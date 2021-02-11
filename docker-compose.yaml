@@ -1,0 +1,10 @@
+version: "3.8"
+services:
+  EML-FE:
+    container_name: "EML-FE"
+    image: "eml-fe:latest"
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
