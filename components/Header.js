@@ -10,10 +10,14 @@ import {
   NavItem,
   NavLink,
   UncontrolledDropdown,
+  Dropdown,
   DropdownToggle,
   DropdownMenu,
-  DropdownItem
+  DropdownItem,
+  DropdownButton,
+  InputGroupButtonDropdown
 } from 'reactstrap';
+import Popper from 'popper.js';
 
 
 const Header = () => {
@@ -38,13 +42,20 @@ const Header = () => {
                   <NavLink>Home</NavLink>
                 </Link>
               </NavItem>
-
               <NavItem>
                 <Link href="/profile">
                   <NavLink>Profile</NavLink>
                 </Link>
               </NavItem>
-
+              <NavItem>
+                <Link href="/account/signin"><NavLink>Login</NavLink></Link>
+              </NavItem>
+              <NavItem>
+                <Link href="/account/signout"><NavLink>Logout</NavLink></Link>
+              </NavItem>
+              <NavItem>
+                <Link href="/account/signup"><NavLink>SignUp</NavLink></Link>
+              </NavItem>
               <NavItem>
                 <Link href="/cart">
                   <NavLink>Cart</NavLink>

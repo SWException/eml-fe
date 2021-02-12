@@ -1,0 +1,20 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-emlbe-dev-104318-authRole",
+      "UnauthRoleArn": "arn:aws:iam::788008150974:role/amplify-emlbe-dev-104318-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::788008150974:role/amplify-emlbe-dev-104318-authRole",
+      "Region": "eu-central-1",
+      "DeploymentBucketName": "amplify-emlbe-dev-104318-deployment",
+      "UnauthRoleName": "amplify-emlbe-dev-104318-unauthRole",
+      "StackName": "amplify-emlbe-dev-104318",
+      "StackId": "arn:aws:cloudformation:eu-central-1:788008150974:stack/amplify-emlbe-dev-104318/bde3e7b0-6d16-11eb-b180-0a13b3f9f9de",
+      "AmplifyAppId": "d2sw5kav5x3vei"
+    },
+    "categories": {
+      "auth": {
+        "emlbea091ce1c": {}
+      }
+    }
+  }
+}

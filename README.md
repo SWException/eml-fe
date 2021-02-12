@@ -1,6 +1,15 @@
 # Front-end dockerized
+## Set up Amazon cognito for login/logout/signup/profile
+1. 
+```
+amplify init
+```
+2. 
+```
+amplify push
+```
 
-### Come usare il front-end tramite docker
+## Come usare il front-end tramite docker
 
 *Per poter usare il front-end è necessario avere installato docker e docker compose nel proprio computer*
 
