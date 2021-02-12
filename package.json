@@ -9,7 +9,6 @@
     "test": "nodemon pages/index.js"
   },
   "dependencies": {
-    "@aws-amplify/cli": "^4.43.0",
     "@aws-amplify/ui-react": "^0.2.38",
     "aws-amplify": "^3.3.18",
     "next": "^10.0.6",
