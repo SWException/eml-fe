@@ -13,7 +13,7 @@ Auth.currentAuthenticatedUser()
         emailUtente = user.attributes.email;
         console.log(user);
     })
-    .catch(err => { emailUtente = err; console.log(err); });
+    .catch(err => { emailUtente = err; console.log("Errore1: " + err); });
 
 function cambiaPassword() {
     Auth.currentAuthenticatedUser()
@@ -24,10 +24,18 @@ function cambiaPassword() {
         .catch(err => console.log(err));
 }
 
+Auth.currentSession()
+    .then(res => {
+        let accessToken = res.getAccessToken()
+        let jwt = accessToken.getJwtToken()
+        console.log(`myJwt: ${jwt}`)
+    })
+    .catch(err => { emailUtente = err; console.log("Errore2: " + err); });
+
 const render = () => {
     return (
         <Layout>
-            <label id="informazioni-utente">Profilo: {emailUtente}</label> <br/>
+            <label id="informazioni-utente">Profilo: {emailUtente}</label> <br />
 
         vecchia password: <input type="password" onChange={e => { vecchia = e.target.value; }} /><br />
         nuova password: <input type="password" onChange={e => { nuova = e.target.value; }} /><br />
