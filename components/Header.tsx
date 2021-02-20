@@ -1,23 +1,13 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
-import Router from 'next/router';
 import {
   Collapse,
   Navbar,
   NavbarToggler,
-  NavbarBrand,
   Nav,
   NavItem,
-  NavLink,
-  UncontrolledDropdown,
-  Dropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem,
-  DropdownButton,
-  InputGroupButtonDropdown
+  NavLink
 } from 'reactstrap';
-import Popper from 'popper.js';
 
 
 const Header = () => {
