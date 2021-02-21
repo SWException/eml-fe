@@ -1,6 +1,10 @@
 import Layout from "../components/Layout";
 
 const Cart = () => {
+
+    //inserire stripe 
+    //inserire chimata carrello
+    
     return (
         <Layout>
             <div className="title-main">

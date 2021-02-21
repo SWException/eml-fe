@@ -1,4 +1,4 @@
-import { useState, Fragment } from 'react';
+import { useState, useEffect, Fragment } from 'react';
 import Link from 'next/link';
 import {
   Collapse,
@@ -10,7 +10,15 @@ import {
 } from 'reactstrap';
 
 export default function Header () {
+
   const [isOpen, setIsOpen] = useState(false);
+  const [isAuth, setIsAuth] = useState(false);
+
+  useEffect(()=>{
+    if(window.localStorage.getItem('jwt')){
+      setIsAuth(true);
+    }
+  })
 
   const toggle = () => {
     setIsOpen(!isOpen);
@@ -26,26 +34,33 @@ export default function Header () {
         <Collapse isOpen={isOpen} navbar>
           <Nav className="ml-auto" navbar>
             <Fragment>
-              <NavItem>
+              <NavItem className="pointer">
                 <Link href="/">
                   <NavLink>Home</NavLink>
                 </Link>
               </NavItem>
-              <NavItem>
+              {isAuth ? (
+                <Fragment>
+              <NavItem className="pointer">
                 <Link href="/profile">
                   <NavLink>Profile</NavLink>
                 </Link>
               </NavItem>
-              <NavItem>
-                <Link href="/account/signin"><NavLink>Login</NavLink></Link>
-              </NavItem>
-              <NavItem>
+              <NavItem className="pointer">
                 <Link href="/account/signout"><NavLink>Logout</NavLink></Link>
               </NavItem>
-              <NavItem>
+                </Fragment>
+              ) : (
+                <Fragment>
+                <NavItem className="pointer">
+                <Link href="/account/signin"><NavLink>Login</NavLink></Link>
+                </NavItem>
+                <NavItem className="pointer">
                 <Link href="/account/signup"><NavLink>SignUp</NavLink></Link>
-              </NavItem>
-              <NavItem>
+                </NavItem>
+                </Fragment>
+              )}
+              <NavItem className="pointer">
                 <Link href="/cart">
                   <NavLink>Cart</NavLink>
                 </Link>
