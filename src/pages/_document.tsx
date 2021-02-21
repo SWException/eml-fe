@@ -1,7 +1,8 @@
 import Document, { Html, Head, Main, NextScript } from 'next/document';
+/*
 import getConfig from 'next/config';
 const { publicRuntimeConfig } = getConfig();
-
+*/
 class MyDocument extends Document {
 
   render() {

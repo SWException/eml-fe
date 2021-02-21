@@ -1,6 +1,6 @@
 import Layout from '../components/Layout';
 import Amplify, { Auth } from 'aws-amplify';
-import awsconfig from '../aws-exports';
+import awsconfig from '../../aws-exports';
 Amplify.configure(awsconfig);
 
 // Salva in automatico i cookie per ricordare il il login è stato fatto

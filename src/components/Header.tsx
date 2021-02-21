@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState, Fragment } from 'react';
 import Link from 'next/link';
 import {
   Collapse,
@@ -9,8 +9,7 @@ import {
   NavLink
 } from 'reactstrap';
 
-
-const Header = () => {
+export default function Header () {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggle = () => {
@@ -18,7 +17,7 @@ const Header = () => {
   };
 
   return (
-    <React.Fragment>
+    <Fragment>
       <Navbar color="light" light expand="md">
         <Link href="/">
           <NavLink className="font-weight-bold">EMPORIO LAMBDA</NavLink>
@@ -26,7 +25,7 @@ const Header = () => {
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
           <Nav className="ml-auto" navbar>
-            <React.Fragment>
+            <Fragment>
               <NavItem>
                 <Link href="/">
                   <NavLink>Home</NavLink>
@@ -51,12 +50,10 @@ const Header = () => {
                   <NavLink>Cart</NavLink>
                 </Link>
               </NavItem>
-            </React.Fragment>
+            </Fragment>
           </Nav>
         </Collapse>
       </Navbar>
-    </React.Fragment>
+    </Fragment>
   );
-};
-
-export default Header;
+}

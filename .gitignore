@@ -131,6 +131,7 @@ sketch
 ### Serverless ###
 # Ignore build directory
 .serverless
+.serverless_nextjs
 
 ### vscode ###
 .vscode/*
@@ -153,7 +154,7 @@ amplify/backend/.temp
 build/
 dist/
 node_modules/
-aws-exports.js
+aws-exports.*
 awsconfiguration.json
 amplifyconfiguration.json
 amplify-build-config.json
