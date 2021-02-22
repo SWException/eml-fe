@@ -18,12 +18,12 @@ const SetNewPassword = () =>{
     
     function inviaCodiceRecupero() {
         Auth.forgotPassword(emailRec)
-            .then(data => console.log(data))
+            .then(data => console.log("invio codice "+data))
             .catch(err => console.log(err));
     }
     function recuperaPassword() {
         Auth.forgotPasswordSubmit(emailRec, codice, password)
-            .then(data => console.log(data))
+            .then(data => console.log("recuperato "+data))
             .catch(err => console.log(err));
     }
 
@@ -52,7 +52,7 @@ const SetNewPassword = () =>{
                     </FormGroup>
                     </Form>
                     <div className="div-button-login">
-                        <Button className="button-rec" color="primary" onClick={recuperaPassword}>Recupera password</Button>
+                        <Button className="button-rec" color="primary" onClick={()=>{recuperaPassword();}}>Recupera password</Button>
                     </div>
                 </div>
             </div>
@@ -67,7 +67,7 @@ const SetNewPassword = () =>{
                     </FormGroup>
                     <div className="div-button-login">
                         <Button className="button-rec" onClick={()=>{
-                            inviaCodiceRecupero;
+                            inviaCodiceRecupero();
                             setNewComp(true);
                         }} color="primary">Invia codice</Button>
                     </div>

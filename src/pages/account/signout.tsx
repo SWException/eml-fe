@@ -37,11 +37,15 @@ const Logout = () => {
             displayErr();
         }
     }
-    
+    /*
     async function signOutGlobal() {
         try {
             await Auth.signOut({ global: true });
             console.log("Logout global");
+            window.localStorage.removeItem('jwt');
+            window.localStorage.clear();
+            window.localStorage.setItem('err', 'Sei uscito da questo sito!');
+            window.location.reload();
             setMessage('Sei uscito da tutti i dispositivi collegati a questo sito!');
             setError('');
             displayInfo();
@@ -52,7 +56,7 @@ const Logout = () => {
             displayErr();
         }
     };
-
+*/
     const displayErr = () =>{
         return (error ? <div className="alert alert-danger">{error}</div> : '');
     }
@@ -68,7 +72,6 @@ const Logout = () => {
                 <h1>Logout</h1>
                 <div className="div-button-login" style={{marginTop: "20px"}}>
                     <Button color="primary" onClick={signOut}>Logout</Button>
-                    <Button color="primary" onClick={signOutGlobal}>Logout da tutti i device</Button>
                 </div>  
                 <div className="info-reg-err">
                     {displayErr()}
