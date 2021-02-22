@@ -1,8 +1,8 @@
 import Layout from '../../components/Layout';
 import Amplify, { Auth } from 'aws-amplify';
 import awsconfig from '../../../aws-exports';
-import { useState } from 'react'
-import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
+import { useEffect, useState } from 'react'
+import { Spinner, Button, Form, FormGroup, Label, Input } from 'reactstrap';
 import SetNewPassword from '../../components/SetNewPassword';
 Amplify.configure(awsconfig);
 
@@ -12,16 +12,20 @@ var email = null, password = null, codice = null;
 
 const Login = () => {
 
-    //mostrare messaggi info e error
-    //Refresh pagina se login ok
+    useEffect(()=>{
+        let mex = window.localStorage.getItem('mex');
+        if(mex){
+            setMessage(mex);
+            window.localStorage.removeItem('mex');
+        }
+    }, [])
 
     const [email, setEmail] = useState('');
-    const [emailRec, setEmailRec] = useState('');
-    const [codice, setCodice] = useState('');
-    const [newPass, setNewPass] = useState('');
     const [remember, setRemember] = useState(false);
-    const [emailSend, setEmailSend] = useState(false);
     const [password, setPassword] = useState('');
+    const [message, setMessage] = useState('');
+    const [error, setError] = useState('');
+    const [loading, setLoading] = useState(false);
 
     const getJwt = () =>{
         Auth.currentSession()
@@ -35,6 +39,7 @@ const Login = () => {
     }
 
     async function signIn() {
+        setLoading(true);
         Auth.signIn(email, password)
             .then(user => {
                 if (user.challengeName === 'NEW_PASSWORD_REQUIRED') { // Non dovrebbe essere necessario credo se la password non ha scadenza. Da capire meglio
@@ -54,23 +59,28 @@ const Login = () => {
                 } else {
                     console.log(user);
                 }
+                setLoading(false);
                 getJwt();
+                window.localStorage.setItem('mex', `Benvenuto ${email}, trova il prodotto adatto a te!`);
+                window.location.reload();
+                setError('');
+                displayInfo();
             })
             .catch(error => {
                 console.log('error signing in', error);
-                document.getElementById('err-registrazione').innerHTML = "Errore: " + error.message;
+                setLoading(false);
+                setError(`Errore nell'inserimento dei dati! Controllare password e/o email e riprovare`);
+                setMessage('');
+                displayErr();
             });
     };
-    
-    function inviaCodiceRecupero() {
-        Auth.forgotPassword(emailRec)
-            .then(data => console.log(data))
-            .catch(err => console.log(err));
+
+    const displayErr = () =>{
+        return (error ? <div className="alert alert-danger">{error}</div> : '');
     }
-    function recuperaPassword() {
-        Auth.forgotPasswordSubmit(email, codice, password)
-            .then(data => console.log(data))
-            .catch(err => console.log(err));
+
+    const displayInfo = () =>{
+        return (message ? <div className="alert alert-info">{message}</div> : '');
     }
 
     return (
@@ -89,10 +99,20 @@ const Login = () => {
                     <Input type="password" name="password" onChange={(e)=>{setPassword(e.target.value)}} id="examplePassword" placeholder="sUpErStrong1!" />
                 </FormGroup>
                 <div className="div-button-login">
-                    <Button className="button-sign" onClick={()=>{setRemember(true)}} color="primary">Recupero</Button>
-                    <Button className="button-sign" color="primary" onClick={signIn}>Login</Button>
+                    {loading ? (
+                        <Spinner color="primary" style={{marginTop: "20px"}}/>
+                    ) : (
+                    <div className="buttons-cont">
+                        <Button className="button-normal" onClick={()=>{setRemember(true)}} color="primary">Recupero</Button>
+                        <Button className="button-normal" color="primary" onClick={signIn}>Login</Button>
+                    </div>
+                    )}
                 </div>
                 </Form>
+                <div className="info-reg-err">
+                    {displayErr()}
+                    {displayInfo()}
+                </div>
             </div>
     </div>)}
             

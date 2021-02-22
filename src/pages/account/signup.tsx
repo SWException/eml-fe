@@ -159,8 +159,7 @@ const SignUp = () => {
                         <Spinner color="primary" style={{marginTop: "20px"}}/>
                     ) : (
                         <Button className="button-sign" color="primary" onClick={signUp}>Registrati</Button>
-                    )}
-                    
+                    )}                    
                 </div>
             </Form>
             <div className="info-reg-err">
