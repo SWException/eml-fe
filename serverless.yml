@@ -1,0 +1,7 @@
+# serverless.yml
+
+emporioLambdaFE:
+  component: "@sls-next/serverless-component" # it is recommended you pin the latest stable version of serverless-next.js
+  inputs:
+    name: eml-fe
+    bucketRegion: eu-central-1
