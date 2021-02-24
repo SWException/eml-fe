@@ -1,6 +1,6 @@
 version: "3.8"
 services:
-  eml-fe:
+  EML-FE:
     container_name: "eml-fe"
     image: "eml-fe:latest"
     build:
