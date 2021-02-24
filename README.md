@@ -8,6 +8,7 @@ Per gli utenti Windows sarà sufficiente installare docker desktop
 
 Per gli utenti Linux o simili sarà necessario installare sia docker sia docker-compose
 
+Inoltre per poter eseguire eml-fe in hot-reload sarà necessario inserire in Settings/Resources/Filesharing la directory dove è presente la cartella eml-fe
 
 ## Lista di comandi importanti
 
