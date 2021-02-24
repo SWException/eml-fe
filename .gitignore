@@ -154,7 +154,7 @@ amplify/backend/.temp
 build/
 dist/
 node_modules/
-aws-exports.*
+#aws-exports.*
 awsconfiguration.json
 amplifyconfiguration.json
 amplify-build-config.json
