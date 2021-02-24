@@ -9,7 +9,5 @@ services:
     ports:
       - "3000:3000"
     volumes:
-      - ./src/pages:/src/app/pages
-      - ./src/public:/src/app/public
-      - ./src/components:/src/app/components
-      - ./src/styles:/src/app/styles
+      #Permette il live update, da omettere nel deploy
+      - ./src:/app/src
