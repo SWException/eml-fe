@@ -5,8 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start",
-    "test": "nodemon pages/index.js"
+    "start": "next start"
   },
   "dependencies": {
     "@aws-amplify/ui-react": "^1.0.2",
