@@ -25,7 +25,7 @@ deploy_service_job: &DEPLOY_SERVICE_JOB
     - travis_retry npm install
 
   script:
-    - serverless deploy
+    - serverless deploy --component=targetComponent build
 
 jobs:
   include:
