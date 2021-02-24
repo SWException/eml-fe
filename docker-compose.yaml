@@ -1,15 +1,10 @@
 version: "3.8"
 services:
-  eml-fe:
-    container_name: "eml-fe"
+  EML-FE:
+    container_name: "EML-FE"
     image: "eml-fe:latest"
     build:
       context: ./
       dockerfile: Dockerfile
     ports:
       - "3000:3000"
-    volumes:
-      - ./pages:/app/pages
-      - ./public:/app/public
-      - ./components:/app/components
-      - ./styles:/app/styles
