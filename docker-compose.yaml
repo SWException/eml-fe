@@ -9,7 +9,7 @@ services:
     ports:
       - "3000:3000"
     volumes:
-      - ./pages:/app/pages
-      - ./public:/app/public
-      - ./components:/app/components
-      - ./styles:/app/styles
+      - .src/pages:/app/pages
+      - .src/public:/app/public
+      - .src/components:/app/components
+      - .src/styles:/app/styles
