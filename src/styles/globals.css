@@ -151,3 +151,9 @@ a {
   margin-top: 20px;
   font-size: 30px;
 }
+
+.button-plus-minus{
+  display: flex;
+  justify-content: center;
+  height: auto;
+}

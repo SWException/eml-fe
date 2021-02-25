@@ -2,30 +2,31 @@ import Layout from "../components/Layout";
 import CartLayout from '../components/Card';
 import { useEffect, useState } from "react";
 import { useRouter } from 'next/router';
-import { Button } from 'reactstrap'
-import { on } from "events";
+import { Button } from 'reactstrap';
 
-const Cart = () => {
+const Cart = ({cartItems}) => {
 
     //Inserire Fetch
 
     const router = useRouter();
 
-    const [price, setPrice] = useState([10, 12, 32]);
-    const [title, setTitle] = useState(['Scarpa elegante uomo', 'Scarpa elegante uomo', 'Scarpa elegante uomo']);
-    const [description, setDescription] = useState(['Scarpa elegante uomo', 'Scarpa elegante uomo', 'Scarpa elegante uomo']);
     const [total, setTotal] = useState(0);
-    const [elements, setElements] = useState(3);
 
     useEffect(()=>{
         setTotalPrice();
+        getItem();
     }, [])
+
+
+    const getItem = () => {
+        console.log(cartItems.carrello.products);
+    }
 
     const setTotalPrice = () => {
         var paytotal = 0;
-        price.forEach(price=>{
-            paytotal = paytotal + price;
-        });
+        cartItems.carrello.products.forEach(product=>{
+            paytotal = paytotal + (product.price*product.quantity)
+        })
         setTotal(paytotal);
     }
 
@@ -41,17 +42,13 @@ const Cart = () => {
                 </div>
                 <div className="cart-item-layout">
                 <CartLayout 
-                description={description[0]}
-                title={title[0]}
-                price={price[0]}/> 
+                title={cartItems.carrello.products[0].name}
+                quantity={cartItems.carrello.products[0].quantity}
+                price={cartItems.carrello.products[0].price}/> 
                 <CartLayout 
-                title={title[1]}
-                description={description[1]}
-                price={price[1]}/>  
-                <CartLayout 
-                title={title[2]}
-                description={description[2]}
-                price={price[2]}/> 
+                quantity={cartItems.carrello.products[1].quantity}
+                title={cartItems.carrello.products[1].name}
+                price={cartItems.carrello.products[1].price}/>  
                 </div>
             </div>
             <div className="total">
@@ -62,5 +59,16 @@ const Cart = () => {
         </Layout>
     );
 };
+
+export async function getStaticProps() {
+    const res = await fetch('https://5qsqmpfpm8.execute-api.eu-central-1.amazonaws.com/dev/getCart/1');
+    const cartItems = await res.json();
+
+    return {
+        props: {
+            cartItems,
+        }
+    };    
+}
 
 export default Cart;
