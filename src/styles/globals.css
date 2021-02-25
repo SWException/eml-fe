@@ -116,3 +116,38 @@ a {
   width: fit-content;
   margin-top: 5%;
 }
+
+.card-cart{
+  margin-left: 10%;
+  margin-right: 10%;
+  height: 18vh;
+}
+
+.img-cart-info{
+  height: 18vh;
+}
+
+.img-container-cart{
+  width: auto;
+  display: flex;
+  justify-content: center;
+}
+
+.container-cart{
+  display: flex;
+}
+
+.price-title{
+  height: 18vh;
+  align-items: center;
+  text-align: center;
+}
+
+.total{
+  display: flex;
+  justify-content: flex-end;
+  margin: 4%;
+  margin-right: 10%;
+  margin-top: 20px;
+  font-size: 30px;
+}

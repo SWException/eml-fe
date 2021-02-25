@@ -10,16 +10,19 @@ const CardLayout = (props) => {
     //Descrizione
 
     return (
-        <div>
-        <Card>
-            <CardImg top width="100%" src="/assets/318x180.svg" alt="Card image cap" />
-            <CardBody>
-            <CardTitle tag="h5">Card title</CardTitle>
-            <CardSubtitle tag="h6" className="mb-2 text-muted">Card subtitle</CardSubtitle>
-            <CardText>Some quick Card text to build on the card title and make up the bulk of the card's content.</CardText>
-            <Button>Button</Button>
-            </CardBody>
-        </Card>
+        <div className="card mb-3 card-cart">
+            <div className="row g-0">
+                <div className="col-md-2 img-container-cart">
+                    <img className="img-cart-info" src="https://www.artimondo.it/media/cvp/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/p/h/phpSlOF8Z.jpg" alt="..."></img>
+                </div>
+                <div className="col-md-9 price-title">
+                    <div className="card-body" style={{}}>
+                        <h5 className="card-title">{props.title}</h5>
+                        <h3><strong>{props.price} €</strong></h3>
+                        <p>{props.description}</p>
+                    </div>
+                </div>
+            </div>
         </div>
     );
 };
