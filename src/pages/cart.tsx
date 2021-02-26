@@ -31,7 +31,7 @@ const Cart = ({cartItems}) => {
     }
 
     const onSubmit = () => {
-        router.push('/payment/stripe');
+        router.push('/payment/checkout');
     }
 
     return (

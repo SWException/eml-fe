@@ -5,6 +5,7 @@ import {
   useElements
 } from "@stripe/react-stripe-js";
 
+
 export default function CheckoutForm() {
 
   const [succeeded, setSucceeded] = useState(false);
@@ -17,15 +18,16 @@ export default function CheckoutForm() {
 
   useEffect(() => {
     // Create PaymentIntent as soon as the page loads
-    window
-      .fetch("/createCharge", {
+    window.fetch("https://5qsqmpfpm8.execute-api.eu-central-1.amazonaws.com/dev/createCharge", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
+          "Allow-Origin": "*"
         },
-        body: JSON.stringify({items: [{ id: "demo" }]})
+        body: JSON.stringify({items: [{ "id": "demo" }]})
       })
       .then(res => {
+        console.log(res);
         return res.json();
       })
       .then(data => {
@@ -58,6 +60,7 @@ export default function CheckoutForm() {
     setDisabled(event.empty);
     setError(event.error ? event.error.message : "");
   };
+
 
   const handleSubmit = async ev => {
     ev.preventDefault();
@@ -92,14 +95,14 @@ export default function CheckoutForm() {
           )}
         </span>
       </button>
-      {/* Show any error that happens when processing the payment */}
+      {/* Show any error that happens when processing the payment*/}
       {error && (
         <div className="card-error" role="alert">
           {error}
         </div>
       )}
-      {/* Show a success message upon completion */}
-      <p className={succeeded ? "result-message" : "result-message hidden"}>
+      {/* Show a success message upon completion*/}
+      <p>
         Payment succeeded, see the result in your
         <a
           href={`https://dashboard.stripe.com/test/payments`}
