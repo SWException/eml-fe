@@ -19,6 +19,8 @@ deploy_service_job: &DEPLOY_SERVICE_JOB
       - node_modules
       - $HOME/.cache/yarn
       - .next/cache
+      - .serverless
+      - .serverless_nextjs
 
   install:
     - npm install -g serverless

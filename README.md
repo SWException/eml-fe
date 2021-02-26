@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.com/SWException/eml-fe.svg?branch=develop)](https://travis-ci.com/SWException/eml-fe)
+
 # Front-end dockerized
 
 ### Come usare il front-end tramite docker
