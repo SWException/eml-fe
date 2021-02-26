@@ -21,8 +21,7 @@ export default function CheckoutForm() {
     window.fetch("https://5qsqmpfpm8.execute-api.eu-central-1.amazonaws.com/dev/createCharge", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
-          "Allow-Origin": "*"
+          "Content-Type": "application/json"
         },
         body: JSON.stringify({items: [{ "id": "demo" }]})
       })
@@ -31,7 +30,7 @@ export default function CheckoutForm() {
         return res.json();
       })
       .then(data => {
-        setClientSecret(data.clientSecret);
+        setClientSecret(data['paymentIntent']['client_secret']);
       });
   }, []);
 
