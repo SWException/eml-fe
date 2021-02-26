@@ -1,4 +1,3 @@
-'use strict';
 import React, { useState, useEffect } from "react";
 import {
   CardElement,
@@ -20,8 +19,9 @@ export default function CheckoutForm() {
       .fetch("https://5qsqmpfpm8.execute-api.eu-central-1.amazonaws.com/dev/createCharge", {
         method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
 		  'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Credentials': true,
         },
         body: JSON.stringify({items: [{ id: "xl-tshirt" }]})
       })
