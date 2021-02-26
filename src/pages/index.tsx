@@ -7,7 +7,7 @@ const Index = () => {
     return (
         <Layout>
             <div className="title-main">
-              <h1>Emporio Lambda PLP</h1>
+              <h1>Emporio Lambda PLP!</h1>
             </div>
             <div className="card-display">
                 <div className="card card-style">
