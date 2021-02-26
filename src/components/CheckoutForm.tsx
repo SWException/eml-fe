@@ -4,6 +4,7 @@ import {
   useStripe,
   useElements
 } from "@stripe/react-stripe-js";
+import { Button } from 'reactstrap'
 
 
 export default function CheckoutForm() {
@@ -80,12 +81,9 @@ export default function CheckoutForm() {
   };
 
   return (
-    <form id="payment-form" onSubmit={handleSubmit}>
+    <form id="payment-form" onSubmit={handleSubmit} className="stripe-form">
       <CardElement id="card-element" options={cardStyle} onChange={handleChange} />
-      <button
-        disabled={processing || disabled || succeeded}
-        id="submit"
-      >
+      <Button disabled={processing || disabled || succeeded} id="submit">
         <span id="button-text">
           {processing ? (
             <div className="spinner" id="spinner"></div>
@@ -93,7 +91,7 @@ export default function CheckoutForm() {
             "Pay now"
           )}
         </span>
-      </button>
+      </Button>
       {/* Show any error that happens when processing the payment*/}
       {error && (
         <div className="card-error" role="alert">

@@ -2,6 +2,7 @@ import React, { useState } from "react";;
 import CheckoutForm from "../../components/CheckoutForm";
 import {Elements} from '@stripe/react-stripe-js';
 import {loadStripe} from '@stripe/stripe-js';
+import Layout from "../../components/Layout";
 
 // Make sure to call `loadStripe` outside of a component’s render to avoid
 // recreating the `Stripe` object on every render.
@@ -9,12 +10,13 @@ const stripePromise = loadStripe('pk_test_51IJio8KnuuioxVCyNkNNVQvZ7pVmXvDHmpesl
 
 const Checkout = () => {
   return (
-    <div className="card-stripe">
-      <h2> Payment Method </h2>
-      <Elements stripe={stripePromise}>
-        <CheckoutForm />
-      </Elements>
-    </div>
+    <Layout>
+      <div className="card-stripe">
+        <Elements stripe={stripePromise}>
+          <CheckoutForm />
+        </Elements>
+      </div>
+    </Layout>
   );
 };
 
