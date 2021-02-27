@@ -11,6 +11,7 @@ export default function CheckoutForm() {
 
   const [succeeded, setSucceeded] = useState(false);
   const [error, setError] = useState(null);
+  const [message, setMessage] = useState(null);
   const [processing, setProcessing] = useState(false);
   const [disabled, setDisabled] = useState(true);
   const [clientSecret, setClientSecret] = useState('');
@@ -77,6 +78,7 @@ export default function CheckoutForm() {
       setError(null);
       setProcessing(false);
       setSucceeded(true);
+      setMessage('Pagamento avvenuto con successo!');
     }
   };
 
@@ -98,7 +100,11 @@ export default function CheckoutForm() {
           {error}
         </div>
       )}
-      {/* Show a success message upon completion*/}
+      {message ? (
+        {message}
+      ) : (
+        null
+      )}
       <p>
         Payment succeeded, see the result in your
         <a
