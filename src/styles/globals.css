@@ -50,8 +50,7 @@ a {
 }
 
 .image-desc{
-  width: 30%;
-  height: auto;
+  height: 200px;
   margin: 2%;
   border-radius: 5px;
 }
