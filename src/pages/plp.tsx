@@ -1,5 +1,4 @@
 import Layout from '../components/Layout';
-import Categories from '../components/Categories/Categories';
 import { useRouter } from 'next/router';
 
 const Index = () => {
@@ -7,7 +6,9 @@ const Index = () => {
 
     return (
         <Layout>
-            <Categories/>
+            <div className="title-main">
+              <h1>Emporio Lambda PLP!</h1>
+            </div>
             <div className="card-display">
                 <div className="card card-style">
                     <img src="https://www.artimondo.it/media/cvp/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/p/h/phpSlOF8Z.jpg" className="card-img-top" alt="..."></img>

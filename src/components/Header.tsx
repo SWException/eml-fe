@@ -35,8 +35,8 @@ export default function Header () {
           <Nav className="ml-auto" navbar>
             <Fragment>
               <NavItem className="pointer">
-                <Link href="/">
-                  <NavLink>Home</NavLink>
+                <Link href="/plp">
+                  <NavLink>PLP</NavLink>
                 </Link>
               </NavItem>
               {isAuth ? (
