@@ -1,6 +1,6 @@
 import { Layout } from 'components/ui';
 import Amplify, { Auth } from 'aws-amplify';
-import awsconfig from '../../aws-exports';
+import awsconfig from 'aws-exports';
 import React, { useState } from 'react';
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 Amplify.configure(awsconfig);
