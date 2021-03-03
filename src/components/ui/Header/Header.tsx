@@ -2,6 +2,7 @@ import React, { useState, useEffect, Fragment } from 'react';
 import Link from 'next/link';
 import { Collapse, Navbar, NavbarToggler, Nav, NavItem, NavLink } from 'reactstrap';
 import { Categories } from 'components/ui';
+import styles from './Header.module.css';
 
 interface Props {
   isVisible: string;
@@ -32,7 +33,7 @@ const Header: React.FC<Props> = ({isVisible}) => {
 
   return (
     <Fragment>
-      <Navbar color="light" light expand="md">
+      <Navbar className={styles.navbar} expand="md">
         <Link href="/">
           <NavLink className="font-weight-bold">EMPORIO LAMBDA</NavLink>
         </Link>

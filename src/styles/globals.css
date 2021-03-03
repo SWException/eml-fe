@@ -254,7 +254,10 @@ input {
 html {
   font-size: 62.5%;
   box-sizing: border-box;
-  --color-primary: #d82c23;
+  --color-primary: #e4f9f5;
+  --color-secondary: #30e3ca;
+  --color-tertiary: #11999e;
+  --color-quaternary: #40514e;
   --color-gray: #f5f5f5;
   --color-gray-dark: #efefef;
   --color-gray-light: #eee;
@@ -279,6 +282,7 @@ body {
   margin: 0;
   padding: 0;
   font-size: 1.5rem;
+  background-color: var(--color-primary);
 }
 
 a {
