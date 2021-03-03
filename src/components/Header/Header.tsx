@@ -10,7 +10,11 @@ import {
 } from 'reactstrap';
 import Categories from 'components/Categories';
 
-const Header: React.FC<Props> = (props) => {
+interface Props {
+  isVisible: string;
+}
+
+const Header: React.FC<Props> = ({isVisible}) => {
 
   const [isOpen, setIsOpen] = useState(false);
   const [isAuth, setIsAuth] = useState(false);
@@ -23,7 +27,7 @@ const Header: React.FC<Props> = (props) => {
   })
 
   useEffect(()=>{
-    if(props.isVisible == "true"){
+    if(isVisible == "true"){
       setIsCategoryListAvailable(true);
     }else{
       setIsCategoryListAvailable(false);
