@@ -1,7 +1,7 @@
 import Layout from 'components/Layout';
 import React from 'react'
 import Amplify, { Auth } from 'aws-amplify';
-import awsconfig from '../../../aws-exports';
+import awsconfig from 'aws-exports';
 import React, { useState } from 'react';
 import { Alert, Spinner, Button, Form, FormGroup, Label, Input } from 'reactstrap';
 import { setGlobalCssModule } from 'reactstrap/es/utils';

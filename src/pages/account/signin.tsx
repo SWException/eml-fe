@@ -1,6 +1,6 @@
 import { Layout } from 'components/ui';
 import Amplify, { Auth } from 'aws-amplify';
-import awsconfig from '../../../aws-exports';
+import awsconfig from 'aws-exports';
 import React, { useEffect, useState } from 'react'
 import { Spinner, Button, Form, FormGroup, Label, Input } from 'reactstrap';
 import SetNewPassword from '../../components/SetNewPassword';

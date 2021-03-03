@@ -1,6 +1,6 @@
 import Layout from 'components/Layout';
 import Amplify, { Auth } from 'aws-amplify';
-import awsconfig from '../../../aws-exports';
+import awsconfig from 'aws-exports';
 import { Button } from 'reactstrap';
 import React, { useEffect, useState } from 'react';
 Amplify.configure(awsconfig);
