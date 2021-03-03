@@ -3,7 +3,7 @@ import Amplify, { Auth } from 'aws-amplify';
 import awsconfig from 'aws-exports';
 import React, { useEffect, useState } from 'react'
 import { Spinner, Button, Form, FormGroup, Label, Input } from 'reactstrap';
-import SetNewPassword from '../../components/SetNewPassword';
+import { SetNewPassword } from 'components/auth';
 Amplify.configure(awsconfig);
 
 var email = null, password = null, codice = null;

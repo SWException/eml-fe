@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { Products } from 'types';
+import React from 'react';
 import styles from './ProductList.module.css';
 
 interface Props {
