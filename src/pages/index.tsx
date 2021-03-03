@@ -2,6 +2,7 @@ import { Layout, Container } from 'components/ui';
 import { ProductList } from 'components/products';
 import { useRouter } from 'next/router';
 import React from 'react';
+import { Alert } from 'reactstrap';
 import { Product } from 'types';
 import styles from 'styles/Home.module.css'
 
