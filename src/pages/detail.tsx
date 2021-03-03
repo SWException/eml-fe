@@ -3,7 +3,6 @@ import React, { useRouter } from 'next/router'
 
 const Detail: React.FC = () => {
     const router = useRouter();
-
     return (
         <Layout>
             <div className="title-main">
