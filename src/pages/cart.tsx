@@ -4,11 +4,11 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from 'next/router';
 import { Button } from 'reactstrap';
 
-interface Props {
+/*interface Props {
     cartItems: string, //ASSOLUTAMENTE DA CONTROLLARE
-}
+}*/
 
-const Cart: React.FC<Props> = ({cartItems}) => {
+const Cart = ({cartItems}) => { //IN VERITA' E' :React.FC<Props>
 
     //Inserire Fetch
 

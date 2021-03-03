@@ -2,7 +2,7 @@ import { Layout } from 'components/ui';
 import { ProductList } from 'components/products';
 import { useRouter } from 'next/router';
 import React from 'react';
-import Product from 'types';
+import { Product } from 'types';
 
 const Index: React.FC = () => {
     const router = useRouter()
