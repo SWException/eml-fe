@@ -1,21 +1,8 @@
-import React, { useState } from 'react';
-import {
-  Collapse,
-  Navbar,
-  NavbarToggler,
-  NavbarBrand,
-  Nav,
-  NavItem,
-  NavLink,
-  UncontrolledDropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem,
-  NavbarText
-} from 'reactstrap';
+import React from 'react';
+import { Navbar, Nav, NavItem, NavLink, NavbarText } from 'reactstrap';
 import styles from './Categories.module.css';
 
-const Categories = (props) => {
+const Categories: React.FC = () => {
   return (
     <div>
       <Navbar className={styles.bar} color="light" expand="md">

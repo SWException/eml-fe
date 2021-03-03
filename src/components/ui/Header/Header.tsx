@@ -1,21 +1,13 @@
 import React, { useState, useEffect, Fragment } from 'react';
 import Link from 'next/link';
-import {
-  Collapse,
-  Navbar,
-  NavbarToggler,
-  Nav,
-  NavItem,
-  NavLink
-} from 'reactstrap';
-import Categories from 'components/Categories';
+import { Collapse, Navbar, NavbarToggler, Nav, NavItem, NavLink } from 'reactstrap';
+import { Categories } from 'components/ui';
 
 interface Props {
   isVisible: string;
 }
 
 const Header: React.FC<Props> = ({isVisible}) => {
-
   const [isOpen, setIsOpen] = useState(false);
   const [isAuth, setIsAuth] = useState(false);
   const [isCategoryListAvailable, setIsCategoryListAvailable] = useState(false);
