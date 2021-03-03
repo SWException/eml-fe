@@ -1,4 +1,4 @@
-import Layout from '../components/Layout';
+import Layout from 'components/Layout';
 import Amplify, { Auth } from 'aws-amplify';
 import awsconfig from '../../aws-exports';
 import { useState } from 'react';

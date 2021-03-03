@@ -1,4 +1,4 @@
-import Layout from '../../components/Layout';
+import Layout from 'components/Layout';
 import React from 'react'
 import Amplify, { Auth } from 'aws-amplify';
 import awsconfig from '../../../aws-exports';

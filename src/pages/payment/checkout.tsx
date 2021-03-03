@@ -2,7 +2,7 @@ import React, { useState } from "react";;
 import CheckoutForm from "../../components/CheckoutForm";
 import {Elements} from '@stripe/react-stripe-js';
 import {loadStripe} from '@stripe/stripe-js';
-import Layout from "../../components/Layout";
+import Layout from "components/Layout";
 
 // Make sure to call `loadStripe` outside of a component’s render to avoid
 // recreating the `Stripe` object on every render.

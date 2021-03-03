@@ -1,48 +1,26 @@
-import Layout from '../components/Layout';
-import Categories from '../components/Categories/Categories';
+import {Layout, ProductList} from 'components';
 import { useRouter } from 'next/router';
+import Product from 'types';
 
 const Index = () => {
     const router = useRouter()
 
+    const prodotto : Product = {
+        _id : "1234",
+        name: "TEST",
+        imageURL: "https://dress-shop.vercel.app/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fdjlbfjouc%2Fimage%2Fupload%2Fv1581158056%2Fdqtdtglewxjvig4x7rlk.jpg&w=640&q=75",
+        category: "CAT",
+        description: "DESCR",
+        price: 1234,
+      };  
+    
+      let products = [prodotto, prodotto, prodotto, prodotto, prodotto, prodotto, prodotto, prodotto, prodotto, prodotto, prodotto, prodotto, prodotto, prodotto, prodotto, prodotto];
     return (
         <Layout>
-            <Categories/>
-            <div className="card-display">
-                <div className="card card-style">
-                    <img src="https://www.artimondo.it/media/cvp/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/p/h/phpSlOF8Z.jpg" className="card-img-top" alt="..."></img>
-                    <div className="card-body">
-                        <h5 className="card-title">Card title</h5>
-                        <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                        <div className="button-display">
-                            <a onClick={()=> router.push('/detail')} className="pointer btn btn-primary">See Details</a>
-                            <a onClick={()=> router.push('/cart')} className=" pointer btn btn-primary">Add to Cart</a>
-                        </div>
-                    </div>
-                </div>
-                <div className="card card-style">
-                    <img src="https://www.artimondo.it/media/cvp/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/p/h/phpSlOF8Z.jpg" className="card-img-top" alt="..."></img>
-                    <div className="card-body">
-                        <h5 className="card-title">Card title</h5>
-                        <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                        <div className="button-display">
-                            <a onClick={()=> router.push('/detail')} className="pointer btn btn-primary">See Details</a>
-                            <a onClick={()=> router.push('/cart')} className="pointer btn btn-primary">Add to Cart</a>
-                        </div>
-                    </div>
-                </div>
-                <div className="card card-style">
-                    <img src="https://www.artimondo.it/media/cvp/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/p/h/phpSlOF8Z.jpg" className="card-img-top" alt="..."></img>
-                    <div className="card-body">
-                        <h5 className="card-title">Card title</h5>
-                        <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                        <div className="button-display">
-                            <a onClick={()=> router.push('/detail')} className="pointer btn btn-primary">See Details</a>
-                            <a onClick={()=> router.push('/cart')} className="pointer btn btn-primary">Add to Cart</a>
-                        </div>
-                    </div>
-                </div>
+            <div className="title-main">
+              <h1>Emporio Lambda</h1>
             </div>
+            <ProductList products={products}/>
         </Layout>
     );
 };

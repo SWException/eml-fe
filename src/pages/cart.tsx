@@ -1,4 +1,4 @@
-import Layout from "../components/Layout";
+import Layout from "components/Layout";
 import CartLayout from '../components/Card';
 import { useEffect, useState } from "react";
 import { useRouter } from 'next/router';

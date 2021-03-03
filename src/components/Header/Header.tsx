@@ -8,15 +8,25 @@ import {
   NavItem,
   NavLink
 } from 'reactstrap';
+import Categories from 'components/Categories';
 
-export default function Header () {
+const Header: React.FC<Props> = (props) => {
 
   const [isOpen, setIsOpen] = useState(false);
   const [isAuth, setIsAuth] = useState(false);
+  const [isCategoryListAvailable, setIsCategoryListAvailable] = useState(false);
 
   useEffect(()=>{
     if(window.localStorage.getItem('jwt')){
       setIsAuth(true);
+    }
+  })
+
+  useEffect(()=>{
+    if(props.isVisible == "true"){
+      setIsCategoryListAvailable(true);
+    }else{
+      setIsCategoryListAvailable(false);
     }
   })
 
@@ -34,11 +44,6 @@ export default function Header () {
         <Collapse isOpen={isOpen} navbar>
           <Nav className="ml-auto" navbar>
             <Fragment>
-              <NavItem className="pointer">
-                <Link href="/plp">
-                  <NavLink>PLP</NavLink>
-                </Link>
-              </NavItem>
               {isAuth ? (
                 <Fragment>
               <NavItem className="pointer">
@@ -69,6 +74,11 @@ export default function Header () {
           </Nav>
         </Collapse>
       </Navbar>
+      { isCategoryListAvailable &&  (
+      <Categories/>
+      )}    
     </Fragment>
   );
 }
+
+export default Header;
