@@ -4,11 +4,14 @@ import {
   useStripe,
   useElements
 } from "@stripe/react-stripe-js";
+import { Button, Spinner } from 'reactstrap'
+
 
 export default function CheckoutForm() {
 
   const [succeeded, setSucceeded] = useState(false);
   const [error, setError] = useState(null);
+  const [message, setMessage] = useState(null);
   const [processing, setProcessing] = useState(false);
   const [disabled, setDisabled] = useState(true);
   const [clientSecret, setClientSecret] = useState('');
@@ -17,19 +20,19 @@ export default function CheckoutForm() {
 
   useEffect(() => {
     // Create PaymentIntent as soon as the page loads
-    window
-      .fetch("/createCharge", {
+    window.fetch("https://5qsqmpfpm8.execute-api.eu-central-1.amazonaws.com/dev/createCharge", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
         },
-        body: JSON.stringify({items: [{ id: "demo" }]})
+        body: JSON.stringify({items: [{ "id": "demo" }]})
       })
       .then(res => {
+        console.log(res);
         return res.json();
       })
       .then(data => {
-        setClientSecret(data.clientSecret);
+        setClientSecret(data['paymentIntent']['client_secret']);
       });
   }, []);
 
@@ -59,6 +62,7 @@ export default function CheckoutForm() {
     setError(event.error ? event.error.message : "");
   };
 
+
   const handleSubmit = async ev => {
     ev.preventDefault();
     setProcessing(true);
@@ -74,32 +78,42 @@ export default function CheckoutForm() {
       setError(null);
       setProcessing(false);
       setSucceeded(true);
+      setMessage('Pagamento avvenuto con successo!');
     }
   };
 
   return (
-    <form id="payment-form" onSubmit={handleSubmit}>
+    <form id="payment-form" onSubmit={handleSubmit} className="stripe-form">
       <CardElement id="card-element" options={cardStyle} onChange={handleChange} />
-      <button
-        disabled={processing || disabled || succeeded}
-        id="submit"
-      >
-        <span id="button-text">
-          {processing ? (
-            <div className="spinner" id="spinner"></div>
-          ) : (
-            "Pay now"
-          )}
-        </span>
-      </button>
-      {/* Show any error that happens when processing the payment */}
+      <div style={{display: "flex", alignItems: "center", justifyContent:"center", margin: "10px"}}>
+        <Button disabled={processing || disabled || succeeded} id="submit">
+          <span id="button-text">
+            {processing ? (
+              <Spinner />
+            ) : (
+              "Pay now"
+            )}
+          </span>
+        </Button>
+      </div>
+      {/* Show any error that happens when processing the payment*/}
       {error && (
         <div className="card-error" role="alert">
           {error}
         </div>
       )}
-      {/* Show a success message upon completion */}
-      <p className={succeeded ? "result-message" : "result-message hidden"}>
+      {message ? (
+        <div style={{
+          backgroundColor: "green",
+          borderRadius: "10px",
+          padding: "5px",
+          margin: "5px"}}>
+          {message}
+        </div>
+      ) : (
+        null
+      )}
+      <p>
         Payment succeeded, see the result in your
         <a
           href={`https://dashboard.stripe.com/test/payments`}

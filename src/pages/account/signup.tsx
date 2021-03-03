@@ -1,15 +1,14 @@
-import Layout from '../../components/Layout';
-import React from 'react'
+import { Layout } from 'components/ui';
 import Amplify, { Auth } from 'aws-amplify';
-import awsconfig from '../../../aws-exports';
-import { useState } from 'react';
+import awsconfig from 'aws-exports';
+import React, { useState } from 'react';
 import { Alert, Spinner, Button, Form, FormGroup, Label, Input } from 'reactstrap';
 import { setGlobalCssModule } from 'reactstrap/es/utils';
 Amplify.configure(awsconfig);
 
 // Non fa in automatico anche il login, perché comunque bisogna verificare l'email
 
-const SignUp = () => {
+const SignUp: React.FC = () => {
 
     //Lavorare su state configurato meglio stile Reducer
     const [email, setEmail] = useState('');

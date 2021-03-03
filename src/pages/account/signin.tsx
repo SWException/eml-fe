@@ -1,16 +1,16 @@
-import Layout from '../../components/Layout';
+import { Layout } from 'components/ui';
 import Amplify, { Auth } from 'aws-amplify';
-import awsconfig from '../../../aws-exports';
-import { useEffect, useState } from 'react'
+import awsconfig from 'aws-exports';
+import React, { useEffect, useState } from 'react'
 import { Spinner, Button, Form, FormGroup, Label, Input } from 'reactstrap';
-import SetNewPassword from '../../components/SetNewPassword';
+import { SetNewPassword } from 'components/auth';
 Amplify.configure(awsconfig);
 
 var email = null, password = null, codice = null;
 
 // Salva in automatico i cookie per ricordare il il login è stato fatto
 
-const Login = () => {
+const Login: React.FC = () => {
 
     useEffect(()=>{
         let mex = window.localStorage.getItem('mex');

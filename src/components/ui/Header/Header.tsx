@@ -1,22 +1,28 @@
-import { useState, useEffect, Fragment } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 import Link from 'next/link';
-import {
-  Collapse,
-  Navbar,
-  NavbarToggler,
-  Nav,
-  NavItem,
-  NavLink
-} from 'reactstrap';
+import { Collapse, Navbar, NavbarToggler, Nav, NavItem, NavLink } from 'reactstrap';
+import { Categories } from 'components/ui';
 
-export default function Header () {
+interface Props {
+  isVisible: string;
+}
 
+const Header: React.FC<Props> = ({isVisible}) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isAuth, setIsAuth] = useState(false);
+  const [isCategoryListAvailable, setIsCategoryListAvailable] = useState(false);
 
   useEffect(()=>{
     if(window.localStorage.getItem('jwt')){
       setIsAuth(true);
+    }
+  })
+
+  useEffect(()=>{
+    if(isVisible == "true"){
+      setIsCategoryListAvailable(true);
+    }else{
+      setIsCategoryListAvailable(false);
     }
   })
 
@@ -34,11 +40,6 @@ export default function Header () {
         <Collapse isOpen={isOpen} navbar>
           <Nav className="ml-auto" navbar>
             <Fragment>
-              <NavItem className="pointer">
-                <Link href="/">
-                  <NavLink>Home</NavLink>
-                </Link>
-              </NavItem>
               {isAuth ? (
                 <Fragment>
               <NavItem className="pointer">
@@ -69,6 +70,11 @@ export default function Header () {
           </Nav>
         </Collapse>
       </Navbar>
+      { isCategoryListAvailable &&  (
+      <Categories/>
+      )}    
     </Fragment>
   );
 }
+
+export default Header;

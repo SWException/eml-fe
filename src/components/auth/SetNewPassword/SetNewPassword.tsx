@@ -1,10 +1,10 @@
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import Amplify, { Auth } from 'aws-amplify';
-import awsconfig from '../../aws-exports';
+import awsconfig from 'aws-exports';
 Amplify.configure(awsconfig);
 
-const SetNewPassword = () =>{
+const SetNewPassword: React.FC = () =>{
 
     const [emailRec, setEmailRec] = useState('');
     const [codice, setCodice] = useState('');

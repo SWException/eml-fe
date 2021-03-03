@@ -1,7 +1,7 @@
-import Layout from '../components/Layout';
-import { useRouter } from 'next/router'
+import { Layout } from 'components/ui';
+import React, { useRouter } from 'next/router'
 
-const Detail = () => {
+const Detail: React.FC = () => {
     const router = useRouter();
 
     return (

@@ -1,13 +1,13 @@
-import Layout from '../../components/Layout';
+import { Layout } from 'components/ui';
 import Amplify, { Auth } from 'aws-amplify';
-import awsconfig from '../../../aws-exports';
+import awsconfig from 'aws-exports';
 import { Button } from 'reactstrap';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 Amplify.configure(awsconfig);
 
 // Elimina i cookie e fa il logout
 
-const Logout = () => {
+const Logout: React.FC = () => {
 
     const [message, setMessage] = useState('');
     const [error, setError] = useState('');
