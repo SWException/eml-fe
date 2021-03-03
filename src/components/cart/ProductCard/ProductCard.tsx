@@ -1,15 +1,17 @@
-import {
-  Card, CardImg, CardText, CardBody,
-  CardTitle, CardSubtitle, Button
-} from 'reactstrap';
-import {useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
-const CardLayout = (props) => {
+interface Props {
+    quantity: number,
+    title: string,
+    price: number
+}
 
-    const [quantity, setQuantity] = useState(0);
+const ProductCard: React.FC<Props> = ({quantity, title, price}) => {
+
+    const [_quantity, setQuantity] = useState(0);
 
     useEffect(()=>{
-        setQuantity(props.quantity);
+        setQuantity(quantity);
     }, [])
 
     //title
@@ -24,9 +26,9 @@ const CardLayout = (props) => {
                 </div>
                 <div className="col-md-9 price-title">
                     <div className="card-body" style={{}}>
-                        <h5 className="card-title">{props.title.toUpperCase()}</h5>
-                        <h3><strong>{props.price} €</strong></h3>
-                        <p>Quantità: {quantity}</p>
+                        <h5 className="card-title">{title.toUpperCase()}</h5>
+                        <h3><strong>{price} €</strong></h3>
+                        <p>Quantità: {_quantity}</p>
                     </div>
                 </div>
             </div>
@@ -34,4 +36,4 @@ const CardLayout = (props) => {
     );
 };
 
-export default CardLayout;
+export default ProductCard;

@@ -1,7 +1,8 @@
-import Layout from 'components/Layout';
+import { Layout } from 'components/ui';
 import { useRouter } from 'next/router';
+import React from 'react';
 
-const Index = () => {
+const PLP: React.FC = () => {
     const router = useRouter()
 
     return (
@@ -48,4 +49,4 @@ const Index = () => {
     );
 };
 
-export default Index;
+export default PLP;

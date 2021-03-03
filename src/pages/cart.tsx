@@ -1,10 +1,14 @@
-import Layout from "../components/Layout/Layout";
-import CartLayout from '../components/Card';
-import { useEffect, useState } from "react";
+import { Layout } from "components/ui";
+import { ProductCard } from 'components/cart';
+import React, { useEffect, useState } from "react";
 import { useRouter } from 'next/router';
 import { Button } from 'reactstrap';
 
-const Cart = ({cartItems}) => {
+interface Props {
+    cartItems: string, //ASSOLUTAMENTE DA CONTROLLARE
+}
+
+const Cart: React.FC<Props> = ({cartItems}) => {
 
     //Inserire Fetch
 
@@ -41,11 +45,11 @@ const Cart = ({cartItems}) => {
                     <h1>Cart</h1>
                 </div>
                 <div className="cart-item-layout">
-                <CartLayout 
+                <ProductCard 
                 title={cartItems.carrello.products[0].name}
                 quantity={cartItems.carrello.products[0].quantity}
                 price={cartItems.carrello.products[0].price}/> 
-                <CartLayout 
+                <ProductCard 
                 quantity={cartItems.carrello.products[1].quantity}
                 title={cartItems.carrello.products[1].name}
                 price={cartItems.carrello.products[1].price}/>  
