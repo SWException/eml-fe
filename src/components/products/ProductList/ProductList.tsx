@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { Products } from 'types';
 import React from 'react';
+import Image from 'next/image';
 import styles from './ProductList.module.css';
 
 interface Props {
@@ -16,7 +17,7 @@ const ProductList: React.FC<Props> = ({products}) => {
             <a>
               <div>
                 <div className={styles.productImgWrapper}>
-                  <img
+                  <Image
                     src={product.imageURL}
                     alt="Picture of the author"
                     width={500}

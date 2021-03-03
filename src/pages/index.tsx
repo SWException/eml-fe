@@ -1,8 +1,9 @@
-import { Layout } from 'components/ui';
+import { Layout, Container } from 'components/ui';
 import { ProductList } from 'components/products';
 import { useRouter } from 'next/router';
 import React from 'react';
 import { Product } from 'types';
+import styles from 'styles/Home.module.css'
 
 const Index: React.FC = () => {
     const router = useRouter()
@@ -22,7 +23,9 @@ const Index: React.FC = () => {
             <div className="title-main">
               <h1>Emporio Lambda</h1>
             </div>
-            <ProductList products={products}/>
+            <Container className={styles.container}>
+              <ProductList products={products}/>
+            </Container>
         </Layout>
     );
 };
