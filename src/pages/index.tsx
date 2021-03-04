@@ -13,7 +13,7 @@ const Index: React.FC = () => {
       var prodotto: Product = {
         _id : "ID" + i,
         name: "TEST",
-        imageURL: "/public/image.jpg",
+        imageURL: "/image.jpg",
         category: "CAT",
         description: "DESCR",
         price: 1234,

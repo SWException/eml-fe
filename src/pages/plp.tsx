@@ -13,7 +13,7 @@ const PLP: React.FC = () => {
       var prodotto: Product = {
         _id : "ID" + i,
         name: "TEST",
-        imageURL: "https://dress-shop.vercel.app/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fdjlbfjouc%2Fimage%2Fupload%2Fv1582456742%2Flongsleeves-hershel_mampai.jpg&w=640&q=75",
+        imageURL: "/static/shoes1.jpg",
         category: "CAT",
         description: "DESCR",
         price: 50 + i,

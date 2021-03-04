@@ -6,6 +6,5 @@ module.exports = {
     },
     images: {
         domains: ['dress-shop.vercel.app', 'localhost'],
-        path: '${basePath}/_next/image',
     },
 }
