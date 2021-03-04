@@ -1,4 +1,3 @@
-import { Layout } from "components/ui";
 import { ProductCard } from 'components/cart';
 import React, { useEffect, useState } from "react";
 import { useRouter } from 'next/router';
@@ -39,7 +38,7 @@ const Cart = ({cartItems}) => { //IN VERITA' E' :React.FC<Props>
     }
 
     return (
-        <Layout>
+        <>
             <div className="items">
                 <div className="title-main">
                     <h1>Cart</h1>
@@ -60,7 +59,7 @@ const Cart = ({cartItems}) => { //IN VERITA' E' :React.FC<Props>
                 <Button color="primary" onClick={()=>{onSubmit()}}>Vai al checkout</Button>
             </div>
 
-        </Layout>
+        </>
     );
 };
 

@@ -1,4 +1,3 @@
-import { Layout } from 'components/ui';
 import Amplify, { Auth } from 'aws-amplify';
 import awsconfig from 'aws-exports';
 import React, { useState } from 'react';
@@ -112,7 +111,7 @@ const SignUp: React.FC = () => {
 
     return (
         <React.Fragment>
-        <Layout>
+        <>
         {isCode ? (
             <div className="div-card">
                 <div className="signup-card">
@@ -168,7 +167,7 @@ const SignUp: React.FC = () => {
             </div>
         </div>
         )}
-        </Layout>
+        </>
         </React.Fragment>
     );
 }

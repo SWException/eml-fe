@@ -1,4 +1,3 @@
-import { Layout } from 'components/ui';
 import { useRouter } from 'next/router';
 import React from 'react';
 
@@ -6,7 +5,7 @@ const PLP: React.FC = () => {
     const router = useRouter()
 
     return (
-        <Layout>
+        <>
             <div className="title-main">
               <h1>PLP</h1>
             </div>
@@ -45,7 +44,7 @@ const PLP: React.FC = () => {
                     </div>
                 </div>
             </div>
-        </Layout>
+        </>
     );
 };
 

@@ -1,4 +1,3 @@
-import { Layout } from 'components/ui';
 import Amplify, { Auth } from 'aws-amplify';
 import awsconfig from 'aws-exports';
 import React, { useState } from 'react';
@@ -48,7 +47,7 @@ const Profile: React.FC = ()=>{
     .catch(err => { setEmail(err); console.log("Errore1: " + err); });
 
     return (
-        <Layout>
+        <>
         <div className="div-card">
             <div className="loginCard">
         <Form>
@@ -76,7 +75,7 @@ const Profile: React.FC = ()=>{
         </Form>
         </div>
         </div>
-        </Layout>
+        </>
     );
 
 }

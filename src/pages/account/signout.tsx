@@ -1,4 +1,3 @@
-import { Layout } from 'components/ui';
 import Amplify, { Auth } from 'aws-amplify';
 import awsconfig from 'aws-exports';
 import { Button } from 'reactstrap';
@@ -66,7 +65,7 @@ const Logout: React.FC = () => {
     }
 
     return(
-    <Layout>
+    <>
         <div className="div-card">
             <div className="loginCard" style={{textAlign: "center"}}>
                 <h1>Logout</h1>
@@ -79,7 +78,7 @@ const Logout: React.FC = () => {
                 </div>              
             </div>
         </div>
-    </Layout>
+    </>
     );
 
 };

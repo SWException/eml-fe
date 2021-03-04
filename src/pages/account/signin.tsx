@@ -1,4 +1,3 @@
-import { Layout } from 'components/ui';
 import Amplify, { Auth } from 'aws-amplify';
 import awsconfig from 'aws-exports';
 import React, { useEffect, useState } from 'react'
@@ -84,7 +83,7 @@ const Login: React.FC = () => {
     }
 
     return (
-        <Layout>{remember ? (
+        <>{remember ? (
                 <SetNewPassword />
             ) : (<div className="div-card">
             <div className="loginCard">
@@ -117,7 +116,7 @@ const Login: React.FC = () => {
     </div>)}
             
             
-        </Layout>
+        </>
     );
 };
 

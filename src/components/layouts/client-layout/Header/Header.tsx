@@ -1,29 +1,17 @@
 import React, { useState, useEffect, Fragment } from 'react';
-import Link from 'next/link';
 import { Collapse, Navbar, NavbarToggler, Nav, NavItem, NavLink } from 'reactstrap';
-import { Categories } from 'components/ui';
+import Link from 'next/link';
+
 import styles from './Header.module.css';
 
-interface Props {
-  isVisible: string;
-}
 
-const Header: React.FC<Props> = ({isVisible}) => {
+const Header: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isAuth, setIsAuth] = useState(false);
-  const [isCategoryListAvailable, setIsCategoryListAvailable] = useState(false);
 
   useEffect(()=>{
     if(window.localStorage.getItem('jwt')){
       setIsAuth(true);
-    }
-  })
-
-  useEffect(()=>{
-    if(isVisible == "true"){
-      setIsCategoryListAvailable(true);
-    }else{
-      setIsCategoryListAvailable(false);
     }
   })
 
@@ -70,10 +58,7 @@ const Header: React.FC<Props> = ({isVisible}) => {
             </Fragment>
           </Nav>
         </Collapse>
-      </Navbar>
-      { isCategoryListAvailable &&  (
-      <Categories/>
-      )}    
+      </Navbar>    
     </Fragment>
   );
 }
