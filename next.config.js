@@ -5,6 +5,7 @@ module.exports = {
         AWS_USER_POOLS_WEB_CLIENT_ID: process.env.AWS_USER_POOLS_WEB_CLIENT_ID,
     },
     images: {
-        domains: ['dress-shop.vercel.app'],
+        domains: ['dress-shop.vercel.app', 'localhost'],
+        path: '${basePath}/_next/image',
     },
 }
