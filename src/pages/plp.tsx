@@ -1,49 +1,52 @@
 import { useRouter } from 'next/router';
+import { Container } from 'components/ui';
+import { ProductList } from 'components/products';
 import React from 'react';
+import styles from 'styles/PLP.module.css';
+import { Product } from 'types';
 
 const PLP: React.FC = () => {
     const router = useRouter()
 
+    let products = [];
+    for(var i = 0; i < 20; i++){
+      var prodotto: Product = {
+        _id : "ID" + i,
+        name: "TEST",
+        imageURL: "https://dress-shop.vercel.app/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fdjlbfjouc%2Fimage%2Fupload%2Fv1582456742%2Flongsleeves-hershel_mampai.jpg&w=640&q=75",
+        category: "CAT",
+        description: "DESCR",
+        price: 50 + i,
+      };  
+      products[i] = prodotto;
+    }
+
     return (
         <>
-            <div className="title-main">
-              <h1>PLP</h1>
-            </div>
-            <div className="card-display">
-                <div className="card card-style">
-                    <img src="https://www.artimondo.it/media/cvp/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/p/h/phpSlOF8Z.jpg" className="card-img-top" alt="..."></img>
-                    <div className="card-body">
-                        <h5 className="card-title">Card title</h5>
-                        <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                        <div className="button-display">
-                            <a onClick={()=> router.push('/detail')} className="pointer btn btn-primary">See Details</a>
-                            <a onClick={()=> router.push('/cart')} className=" pointer btn btn-primary">Add to Cart</a>
-                        </div>
-                    </div>
+            {/*<Meta title="Search" />*/}
+            <Container>
+                {/*<div className={styles.searchBarContainer}>
+                <SearchBar onSubmit={handleSearchSubmit} style={{ width: '100%' }} isFocus />
                 </div>
-                <div className="card card-style">
-                    <img src="https://www.artimondo.it/media/cvp/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/p/h/phpSlOF8Z.jpg" className="card-img-top" alt="..."></img>
-                    <div className="card-body">
-                        <h5 className="card-title">Card title</h5>
-                        <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                        <div className="button-display">
-                            <a onClick={()=> router.push('/detail')} className="pointer btn btn-primary">See Details</a>
-                            <a onClick={()=> router.push('/cart')} className="pointer btn btn-primary">Add to Cart</a>
-                        </div>
-                    </div>
+                <div className={styles.sortContainer}>
+                <SearchCategory active={category} onChangeTab={handleTabChange} />
+                <SearchFilter handleChange={handleFilterChange} active={sort} />
                 </div>
-                <div className="card card-style">
-                    <img src="https://www.artimondo.it/media/cvp/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/p/h/phpSlOF8Z.jpg" className="card-img-top" alt="..."></img>
-                    <div className="card-body">
-                        <h5 className="card-title">Card title</h5>
-                        <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                        <div className="button-display">
-                            <a onClick={()=> router.push('/detail')} className="pointer btn btn-primary">See Details</a>
-                            <a onClick={()=> router.push('/cart')} className="pointer btn btn-primary">Add to Cart</a>
-                        </div>
+                {isLoading ? (
+                <ProductListSkeleton number={20} />
+                ) : (*/
+                <>
+                    {products.length > 0 ? (
+                    <ProductList products={products} />
+                    ) : (
+                    <div className={styles.message}>
+                        No products found. Try searching for other keyword.
                     </div>
-                </div>
-            </div>
+                    )}
+                </>
+                /*)*/}
+                {/*<MobileBottomMenu />*/}
+            </Container>
         </>
     );
 };

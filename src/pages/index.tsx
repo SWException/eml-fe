@@ -9,7 +9,7 @@ const Index: React.FC = () => {
     const router = useRouter()
 
     let products = [];
-    for(var i = 0; i < 15; i++){
+    for(var i = 0; i < 8; i++){
       var prodotto: Product = {
         _id : "ID" + i,
         name: "TEST",
@@ -24,7 +24,7 @@ const Index: React.FC = () => {
     return (
       <>
         <div className="title-main">
-          <h1>Emporio Lambda</h1>
+          <h1>PRODOTTI IN RISALTO PER HOMEPAGE</h1>
         </div>
         <Container className={styles.container}>
           <ProductList products={products}/>
