@@ -1,8 +1,8 @@
 import React, { useState, useEffect, Fragment } from 'react';
 import { Collapse, Navbar, NavbarToggler, Nav, NavItem, NavLink } from 'reactstrap';
 import Link from 'next/link';
-
 import styles from './Header.module.css';
+import { SearchBar } from 'components/ui';
 
 
 const Header: React.FC = () => {
@@ -23,11 +23,18 @@ const Header: React.FC = () => {
     <Fragment>
       <Navbar className={styles.navbar} expand="md">
         <Link href="/">
-          <NavLink className="font-weight-bold">EMPORIO LAMBDA</NavLink>
+          <NavLink className="font-weight-bold">COMPANY NAME</NavLink>
         </Link>
+        
+        {/*<div className={styles.searchBarContainer}>
+          
+  </div>*/}
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
           <Nav className="ml-auto" navbar>
+            <NavItem>
+              <SearchBar/>
+            </NavItem>
             <Fragment>
               {isAuth ? (
                 <Fragment>
@@ -43,10 +50,10 @@ const Header: React.FC = () => {
               ) : (
                 <Fragment>
                 <NavItem className="pointer">
-                <Link href="/account/signin"><NavLink>Login</NavLink></Link>
+                  <Link href="/account/signin"><NavLink>Login</NavLink></Link>
                 </NavItem>
                 <NavItem className="pointer">
-                <Link href="/account/signup"><NavLink>SignUp</NavLink></Link>
+                  <Link href="/account/signup"><NavLink>SignUp</NavLink></Link>
                 </NavItem>
                 </Fragment>
               )}

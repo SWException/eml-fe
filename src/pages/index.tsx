@@ -24,11 +24,14 @@ const Index: React.FC = () => {
     return (
       <>
         <div className="title-main">
-          <h1>PRODOTTI IN RISALTO PER HOMEPAGE</h1>
+          <h1>BEST PRODUCTS</h1>
         </div>
         <Container className={styles.container}>
           <ProductList products={products}/>
         </Container>
+        <div>
+          <h1>COMPANY INFORMATIONS</h1>
+        </div>
       </>
     );
 };

@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import { Container } from 'components/ui';
+import { Container, Filters, Sort } from 'components/ui';
 import { ProductList } from 'components/products';
 import React from 'react';
 import styles from 'styles/PLP.module.css';
@@ -22,32 +22,17 @@ const PLP: React.FC = () => {
     }
 
     return (
-        <>
-            {/*<Meta title="Search" />*/}
-            <Container>
-                {/*<div className={styles.searchBarContainer}>
-                <SearchBar onSubmit={handleSearchSubmit} style={{ width: '100%' }} isFocus />
-                </div>
-                <div className={styles.sortContainer}>
-                <SearchCategory active={category} onChangeTab={handleTabChange} />
-                <SearchFilter handleChange={handleFilterChange} active={sort} />
-                </div>
-                {isLoading ? (
-                <ProductListSkeleton number={20} />
-                ) : (*/
-                <>
-                    {products.length > 0 ? (
-                    <ProductList products={products} />
-                    ) : (
-                    <div className={styles.message}>
-                        No products found. Try searching for other keyword.
-                    </div>
-                    )}
-                </>
-                /*)*/}
-                {/*<MobileBottomMenu />*/}
-            </Container>
-        </>
+        <Container>
+            <Filters/>
+            <Sort/>
+            {products.length > 0 ? (
+            <ProductList products={products} />
+            ) : (
+            <div className={styles.message}>
+                No products found. Try searching for other keyword.
+            </div>
+            )}
+        </Container>
     );
 };
 

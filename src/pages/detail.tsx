@@ -2,6 +2,7 @@ import React, { useRouter } from 'next/router';
 import { Container } from 'components/ui';
 import styles from 'styles/Detail.module.css';
 import { Product } from 'types';
+import { ProductPhoto } from 'components/products';
 
 interface Props {
     product: Product;
@@ -23,7 +24,8 @@ const Detail: React.FC<Props> = ({product}) => {
             <div className={styles.productContainer}>
                 <div className={styles.main}>
                     <div className={styles.coverImg}>
-                        <img className={styles.img} src={product.imageURL} alt={product.name}/>
+                        <ProductPhoto/>
+                        {/*<img className={styles.img} src={product.imageURL} alt={product.name}/>*/}
                     </div>
                 </div>
                 <div className={styles.productInfo}>

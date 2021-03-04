@@ -25,8 +25,9 @@ const ProductList: React.FC<Props> = ({products}) => {
                   />
                 </div>
                 <div className={styles.productInfo}>
+                  <div className={styles.productId}>{product._id}</div>
                   <div className={styles.productName}>{product.name}</div>
-                  <div className={styles.productPrice}>P{product.price}</div>
+                  <div className={styles.productPrice}>Price: €{product.price}</div>
                 </div>
               </div>
             </a>

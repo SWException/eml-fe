@@ -3,7 +3,6 @@ import React, {Fragment} from 'react';
 import styles from './Layout.module.css';
 
 const Layout: React.FC = ({children}) => {
-    //decidere quando stampare o no le categories
     return (
         <Fragment>
             <ClientHeader />
