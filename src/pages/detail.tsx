@@ -24,8 +24,7 @@ const Detail: React.FC<Props> = ({product}) => {
             <div className={styles.productContainer}>
                 <div className={styles.main}>
                     <div className={styles.coverImg}>
-                        <ProductPhoto/>
-                        {/*<img className={styles.img} src={product.imageURL} alt={product.name}/>*/}
+                        <img className={styles.img} src={product.imageURL} alt={product.name}/>
                     </div>
                 </div>
                 <div className={styles.productInfo}>

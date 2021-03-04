@@ -1,14 +1,10 @@
 import React from 'react';
 import Slider from 'react-slick';
-//import { Banner } from 'types';
 import styles from './ProductPhoto.module.css';
 
-/*interface Props {
-  banners: Banner[];
-}*/
 
-const Banners: React.FC = () => {
-  const settings = {
+const ProductPhoto: React.FC = () => {
+  let settings = {
     dots: true,
     infinite: true,
     slidesToShow: 1,
@@ -19,19 +15,25 @@ const Banners: React.FC = () => {
     dotsClass: 'slick-dots dots',
   };
 
+  let images = ['/image.jpg', '/image2.jpg'];
+  images.map((image) => {
+    console.log(image);
+  });
+
   return (
     <>
-      
+      <Slider {...settings}>
+        {images.map((image) => (
           <div className={styles.banner} key={1}>
             <div
               className={styles.img}
-              style={{ backgroundImage: 'url("/image.jpg")' }}
+              style={{ backgroundImage: `url(${image})` }}
             ></div>
           </div>
-        ))
-      
+        ))}
+      </Slider>
     </>
   );
 };
 
-export default Banners;
+export default ProductPhoto;

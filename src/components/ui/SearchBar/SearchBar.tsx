@@ -13,7 +13,7 @@ const SearchBar: React.FC = () => {
           className={styles.searchInput}
           placeholder="Search Product..."
         />
-        <button className={styles.searchButton} type="submit" formaction="/plp">
+        <button className={styles.searchButton} type="submit" formAction="/plp">
           SEARCH
         </button>
       </form>
