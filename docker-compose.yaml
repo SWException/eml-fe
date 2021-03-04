@@ -1,8 +1,8 @@
 version: "3.8"
 services:
   EML-FE-DEV:
-    container_name: "eml-fe"
-    image: "eml-fe:latest"
+    container_name: "eml-fe-dev"
+    image: "eml-fe-dev:latest"
     build:
       context: ./
       dockerfile: Dockerfile
@@ -20,7 +20,7 @@ services:
       dockerfile: Dockerfile.prod
     command: "npm start"
     ports:
-      - "3000:3000"
+      - "5000:3000"
 
 #docker-compose -p EML-FE-DEV up -d --build EML-FE-DEV
 #docker-compose -p EML-FE-DEV down -v
