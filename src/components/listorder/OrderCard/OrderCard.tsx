@@ -14,7 +14,7 @@ const OrderCard: React.FC<Props> = ({id, date, total, totart, state}) => {
             <div className="">
                 <div className="">
                     <div className="" style={{}}>
-                        <p>{id} {date} {total} {totart} {state} <button type="button">Visualizza dettagli</button></p>
+                        <p>{id} {date} {total} {totart} {state} <button type="button">Order Summary</button></p>
                     </div>
                 </div>
             </div>

@@ -1,0 +1,1 @@
+export { default as DetCard } from './DetCard';
