@@ -13,7 +13,7 @@ const PLP: React.FC = () => {
       var prodotto: Product = {
         _id : "ID" + i,
         name: "TEST",
-        imageURL: "/static/shoes1.jpg",
+        imageURL: "/image2.jpg",
         category: "CAT",
         description: "DESCR",
         price: 50 + i,

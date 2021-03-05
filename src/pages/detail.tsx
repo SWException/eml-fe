@@ -1,8 +1,8 @@
 import React, { useRouter } from 'next/router';
-import { Container } from 'components/ui';
+import { Button, Container } from 'components/ui';
 import styles from 'styles/Detail.module.css';
 import { Product } from 'types';
-import { ProductPhoto } from 'components/products';
+import { ProductQuantity } from 'components/products';
 
 interface Props {
     product: Product;
@@ -11,12 +11,13 @@ interface Props {
 const Detail: React.FC<Props> = ({product}) => {
     product = {
         _id : "ProductId",
-        name: "Prodotto bello",
+        name: "Awesome product",
         imageURL: "https://dress-shop.vercel.app/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fdjlbfjouc%2Fimage%2Fupload%2Fv1581158056%2Fdqtdtglewxjvig4x7rlk.jpg&w=640&q=75",
         category: "Categories",
         description: "This is a default description",
         price: 1234,
       };  
+    let qty = 1;
 
     const router = useRouter();
     return (
@@ -28,23 +29,20 @@ const Detail: React.FC<Props> = ({product}) => {
                     </div>
                 </div>
                 <div className={styles.productInfo}>
+                    <div className={styles.productId}>{product._id}</div>
                     <div className={styles.productName}>{product.name}</div>
-                    <div className={styles.productPrice}>P{product.price}</div>
+                    <div className={styles.productPrice}>Price: €{product.price}</div>
                     <div className={styles.productDesc}>{product.description}</div>
                     <div className={styles.productAction}>
-                    {/*<ProductInputQuantity
+                    <ProductQuantity
                         value={qty}
-                        onButtonClick={handleButtonChangeQty}
-                        onChangeBlur={handleChangeBlur}
-                        onChangeInput={handleChangeInputQty}
                     />
                     <Button
                         type="button"
-                        onClick={handleAddToCart}
                         variant="primary"
                         title="Add to Cart"
                         className={styles.btnAddCart}
-                    />*/}
+                    />
                     </div>
                 </div>
             </div>

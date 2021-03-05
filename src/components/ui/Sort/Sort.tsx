@@ -5,10 +5,7 @@ const Sort: React.FC = () => {
   return (
     <>
       <form className={styles.searchForm}>
-        <select
-          type="number"
-          placeholder="Minimum cost"
-        >
+        <select>
         <option>
           Price: Low to High
         </option>

@@ -14,7 +14,7 @@ const Filters: React.FC = () => {
           type="number"
           placeholder="Maximum cost"
         />
-        <button className={styles.searchButton} type="submit" formaction="/plp">
+        <button className={styles.searchButton} type="submit" formAction="/plp">
           FILTER
         </button>
       </form>
