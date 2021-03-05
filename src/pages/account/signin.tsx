@@ -2,7 +2,8 @@ import Amplify, { Auth } from 'aws-amplify';
 import awsconfig from 'aws-exports';
 import React, { useEffect, useState } from 'react'
 import { Spinner, Button, Form, FormGroup, Label, Input } from 'reactstrap';
-import { SetNewPassword } from 'components/auth';
+import { SetNewPassword} from 'components/auth';
+
 Amplify.configure(awsconfig);
 
 var email = null, password = null, codice = null;
@@ -106,6 +107,19 @@ const Login: React.FC = () => {
                         <Button className="button-normal" color="primary" onClick={signIn}>Login</Button>
                     </div>
                     )}
+                </div>
+                <div>
+                    <h1>Are you not registered? Do it now!</h1>
+                </div>
+                <div className="button-signup">
+                {loading ? (
+                        <Spinner color="primary" style={{marginTop: "20px"}}/>
+                    ) : (
+                        <div className="buttons-cont">
+                        <Button className="button-normal" color="primary">SignUp</Button>
+                    </div>
+                    )
+                    }
                 </div>
                 </Form>
                 <div className="info-reg-err">
