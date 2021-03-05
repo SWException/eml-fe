@@ -5,9 +5,11 @@ import {
   useElements
 } from "@stripe/react-stripe-js";
 import { Button, Spinner } from 'reactstrap'
+import style from './CheckoutForm.module.css'
+import AddressForm from "../AddressForm";
 
 
-export default function CheckoutForm() {
+const CheckoutForm: React.Props = () => {
 
   const [succeeded, setSucceeded] = useState(false);
   const [error, setError] = useState(null);
@@ -84,6 +86,27 @@ export default function CheckoutForm() {
 
   return (
     <form id="payment-form" onSubmit={handleSubmit} className="stripe-form">
+      <p>BILLING ADDRESS</p>
+      <AddressForm/>
+      <p>If authenticated</p>
+      <select>
+        <option>Address 1</option>
+        <option>Address 2</option>
+        <option>Address 3</option>
+      </select>
+      <br/>
+      <p>SHIPPING ADDRESS</p>
+      <AddressForm/>
+      <p>OR</p>
+      <button type="button">Autofill with Billing Data</button>
+      <p>If authenticated</p>
+      <select>
+        <option>Address 1</option>
+        <option>Address 2</option>
+        <option>Address 3</option>
+      </select>
+      <p>Shipping cost: 10€</p>
+      <p>Total cost: total€</p>
       <CardElement id="card-element" options={cardStyle} onChange={handleChange} />
       <div style={{display: "flex", alignItems: "center", justifyContent:"center", margin: "10px"}}>
         <Button disabled={processing || disabled || succeeded} id="submit">
@@ -122,6 +145,9 @@ export default function CheckoutForm() {
           Stripe dashboard.
         </a> Refresh the page to pay again.
       </p>
+      <button type="button">Cancel the Checkout</button>
     </form>
   );
 }
+
+export default CheckoutForm;

@@ -6,12 +6,12 @@ const Sort: React.FC = () => {
     <>
       <form className={styles.searchForm}>
         <select>
-        <option>
-          Price: Low to High
-        </option>
-        <option>
-          Price: High to Low
-        </option>
+          <option>
+            Price: Low to High
+          </option>
+          <option>
+            Price: High to Low
+          </option>
         </select>
       </form>
     </>

@@ -1,12 +1,15 @@
+import { ProductQuantity } from 'components/products';
 import React, {useEffect, useState} from 'react';
 
 interface Props {
-    quantity: number,
-    title: string,
-    price: number
+    id: number,
+    name: string,
+    photo: string,
+    price: number,
+    quantity: number,    
 }
 
-const ProductCard: React.FC<Props> = ({quantity, title, price}) => {
+const ProductCard: React.FC<Props> = ({id, name, photo, price, quantity}) => {
 
     const [_quantity, setQuantity] = useState(0);
 
@@ -14,22 +17,23 @@ const ProductCard: React.FC<Props> = ({quantity, title, price}) => {
         setQuantity(quantity);
     }, [])
 
-    //title
-    //IMG
-    //Descrizione
-
     return (
-        <div className="card mb-3 card-cart">
-            <div className="row g-0 cont">
-                <div className="col-md-2 img-container-cart">
-                    <img className="img-cart-info" src="https://www.artimondo.it/media/cvp/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/p/h/phpSlOF8Z.jpg" alt="..."></img>
+        <div className="">
+            <div className="">
+                <div className="">
+                    <img className="" src={photo} height="500" width="500" alt="..."></img>
                 </div>
-                <div className="col-md-9 price-title">
-                    <div className="card-body" style={{}}>
-                        <h5 className="card-title">{title.toUpperCase()}</h5>
-                        <h3><strong>{price} €</strong></h3>
+                <div className="">
+                    <div className="" style={{}}>
+                        <p>This is the id: {id}</p>
+                        <p className="">{name.toUpperCase()}</p>
+                        <p><strong>{price} €</strong></p>
                         <p>Quantità: {_quantity}</p>
                     </div>
+                </div>
+                <div>
+                    <ProductQuantity/>
+                    <button type="button">Remove all</button>
                 </div>
             </div>
         </div>

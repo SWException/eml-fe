@@ -11,10 +11,10 @@ const Index: React.FC = () => {
     let products = [];
     for(var i = 0; i < 8; i++){
       var prodotto: Product = {
-        _id : "ID" + i,
-        name: "TEST",
+        _id : "ID " + i,
+        name: "Product Name",
         imageURL: "/image.jpg",
-        category: "CAT",
+        category: "Category",
         description: "DESCR",
         price: 1234,
       };  
