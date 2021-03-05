@@ -87,7 +87,11 @@ const Profile: React.FC = ()=>{
                     </FormGroup>
                     <FormGroup>
                         <Label for="newPassword">New Password</Label>
-                        <Input type="password" onChange={(e)=>{changeNew(e);}} name="password" id="newPassword" placeholder="New Password" />
+                        <Input type="password" onChange={(e)=>{changeNew(e);}} name="newPassword" id="newPassword" placeholder="New Password" />
+                    </FormGroup>
+                    <FormGroup>
+                        <Label for="confirmNewPassword">Confirm New Password</Label>
+                        <Input type="password" onChange={(e)=>{changeNew(e);}} name="confirmNewPassword" id="confirmNewPassword" placeholder="Confirm New Password" />
                     </FormGroup>
                     <div>
                         <Button onClick={changePassword}>Change Password</Button>
@@ -99,11 +103,11 @@ const Profile: React.FC = ()=>{
                 <Form>
                     <FormGroup>
                         <Label for="newEmail">New Email</Label>
-                        <Input type="email" onChange={(e)=>{changeNew(e);}} name="password" id="newPassword" placeholder="New Email" />
+                        <Input type="email" onChange={(e)=>{changeNew(e);}} name="newEmail" id="newEmail" placeholder="New Email" />
                     </FormGroup>
                     <FormGroup>
                         <Label for="confirmNewEmail">Confirm New Email</Label>
-                        <Input type="email" onChange={(e)=>{changeNew(e);}} name="password" id="newPassword" placeholder="Confirm New Email" />
+                        <Input type="email" onChange={(e)=>{changeNew(e);}} name="confirmNewEmail" id="confirmNewEmail" placeholder="Confirm New Email" />
                     </FormGroup>
                     <div>
                         <Button onClick={changeEmail}>Change Email</Button>
