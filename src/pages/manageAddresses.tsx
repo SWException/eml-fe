@@ -1,15 +1,14 @@
 import Amplify, { Auth } from 'aws-amplify';
 import awsconfig from 'aws-exports';
+import AddressForm from 'components/checkout/AddressForm';
 import React, { useState } from 'react';
-import { useRouter } from 'next/router';
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 Amplify.configure(awsconfig);
 
 // Salva in automatico i cookie per ricordare se il login è stato fatto
 
-const Profile: React.FC = ()=>{
+const ManageAddresses: React.FC = ()=>{
 
-    const router = useRouter();
     //mostrare messaggi ed errori nel successo o no del cambio di password + confirmPass
 
     const [oldPass, setOldPass] = useState("");
@@ -48,30 +47,23 @@ const Profile: React.FC = ()=>{
     })
     .catch(err => { setEmail(err); console.log("Errore1: " + err); });
 
-    const onSubmit = () => {
-        router.push('/manageAddresses');
-    }
-
     return (
         <div>
-            <button type="button" onClick={()=>onSubmit()}>ADD/EDIT ADDRESSES</button>
-            <Form>
-                <strong>User: {email}</strong>
-                <FormGroup>
-                    <Label for="oldPassword">Old Password</Label>
-                    <Input type="password" onChange={(e)=>{changeOld(e);}} name="password" id="oldPassword" placeholder="Old Password" />
-                </FormGroup>
-                <FormGroup>
-                    <Label for="newPassword">New Password</Label>
-                    <Input type="password" onChange={(e)=>{changeNew(e);}} name="password" id="newPassword" placeholder="New Password" />
-                </FormGroup>
-                <div>
-                    <Button onClick={changePassword}>Change Password</Button>
-                </div>  
-            </Form>
+            <strong>User: {email}</strong>
+            <p>Here you can manage your addresses</p>
+            <p>Add a new one</p>
+            <AddressForm/> 
+            <button type="button">Add</button>
+            <p>Or delete an existing one</p>
+            <select>
+                <option>Address 1</option>
+                <option>Address 2</option>
+                <option>Address 3</option>
+            </select>
+            <button type="button">Delete this address</button>
         </div>
     );
 }
 
-export default Profile;
+export default ManageAddresses;
 
