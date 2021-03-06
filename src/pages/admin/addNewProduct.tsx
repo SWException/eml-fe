@@ -50,10 +50,18 @@ const AddNewProduct: React.FC = ({product}) => {
                 <br/>
                 <label for="" >Visibility</label>
                 <input type="radio" id="visible" name="visibilty" value="visible"/>
-                <label for="male">Visible</label>
-                <input type="radio" id="notVisible" name="visibilty" value="notVisible"/>
-                <label for="female">Not Visible</label>
+                <label for="visible">Visible</label>
+                <input type="radio" id="notVisible" name="visibilty" value="notVisible" checked/>
+                <label for="notVisible">Not visible</label>
                 <br/>
+                <label for="" >Warehouse stock</label>
+                <input type="number" placeholder="Insert product net price"/>
+                <br/>
+                <label for="" >Visible in Best Product</label>
+                <input type="radio" id="BPv" name="BP" value="v"/>
+                <label for="v">Visible</label>
+                <input type="radio" id="BPnv" name="BP" value="nv" checked/>
+                <label for="nv">Not visible</label>
             </form>
         </>
     );
