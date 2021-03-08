@@ -3,13 +3,14 @@ import { Product } from 'types'
 import React, { useEffect, useState } from "react";
 import { useRouter } from 'next/router';
 import { Button } from 'reactstrap';
+import { ClientLayout } from 'components/layouts/client-layout';
 
 
 /*interface Props {
     cartItems: string, //ASSOLUTAMENTE DA CONTROLLARE
 }*/
 
-const Orderdetails = ({orderdetails}) => { //IN VERITA' E' :React.FC<Props>
+const OrderDetails = ({orderdetails}) => { //IN VERITA' E' :React.FC<Props>
     console.log(orderdetails);
     //Inserire Fetch
  
@@ -42,7 +43,7 @@ const Orderdetails = ({orderdetails}) => { //IN VERITA' E' :React.FC<Props>
 
 
     return (
-        <>
+        <ClientLayout header>
             <div className="items">
                 <div className="title-main">
                     <h1>Order Summary</h1>
@@ -71,9 +72,8 @@ const Orderdetails = ({orderdetails}) => { //IN VERITA' E' :React.FC<Props>
                   <Button color="primary">Richiedi Reso</Button>{'   '}
                   <Button color="primary">Annulla ordine</Button>
                 </div>
-            </div>
-
-        </>
+            </div> 
+        </ClientLayout>
     );
 };
-export default Orderdetails;
+export default OrderDetails;

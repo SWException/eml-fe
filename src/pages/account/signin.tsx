@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react'
 import { Spinner, Button, Form, FormGroup, Label, Input } from 'reactstrap';
 import { SetNewPassword} from 'components/auth';
 import { useRouter } from 'next/router';
+import { ClientLayout } from 'components/layouts/client-layout';
 
 Amplify.configure(awsconfig);
 
@@ -67,7 +68,7 @@ const Login: React.FC = () => {
                 window.localStorage.setItem('mex', `Benvenuto ${email}, trova il prodotto adatto a te!`);
                 window.location.reload();
                 setError('');
-                displayInfo();
+                redirectToHomePage();
             })
             .catch(error => {
                 console.log('error signing in', error);
@@ -90,54 +91,61 @@ const Login: React.FC = () => {
         router.push('/account/signup');
     }
 
+    const redirectToHomePage = () =>{
+        router.push('/');
+    }
+
     return (
-        <>{remember ? (
-                <SetNewPassword />
-            ) : (<div className="div-card">
-            <div className="loginCard">
-                <h1>Login</h1>
-                <Form>
-                <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
-                    <Label for="exampleEmail" className="mr-sm-2">Email</Label>
-                    <Input type="email" name="email" onChange={(e)=>{setEmail(e.target.value)}} id="exampleEmail" placeholder="something@idk.cool" />
-                </FormGroup>
-                <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
-                    <Label for="examplePassword" className="mr-sm-2">Password</Label>
-                    <Input type="password" name="password" onChange={(e)=>{setPassword(e.target.value)}} id="examplePassword" placeholder="sUpErStrong1!" />
-                </FormGroup>
-                <div className="div-button-login">
-                    {loading ? (
-                        <Spinner color="primary" style={{marginTop: "20px"}}/>
-                    ) : (
-                    <div className="buttons-cont">
-                        <Button className="button-normal" onClick={()=>{setRemember(true)}} color="primary">Recupero</Button>
-                        <Button className="button-normal" color="primary" onClick={signIn}>Login</Button>
-                    </div>
-                    )}
-                </div>
-                <div>
-                    <h1>Are you not registered? Do it now!</h1>
-                </div>
-                <div className="button-signup">
-                {loading ? (
-                        <Spinner color="primary" style={{marginTop: "20px"}}/>
-                    ) : (
+        <ClientLayout header>
+            {remember ? (
+            <SetNewPassword />
+            ) : (
+            <div className="">
+                <div className="">
+                    <h1>Login</h1>
+                    <Form>
+                    <FormGroup className="">
+                        <Label for="exampleEmail" className="">Email</Label>
+                        <Input type="email" name="email" onChange={(e)=>{setEmail(e.target.value)}} id="exampleEmail" placeholder="something@idk.cool" />
+                    </FormGroup>
+                    <FormGroup className="">
+                        <Label for="examplePassword" className="">Password</Label>
+                        <Input type="password" name="password" onChange={(e)=>{setPassword(e.target.value)}} id="examplePassword" placeholder="sUpErStrong1!" />
+                    </FormGroup>
+                    <div className="">
+                        {loading ? (
+                            <Spinner color="primary" style={{marginTop: "20px"}}/>
+                        ) : (
                         <div className="buttons-cont">
-                        <Button className="button-normal" onClick={signUp} color="primary">SignUp</Button>
+                            <Button className="" onClick={()=>{setRemember(true)}} color="primary">Recupero</Button>
+                            <Button className="" color="primary" onClick={signIn}>Login</Button>
+                        </div>
+                        )}
                     </div>
-                    )
-                    }
-                </div>
-                </Form>
-                <div className="info-reg-err">
-                    {displayErr()}
-                    {displayInfo()}
+                    <div>
+                        <h1>Are you not registered? Do it now!</h1>
+                    </div>
+                    <div className="">
+                    {loading ? (
+                            <Spinner color="primary" style={{marginTop: "20px"}}/>
+                        ) : (
+                            <div className="">
+                            <Button className="" onClick={signUp} color="primary">SignUp</Button>
+                        </div>
+                        )
+                        }
+                    </div>
+                    </Form>
+                    <div className="">
+                        {displayErr()}
+                        {displayInfo()}
+                    </div>
                 </div>
             </div>
-    </div>)}
-            
-            
-        </>
+            )}
+        
+        </ClientLayout>
+
     );
 };
 

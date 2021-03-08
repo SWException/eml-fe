@@ -1,14 +1,14 @@
 import { ClientHeader,  ClientCategories } from 'components/layouts/client-layout';
-import React, {Fragment} from 'react';
+import React from 'react';
 import styles from './Layout.module.css';
 
-const Layout: React.FC = ({children}) => {
+const Layout: React.FC = ({header, categories, children}) => {
     return (
-        <Fragment>
-            <ClientHeader />
-            <ClientCategories/>
+        <>
+            {header && <ClientHeader />}
+            {categories && <ClientCategories/>}
             <main className={styles.main}>{children}</main>
-        </Fragment>
+        </>
     );
 }
 

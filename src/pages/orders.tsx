@@ -1,13 +1,14 @@
 import { OrderCard } from 'components/listorder';
 import React, { useEffect, useState } from "react";
 import { useRouter } from 'next/router';
+import { ClientLayout } from 'components/layouts/client-layout';
 
 
 /*interface Props {
     cartItems: string, //ASSOLUTAMENTE DA CONTROLLARE
 }*/
 
-const Listorder = ({listorder}) => { //IN VERITA' E' :React.FC<Props>
+const OrdersList = ({listorder}) => { //IN VERITA' E' :React.FC<Props>
     console.log(listorder);
     //Inserire Fetch
  
@@ -26,11 +27,11 @@ const Listorder = ({listorder}) => { //IN VERITA' E' :React.FC<Props>
     }
 
     const orderSummary = () => {
-        router.push('/orderdetails');
+        router.push('/order');
     }
 
     return (
-        <>
+        <ClientLayout header>
             <div className="items">
                 <div className="title-main">
                     <h1>List of orders</h1>
@@ -51,7 +52,7 @@ const Listorder = ({listorder}) => { //IN VERITA' E' :React.FC<Props>
                 </div>
             </div>
 
-        </>
+        </ClientLayout>
     );
 };
-export default Listorder;
+export default OrdersList;

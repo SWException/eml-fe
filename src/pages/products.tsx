@@ -4,8 +4,9 @@ import { ProductList } from 'components/products';
 import React from 'react';
 import styles from 'styles/PLP.module.css';
 import { Product } from 'types';
+import { ClientLayout } from 'components/layouts/client-layout';
 
-const PLP: React.FC = () => {
+const Products: React.FC = () => {
     const router = useRouter()
 
     let products = [];
@@ -22,7 +23,7 @@ const PLP: React.FC = () => {
     }
 
     return (
-        <Container>
+        <ClientLayout header categories>
             <Filters/>
             <Sort/>
             {products.length > 0 ? (
@@ -32,8 +33,8 @@ const PLP: React.FC = () => {
                 No products found. Try searching for other keyword.
             </div>
             )}
-        </Container>
+        </ClientLayout>
     );
 };
 
-export default PLP;
+export default Products;

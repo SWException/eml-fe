@@ -2,6 +2,7 @@ import { ProductCard } from 'components/cart';
 import React, { useEffect, useState } from "react";
 import { useRouter } from 'next/router';
 import { Button } from 'reactstrap';
+import { ClientLayout } from 'components/layouts/client-layout';
 
 /*interface Props {
     cartItems: string, //ASSOLUTAMENTE DA CONTROLLARE
@@ -20,7 +21,7 @@ const Cart = ({cart}) => { //IN VERITA' E' :React.FC<Props>
     }
 
     return (
-        <>
+        <ClientLayout header>
             <div className="items">
                 <div className="title-main">
                     <h1>Cart</h1>
@@ -42,8 +43,7 @@ const Cart = ({cart}) => { //IN VERITA' E' :React.FC<Props>
                 <div style={{marginRight: "10px"}}><strong>Taxes: {cart.tax}{" €"} </strong></div>
                 <Button color="primary" onClick={()=>{onSubmit()}}>Vai al checkout</Button>
             </div>
-
-        </>
+        </ClientLayout>
     );
 };
 

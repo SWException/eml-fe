@@ -3,6 +3,7 @@ import { Button, Container } from 'components/ui';
 import styles from 'styles/Detail.module.css';
 import { Product } from 'types';
 import { ProductQuantity } from 'components/products';
+import { ClientLayout } from 'components/layouts/client-layout';
 
 interface Props {
     product: Product;
@@ -21,7 +22,7 @@ const Detail: React.FC<Props> = ({product}) => {
 
     const router = useRouter();
     return (
-        <Container>
+        <ClientLayout header categories>
             <div className={styles.productContainer}>
                 <div className={styles.main}>
                     <div className={styles.coverImg}>
@@ -47,7 +48,7 @@ const Detail: React.FC<Props> = ({product}) => {
             </div>
             {/*<Heading className={styles.heading}> Related Products </Heading>
             <ProductList products={relatedProducts} />*/}
-        </Container>
+        </ClientLayout>
     )
 }
 

@@ -23,12 +23,9 @@ const Header: React.FC = () => {
     <Fragment>
       <Navbar className={styles.navbar} expand="md">
         <Link href="/">
-          <NavLink className="font-weight-bold">COMPANY NAME</NavLink>
+          <NavLink className="">COMPANY NAME</NavLink>
         </Link>
         
-        {/*<div className={styles.searchBarContainer}>
-          
-  </div>*/}
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
           <Nav className="ml-auto" navbar>
@@ -38,23 +35,28 @@ const Header: React.FC = () => {
             <Fragment>
               {isAuth ? (
                 <Fragment>
-              <NavItem className="pointer">
+              <NavItem className="">
                 <Link href="/profile">
                   <NavLink>Profile</NavLink>
                 </Link>
               </NavItem>
-              <NavItem className="pointer">
+              <NavItem className="">
+                <Link href="/orders">
+                  <NavLink>My Orders</NavLink>
+                </Link>
+              </NavItem>
+              <NavItem className="">
                 <Link href="/account/signout"><NavLink>Logout</NavLink></Link>
               </NavItem>
                 </Fragment>
               ) : (
                 <Fragment>
-                <NavItem className="pointer">
+                <NavItem className="">
                   <Link href="/account/signin"><NavLink>Login</NavLink></Link>
                 </NavItem>
                 </Fragment>
               )}
-              <NavItem className="pointer">
+              <NavItem className="">
                 <Link href="/cart">
                   <NavLink>Cart</NavLink>
                 </Link>

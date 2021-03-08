@@ -9,10 +9,10 @@ const Categories: React.FC = () => {
         <NavbarText className={styles.categories}>CATEGORIES</NavbarText>
         <Nav className="mr-auto" navbar>
           <NavItem>
-            <NavLink href="/plp">CATEGORY 1</NavLink>
+            <NavLink href="/products">CATEGORY 1</NavLink>
           </NavItem>
           <NavItem>
-            <NavLink href="/plp">CATEGORY 2</NavLink>
+            <NavLink href="/products">CATEGORY 2</NavLink>
           </NavItem>
         </Nav>
       </Navbar>
