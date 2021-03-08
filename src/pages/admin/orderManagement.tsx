@@ -57,7 +57,11 @@ const OrderManagement: React.FC = ({orders}) => {
                 {orders2.orders.map((order)=>(
                     <tr>
                         <td>{order.id}</td>
-                        <td>{order.emailcustomer}</td>
+                        <td>
+                            <a href = {"mailto:" + order.emailcustomer + "?subject = Feedback&body = Message"}>
+                                Send Feedback
+                            </a>
+                        </td>
                         <td>
                             <select>
                                 <option>accettato</option>
