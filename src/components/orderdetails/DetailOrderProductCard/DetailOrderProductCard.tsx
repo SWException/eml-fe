@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react';
+import styles from './DetailOrderProductCard.tsx';
 
 interface Props {
     id: number,
@@ -11,7 +12,7 @@ interface Props {
     quantity: number,
 }
 
-const DetCard: React.FC<Props> = ({id, date, total, state, idp, name, price, quantity}) => {
+const DetailOrderProductCard: React.FC<Props> = ({id, date, total, state, idp, name, price, quantity}) => {
     
     return (
         <div className="">
@@ -21,7 +22,7 @@ const DetCard: React.FC<Props> = ({id, date, total, state, idp, name, price, qua
                         <p>{id} {date} {total} {state}</p>
                     </div>
                     <div className="DetProducts" style={{}}>
-                        <p>{idp} {name} {price}{" €"} {quantity}</p>
+                        <p>{idp} {name} {price}{" €"} x{quantity}</p>
                     </div>
                 </div>
             </div>
@@ -29,4 +30,4 @@ const DetCard: React.FC<Props> = ({id, date, total, state, idp, name, price, qua
     );
 };
 
-export default DetCard;
+export default DetailOrderProductCard;

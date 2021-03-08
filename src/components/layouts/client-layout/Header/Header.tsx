@@ -52,9 +52,6 @@ const Header: React.FC = () => {
                 <NavItem className="pointer">
                   <Link href="/account/signin"><NavLink>Login</NavLink></Link>
                 </NavItem>
-                <NavItem className="pointer">
-                  <Link href="/account/signup"><NavLink>SignUp</NavLink></Link>
-                </NavItem>
                 </Fragment>
               )}
               <NavItem className="pointer">

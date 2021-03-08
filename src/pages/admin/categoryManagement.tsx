@@ -36,9 +36,8 @@ const CategoryManagement: React.FC = ({categories}) => {
                 </th>
                 {categories2.categories.map((category)=>(
                     <tr>
-                        <td>{category.id}</td>
                         <td>{category.name}</td>
-                        <td><input type="text" placeholder="Edit category name...."/><button type="button">EDIT</button></td>
+                        <td><button type="button">EDIT</button></td>
                         <td><button type="button">REMOVE</button></td>
                     </tr>
                 ))}

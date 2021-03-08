@@ -1,6 +1,6 @@
 import React from 'react';
 
-const AddNewProduct: React.FC = ({product}) => {
+const EditExistingProduct: React.FC = ({product}) => {
     let product2 =  {
         "id": 1,
         "name": "giochi",
@@ -69,4 +69,4 @@ const AddNewProduct: React.FC = ({product}) => {
     );
 };
 
-export default AddNewProduct;
+export default EditExistingProduct;

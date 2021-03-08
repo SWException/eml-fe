@@ -1,5 +1,6 @@
 import React from 'react'
 import { useRouter } from 'next/router';
+import OrderDetailsAdmin from './orderDetailsAdmin';
 
 const OrderManagement: React.FC = ({orders}) => {
     
@@ -24,9 +25,10 @@ const OrderManagement: React.FC = ({orders}) => {
         ]
       };
 
-    const addNewProduct = () => {
-        router.push('/admin/addNewProduct');
+    const orderDetailsAdmin = () => {
+        router.push('/admin/orderDetailsAdmin');
     }
+    
 
     return (
         <>
@@ -59,7 +61,7 @@ const OrderManagement: React.FC = ({orders}) => {
                         <td>{order.id}</td>
                         <td>
                             <a href = {"mailto:" + order.emailcustomer + "?subject = Feedback&body = Message"}>
-                                Send Feedback
+                                {order.emailcustomer}
                             </a>
                         </td>
                         <td>
@@ -74,7 +76,7 @@ const OrderManagement: React.FC = ({orders}) => {
                         <td>{order.date}</td>
                         <td>{order.total}</td>
                         <td><button type="button">Stampa bolla</button></td>
-                        <td><button type="button">OPEN ORDER DETAILS PAGE</button></td>
+                        <td><button type="button" onClick={orderDetailsAdmin}>OPEN ORDER DETAILS PAGE</button></td>
                     </tr>
                 ))}
             </table>

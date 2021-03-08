@@ -3,6 +3,7 @@ import awsconfig from 'aws-exports';
 import React, { useEffect, useState } from 'react'
 import { Spinner, Button, Form, FormGroup, Label, Input } from 'reactstrap';
 import { SetNewPassword} from 'components/auth';
+import { useRouter } from 'next/router';
 
 Amplify.configure(awsconfig);
 
@@ -11,6 +12,8 @@ var email = null, password = null, codice = null;
 // Salva in automatico i cookie per ricordare il il login è stato fatto
 
 const Login: React.FC = () => {
+
+    const router = useRouter();
 
     useEffect(()=>{
         let mex = window.localStorage.getItem('mex');
@@ -83,6 +86,10 @@ const Login: React.FC = () => {
         return (message ? <div className="alert alert-info">{message}</div> : '');
     }
 
+    const signUp = () =>{
+        router.push('/account/signup');
+    }
+
     return (
         <>{remember ? (
                 <SetNewPassword />
@@ -116,7 +123,7 @@ const Login: React.FC = () => {
                         <Spinner color="primary" style={{marginTop: "20px"}}/>
                     ) : (
                         <div className="buttons-cont">
-                        <Button className="button-normal" color="primary">SignUp</Button>
+                        <Button className="button-normal" onClick={signUp} color="primary">SignUp</Button>
                     </div>
                     )
                     }

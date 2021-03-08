@@ -20,11 +20,14 @@ const Listorder = ({listorder}) => { //IN VERITA' E' :React.FC<Props>
         date: "19/01",
         total: 10 + i,
         totart: "2",
-        state: "boh",
+        state: "pending",
       };  
       orders[i] = order;
     }
 
+    const orderSummary = () => {
+        router.push('/orderdetails');
+    }
 
     return (
         <>
@@ -34,13 +37,16 @@ const Listorder = ({listorder}) => { //IN VERITA' E' :React.FC<Props>
                 </div>
                 <div className="listorder-item-layout">
                 {orders.map((order) => (
-                    <OrderCard 
-                    id={order.id} 
-                    date = {order.date}
-                    total={order.total}
-                    totart={order.totart}
-                    state={order.state}
-                    /> 
+                    <>
+                        <OrderCard 
+                        id={order.id} 
+                        date = {order.date}
+                        total={order.total}
+                        totart={order.totart}
+                        state={order.state}
+                        /> 
+                        <button type="button" onClick={orderSummary}>Order Summary</button>
+                    </>
                 ))}
                 </div>
             </div>

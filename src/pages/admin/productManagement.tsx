@@ -28,6 +28,10 @@ const ProductManagement: React.FC = ({products}) => {
         router.push('/admin/addNewProduct');
     }
 
+    const editProduct = () => {
+        router.push('/admin/editExistingProduct');
+    }
+    
     return (
         <>
             <button type="button" onClick={addNewProduct}>ADD NEW PRODUCT</button>
@@ -67,7 +71,7 @@ const ProductManagement: React.FC = ({products}) => {
                         <td>{product.name}</td>
                         <td>{product.netprice}</td>
                         <td>{product.category}</td>
-                        <td><button type="button">EDIT</button></td>
+                        <td><button type="button" onClick={editProduct}>EDIT</button></td>
                         <td><button type="button">REMOVE</button></td>
                     </tr>
                 ))}

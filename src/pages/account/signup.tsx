@@ -145,6 +145,10 @@ const SignUp: React.FC = () => {
                     <Input type="email" name="email" onChange={(e)=>{setEmail(e.target.value)}} id="exampleEmail" placeholder="something@idk.cool" />
                 </FormGroup>
                 <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
+                    <Label for="exampleEmail" className="mr-sm-2">Ripeti Email</Label>
+                    <Input type="email" name="email" onChange={(e)=>{setEmail(e.target.value)}} id="exampleEmail" placeholder="something@idk.cool" />
+                </FormGroup>
+                <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
                     <Label for="examplePassword" className="mr-sm-2">Password</Label>
                     <Input type="password" name="password" onChange={(e)=>{setPass(e.target.value)}} id="examplePassword" placeholder="sUpErStrong1!" />
                 </FormGroup>

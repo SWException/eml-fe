@@ -30,7 +30,7 @@ const Index: React.FC = () => {
           <ProductList products={products}/>
         </Container>
         <div>
-          <h1>COMPANY INFORMATIONS</h1>
+          <h1>partita iva, indirizzo, ragione sociale, numero di telefono, email</h1>
         </div>
       </>
     );

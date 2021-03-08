@@ -1,15 +1,14 @@
 import { DetailOrderProductCard } from 'components/orderdetails'
 import { Product } from 'types'
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useRouter } from 'next/router';
-import { Button } from 'reactstrap';
 
 
 /*interface Props {
     cartItems: string, //ASSOLUTAMENTE DA CONTROLLARE
 }*/
 
-const Orderdetails = ({orderdetails}) => { //IN VERITA' E' :React.FC<Props>
+const OrderDetailsAdmin = ({orderdetails}) => { //IN VERITA' E' :React.FC<Props>
     console.log(orderdetails);
     //Inserire Fetch
  
@@ -43,16 +42,16 @@ const Orderdetails = ({orderdetails}) => { //IN VERITA' E' :React.FC<Props>
 
     return (
         <>
-            <div className="items">
-                <div className="title-main">
+            <div className="">
+                <div className="">
                     <h1>Order Summary</h1>
                 </div>
-                <div className="detailsorder-layout">
+                <div className="">
                   <p><strong>ORDER ID:</strong>  {order.id}</p>
                   <p><strong>Date:</strong>  {order.date}</p>
                   <p><strong>State:</strong>  {order.state}</p>
                 </div>
-                <div className="item-layout">
+                <div className="">
                   <h2>Products</h2>
                   {products.map((product) => (
                       <DetailOrderProductCard 
@@ -66,14 +65,9 @@ const Orderdetails = ({orderdetails}) => { //IN VERITA' E' :React.FC<Props>
                 <div><strong>Total: {order.total}{" €"} </strong></div>
                 <div><strong>Shipping address: Address</strong></div>
                 <div><strong>Billing address: Address</strong></div>
-                <div> 
-                  <Button color="primary">Assistenza</Button>{'    '}
-                  <Button color="primary">Richiedi Reso</Button>{'   '}
-                  <Button color="primary">Annulla ordine</Button>
-                </div>
             </div>
 
         </>
     );
 };
-export default Orderdetails;
+export default OrderDetailsAdmin;
