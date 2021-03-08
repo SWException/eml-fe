@@ -1,7 +1,11 @@
 import React from 'react'
 import { useRouter } from 'next/router';
 
-const CategoryManagement: React.FC = ({categories}) => {
+interface Props{
+    categories: any, //DA MODIFICARE NON APPENA E' PRONTO
+}
+
+const CategoryManagement: React.FC<Props> = ({categories}) => {
     
     const router = useRouter();
 

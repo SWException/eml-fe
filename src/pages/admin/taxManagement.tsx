@@ -1,7 +1,11 @@
 import React from 'react'
 import { useRouter } from 'next/router';
 
-const TaxManagement: React.FC = ({tax}) => {
+interface Props{
+    tax: any,  //DA MODIFICARE NON APPENA E' PRONTO
+  }
+
+const TaxManagement: React.FC<Props> = ({tax}) => {
     
     const router = useRouter();
 

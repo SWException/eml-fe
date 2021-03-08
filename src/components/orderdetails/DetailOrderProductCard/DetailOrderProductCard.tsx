@@ -1,15 +1,15 @@
 import React, {useEffect, useState} from 'react';
-import styles from './DetailOrderProductCard.tsx';
+import styles from './DetailOrderProductCard.module.css';
 
-interface Props {
-    id: number,
-    date: string,
-    total: number,
-    state: string, 
-    idp: number,
-    name: string,
-    price: number,
-    quantity: number,
+interface Props {   //DA RIVEDERE ASSOLUTAMENTE
+    id?: number,
+    date?: string,
+    total?: number,
+    state?: string, 
+    idp?: number,
+    name?: string,
+    price?: number,
+    quantity?: number,
 }
 
 const DetailOrderProductCard: React.FC<Props> = ({id, date, total, state, idp, name, price, quantity}) => {

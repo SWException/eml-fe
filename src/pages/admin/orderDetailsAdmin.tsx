@@ -4,11 +4,11 @@ import React from "react";
 import { useRouter } from 'next/router';
 
 
-/*interface Props {
-    cartItems: string, //ASSOLUTAMENTE DA CONTROLLARE
-}*/
+interface Props{
+  orderdetails: any,  //DA MODIFICARE NON APPENA E' PRONTO
+}
 
-const OrderDetailsAdmin = ({orderdetails}) => { //IN VERITA' E' :React.FC<Props>
+const OrderDetailsAdmin: React.FC<Props> = ({orderdetails}) => { //IN VERITA' E' :React.FC<Props>
     console.log(orderdetails);
     //Inserire Fetch
  
@@ -55,7 +55,7 @@ const OrderDetailsAdmin = ({orderdetails}) => { //IN VERITA' E' :React.FC<Props>
                   <h2>Products</h2>
                   {products.map((product) => (
                       <DetailOrderProductCard 
-                      idp={product._id}
+                      id={product._id}
                       name = {product.name}
                       price={product.price}
                       quantity={10}

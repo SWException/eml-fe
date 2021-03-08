@@ -1,8 +1,12 @@
 import React from 'react'
 import { useRouter } from 'next/router';
-import OrderDetailsAdmin from './orderDetailsAdmin';
 
-const OrderManagement: React.FC = ({orders}) => {
+interface Props{
+    orders: any,  //DA MODIFICARE NON APPENA E' PRONTO
+  }
+  
+
+const OrderManagement: React.FC<Props> = ({orders}) => {
     
     const router = useRouter();
 

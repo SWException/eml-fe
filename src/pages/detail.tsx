@@ -34,15 +34,8 @@ const Detail: React.FC<Props> = ({product}) => {
                     <div className={styles.productPrice}>Price: €{product.price}</div>
                     <div className={styles.productDesc}>{product.description}</div>
                     <div className={styles.productAction}>
-                    <ProductQuantity
-                        value={qty}
-                    />
-                    <Button
-                        type="button"
-                        variant="primary"
-                        title="Add to Cart"
-                        className={styles.btnAddCart}
-                    />
+                    <ProductQuantity/>
+                    <Button/>
                     </div>
                 </div>
             </div>

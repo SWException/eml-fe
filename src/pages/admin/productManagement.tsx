@@ -1,7 +1,11 @@
 import React from 'react'
 import { useRouter } from 'next/router';
 
-const ProductManagement: React.FC = ({products}) => {
+interface Props{
+    products: any,  //DA MODIFICARE NON APPENA E' PRONTO
+  }
+
+const ProductManagement: React.FC<Props> = ({products}) => {
     
     const router = useRouter();
 

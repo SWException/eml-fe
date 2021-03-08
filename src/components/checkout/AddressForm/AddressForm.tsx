@@ -3,7 +3,7 @@ import React from "react";
 import style from './AddressForm.module.css'
 
 
-const AddressForm: React.Props = () => {
+const AddressForm: React.FC = () => {
 
   return (
     <>

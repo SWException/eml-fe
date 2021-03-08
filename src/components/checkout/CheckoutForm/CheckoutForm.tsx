@@ -9,7 +9,7 @@ import style from './CheckoutForm.module.css'
 import AddressForm from "../AddressForm";
 
 
-const CheckoutForm: React.Props = () => {
+const CheckoutForm: React.FC = () => {
 
   const [succeeded, setSucceeded] = useState(false);
   const [error, setError] = useState(null);
