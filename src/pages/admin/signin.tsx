@@ -2,13 +2,7 @@ import Amplify, { Auth } from 'aws-amplify';
 import awsconfig from 'aws-exports';
 import React, { useEffect, useState } from 'react'
 import { Spinner, Button, Form, FormGroup, Label, Input } from 'reactstrap';
-import { SetNewPassword} from 'components/auth';
-
 Amplify.configure(awsconfig);
-
-var email = null, password = null, codice = null;
-
-// Salva in automatico i cookie per ricordare il il login è stato fatto
 
 const AdminLogin: React.FC = () => {
 
@@ -85,39 +79,34 @@ const AdminLogin: React.FC = () => {
 
     return (
         <>
-            {remember ? (
-                <SetNewPassword />
-            ) : (
-            <div className="div-card">
-                <div className="loginCard">
+            <div className="">
+                <div className="">
                     <h1>Login</h1>
                     <Form>
-                        <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
-                            <Label for="exampleEmail" className="mr-sm-2">Email</Label>
+                        <FormGroup className="">
+                            <Label for="exampleEmail" className="">Email</Label>
                             <Input type="email" name="email" onChange={(e)=>{setEmail(e.target.value)}} id="exampleEmail" placeholder="something@idk.cool" />
                         </FormGroup>
-                        <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
-                            <Label for="examplePassword" className="mr-sm-2">Password</Label>
+                        <FormGroup className="">
+                            <Label for="examplePassword" className="">Password</Label>
                             <Input type="password" name="password" onChange={(e)=>{setPassword(e.target.value)}} id="examplePassword" placeholder="sUpErStrong1!" />
                         </FormGroup>
-                        <div className="div-button-login">
+                        <div className="">
                             {loading ? (
-                                <Spinner color="primary" style={{marginTop: "20px"}}/>
+                                <Spinner color="" style={{marginTop: "20px"}}/>
                             ) : (
-                            <div className="buttons-cont">
-                                <Button className="button-normal" onClick={()=>{setRemember(true)}} color="primary">Recupero</Button>
-                                <Button className="button-normal" color="primary" onClick={signIn}>Login</Button>
+                            <div className="">
+                                <Button className="" color="primary" onClick={signIn}>Login</Button>
                             </div>
                             )}
                         </div>
                     </Form>
-                    <div className="info-reg-err">
+                    <div className="">
                         {displayErr()}
                         {displayInfo()}
                     </div>
                 </div>
-            </div>
-            )}            
+            </div>           
         </>
     );
 };
