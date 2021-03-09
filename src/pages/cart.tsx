@@ -60,7 +60,7 @@ export async function getStaticProps() {
 
     return {
         props: {
-            cart: cart,
+            cartItems: cart,
         }
     };    
 }
