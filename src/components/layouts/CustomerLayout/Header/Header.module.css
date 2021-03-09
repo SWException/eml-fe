@@ -1,4 +1,25 @@
 .navbar{
-    background-color: var(--color-quaternary);
+    background-color: var(--color-lightblue);
 }
 
+.siteTitle {
+    font-size: 3rem;
+    font-weight: 600;
+    color: var(--color-dark);
+  }
+
+.navbar a{
+    font-weight: 600;
+    color: var(--color-dark);
+}
+/* Change the color of links on hover */
+.navbar a:hover {
+    background-color: var(--color-selection);
+    color: var(--color-dark);
+  }
+  
+  /* Style the "active" element to highlight the current page */
+  .navbar a.active {
+    background-color: var(--color-lightblue);
+    color: var(--color-light);
+  }
