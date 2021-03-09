@@ -8,8 +8,8 @@ interface Props {
     cartItems: any, //ASSOLUTAMENTE DA CONTROLLARE
 }
 
-const Cart: React.FC<Props>= ({cart}) => { 
-    console.log(cart);
+const Cart: React.FC<Props>= ({cartItems}) => { 
+    console.log(cartItems);
     //Inserire Fetch
  
     const router = useRouter();
@@ -27,7 +27,7 @@ const Cart: React.FC<Props>= ({cart}) => {
                     <h1>Cart</h1>
                 </div>
                 <div className="cart-item-layout">
-                {cart.products.map((product) => (
+                {cartItems.products.map((product) => (
                     <ProductCard 
                     id={product.id}
                     name = {product.name}
@@ -39,8 +39,8 @@ const Cart: React.FC<Props>= ({cart}) => {
                 </div>
             </div>
             <div className="total">
-                <div style={{marginRight: "10px"}}><strong>Total: {cart.total}{" €"} </strong></div>
-                <div style={{marginRight: "10px"}}><strong>Taxes: {cart.tax}{" €"} </strong></div>
+                <div style={{marginRight: "10px"}}><strong>Total: {cartItems.total}{" €"} </strong></div>
+                <div style={{marginRight: "10px"}}><strong>Taxes: {cartItems.tax}{" €"} </strong></div>
                 <Button color="primary" onClick={()=>{onSubmit()}}>Vai al checkout</Button>
             </div>
         </CustomerLayout>

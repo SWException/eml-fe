@@ -29,8 +29,6 @@ const Dashboard: React.FC = () => {
             <button type="button" onClick={redirectCategoryManagement}>Manage your categories</button>
             <button type="button" onClick={redirectTaxManagement}>Manage your taxes</button>
             <button type="button" onClick={redirectCustomerManagement}>Manage your customers</button>
-            <button type="button" onClick={redirectProductManagement}>Manage your products</button>
-
         </AdminLayout>
     );
 };
