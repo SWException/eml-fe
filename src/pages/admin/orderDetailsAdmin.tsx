@@ -2,6 +2,7 @@ import { DetailOrderProductCard } from 'components/orderdetails'
 import { Product } from 'types'
 import React from "react";
 import { useRouter } from 'next/router';
+import { AdminLayout } from 'components/layouts/AdminLayout';
 
 
 interface Props{
@@ -41,7 +42,7 @@ const OrderDetailsAdmin: React.FC<Props> = ({orderdetails}) => { //IN VERITA' E'
 
 
     return (
-        <>
+        <AdminLayout header>
             <div className="">
                 <div className="">
                     <h1>Order Summary</h1>
@@ -67,7 +68,7 @@ const OrderDetailsAdmin: React.FC<Props> = ({orderdetails}) => { //IN VERITA' E'
                 <div><strong>Billing address: Address</strong></div>
             </div>
 
-        </>
+      </AdminLayout>
     );
 };
 export default OrderDetailsAdmin;

@@ -1,5 +1,6 @@
 import React from 'react'
 import { useRouter } from 'next/router';
+import { AdminLayout } from 'components/layouts/AdminLayout';
 
 interface Props{
     tax: any,  //DA MODIFICARE NON APPENA E' PRONTO
@@ -25,7 +26,7 @@ const TaxManagement: React.FC<Props> = ({tax}) => {
     };
 
     return (
-        <>
+        <AdminLayout header>
             <input type="text" placeholder="New tax name..."/>
             <input type="number" placeholder="Percentage"/>
             <button type="button">CREATE TAX</button>
@@ -55,7 +56,7 @@ const TaxManagement: React.FC<Props> = ({tax}) => {
                     </tr>
                 ))}
             </table>
-        </>
+        </AdminLayout>
     );
 };
 

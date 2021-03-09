@@ -1,3 +1,4 @@
+import { AdminLayout } from 'components/layouts/AdminLayout';
 import React from 'react';
 
 interface Props{
@@ -17,7 +18,7 @@ const AddNewProduct: React.FC<Props> = ({product}) => {
     };
 
     return (
-        <>
+        <AdminLayout header>
             <p>Add new product</p>
             <form>  
                 <label>Name</label>
@@ -69,7 +70,7 @@ const AddNewProduct: React.FC<Props> = ({product}) => {
                 <br/>
                 <input type="button" value="SAVE"/>
             </form>
-        </>
+        </AdminLayout>
     );
 };
 

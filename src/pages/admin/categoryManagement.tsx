@@ -1,5 +1,6 @@
 import React from 'react'
 import { useRouter } from 'next/router';
+import { AdminLayout } from 'components/layouts/AdminLayout';
 
 interface Props{
     categories: any, //DA MODIFICARE NON APPENA E' PRONTO
@@ -23,7 +24,7 @@ const CategoryManagement: React.FC<Props> = ({categories}) => {
       };
 
     return (
-        <>
+        <AdminLayout header>
             <input type="text" placeholder="New category name...."/>
             <button type="button">Add category</button>
             <br/>      
@@ -46,7 +47,7 @@ const CategoryManagement: React.FC<Props> = ({categories}) => {
                     </tr>
                 ))}
             </table>
-        </>
+        </AdminLayout>
     );
 };
 

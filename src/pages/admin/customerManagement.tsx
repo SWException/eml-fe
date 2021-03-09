@@ -1,5 +1,6 @@
 import React from 'react'
 import { useRouter } from 'next/router';
+import { AdminLayout } from 'components/layouts/AdminLayout';
 
 interface Props{
     customers: any,  //DA MODIFICARE NON APPENA E' PRONTO
@@ -31,7 +32,7 @@ const OrderManagement: React.FC<Props> = ({customers}) => {
     }
 
     return (
-        <>
+        <AdminLayout header>
             <input type="text" placeholder="Search by email..."/>
             <button type="button">SEARCH</button>
             <table>
@@ -52,7 +53,7 @@ const OrderManagement: React.FC<Props> = ({customers}) => {
                     </tr>
                 ))}
             </table>
-        </>
+        </AdminLayout>
     );
 };
 
