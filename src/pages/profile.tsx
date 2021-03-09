@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 import { AddressForm } from 'components/checkout';
-import { ClientLayout } from 'components/layouts/client-layout';
+import { CustomerLayout } from 'components/layouts/CustomerLayout';
 Amplify.configure(awsconfig);
 
 // Salva in automatico i cookie per ricordare se il login è stato fatto
@@ -64,7 +64,7 @@ const Profile: React.FC = ()=>{
 
 
     return (
-        <ClientLayout header>
+        <CustomerLayout header>
             <strong>User: {email}</strong>
             <div>
                 <p>Here you can manage your addresses</p>
@@ -119,7 +119,7 @@ const Profile: React.FC = ()=>{
                 <p>DANGER ZONE!</p>
                 <button type="button">Request account deletion</button>
             </div>
-        </ClientLayout>
+        </CustomerLayout>
     );
 }
 

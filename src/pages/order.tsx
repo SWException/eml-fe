@@ -3,7 +3,7 @@ import { Product } from 'types'
 import React, { useEffect, useState } from "react";
 import { useRouter } from 'next/router';
 import { Button } from 'reactstrap';
-import { ClientLayout } from 'components/layouts/client-layout';
+import { CustomerLayout } from 'components/layouts/CustomerLayout';
 
 
 /*interface Props {
@@ -43,7 +43,7 @@ const OrderDetails = ({orderdetails}) => { //IN VERITA' E' :React.FC<Props>
 
 
     return (
-        <ClientLayout header>
+        <CustomerLayout header>
             <div className="items">
                 <div className="title-main">
                     <h1>Order Summary</h1>
@@ -73,7 +73,7 @@ const OrderDetails = ({orderdetails}) => { //IN VERITA' E' :React.FC<Props>
                   <Button color="primary">Annulla ordine</Button>
                 </div>
             </div> 
-        </ClientLayout>
+        </CustomerLayout>
     );
 };
 export default OrderDetails;

@@ -1,6 +1,6 @@
 import Amplify, { Auth } from 'aws-amplify';
 import awsconfig from 'aws-exports';
-import { ClientLayout } from 'components/layouts/client-layout';
+import { CustomerLayout } from 'components/layouts/CustomerLayout';
 import React, { useState } from 'react';
 import { Spinner, Button, Form, FormGroup, Label, Input } from 'reactstrap';
 Amplify.configure(awsconfig);
@@ -93,7 +93,7 @@ const SignUp: React.FC = () => {
     }
 
     return (
-        <ClientLayout header>
+        <CustomerLayout header>
             {isCode ? (
                 <div className="">
                     <div className="">
@@ -153,7 +153,7 @@ const SignUp: React.FC = () => {
                 </div>
             </div>
             )}
-        </ClientLayout>
+        </CustomerLayout>
     );
 }
 

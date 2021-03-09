@@ -1,7 +1,7 @@
 import { OrderCard } from 'components/listorder';
 import React, { useEffect, useState } from "react";
 import { useRouter } from 'next/router';
-import { ClientLayout } from 'components/layouts/client-layout';
+import { CustomerLayout } from 'components/layouts/CustomerLayout';
 
 
 /*interface Props {
@@ -31,7 +31,7 @@ const OrdersList = ({listorder}) => { //IN VERITA' E' :React.FC<Props>
     }
 
     return (
-        <ClientLayout header>
+        <CustomerLayout header>
             <div className="items">
                 <div className="title-main">
                     <h1>List of orders</h1>
@@ -52,7 +52,7 @@ const OrdersList = ({listorder}) => { //IN VERITA' E' :React.FC<Props>
                 </div>
             </div>
 
-        </ClientLayout>
+        </CustomerLayout>
     );
 };
 export default OrdersList;

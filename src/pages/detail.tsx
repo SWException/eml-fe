@@ -3,7 +3,7 @@ import { Button, Container } from 'components/ui';
 import styles from 'styles/Detail.module.css';
 import { Product } from 'types';
 import { ProductQuantity } from 'components/products';
-import { ClientLayout } from 'components/layouts/client-layout';
+import { CustomerLayout } from 'components/layouts/CustomerLayout';
 
 interface Props {
     product: Product;
@@ -13,7 +13,7 @@ const Detail: React.FC<Props> = ({product}) => {
     product = {
         _id : "ProductId",
         name: "Awesome product",
-        imageURL: "https://dress-shop.vercel.app/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fdjlbfjouc%2Fimage%2Fupload%2Fv1581158056%2Fdqtdtglewxjvig4x7rlk.jpg&w=640&q=75",
+        imageURL: "/image2.jpg",
         category: "Categories",
         description: "This is a default description",
         price: 1234,
@@ -22,7 +22,7 @@ const Detail: React.FC<Props> = ({product}) => {
 
     const router = useRouter();
     return (
-        <ClientLayout header categories>
+        <CustomerLayout header categories>
             <div className={styles.productContainer}>
                 <div className={styles.main}>
                     <div className={styles.coverImg}>
@@ -41,7 +41,7 @@ const Detail: React.FC<Props> = ({product}) => {
             </div>
             {/*<Heading className={styles.heading}> Related Products </Heading>
             <ProductList products={relatedProducts} />*/}
-        </ClientLayout>
+        </CustomerLayout>
     )
 }
 

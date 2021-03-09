@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import React from 'react';
 import { Product } from 'types';
 import styles from 'styles/Home.module.css'
-import { ClientLayout } from 'components/layouts/client-layout';
+import { CustomerLayout } from 'components/layouts/CustomerLayout';
 
 const Index: React.FC = () => {
     const router = useRouter();
@@ -23,7 +23,7 @@ const Index: React.FC = () => {
     }
     
     return (
-      <ClientLayout header categories>
+      <CustomerLayout header categories>
         <div className="title-main">
           <h1>BEST PRODUCTS</h1>
         </div>
@@ -33,7 +33,7 @@ const Index: React.FC = () => {
         <div>
           <h1>partita iva, indirizzo, ragione sociale, numero di telefono, email</h1>
         </div>
-      </ClientLayout>
+      </CustomerLayout>
     );
 };
 

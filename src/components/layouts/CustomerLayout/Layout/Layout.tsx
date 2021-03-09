@@ -1,4 +1,4 @@
-import { ClientHeader,  ClientCategories } from 'components/layouts/client-layout';
+import { CustomerHeader,  CustomerCategories } from 'components/layouts/CustomerLayout';
 import React from 'react';
 import styles from './Layout.module.css';
 
@@ -11,8 +11,8 @@ interface Props{
 const Layout: React.FC<Props> = ({header, categories, children}) => {
     return (
         <>
-            {header && <ClientHeader />}
-            {categories && <ClientCategories/>}
+            {header && <CustomerHeader />}
+            {categories && <CustomerCategories/>}
             <main className={styles.main}>{children}</main>
         </>
     );

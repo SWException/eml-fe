@@ -1,5 +1,6 @@
 import React from 'react'
 import { useRouter } from 'next/router';
+import { AdminLayout } from 'components/layouts/AdminLayout';
 
 interface Props{
     products: any,  //DA MODIFICARE NON APPENA E' PRONTO
@@ -15,8 +16,8 @@ const ProductManagement: React.FC<Props> = ({products}) => {
             "id": 1,
             "name": "giochi",
             "description": "descrizione del prodotto",
-            "photo": "https://www.technogym.com/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/w/e/wellness_ball_active_sitting_hero_3_3.jpg",
-            "secondaryPhoto": "https://www.technogym.com/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/w/e/wellness_ball_active_sitting_hero_3_3.jpg",
+            "photo": "/image2.jpg",
+            "secondaryPhoto": "/image2.jpg",
             "category": "giochi",
             "netprice": 5.99,
             "tax": null
@@ -37,7 +38,7 @@ const ProductManagement: React.FC<Props> = ({products}) => {
     }
     
     return (
-        <>
+        <AdminLayout header>
             <button type="button" onClick={addNewProduct}>ADD NEW PRODUCT</button>
             <select>
                 <option>NO CATEGORY FILTER</option>
@@ -80,7 +81,7 @@ const ProductManagement: React.FC<Props> = ({products}) => {
                     </tr>
                 ))}
             </table>
-        </>
+        </AdminLayout>
     );
 };
 

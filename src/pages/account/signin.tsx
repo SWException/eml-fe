@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react'
 import { Spinner, Button, Form, FormGroup, Label, Input } from 'reactstrap';
 import { SetNewPassword} from 'components/auth';
 import { useRouter } from 'next/router';
-import { ClientLayout } from 'components/layouts/client-layout';
+import { CustomerLayout } from 'components/layouts/CustomerLayout';
 
 Amplify.configure(awsconfig);
 
@@ -96,7 +96,7 @@ const Login: React.FC = () => {
     }
 
     return (
-        <ClientLayout header>
+        <CustomerLayout header>
             {remember ? (
             <SetNewPassword />
             ) : (
@@ -144,7 +144,7 @@ const Login: React.FC = () => {
             </div>
             )}
         
-        </ClientLayout>
+        </CustomerLayout>
 
     );
 };
