@@ -1,5 +1,5 @@
 import { APIClass } from 'aws-amplify';
-import { Products, ProductsData } from '../types/product';
+import { Products, ProductsData, ProductData } from '../types/product';
 //import { catchError } from 'utils/catchError';
 //import apiClient from 'utils/apiClient';
 
@@ -34,22 +34,28 @@ const fetchProducts = async (payload?: ProductPayload): Promise<ProductsData> =>
     throw new Error('Error on fetching Products');
   }
 };
-/*
+
 export const fetchProduct = async (id: string): Promise<ProductData> => {
   try {
-    const url = `/products/${id}`;
-    const { data } = await apiClient.get(url);
+    const requestOptions = {
+      method: 'GET',
+      headers: { 
+        "Access-Control-Allow-Origin": "*",
+        'Content-Type': 'application/json'
+       }
+    };
+    const res = await fetch(`https://virtserver.swaggerhub.com/swexception4/OpenAPI/0.0.2/products/${id}`, requestOptions)
+    const data = await res.json();
 
     const productData: ProductData = {
-      product: data.data.product,
-      relatedProducts: data.data.relatedProducts,
+      product: data.data
     };
     return productData;
   } catch (error) {
-    throw new Error(catchError(error));
+    throw new Error(error);
   }
 };
-
+/*
 export const addProduct = async (product: AddProduct): Promise<AddProductData> => {
   try {
     const url = '/products';
@@ -73,8 +79,8 @@ export const deleteProduct = async (id: string): Promise<void> => {
 */
 export const ProductService = {
   fetchProducts,
-  /*
   fetchProduct,
+  /*
   addProduct,
   deleteProduct,*/
 };

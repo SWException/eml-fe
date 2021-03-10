@@ -5,11 +5,13 @@
 .siteTitle {
     font-size: 3rem;
     font-weight: 600;
+    cursor: pointer;
     color: var(--color-dark);
   }
 
 .navbar a{
     font-weight: 600;
+    cursor: pointer;
     color: var(--color-dark);
 }
 /* Change the color of links on hover */

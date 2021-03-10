@@ -66,7 +66,7 @@ const Login: React.FC = () => {
                 setLoading(false);
                 getJwt();
                 window.localStorage.setItem('mex', `Benvenuto ${email}, trova il prodotto adatto a te!`);
-                window.location.reload();
+                //window.location.reload();
                 setError('');
                 redirectToHomePage();
             })
@@ -100,7 +100,7 @@ const Login: React.FC = () => {
             {remember ? (
             <SetNewPassword />
             ) : (
-            <div className="">
+            <div className="" style={{width: "80%", marginLeft: "10%"}}>
                 <div className="">
                     <h1>Login</h1>
                     <Form>

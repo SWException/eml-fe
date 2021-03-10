@@ -2,9 +2,9 @@ export type Product = {
     id: string;
     name: string;
     description: string;
-    photo?: string;
-    secondary: string;
-    categories: string;
+    primaryPhoto: string;
+    secondaryPhotos: string;
+    categories: [];
     price: number;
     tax: number;
     show: boolean;
@@ -21,7 +21,6 @@ export interface ProductsData {
   
 export interface ProductData {
     product: Product;
-    relatedProducts: Product[];
   }
   
 export interface AddProduct {

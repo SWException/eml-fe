@@ -9,16 +9,18 @@ interface Props {
 }
 
 const ProductList: React.FC<Props> = ({products}) => {
+  const mock = 'XYZ123';
+  //cambiare mock con product.id quando le api saranno pronte
   return (
     <>
       <div className={styles.productGrid}>
         {products.map((product) => (
-          <Link href={`/detail?id=${product.id}`} key={product.id}>
+          <Link href={`/detail?id=${mock}`} key={product.id}>
             <a>
               <div>
                 <div className={styles.productImgWrapper}>
                   <Image
-                    src={product.photo}
+                    src={product.primaryPhoto}
                     alt="Picture of the author"
                     width={500}
                     height={500}
