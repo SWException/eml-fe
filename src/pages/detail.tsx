@@ -1,32 +1,47 @@
-import { Layout } from 'components/ui';
-import React, { useRouter } from 'next/router'
+import React, { useRouter } from 'next/router';
+import { Button, Container } from 'components/ui';
+import styles from 'styles/Detail.module.css';
+import { Product } from 'types';
+import { ProductQuantity } from 'components/products';
+import { CustomerLayout } from 'components/layouts/CustomerLayout';
 
-const Detail: React.FC = () => {
+interface Props {
+    product: Product;
+}
+
+const Detail: React.FC<Props> = ({product}) => {
+    product = {
+        _id : "ProductId",
+        name: "Awesome product",
+        imageURL: "/image2.jpg",
+        category: "Categories",
+        description: "This is a default description",
+        price: 1234,
+      };  
+    let qty = 1;
+
     const router = useRouter();
     return (
-        <Layout>
-            <div className="title-main">
-                <h1>Shoes</h1>
-            </div>
-            <div className="row-flex">
-                <img className="image-desc" src="https://www.artimondo.it/media/cvp/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/p/h/phpSlOF8Z.jpg"></img>
-                <div className="description">
-                    <p>Lorem Ipsum è un testo segnaposto utilizzato nel
-                    settore della tipografia e della stampa. Lorem Ipsum
-                    è considerato il testo segnaposto standard sin dal 
-                    sedicesimo secolo, quando un anonimo tipografo prese
-                    una cassetta di caratteri e li assemblò per preparare 
-                    un testo campione. È sopravvissuto non solo a più di cinque
-                    secoli, ma anche al passaggio alla videoimpaginazione, 
-                    pervenendoci sostanzialmente inalterato. Fu reso popolare, 
-                    negli anni ’60, con la diffusione dei fogli di caratteri 
-                    trasferibili “Letraset”, che contenevano passaggi del 
-                    Lorem Ipsum, e più recentemente da software di 
-                    impaginazione come </p>
-                    <a onClick={()=> router.push('/cart')} className="pointer btn btn-primary">Add to Cart</a>
+        <CustomerLayout header categories>
+            <div className={styles.productContainer}>
+                <div className={styles.main}>
+                    <div className={styles.coverImg}>
+                        <img className={styles.img} src={product.imageURL} alt={product.name}/>
+                    </div>
+                </div>
+                <div className={styles.productInfo}>
+                    <div className={styles.productName}>{product.name}</div>
+                    <div className={styles.productPrice}>Price: €{product.price}</div>
+                    <div className={styles.productDesc}>{product.description}</div>
+                    <div className={styles.productAction}>
+                    <ProductQuantity/>
+                    <Button/>
+                    </div>
                 </div>
             </div>
-        </Layout>
+            {/*<Heading className={styles.heading}> Related Products </Heading>
+            <ProductList products={relatedProducts} />*/}
+        </CustomerLayout>
     )
 }
 

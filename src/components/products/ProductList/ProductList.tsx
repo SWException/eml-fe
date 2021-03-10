@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { Products } from 'types';
 import React from 'react';
+import Image from 'next/image';
 import styles from './ProductList.module.css';
 
 interface Props {
@@ -12,11 +13,11 @@ const ProductList: React.FC<Props> = ({products}) => {
     <>
       <div className={styles.productGrid}>
         {products.map((product) => (
-          <Link href={`/product?id=${product._id}`} key={product._id}>
+          <Link href={`/detail?id=${product._id}`} key={product._id}>
             <a>
               <div>
                 <div className={styles.productImgWrapper}>
-                  <img
+                  <Image
                     src={product.imageURL}
                     alt="Picture of the author"
                     width={500}
@@ -25,7 +26,7 @@ const ProductList: React.FC<Props> = ({products}) => {
                 </div>
                 <div className={styles.productInfo}>
                   <div className={styles.productName}>{product.name}</div>
-                  <div className={styles.productPrice}>P{product.price}</div>
+                  <div className={styles.productPrice}>Price: €{product.price}</div>
                 </div>
               </div>
             </a>

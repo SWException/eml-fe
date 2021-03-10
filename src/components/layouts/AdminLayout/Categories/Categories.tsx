@@ -6,13 +6,13 @@ const Categories: React.FC = () => {
   return (
     <div>
       <Navbar className={styles.bar} color="light" expand="md">
-        <NavbarText className={styles.categories}>Categorie</NavbarText>
+        <NavbarText className={styles.categories}>CATEGORIES</NavbarText>
         <Nav className="mr-auto" navbar>
           <NavItem>
-            <NavLink href="/plp">Categoria 1</NavLink>
+            <NavLink href="/products">CATEGORY 1</NavLink>
           </NavItem>
           <NavItem>
-            <NavLink href="/plp">Categoria 2</NavLink>
+            <NavLink href="/products">CATEGORY 2</NavLink>
           </NavItem>
         </Nav>
       </Navbar>

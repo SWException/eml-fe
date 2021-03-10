@@ -1,29 +1,39 @@
-import { Layout } from 'components/ui';
+import { Container } from 'components/ui';
 import { ProductList } from 'components/products';
 import { useRouter } from 'next/router';
 import React from 'react';
 import { Product } from 'types';
+import styles from 'styles/Home.module.css'
+import { CustomerLayout } from 'components/layouts/CustomerLayout';
 
 const Index: React.FC = () => {
-    const router = useRouter()
+    const router = useRouter();
 
-    const prodotto: Product = {
-      _id : "1234",
-      name: "TEST",
-      imageURL: "https://dress-shop.vercel.app/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fdjlbfjouc%2Fimage%2Fupload%2Fv1581158056%2Fdqtdtglewxjvig4x7rlk.jpg&w=640&q=75",
-      category: "CAT",
-      description: "DESCR",
-      price: 1234,
-    };  
-    let products = [prodotto, prodotto, prodotto, prodotto, prodotto, prodotto, prodotto, prodotto, prodotto, prodotto, prodotto, prodotto, prodotto, prodotto, prodotto, prodotto];
+    let products = [];
+    for(var i = 0; i < 8; i++){
+      var prodotto: Product = {
+        _id : "ID " + i,
+        name: "Product Name",
+        imageURL: "/image.jpg",
+        category: "Category",
+        description: "DESCR",
+        price: 1234,
+      };  
+      products[i] = prodotto;
+    }
     
     return (
-        <Layout>
-            <div className="title-main">
-              <h1>Emporio Lambda</h1>
-            </div>
-            <ProductList products={products}/>
-        </Layout>
+      <CustomerLayout header categories>
+        <div className={styles.title}>
+          <h1>BEST PRODUCTS</h1>
+        </div>
+        <Container className={styles.container}>
+          <ProductList products={products}/>
+        </Container>
+        <div>
+          <h1>partita iva, indirizzo, ragione sociale, numero di telefono, email</h1>
+        </div>
+      </CustomerLayout>
     );
 };
 

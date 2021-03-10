@@ -1,12 +1,11 @@
 .container {
-  min-height: 100vh;
-  padding: 0 0.5rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  padding: 2rem 0;
 }
 
+.title{
+  text-align: center;
+}
+/*
 .main {
   padding: 5rem 0;
   flex: 1;
@@ -119,4 +118,6 @@
     width: 100%;
     flex-direction: column;
   }
-}
+}*/
+
+
