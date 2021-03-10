@@ -23,6 +23,8 @@ html {
   --color-success: #8bc34a;
   --color-danger: #c00;
   --color-danger-light: #fbe1e3;
+  --color-lightblue: #2196F3;
+  --color-selection: #99cbff;
   --border-radius: 6px;
 }
 
