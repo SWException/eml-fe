@@ -1,7 +1,8 @@
 import { Container } from 'components/ui';
 import { ProductList } from 'components/products';
 import { useRouter } from 'next/router';
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useShop } from '../context/shop';
 import { Product } from 'types';
 import styles from 'styles/Home.module.css'
 import { CustomerLayout } from 'components/layouts/CustomerLayout';
@@ -9,18 +10,27 @@ import { CustomerLayout } from 'components/layouts/CustomerLayout';
 const Index: React.FC = () => {
     const router = useRouter();
 
-    let products = [];
+    const { loadProducts, products } = useShop();
+
+    useEffect(()=>{
+      products.length === 0 && loadProducts();
+      console.log(products);
+    }, [])
+
+    /*let products = [];
     for(var i = 0; i < 8; i++){
       var prodotto: Product = {
-        _id : "ID " + i,
+        id : "ID " + i,
         name: "Product Name",
-        imageURL: "/image.jpg",
+        photo: "/image.jpg",
+        secondaryPhoto: '',
         category: "Category",
         description: "DESCR",
-        price: 1234,
+        tax: 1,
+        netprice: 1234,
       };  
       products[i] = prodotto;
-    }
+    }*/
     
     return (
       <CustomerLayout header categories>

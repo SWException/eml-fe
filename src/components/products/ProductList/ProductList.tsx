@@ -13,12 +13,12 @@ const ProductList: React.FC<Props> = ({products}) => {
     <>
       <div className={styles.productGrid}>
         {products.map((product) => (
-          <Link href={`/detail?id=${product._id}`} key={product._id}>
+          <Link href={`/detail?id=${product.id}`} key={product.id}>
             <a>
               <div>
                 <div className={styles.productImgWrapper}>
                   <Image
-                    src={product.imageURL}
+                    src={product.photo}
                     alt="Picture of the author"
                     width={500}
                     height={500}
