@@ -4,7 +4,7 @@ import styles from './Button.module.css';
 const Button: React.FC = () => {
   return (
     <>
-      <button type="button">Add to Cart</button>
+      <button type="button" className={styles.button}>Add to Cart</button>
     </>
   );
 };

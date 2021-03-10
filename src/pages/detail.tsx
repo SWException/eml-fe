@@ -35,7 +35,7 @@ const Detail: React.FC<Props> = ({product}) => {
                     <div className={styles.productDesc}>{product.description}</div>
                     <div className={styles.productAction}>
                     <ProductQuantity/>
-                    <Button/>
+                    <Button>Add to Cart</Button>
                     </div>
                 </div>
             </div>

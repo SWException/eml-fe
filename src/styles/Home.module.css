@@ -5,6 +5,14 @@
 .title{
   text-align: center;
 }
+
+.footer {
+  text-align: center;
+  padding: 3px;
+  background-color: var(--color-lightblue);
+  color: var(--color-dark);
+  width: 100%;
+}
 /*
 .main {
   padding: 5rem 0;

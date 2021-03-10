@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './ProductPhoto.module.css';
+import styles from './ProductQuantity.module.css';
 
 
 const ProductQuantity: React.FC = () => {
@@ -7,7 +7,7 @@ const ProductQuantity: React.FC = () => {
   return (
     <>
       <button type="button">-</button>
-      <input type="text" value="1"/>
+      <input type="text" text-align="center" value="1"/>
       <button type="button">+</button>
     </>
   );
