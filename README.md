@@ -18,7 +18,7 @@ La maggior parte dei comandi va eseguita nella directory che contiene il file **
 
 | Descrizione   							| Comando 		|
 | ------------- 							|:-------------:|
-| Esecuzione (Build solo se non presente)	| **docker-compose up -d**	|
-| Esecuzione e Build forzata				| **docker-compose up -d --build**	|
-| Build      								| **docker-compose build**	|
-| Interruzzione del container				| **docker-compose down**	|
+| Esecuzione con Build DEV                 	| **docker-compose -p EML-FE-DEV up -d --build EML-FE-DEV**	|
+| Interruzzione di DEV      				| **docker-compose -p EML-FE-DEV down -v**	|
+| Esecuzione con Build completa            	| **docker-compose -p EML-FE up -d --build EML-FE**	|
+| Interruzzione di EML-FE-COMPLETA			| **docker-compose -p EML-FE down -v**	|
