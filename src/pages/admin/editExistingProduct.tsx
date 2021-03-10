@@ -19,7 +19,7 @@ const EditExistingProduct: React.FC<Props> = ({product}) => {
 
     return (
         <AdminLayout header>
-            <p>Add new product</p>
+            <p>Edit existing product</p>
             <form>  
                 <label>Name</label>
                 <input type="text" placeholder="Insert product name"/>

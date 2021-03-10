@@ -1,5 +1,6 @@
 import Amplify, { Auth } from 'aws-amplify';
 import awsconfig from 'aws-exports';
+import { AdminLayout } from 'components/layouts/AdminLayout';
 import React, { useEffect, useState } from 'react'
 import { Spinner, Button, Form, FormGroup, Label, Input } from 'reactstrap';
 Amplify.configure(awsconfig);
@@ -78,7 +79,7 @@ const AdminLogin: React.FC = () => {
     }
 
     return (
-        <>
+        <AdminLayout header>
             <div className="">
                 <div className="">
                     <h1>Login</h1>
@@ -107,7 +108,7 @@ const AdminLogin: React.FC = () => {
                     </div>
                 </div>
             </div>           
-        </>
+        </AdminLayout>
     );
 };
 

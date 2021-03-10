@@ -60,7 +60,7 @@ const TaxManagement: React.FC<Props> = ({tax}) => {
     );
 };
 
-export async function getStaticProps() {
+/*export async function getStaticProps() {
     const res = await fetch('https://virtserver.swaggerhub.com/swexception4/OpenAPI/0.0.1/getProducts');
 
     const products = await res.json();
@@ -70,6 +70,6 @@ export async function getStaticProps() {
             products: products,
         }
     };    
-}
+}*/
 
 export default TaxManagement;
