@@ -23,7 +23,7 @@ const Products: React.FC = () => {
     }
 
     return (
-        <CustomerLayout header categories>
+        <CustomerLayout header categories footer>
             <Filters/>
             <Sort/>
             {products.length > 0 ? (
