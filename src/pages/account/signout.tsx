@@ -14,9 +14,8 @@ const Logout: React.FC = () => {
 
     const router = useRouter();
 
-    signOut();
-
     useEffect(()=>{
+        signOut();
         let err = window.localStorage.getItem('err');
         if(err){
             setMessage(err);
