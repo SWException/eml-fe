@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react'
 import { Spinner, Button, Form, FormGroup, Label, Input } from 'reactstrap';
 import { SetNewPassword} from 'components/auth';
 import { useRouter } from 'next/router';
+import { useAuth } from 'context';
 import { CustomerLayout } from 'components/layouts/CustomerLayout';
 
 Amplify.configure(awsconfig);
@@ -15,6 +16,8 @@ var email = null, password = null, codice = null;
 const Login: React.FC = () => {
 
     const router = useRouter();
+
+    const { login } = useAuth();
 
     useEffect(()=>{
         let mex = window.localStorage.getItem('mex');
@@ -31,7 +34,7 @@ const Login: React.FC = () => {
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
 
-    const getJwt = () =>{
+    /*const getJwt = () =>{
         Auth.currentSession()
     .then(res => {
         let accessToken = res.getAccessToken()
@@ -77,7 +80,19 @@ const Login: React.FC = () => {
                 setMessage('');
                 displayErr();
             });
-    };
+    };*/
+
+    const signIn = async() => {
+        setLoading(true);
+        try {
+            await login(email, password);
+            router.push('/');
+        } catch(e) {
+            setLoading(false);
+            setError(e);
+            displayErr();
+        }
+    }
 
     const displayErr = () =>{
         return (error ? <div className="alert alert-danger">{error}</div> : '');

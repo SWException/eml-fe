@@ -1,7 +1,9 @@
 import Amplify, { Auth } from 'aws-amplify';
 import awsconfig from 'aws-exports';
 import { CustomerLayout } from 'components/layouts/CustomerLayout';
+import { AuthService } from 'services'
 import React, { useState } from 'react';
+
 import { Spinner, Button, Form, FormGroup, Label, Input } from 'reactstrap';
 Amplify.configure(awsconfig);
 
@@ -22,8 +24,7 @@ const SignUp: React.FC = () => {
     const [message, setMessage] = useState('');
     
     async function signUp() {
-        setLoading(true);
-        try {
+        /*try {
             if(same){
                 console.log(email);
                 const { user } = await Auth.signUp({
@@ -47,7 +48,15 @@ const SignUp: React.FC = () => {
             }
             setMessage('');
             displayErr();
+        }*/
+        setLoading(true);
+        try {
+            const { confirmCode } = await AuthService.signUp(email, password)
+            setIsCode(confirmCode);
+        } catch (e) {
+            console.log(e)
         }
+        setLoading(false)
     }
     
     async function confirmSignUp() {
