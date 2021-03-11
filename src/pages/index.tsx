@@ -9,7 +9,7 @@ import { CustomerLayout } from 'components/layouts/CustomerLayout';
 
 const Index: React.FC = () => {
     const router = useRouter();
-
+  
     const { loadProducts, products } = useShop();
 
     useEffect(()=>{
@@ -17,16 +17,13 @@ const Index: React.FC = () => {
     }, [])
     
     return (
-      <CustomerLayout header categories>
+      <CustomerLayout header categories footer>
         <div className={styles.title}>
           <h1>BEST PRODUCTS</h1>
         </div>
         <Container className={styles.container}>
           <ProductList products={products}/>
         </Container>
-        <div>
-          <h1>partita iva, indirizzo, ragione sociale, numero di telefono, email</h1>
-        </div>
       </CustomerLayout>
     );
 };

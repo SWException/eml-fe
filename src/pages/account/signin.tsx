@@ -100,7 +100,7 @@ const Login: React.FC = () => {
             {remember ? (
             <SetNewPassword />
             ) : (
-            <div className="" style={{width: "80%", marginLeft: "10%"}}>
+            <div className="">
                 <div className="">
                     <h1>Login</h1>
                     <Form>
