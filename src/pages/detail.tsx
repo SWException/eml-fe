@@ -1,69 +1,25 @@
 import React, { useRouter } from 'next/router';
-import { Button, Container } from 'components/ui';
+import { Button } from 'components/ui';
 import styles from 'styles/Detail.module.css';
 import { ProductService } from 'services/productService';
 import { ProductQuantity } from 'components/products';
 import { CustomerLayout } from 'components/layouts/CustomerLayout';
-import { useEffect, useState } from 'react';
 import { Product } from '../types/product'
-import { Spinner } from 'reactstrap';
+import { GetServerSideProps } from 'next';
 
 interface Props {
-    id_product: string
+    product: Product;
 }
 
-const Detail: React.FC<Props> = ({id_product}) => {
+const Detail: React.FC<Props> = ({product}) => {
 
     const router = useRouter();
 
-    const [loading, setLoading] = useState(false);
-    const [productData, setProductData] = useState<Product>({
-        id: id_product,
-        name: '',
-        description: '',
-        primaryPhoto: '',
-        secondaryPhotos: [],
-        categories: [],
-        price: 0,
-        tax: 0,
-        show: true,
-        showHome: true,
-        stock: 0
-    });
-
-    const { id, name, description, primaryPhoto, secondaryPhotos,
-         categories, price, tax, show, showHome, stock } = productData;
-    
-    useEffect(()=>{
-        loadProduct(id_product);
-    }, [])
-
-    const loadProduct = async(id_product) =>{
-        setLoading(true);
-        const { product } = await ProductService.fetchProduct(id_product);
-        setProductData({
-            ...productData,
-            id: product.id,
-            name: product.name,
-            description: product.description,
-            primaryPhoto: product.primaryPhoto,
-            secondaryPhotos: product.secondaryPhotos,
-            categories: product.categories,
-            price: product.price,
-            tax: product.tax,
-            show: product.show,
-            showHome: product.showHome,
-            stock: product.stock
-        });
-        setLoading(false);
-    }
+    const { name, description, primaryPhoto, price } = product;
     
     return (
         <CustomerLayout header categories>
             <div className={styles.productContainer}>
-                {loading ? (
-                    < Spinner />
-                ) : (
                 <div>
                     <div className={styles.main}>
                         <div className={styles.coverImg}>
@@ -80,10 +36,29 @@ const Detail: React.FC<Props> = ({id_product}) => {
                         </div>
                     </div>
                 </div>
-                )}
             </div>
         </CustomerLayout>
     )
 }
 
+export const getServerSideProps: GetServerSideProps = async (context) => {
+    const id = context.query.id as string;
+
+    try {
+        const { product } = await ProductService.fetchProduct(id);
+        return {
+            props: { product },
+        };
+    } catch (error) {
+        return {
+            props: {
+                product: null,
+                relatedProducts: [],
+                error: 'Error in getting product',
+            },
+        };
+    }
+};
+
 export default Detail;
+
