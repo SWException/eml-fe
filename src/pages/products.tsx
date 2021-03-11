@@ -12,13 +12,17 @@ const Products: React.FC = () => {
     let products = [];
     for(var i = 0; i < 20; i++){
       var prodotto: Product = {
-        _id : "ID" + i,
+        id : "ID" + i,
         name: "TEST",
-        imageURL: "/image2.jpg",
-        category: "CAT",
+        primaryPhoto: "/image2.jpg",
+        categories: ['CAT'],
         description: "DESCR",
         price: 50 + i,
-      };  
+        show: true,
+        showHome: false,
+        stock: 20,
+        tax: 10,
+      }; 
       products[i] = prodotto;
     }
 

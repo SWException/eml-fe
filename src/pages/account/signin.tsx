@@ -66,7 +66,7 @@ const Login: React.FC = () => {
                 setLoading(false);
                 getJwt();
                 window.localStorage.setItem('mex', `Benvenuto ${email}, trova il prodotto adatto a te!`);
-                window.location.reload();
+                //window.location.reload();
                 setError('');
                 redirectToHomePage();
             })

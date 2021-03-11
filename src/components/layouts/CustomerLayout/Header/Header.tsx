@@ -3,6 +3,7 @@ import { Collapse, Navbar, NavbarToggler, Nav, NavItem, NavLink } from 'reactstr
 import Link from 'next/link';
 import styles from './Header.module.css';
 import { SearchBar } from 'components/ui';
+import { LogoutButton } from 'components/ui';
 
 
 const Header: React.FC = () => {
@@ -45,7 +46,7 @@ const Header: React.FC = () => {
                 </Link>
               </NavItem>
               <NavItem>
-                <Link href="/account/signout"><NavLink>Logout</NavLink></Link>
+                <LogoutButton />
               </NavItem>
                 </Fragment>
               ) : (

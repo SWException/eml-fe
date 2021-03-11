@@ -2,7 +2,6 @@ import React from "react";
 import style from './AddressForm.module.css'
 import {Form, Label, Input } from 'reactstrap';
 
-
 const AddressForm: React.FC = () => {
 
   return (
