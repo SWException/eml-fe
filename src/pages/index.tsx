@@ -14,23 +14,7 @@ const Index: React.FC = () => {
 
     useEffect(()=>{
       products.length === 0 && loadProducts();
-      console.log(products);
     }, [])
-
-    /*let products = [];
-    for(var i = 0; i < 8; i++){
-      var prodotto: Product = {
-        id : "ID " + i,
-        name: "Product Name",
-        photo: "/image.jpg",
-        secondaryPhoto: '',
-        category: "Category",
-        description: "DESCR",
-        tax: 1,
-        netprice: 1234,
-      };  
-      products[i] = prodotto;
-    }*/
     
     return (
       <CustomerLayout header categories>

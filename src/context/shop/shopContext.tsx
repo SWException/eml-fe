@@ -1,11 +1,11 @@
 import React, { createContext, useReducer, useContext } from 'react';
 import { LOAD_PRODUCTS } from './shopTypes';
 import { ProductService } from 'services/productService';
-import { Product } from '../../types/product';
+import { Product, Products } from '../../types/product';
 import reducer from './shopReducer';
 
 interface InitialStateType {
-  products: Product[];
+  products: Products;
   isLoading: boolean;
   hasLoadMore: boolean;
   currentPage: number;
@@ -30,7 +30,7 @@ export const ShopProvider: React.FC = ({ children }) => {
       params: { page: state.currentPage, limit: 10 },
     };
     const data = await ProductService.fetchProducts(payload);
-    console.log(data);
+
     dispatch({ type: LOAD_PRODUCTS, payload: data });
   }
 

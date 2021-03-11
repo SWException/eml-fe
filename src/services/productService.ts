@@ -19,20 +19,26 @@ const fetchProducts = async (payload?: ProductPayload): Promise<ProductsData> =>
     const res = await fetch('https://virtserver.swaggerhub.com/swexception4/OpenAPI/0.0.2/products', requestOptions)
     const products = await res.json();
 
-    console.log(products)
+    console.log(products.data);
 
     const productsData: ProductsData = {
       products: products.data,
       total: products.data.length,
     };
 
-    console.log(productsData);
-
     return productsData;
 
   } catch (error) {
     throw new Error('Error on fetching Products');
   }
+};
+
+export const ProductService = {
+  fetchProducts,
+  /*
+  fetchProduct,
+  addProduct,
+  deleteProduct,*/
 };
 /*
 export const fetchProduct = async (id: string): Promise<ProductData> => {
@@ -71,10 +77,3 @@ export const deleteProduct = async (id: string): Promise<void> => {
   }
 };
 */
-export const ProductService = {
-  fetchProducts,
-  /*
-  fetchProduct,
-  addProduct,
-  deleteProduct,*/
-};

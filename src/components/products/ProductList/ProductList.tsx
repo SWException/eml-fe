@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { Products } from 'types';
+import { Product, Products } from 'types';
 import React from 'react';
 import Image from 'next/image';
 import styles from './ProductList.module.css';
@@ -12,13 +12,13 @@ const ProductList: React.FC<Props> = ({products}) => {
   return (
     <>
       <div className={styles.productGrid}>
-        {products.map((product) => (
+        {products.map((product: Product) => (
           <Link href={`/detail?id=${product.id}`} key={product.id}>
             <a>
               <div>
                 <div className={styles.productImgWrapper}>
                   <Image
-                    src={product.photo}
+                    src={product.primaryPhoto}
                     alt="Picture of the author"
                     width={500}
                     height={500}

@@ -10,15 +10,19 @@ interface Props {
 }
 
 const Detail: React.FC<Props> = ({product}) => {
+    
     product = {
-        _id : "ProductId",
-        name: "Awesome product",
-        imageURL: "/image2.jpg",
-        category: "Categories",
-        description: "This is a default description",
-        price: 1234,
-      };  
-    let qty = 1;
+        id : "ID",
+        name: "TEST",
+        primaryPhoto: "/image2.jpg",
+        categories: ['CAT'],
+        description: "DESCR",
+        price: 50,
+        show: true,
+        showHome: false,
+        stock: 20,
+        tax: 10,
+    };
 
     const router = useRouter();
     return (
@@ -26,7 +30,7 @@ const Detail: React.FC<Props> = ({product}) => {
             <div className={styles.productContainer}>
                 <div className={styles.main}>
                     <div className={styles.coverImg}>
-                        <img className={styles.img} src={product.imageURL} alt={product.name}/>
+                        <img className={styles.img} src={product.primaryPhoto} alt={product.name}/>
                     </div>
                 </div>
                 <div className={styles.productInfo}>
@@ -39,8 +43,6 @@ const Detail: React.FC<Props> = ({product}) => {
                     </div>
                 </div>
             </div>
-            {/*<Heading className={styles.heading}> Related Products </Heading>
-            <ProductList products={relatedProducts} />*/}
         </CustomerLayout>
     )
 }
