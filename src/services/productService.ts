@@ -33,6 +33,27 @@ const fetchProducts = async (payload?: ProductPayload): Promise<ProductsData> =>
   }
 };
 
+export const fetchProduct = async (id: string): Promise<ProductData> => {
+  try {
+    const requestOptions = {
+      method: 'GET',
+      headers: { 
+        "Access-Control-Allow-Origin": "*",
+        'Content-Type': 'application/json'
+       }
+    };
+    const res = await fetch(`https://virtserver.swaggerhub.com/swexception4/OpenAPI/0.0.2/products/${id}`, requestOptions)
+    const data = await res.json();
+
+    const productData: ProductData = {
+      product: data.data
+    };
+    return productData;
+  } catch (error) {
+    throw new Error(error);
+  }
+};
+
 
 export const ProductService = {
   fetchProducts,
