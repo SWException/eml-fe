@@ -24,7 +24,7 @@ const Header: React.FC = () => {
     <Fragment>
       <Navbar className={styles.navbar} expand="md">
         <Link href="/">
-          <NavLink className={styles.siteTitle}>EMPORIO LAMBDA</NavLink>
+          <NavLink className={styles.siteTitle}>COMPANY NAME</NavLink>
         </Link>
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>

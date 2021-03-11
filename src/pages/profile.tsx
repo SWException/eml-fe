@@ -5,6 +5,7 @@ import { useRouter } from 'next/router';
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 import { AddressForm } from 'components/checkout';
 import { CustomerLayout } from 'components/layouts/CustomerLayout';
+import styles from 'styles/Profile.module.css';
 Amplify.configure(awsconfig);
 
 // Salva in automatico i cookie per ricordare se il login è stato fatto
@@ -66,22 +67,25 @@ const Profile: React.FC = ()=>{
     return (
         <CustomerLayout header>
             <strong>User: {email}</strong>
-            <div>
-                <p>Here you can manage your addresses</p>
-                <p>Add a new one</p>
-                <AddressForm/> 
-                <button type="button">Add</button>
-                <p>Or delete an existing one</p>
-                <select>
-                    <option>Address 1</option>
-                    <option>Address 2</option>
-                    <option>Address 3</option>
-                </select>
-                <button type="button">Delete this address</button>
+            <div className={styles.div}>
+                    <h1 className={styles.h1}>Here you can manage your addresses</h1>
+                    <h2>Add a new one</h2>
+                    <AddressForm/>
+                    <p/> 
+                    <Button>Add</Button>
+                    <p/>
+                    <h2>Or delete an existing one</h2>
+                    <select>
+                        <option>Address 1</option>
+                        <option>Address 2</option>
+                        <option>Address 3</option>
+                    </select>
+                    <p/>
+                    <Button>Delete this address</Button>
             </div>
-            <div>
-                <p>Here you can manage your password</p>
+            <div className={styles.div}>
                 <Form>
+                    <h1 className={styles.h1}>Here you can manage your password</h1>
                     <FormGroup>
                         <Label for="oldPassword">Old Password</Label>
                         <Input type="password" onChange={(e)=>{changeOld(e);}} name="password" id="oldPassword" placeholder="Old Password" />
@@ -99,8 +103,8 @@ const Profile: React.FC = ()=>{
                     </div>  
                 </Form>
             </div>
-            <div>
-                <p>Here you can manage your email</p>
+            <div className={styles.div}>
+                <h1 className={styles.h1}>Here you can manage your email</h1>
                 <Form>
                     <FormGroup>
                         <Label for="newEmail">New Email</Label>
@@ -115,9 +119,9 @@ const Profile: React.FC = ()=>{
                     </div>  
                 </Form>
             </div>
-            <div>
-                <p>DANGER ZONE!</p>
-                <button type="button">Request account deletion</button>
+            <div className={styles.div}>
+                <h1>DANGER ZONE! Here you can request the delation of the account</h1>
+                <Button>Request account deletion</Button>
             </div>
         </CustomerLayout>
     );
