@@ -48,6 +48,7 @@ export const fetchProduct = async (id: string): Promise<ProductData> => {
     const productData: ProductData = {
       product: data.data
     };
+    
     return productData;
   } catch (error) {
     throw new Error(error);

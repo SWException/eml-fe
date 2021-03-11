@@ -22,7 +22,7 @@ const Detail: React.FC<Props> = ({id_product}) => {
         name: '',
         description: '',
         primaryPhoto: '',
-        secondaryPhotos: '',
+        secondaryPhotos: [],
         categories: [],
         price: 0,
         tax: 0,
@@ -33,7 +33,7 @@ const Detail: React.FC<Props> = ({id_product}) => {
 
     const { id, name, description, primaryPhoto, secondaryPhotos,
          categories, price, tax, show, showHome, stock } = productData;
-
+    
     useEffect(()=>{
         loadProduct(id_product);
     }, [])
