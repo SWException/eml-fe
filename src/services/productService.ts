@@ -1,5 +1,5 @@
 import { APIClass } from 'aws-amplify';
-import { Products, ProductsData } from '../types/product';
+import { Products, ProductsData, ProductData } from '../types/product';
 //import { catchError } from 'utils/catchError';
 //import apiClient from 'utils/apiClient';
 
@@ -33,47 +33,11 @@ const fetchProducts = async (payload?: ProductPayload): Promise<ProductsData> =>
   }
 };
 
+
 export const ProductService = {
   fetchProducts,
-  /*
   fetchProduct,
+  /*
   addProduct,
   deleteProduct,*/
 };
-/*
-export const fetchProduct = async (id: string): Promise<ProductData> => {
-  try {
-    const url = `/products/${id}`;
-    const { data } = await apiClient.get(url);
-
-    const productData: ProductData = {
-      product: data.data.product,
-      relatedProducts: data.data.relatedProducts,
-    };
-    return productData;
-  } catch (error) {
-    throw new Error(catchError(error));
-  }
-};
-
-export const addProduct = async (product: AddProduct): Promise<AddProductData> => {
-  try {
-    const url = '/products';
-    const { data } = await apiClient.post(url, product);
-    return {
-      product: data.data.product,
-    };
-  } catch (error) {
-    throw new Error(catchError(error));
-  }
-};
-
-export const deleteProduct = async (id: string): Promise<void> => {
-  const url = `/products/${id}`;
-  try {
-    return await apiClient.delete(url);
-  } catch (error) {
-    throw new Error(catchError(error));
-  }
-};
-*/

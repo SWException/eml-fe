@@ -1,14 +1,29 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import {Button} from 'reactstrap'
 import styles from './ProductPhoto.module.css';
 
 
 const ProductQuantity: React.FC = () => {
 
+  const [quantity, setQuantity] = useState(0);
+
+  useEffect(()=>{
+    setQuantity(1);
+  }, [])
+
   return (
     <>
-      <button type="button">-</button>
-      <input type="text" value="1"/>
-      <button type="button">+</button>
+      <Button onClick={()=>{
+        if(quantity>1){
+          setQuantity(quantity-1);
+        }
+      }}>-</Button>
+      <input type="text" value={quantity} onChange={()=>{
+        console.log('Changed');
+      }}/>
+      <Button onClick={()=>{
+        setQuantity(quantity+1)
+      }}>+</Button>
     </>
   );
 };

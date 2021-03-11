@@ -18,6 +18,11 @@ export interface ProductsData {
     products: Product[];
     total: number;
 }
+
+export interface ProductData {
+    product: Product;
+}
+
   
 /*
 export interface AddProduct {
