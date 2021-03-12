@@ -1,0 +1,63 @@
+.item {
+    padding: 20px 30px;
+    display: flex;
+    margin: 25px;
+    border-top:  1px solid #E1E8EE;
+    border-bottom:  1px solid #E1E8EE;
+  }
+
+.buttons {
+    margin-right: 50px;
+    margin-left: 40px;
+    margin-top: 20px;
+    height: 30px;
+    width: 30px;
+    Cursor: pointer;
+    text-align: center;
+  }
+
+.image {
+    margin-right: 50px;
+    margin-left: 40px;
+  }
+   
+.information {
+    padding-top: 20px;
+    margin-right: 40px;
+    margin-left:40px;
+    width: 115px;
+    text-align: center;
+    margin-top: 5px;
+  }
+   
+.information span {
+    display: block;
+    font-size: 14px;
+    color: #43484D;
+    font-weight: 400;
+  }
+
+
+.quantity {
+  padding-top: 20px;
+  margin-left: 40px;
+  margin-right: 50px;
+
+}
+.quantity input {
+  -webkit-appearance: none;
+  border: none;
+  text-align: center;
+  width: 32px;
+  font-size: 16px;
+  color: #43484D;
+  font-weight: 300;
+}
+ 
+
+.minus {
+  margin-bottom: 3px;
+}
+.plus {
+  margin-top: 2px;
+}

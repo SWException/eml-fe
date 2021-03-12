@@ -1,6 +1,7 @@
 import { ProductQuantity } from 'components/products';
 import React, {useEffect, useState} from 'react';
-
+import {Button} from 'reactstrap'
+import styles from 'components/cart/ProductCard/ProductCard.module.css'
 interface Props {
     id: number,
     name: string,
@@ -16,28 +17,29 @@ const ProductCard: React.FC<Props> = ({id, name, photo, price, quantity}) => {
     useEffect(()=>{
         setQuantity(quantity);
     }, [])
+  
+    const totart=price*quantity;
 
     return (
-        <div className="">
-            <div className="">
-                <div className="">
-                    <img className="" src={photo} height="500" width="500" alt="..."></img>
+
+            <div className={styles.item}>
+                <button className={styles.buttons}>x</button>
+                <img className={styles.img} src={photo} height="100" width="100" alt="..."/>
+                <span className={styles.information}><strong>ID: </strong>{id}</span>
+                <span className={styles.information}><strong>NAME: </strong>{name.toUpperCase()}</span>
+                <span className={styles.information}><strong>PRICE: </strong>€ {price}</span>
+                <div className={styles.quantity}>
+                <button className={styles.plus} type="button" name="button">
+                    +
+                </button>
+                <input type="text" name="name" value={quantity}></input>
+                <button className={styles.minus} type="button" name="button">
+                    -
+                </button>
                 </div>
-                <div className="">
-                    <div className="" style={{}}>
-                        <p>This is the id: {id}</p>
-                        <p className="">{name.toUpperCase()}</p>
-                        <p><strong>{price} €</strong></p>
-                        <p>Quantità: {_quantity}</p>
-                    </div>
-                </div>
-                <div>
-                    <ProductQuantity/>
-                    <button type="button">Remove all</button>
-                </div>
-            </div>
-        </div>
-    );
+                <span className={styles.information}><strong>SUBTOTAL: </strong>€ {totart}</span>
+            </div>    
+    )
 };
 
 export default ProductCard;

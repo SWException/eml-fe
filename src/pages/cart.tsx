@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from 'next/router';
 import { Button } from 'reactstrap';
 import { CustomerLayout } from 'components/layouts/CustomerLayout';
+import styles from 'styles/Cart.module.css'
 
 interface Props {
     cartItems: any, //ASSOLUTAMENTE DA CONTROLLARE
@@ -21,11 +22,11 @@ const Cart: React.FC<Props>= ({cartItems}) => {
     }
 
     return (
-        <CustomerLayout header>
-            <div className="items">
-                <div className="title-main">
+        <CustomerLayout header footer>
+             <div className={styles.title}>
                     <h1>Cart</h1>
-                </div>
+            </div>
+            <div className={styles.cart}>
                 <div className="cart-item-layout">
                 {cartItems.products.map((product) => (
                     <ProductCard 
@@ -38,9 +39,9 @@ const Cart: React.FC<Props>= ({cartItems}) => {
                 ))}
                 </div>
             </div>
-            <div className="total">
-                <div style={{marginRight: "10px"}}><strong>Total: {cartItems.total}{" €"} </strong></div>
-                <div style={{marginRight: "10px"}}><strong>Taxes: {cartItems.tax}{" €"} </strong></div>
+            <div className={styles.total}>
+                <div><strong>Total: {cartItems.total}{" €"} </strong></div>
+                <div><strong>Taxes: {cartItems.tax}{" €"} </strong></div>
                 <Button color="primary" onClick={()=>{onSubmit()}}>Vai al checkout</Button>
             </div>
         </CustomerLayout>
