@@ -13,6 +13,13 @@ interface UserDetails {
   name: string;
 }
 
+/*
+TODO: 
+- Capire ad inizializzazione app come prendere utente
+- Settare token expirancy
+- Valutare utilizzo cookies con nookies (Nextjs)
+*/
+
 interface InitialStateType {
   isAuthenticated: boolean;
   currentUser: User | null;

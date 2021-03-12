@@ -3,13 +3,21 @@ import awsconfig from 'aws-exports';
 import { CustomerLayout } from 'components/layouts/CustomerLayout';
 import { AuthService } from 'services'
 import React, { useState } from 'react';
-
 import { Spinner, Button, Form, FormGroup, Label, Input } from 'reactstrap';
+import { useRouter } from 'next/router';
 Amplify.configure(awsconfig);
 
-// Non fa in automatico anche il login, perché comunque bisogna verificare l'email
+/*
+TODO:
+- Sistemare display di Errori e Messaggi di successo in inglese
+- Sistemare useState unificando
+- Creare due componenti per l'HTML tipo SignupCredentials & SignupCode per
+    migliorare leggibilità codice?
+*/
 
 const SignUp: React.FC = () => {
+
+    const router = useRouter()
 
     //Lavorare su state configurato meglio stile Reducer
     const [email, setEmail] = useState('');
@@ -24,48 +32,28 @@ const SignUp: React.FC = () => {
     const [message, setMessage] = useState('');
     
     async function signUp() {
-        /*try {
-            if(same){
-                console.log(email);
-                const { user } = await Auth.signUp({
-                    username: email, password
-                });
-                console.log("Registrazione effettuata");
-                setMessage('Registrazione avvenuta con successo! Conferma la tua mail inserendo il codice ricevuto');
-                setError('')
-                displayInfo();
-                console.log(user);
-                setLoading(false);
-                setIsCode(true);
-            }
-        } catch (error) {
-            setLoading(false);
-            if(same){
-                console.log('error signing up:', error);
-                setError('Password troppo corta! Lunghezza minima: 6 caratteri');
-            } else {
-                setError('Le due password non combaciano! Controlla e riprova!');
-            }
-            setMessage('');
-            displayErr();
-        }*/
         setLoading(true);
         try {
             const { confirmCode } = await AuthService.signUp(email, password)
+            setMessage('Registrazione avvenuta con successo! Conferma la tua mail inserendo il codice ricevuto');
+            setError('')
+            displayInfo();
             setIsCode(confirmCode);
         } catch (e) {
             console.log(e)
+            setError('Something went wrong! Retry!')
+            setMessage('');
+            displayErr();
         }
         setLoading(false)
     }
     
     async function confirmSignUp() {
         try {
-            await Auth.confirmSignUp(emailRec, code);
-            console.log("Codice confermato");
-            setMessage('Codice cliente confermato! Benvenuto su Emporio Lambda!');
-            setError('');
-            displayInfo();
+            setLoading(true);
+            await AuthService.confirmCode(emailRec, code);
+            setLoading(false);
+            router.push('/');
         } catch (error) {
             console.log('error confirming sign up', error);
             setError('Errore di conferma! Codice errato, riprovare o slicca Rinvia Codice');

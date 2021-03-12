@@ -118,10 +118,16 @@ const signUp = async (email: string, password:string): Promise<NewUser> => {
     return userData;
 };
 
-const confirmCode = async(email: string, code: number): Promise<NewUser> => {
+const confirmCode = async(email: string, code: string): Promise<NewUser> => {
     //Sistemare codice
+    try {
+      await Auth.confirmSignUp(email, code);
+      console.log("Codice confermato");
+    } catch (error) {
+        console.log('error confirming sign up', error);
+    }
     //Rimandare a Login (da Context?)
-    return;
+    return ;
 }
 
 /*
