@@ -4,9 +4,9 @@
     margin-bottom: 2rem;
 }
 
-.main,
 .productInfo {
     flex-basis: 100%;
+    margin-left: 25px;
 }
 .productInfo {
     padding: 2rem;
@@ -60,6 +60,18 @@
 .heading {
     padding: 0 2rem;
 }
+
+.div{
+    margin-left: 25px;
+    margin-top: 25px;
+}
+
+.carousel{
+    margin-left: 25px;
+    margin-top: 25px;
+}
+
+.carousel-inner > .item > img { width:130px; height:130px; }
 
 @media only screen and (min-width: 1024px) {
     .main,
