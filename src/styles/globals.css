@@ -75,3 +75,11 @@ textarea {
   font-family: 'Poppins';
 }
 
+h1{
+  text-align: center;
+}
+
+button{
+  border-radius: 4px;
+  padding:  4px 20px 4px 20px;
+}
