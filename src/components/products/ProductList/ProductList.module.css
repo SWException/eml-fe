@@ -5,18 +5,15 @@
   
 .productGrid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-gap: 1.5rem;
-  margin: 2rem 0;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-gap: 2rem;
+  margin: 6rem 6rem 6rem 6rem;
+  font-size: 1.7rem;
+  color: var(--color-dark);
 }
 
 .productInfo {
   padding: 1rem;
-}
-
-.productGrid {
-  font-size: 1.7rem;
-  color: var(--color-dark);
 }
 
 .productName {
@@ -30,8 +27,3 @@
   font-weight: 600;
 }
 
-@media only screen and (min-width: 768px) {
-  .productGrid {
-    grid-template-columns: repeat(auto-fill, minmax(25rem, 1fr));
-  }
-}

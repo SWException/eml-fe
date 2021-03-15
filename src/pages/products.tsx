@@ -28,8 +28,10 @@ const Products: React.FC = () => {
 
     return (
         <CustomerLayout header categories footer>
-            <Filters/>
-            <Sort/>
+          <div>
+            <div className={styles.div}>  Price:<Filters/> </div>
+            <div className={styles.div}>  Price Ordinament:<Sort/></div>
+            <div>
             {products.length > 0 ? (
             <ProductList products={products} />
             ) : (
@@ -37,8 +39,11 @@ const Products: React.FC = () => {
                 No products found. Try searching for other keyword.
             </div>
             )}
+            </div>
+          </div>
         </CustomerLayout>
     );
 };
+
 
 export default Products;

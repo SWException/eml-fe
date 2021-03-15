@@ -4,15 +4,17 @@ import styles from './Sort.module.css';
 const Sort: React.FC = () => {
   return (
     <>
-      <form className={styles.searchForm}>
+      <form className={styles.form}>
+        <div>
         <select>
           <option>
-            Price: Low to High
+            Low to High     
           </option>
           <option>
-            Price: High to Low
+            High to Low    
           </option>
         </select>
+        </div>
       </form>
     </>
   );
