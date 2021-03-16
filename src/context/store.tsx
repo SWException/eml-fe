@@ -1,5 +1,5 @@
 import React from 'react';
-//import { AuthProvider } from './auth';
+import { AuthProvider } from './auth';
 //import { CartProvider } from './cart';
 import { ShopProvider } from './shop';
 //import { ToastProvider } from './toast';
@@ -32,6 +32,7 @@ export const StoreProvider: React.FC<InitialStateProps> = ({ children, currentUs
     <ProviderComposer
       contexts={[
         <ShopProvider key="1" />,
+        <AuthProvider currentUser={currentUser} key="2" />
       ]}
     >
       {children}

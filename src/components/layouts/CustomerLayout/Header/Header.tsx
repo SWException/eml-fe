@@ -4,16 +4,17 @@ import Link from 'next/link';
 import styles from './Header.module.css';
 import { SearchBar } from 'components/ui';
 import { LogoutButton } from 'components/ui';
+import { useAuth } from 'context';
 
 
 const Header: React.FC = () => {
+
   const [isOpen, setIsOpen] = useState(false);
-  const [isAuth, setIsAuth] = useState(false);
+
+  const { isAuthenticated } = useAuth()
 
   useEffect(()=>{
-    if(window.localStorage.getItem('jwt')){
-      setIsAuth(true);
-    }
+    //
   })
 
   const toggle = () => {
@@ -33,7 +34,7 @@ const Header: React.FC = () => {
               <SearchBar/>
             </NavItem>
             <Fragment>
-              {isAuth ? (
+              {isAuthenticated ? (
                 <Fragment>
               <NavItem>
                 <Link href="/profile">
@@ -51,8 +52,11 @@ const Header: React.FC = () => {
                 </Fragment>
               ) : (
                 <Fragment>
-                <NavItem>
-                  <Link href="/account/signin"><NavLink>Login</NavLink></Link>
+                  <NavItem>
+                    <Link href="/account/signin"><NavLink>Login</NavLink></Link>
+                  </NavItem>
+                  <NavItem>
+                  <Link href="/account/signup"><NavLink>Signup</NavLink></Link>
                 </NavItem>
                 </Fragment>
               )}
