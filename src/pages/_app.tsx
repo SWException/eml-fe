@@ -2,6 +2,7 @@ import React from 'react';
 import App, { AppProps, AppContext } from 'next/app';
 import { User } from '../types/user';
 import 'styles/globals.css';
+import { AuthService } from 'services/authService';
 import { StoreProvider } from '../context/store';
 
 interface MyAppProps extends AppProps {

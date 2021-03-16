@@ -26,7 +26,6 @@ interface NewUser {
 }*/
 
 /*const getMe = async (token: string): Promise<UserData> => {
-  setAuthToken(token);
   try {
     const { data } = await apiClient.get(`/auth/me`);
 
@@ -37,7 +36,7 @@ interface NewUser {
 
     return userData;
   } catch (error) {
-    throw new Error(catchError(error));
+    console.log(error);
   }
 };*/
 
