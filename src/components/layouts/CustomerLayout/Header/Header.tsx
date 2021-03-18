@@ -1,14 +1,17 @@
 import React, { useState, useEffect, Fragment } from 'react';
-import { Collapse, Navbar, NavbarToggler, Nav, NavItem, NavLink } from 'reactstrap';
+import { Collapse, Navbar, NavbarToggler, Nav, NavItem, NavLink, ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 import Link from 'next/link';
 import styles from './Header.module.css';
 import { SearchBar } from 'components/ui';
 import { LogoutButton } from 'components/ui';
 
-
 const Header: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isAuth, setIsAuth] = useState(false);
+  const [dropdownOpen, setOpen] = useState(false);
+
+  const dropeffect = () =>{setOpen(!dropdownOpen);} 
+
 
   useEffect(()=>{
     if(window.localStorage.getItem('jwt')){
@@ -29,21 +32,23 @@ const Header: React.FC = () => {
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
           <Nav className="ml-auto" navbar>
-            <NavItem>
-              <SearchBar/>
+          <NavItem>
+                <SearchBar/>
             </NavItem>
             <Fragment>
               {isAuth ? (
                 <Fragment>
               <NavItem>
-                <Link href="/profile">
-                  <NavLink>Profile</NavLink>
-                </Link>
-              </NavItem>
-              <NavItem>
-                <Link href="/orders">
-                  <NavLink>My Orders</NavLink>
-                </Link>
+              <ButtonDropdown isOpen={dropdownOpen} toggle={dropeffect}>
+                <DropdownToggle caret color="--color-lightblue" size="lg" font-size="3rem" font-weight="600">
+                  Profile
+                </DropdownToggle>
+                <DropdownMenu>
+                  <DropdownItem href="/profile">Account Settings</DropdownItem>
+                  <DropdownItem divider />
+                  <DropdownItem href="/orders">My orders</DropdownItem>
+                </DropdownMenu>
+              </ButtonDropdown>
               </NavItem>
               <NavItem>
                 <LogoutButton />

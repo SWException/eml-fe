@@ -1,12 +1,12 @@
 import React from 'react';
-import { Navbar, Nav, NavItem, NavLink, NavbarText } from 'reactstrap';
+import { Navbar, Nav, NavItem, NavLink } from 'reactstrap';
 import styles from './Categories.module.css';
 
 const Categories: React.FC = () => {
   return (
     <div>
       <Navbar className={styles.bar} color="light" expand="md">
-        <Nav className="mr-auto" navbar>
+        <Nav navbar>
           <NavItem>
             <NavLink href="/products">CATEGORY 1</NavLink>
           </NavItem>

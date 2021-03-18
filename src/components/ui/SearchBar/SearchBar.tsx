@@ -7,14 +7,10 @@ const SearchBar: React.FC = () => {
 
   return (
     <>
-      <form className={styles.searchForm}>
-        <input
-          className={styles.input}
-          type="text"
-          placeholder="Search Product..."
-        />
+      <form>
+        <input className={styles.input} type="text" placeholder="Search Product..."/>
         <button className={styles.searchButton} type="submit" formAction="/products">
-          SEARCH
+          S
         </button>
       </form>
     </>

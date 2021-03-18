@@ -14,12 +14,12 @@
 }
 /* Change the color of links on hover */
 .navbar a:hover {
-    background-color: var(--color-selection);
+    background-color: var(--color-gray);
     color: var(--color-dark);
   }
   
   /* Style the "active" element to highlight the current page */
   .navbar a.active {
-    background-color: var(--color-lightblue);
+    background-color: var(--color-gray-light);
     color: var(--color-light);
   }
