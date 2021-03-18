@@ -1,0 +1,16 @@
+.div{
+    border-radius: 10px;
+    border: ridge var(--color-gray-dark);
+    padding: 20px;
+    margin-left:35%;
+    margin-right: 35%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+
+.p{
+    font-size:12px;
+    display:inline-flex;
+    margin-top: 25px;
+}

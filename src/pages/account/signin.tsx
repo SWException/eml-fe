@@ -5,6 +5,7 @@ import { Spinner, Button, Form, FormGroup, Label, Input } from 'reactstrap';
 import { SetNewPassword} from 'components/auth';
 import { useRouter } from 'next/router';
 import { CustomerLayout } from 'components/layouts/CustomerLayout';
+import styles from 'styles/Account.module.css'
 
 Amplify.configure(awsconfig);
 
@@ -65,7 +66,7 @@ const Login: React.FC = () => {
                 }
                 setLoading(false);
                 getJwt();
-                window.localStorage.setItem('mex', `Benvenuto ${email}, trova il prodotto adatto a te!`);
+                window.localStorage.setItem('mex', `Welcome ${email}, find the right product for you!`);
                 //window.location.reload();
                 setError('');
                 redirectToHomePage();
@@ -73,7 +74,7 @@ const Login: React.FC = () => {
             .catch(error => {
                 console.log('error signing in', error);
                 setLoading(false);
-                setError(`Errore nell'inserimento dei dati! Controllare password e/o email e riprovare`);
+                setError(`Error in entering data! Check your password and / or email and try again`);
                 setMessage('');
                 displayErr();
             });
@@ -96,52 +97,53 @@ const Login: React.FC = () => {
     }
 
     return (
-        <CustomerLayout header>
+        <CustomerLayout header footer>
             {remember ? (
             <SetNewPassword />
             ) : (
-            <div className="">
-                <div className="">
-                    <h1>Login</h1>
+                <div className={styles.div}>
+                    <h1 style={{marginTop: "5px"}}>Login</h1>
                     <Form>
-                    <FormGroup className="">
+                    <FormGroup>
                         <Label for="exampleEmail" className="">Email</Label>
                         <Input type="email" name="email" onChange={(e)=>{setEmail(e.target.value)}} id="exampleEmail" placeholder="something@idk.cool" />
                     </FormGroup>
-                    <FormGroup className="">
+                    <FormGroup>
                         <Label for="examplePassword" className="">Password</Label>
                         <Input type="password" name="password" onChange={(e)=>{setPassword(e.target.value)}} id="examplePassword" placeholder="sUpErStrong1!" />
                     </FormGroup>
-                    <div className="">
+                    <div>
                         {loading ? (
                             <Spinner color="primary" style={{marginTop: "20px"}}/>
                         ) : (
-                        <div className="buttons-cont">
-                            <Button className="" onClick={()=>{setRemember(true)}} color="primary">Recupero</Button>
-                            <Button className="" color="primary" onClick={signIn}>Login</Button>
+                        <div>
+                            <Button color="primary" size="lg" onClick={signIn}>Login</Button> 
+                            <div>
+                                <p className={styles.p}>Forgot your password?</p>
+                                <Button onClick={()=>{setRemember(true)}} color="primary" size="lg" style={{marginLeft: "10px"}}>Recover</Button>
+                            </div>
                         </div>
                         )}
                     </div>
-                    <div>
-                        <h1>Are you not registered? Do it now!</h1>
+                    <div style={{marginTop: "60px"}}>
+                        <h1 style={{fontSize: "20px"}}>Are you not registered? Do it now!</h1>
                     </div>
                     <div className="">
                     {loading ? (
-                            <Spinner color="primary" style={{marginTop: "20px"}}/>
+                            <Spinner color="primary"  style={{marginTop: "20px"}}/>
                         ) : (
                             <div className="">
-                            <Button className="" onClick={signUp} color="primary">SignUp</Button>
+                            <Button onClick={signUp} color="primary" size="lg" style={{marginLeft:"40%"}} >SignUp</Button>
                         </div>
                         )
                         }
                     </div>
                     </Form>
-                    <div className="">
+                    <div  style={{marginTop: "20px"}}>
                         {displayErr()}
                         {displayInfo()}
                     </div>
                 </div>
-            </div>
             )}
         
         </CustomerLayout>

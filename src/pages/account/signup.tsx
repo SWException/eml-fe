@@ -4,6 +4,7 @@ import { CustomerLayout } from 'components/layouts/CustomerLayout';
 import React, { useState } from 'react';
 import { Spinner, Button, Form, FormGroup, Label, Input } from 'reactstrap';
 Amplify.configure(awsconfig);
+import styles from 'styles/Account.module.css'
 
 // Non fa in automatico anche il login, perché comunque bisogna verificare l'email
 
@@ -30,7 +31,7 @@ const SignUp: React.FC = () => {
                     username: email, password
                 });
                 console.log("Registrazione effettuata");
-                setMessage('Registrazione avvenuta con successo! Conferma la tua mail inserendo il codice ricevuto');
+                setMessage('Registration was successful! Confirm your email by entering the code received');
                 setError('')
                 displayInfo();
                 console.log(user);
@@ -41,9 +42,9 @@ const SignUp: React.FC = () => {
             setLoading(false);
             if(same){
                 console.log('error signing up:', error);
-                setError('Password troppo corta! Lunghezza minima: 6 caratteri');
+                setError('Password too short! Minimum length: 6 characters');
             } else {
-                setError('Le due password non combaciano! Controlla e riprova!');
+                setError('The two passwords do not match! Check and try again!');
             }
             setMessage('');
             displayErr();
@@ -54,12 +55,12 @@ const SignUp: React.FC = () => {
         try {
             await Auth.confirmSignUp(emailRec, code);
             console.log("Codice confermato");
-            setMessage('Codice cliente confermato! Benvenuto su Emporio Lambda!');
+            setMessage('Customer number confirmed! Welcome to Emporio Lambda!');
             setError('');
             displayInfo();
         } catch (error) {
             console.log('error confirming sign up', error);
-            setError('Errore di conferma! Codice errato, riprovare o slicca Rinvia Codice');
+            setError('Confirmation error! Wrong code, try again or click "Resend Code"');
             setMessage('');
             displayErr();
         }
@@ -69,12 +70,12 @@ const SignUp: React.FC = () => {
         try {
             await Auth.resendSignUp(emailRec);
             console.log('code resent successfully');
-            setMessage('Codice rinviato con successo. Inserisci e conferma la registrazione!');
+            setMessage('Code returned successfully. Enter and confirm your registration!');
             setError('');
             displayInfo();
         } catch (error) {
             console.log('error resending code: ', error);
-            setError('Errore di connessione, riprovare!');
+            setError('Connection error, try again!');
             setMessage('');
             displayErr()
         }
@@ -93,65 +94,62 @@ const SignUp: React.FC = () => {
     }
 
     return (
-        <CustomerLayout header>
+        <CustomerLayout header footer>
             {isCode ? (
-                <div className="">
-                    <div className="">
+                    <div className={styles.div}>
                         <Form>
-                            <FormGroup className="">
+                            <FormGroup>
                                 <Label for="exampleEmail" className="">Email</Label>
                                 <Input type="email" name="email" onChange={(e)=>{setEmailRec(e.target.value)}} id="exampleEmail" placeholder="something@idk.cool" />
                             </FormGroup>
-                            <FormGroup className="">
+                            <FormGroup>
                                 <Label for="codiceExample" className="">Codice di Recupero</Label>
                                 <Input type="text" name="codice" onChange={(e)=>{setCode(e.target.value)}} id="exampleEmail" placeholder="1234" />
                             </FormGroup>
-                            <div className="">
-                                <Button className="" onClick={confirmSignUp} color="primary">Conferma registrazione</Button>
-                                <Button className="" onClick={resendConfirmationCode} color="primary">Rinvia codice</Button>
+                            <div>
+                                <Button size="lg" onClick={confirmSignUp} color="primary">Conferma registrazione</Button>
+                                <Button size="lg" onClick={resendConfirmationCode} color="primary" style={{marginLeft:"20px"}}>Rinvia codice</Button>
                             </div>
                         </Form>
-                        <div className="">
+                        <div style={{marginTop: "20px"}}>
                             {displayErr()}
                             {displayInfo()}
                         </div>
                     </div>
-                </div>
+
             ) : (
-            <div className="">
-                <div className="">
-                    <h1>Registrazione</h1>
+                <div className={styles.div}>
+                    <h1 style={{marginTop: "5px"}}>Create account</h1>
                     <Form>
-                        <FormGroup className="">
+                        <FormGroup>
                             <Label for="exampleEmail" className="">Email</Label>
                             <Input type="email" name="email" onChange={(e)=>{setEmail(e.target.value)}} id="exampleEmail" placeholder="something@idk.cool" />
                         </FormGroup>
-                        <FormGroup className="">
+                        <FormGroup>
                             <Label for="exampleEmail" className="">Ripeti Email</Label>
                             <Input type="email" name="email" onChange={(e)=>{setEmail(e.target.value)}} id="exampleEmail" placeholder="something@idk.cool" />
                         </FormGroup>
-                        <FormGroup className="">
+                        <FormGroup >
                             <Label for="examplePassword" className="">Password</Label>
                             <Input type="password" name="password" onChange={(e)=>{setPass(e.target.value)}} id="examplePassword" placeholder="sUpErStrong1!" />
                         </FormGroup>
-                        <FormGroup className="">
+                        <FormGroup>
                             <Label for="examplePassword" className="">Ripeti Password</Label>
                             <Input type="password" name="password" onChange={(e)=>{isSamePassword(e)}} id="examplePassword" placeholder="sUpErStrong1!" />
                         </FormGroup>
-                        <div className="">
+                        <div>
                             {loading ? (
                                 <Spinner color="primary" style={{marginTop: "20px"}}/>
                             ) : (
-                                <Button className="" color="primary" onClick={signUp}>Registrati</Button>
+                                <Button color="primary" size="lg" onClick={signUp} style={{marginLeft:"30%"}}>Create your account</Button>
                             )}                    
                         </div>
                     </Form>
-                    <div className="">
+                    <div style={{marginTop: "20px"}}>
                         {displayErr()}
                         {displayInfo()}
                     </div>
                 </div>
-            </div>
             )}
         </CustomerLayout>
     );
