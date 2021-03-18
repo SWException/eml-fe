@@ -1,11 +1,7 @@
 import React, { useState, useEffect } from "react";
-import {
-  CardElement,
-  useStripe,
-  useElements
-} from "@stripe/react-stripe-js";
+import { CardElement, useStripe, useElements} from "@stripe/react-stripe-js";
 import { Button, Spinner } from 'reactstrap'
-import style from './CheckoutForm.module.css'
+import styles from './CheckoutForm.module.css'
 import AddressForm from "../AddressForm";
 
 
@@ -85,31 +81,37 @@ const CheckoutForm: React.FC = () => {
   };
 
   return (
-    <form id="payment-form" onSubmit={handleSubmit} className="stripe-form">
-      <p>BILLING ADDRESS</p>
+    <form id="payment-form" onSubmit={handleSubmit}>
+      <div className={styles.form}>
+      <h1>BILLING ADDRESS</h1>
       <AddressForm/>
-      <p>If authenticated</p>
+      <p className={styles.p}>If authenticated</p>
       <select>
         <option>Address 1</option>
         <option>Address 2</option>
         <option>Address 3</option>
       </select>
       <br/>
-      <p>SHIPPING ADDRESS</p>
+      </div>
+      <div className={styles.form}>
+      <h1>SHIPPING ADDRESS</h1>
       <AddressForm/>
-      <p>OR</p>
-      <button type="button">Autofill with Billing Data</button>
-      <p>If authenticated</p>
+      <p className={styles.p}>OR</p>
+      <Button color="primary" size="lg" type="button">Autofill with Billing Data</Button>
+      <p className={styles.p}>If authenticated</p>
       <select>
         <option>Address 1</option>
         <option>Address 2</option>
         <option>Address 3</option>
       </select>
-      <p>Shipping cost: 10€</p>
-      <p>Total cost: total€</p>
+      </div>
+      <p className={styles.p}>Shipping cost: 10€</p>
+      <p className={styles.p}>Total cost: total€</p>
+      <div className={styles.form}>
+      <h1 marginTop="5px">PAYMENT</h1>
       <CardElement id="card-element" options={cardStyle} onChange={handleChange} />
       <div style={{display: "flex", alignItems: "center", justifyContent:"center", margin: "10px"}}>
-        <Button disabled={processing || disabled || succeeded} id="submit">
+        <Button color="primary" size="lg" disabled={processing || disabled || succeeded} id="submit">
           <span id="button-text">
             {processing ? (
               <Spinner />
@@ -136,7 +138,7 @@ const CheckoutForm: React.FC = () => {
       ) : (
         null
       )}
-      <p>
+      <p className={styles.p}>
         Payment succeeded, see the result in your
         <a
           href={`https://dashboard.stripe.com/test/payments`}
@@ -145,8 +147,9 @@ const CheckoutForm: React.FC = () => {
           Stripe dashboard.
         </a> Refresh the page to pay again.
       </p>
-      <button type="button">Cancel the Checkout</button>
-    </form>
+      </div>
+      <Button color="primary" size="lg" >Cancel the Checkout</Button>
+    </form> 
   );
 }
 
