@@ -40,12 +40,12 @@ const Cart: React.FC<Props>= ({cartItems}) => {
                 </div>
             </div>
             <div className={styles.remove}>
-                <Button color="primary">Remove all</Button>
+                <Button color="primary" size="lg">Remove all</Button>
             </div>
             <div className={styles.total}>
                 <div><strong>Total: {cartItems.total}{" €"} </strong></div>
                 <div><strong>Taxes: {cartItems.tax}{" €"} </strong></div>
-                <Button color="primary" onClick={()=>{onSubmit()}}>Checkout</Button>
+                <Button color="primary" size="lg" style={{marginTop: "10px"}} onClick={()=>{onSubmit()}}>Checkout</Button>
             </div>
 
         </CustomerLayout>

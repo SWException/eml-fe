@@ -6,15 +6,6 @@
     border-bottom:  1px solid #E1E8EE;
   }
 
-.buttons {
-    margin-right: 50px;
-    margin-left: 40px;
-    margin-top: 20px;
-    height: 30px;
-    width: 30px;
-    Cursor: pointer;
-    text-align: center;
-  }
 
 .image {
     margin-right: 50px;
@@ -22,12 +13,11 @@
   }
    
 .information {
-    padding-top: 20px;
+    padding-top: 30px;
     margin-right: 40px;
     margin-left:40px;
     width: 135px;
     text-align: center;
-    margin-top: 5px;
   }
    
 .information span {
@@ -39,7 +29,7 @@
 
 
 .quantity {
-  padding-top: 20px;
+  padding-top: 25px;
   margin-left: 40px;
   margin-right: 50px;
 
@@ -60,4 +50,12 @@
 }
 .plus {
   margin-top: 2px;
+}
+
+.delete{
+  margin-right:50px;
+  width: 25px;
+  height: 25px;
+  margin-top: 30px;
+  padding: 0;
 }
