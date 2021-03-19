@@ -29,11 +29,11 @@ const ProductCard: React.FC<Props> = ({id, name, photo, price, quantity}) => {
             <span className={styles.information}><strong>PRICE: </strong>€ {price}</span>
             <div className={styles.quantity}>
                 <button className={styles.plus} type="button" name="button">
-                    +
+                    -
                 </button>
                 <input type="text" name="name" value={quantity}></input>
                 <button className={styles.minus} type="button" name="button">
-                -
+                    +
                 </button>
             </div>
             <span className={styles.information}><strong>SUBTOTAL: € {totart} </strong></span>

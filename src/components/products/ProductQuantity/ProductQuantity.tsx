@@ -5,11 +5,15 @@ const ProductQuantity: React.FC = () => {
 
 
   return (
-    <>
-      <button type="button">-</button>
-      <input type="text" text-align="center" value="1"/>
-      <button type="button">+</button>
-    </>
+    <div className={styles.quantity}>
+      <button className={styles.plus} type="button" name="button">
+        -
+      </button>
+      <input type="text" name="name" value="1"></input>
+      <button className={styles.minus} type="button" name="button">
+        +
+      </button>
+    </div>
   );
 };
 

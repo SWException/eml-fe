@@ -1,12 +1,11 @@
 import React, { useRouter } from 'next/router';
 import { useState } from 'react';
-import { Button } from 'components/ui';
 import styles from 'styles/Detail.module.css';
 import { ProductService } from 'services/productService';
 import { ProductQuantity } from 'components/products';
 import { CustomerLayout } from 'components/layouts/CustomerLayout';
 import { Product } from '../types/product'
-import {Carousel, CarouselItem,CarouselControl,CarouselIndicators,CarouselCaption} from 'reactstrap';
+import { Button, Carousel, CarouselItem,CarouselControl,CarouselIndicators,CarouselCaption} from 'reactstrap';
 import { GetServerSideProps } from 'next';
 
 interface Props {
@@ -64,8 +63,9 @@ const Detail: React.FC<Props> = ({product}) => {
             key={item.src}
             onExiting={() => setAnimating(true)}
             onExited={() => setAnimating(false)}
+            height="400" width="400"
         >
-            <img src={item.src} alt={item.altText} />
+            <img src={item.src} height="400" width="400" alt={item.altText} />
             <CarouselCaption captionText={item.caption} captionHeader={item.caption} />
         </CarouselItem>
         );
@@ -73,29 +73,22 @@ const Detail: React.FC<Props> = ({product}) => {
 
         
     return (
-        <CustomerLayout header categories>
+        <CustomerLayout header categories footer>
             <div className={styles.productContainer}>
-                <div>
-                    <div className={styles.div}>
-                        <Carousel
-                            className={styles.carousel}
-                            activeIndex={activeIndex}
-                            next={next}
-                            previous={previous}
-                            >
-                            <CarouselIndicators items={items} activeIndex={activeIndex} onClickHandler={goToIndex} />
+                <Carousel className={styles.carousel} activeIndex={activeIndex} next={next} previous={previous}>
+                            <CarouselIndicators items={items} activeIndex={activeIndex}  color="dark" onClickHandler={goToIndex} />
                             {slides}
                             <CarouselControl direction="prev" directionText="Previous" onClickHandler={previous} />
                             <CarouselControl direction="next" directionText="Next" onClickHandler={next} />
-                        </Carousel>
-                    </div>
-                    <div className={styles.productInfo}>
+                </Carousel>
+                <div className={styles.productInfo}>
                         <div className={styles.productName}>{name}</div>
-                        <div className={styles.productPrice}>Price: €{price}</div>
+                        <div className={styles.productPrice}>Price: € {price}</div>
                         <div className={styles.productDesc}>{description}</div>
                         <div className={styles.productAction}><ProductQuantity/></div>
-                        <div className={styles.productAction}><Button/></div>
-                    </div>
+                        <div className={styles.productAction}>
+                            <Button color="primary" size="lg" marginTop="20px">Add to Cart</Button>
+                        </div>
                 </div>
             </div>
         </CustomerLayout>
