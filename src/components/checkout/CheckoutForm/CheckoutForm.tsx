@@ -81,11 +81,12 @@ const CheckoutForm: React.FC = () => {
   };
 
   return (
-    <form id="payment-form" onSubmit={handleSubmit}>
-      <div className={styles.form}>
+    <form id="payment-form" onSubmit={handleSubmit} className={styles.form}>
+      <div className={styles.div}>
+      <div className={styles.address} style={{marginRight: "160px"}}>
       <h1>BILLING ADDRESS</h1>
       <AddressForm/>
-      <p className={styles.p}>If authenticated</p>
+      <p className={styles.p}><b>Choose one: (solo se autenticato)</b></p>
       <select>
         <option>Address 1</option>
         <option>Address 2</option>
@@ -93,21 +94,22 @@ const CheckoutForm: React.FC = () => {
       </select>
       <br/>
       </div>
-      <div className={styles.form}>
+      <div className={styles.address}>
       <h1>SHIPPING ADDRESS</h1>
       <AddressForm/>
-      <p className={styles.p}>OR</p>
+      <p className={styles.p} style={{textDecoration: "underline"}}>OR</p>
       <Button color="primary" size="lg" type="button">Autofill with Billing Data</Button>
-      <p className={styles.p}>If authenticated</p>
+      <p className={styles.p}><b>Choose one: (solo se autenticato)</b></p>
       <select>
         <option>Address 1</option>
         <option>Address 2</option>
         <option>Address 3</option>
       </select>
       </div>
-      <p className={styles.p}>Shipping cost: 10€</p>
-      <p className={styles.p}>Total cost: total€</p>
-      <div className={styles.form}>
+      </div>
+      <p className={styles.p}><b>Shipping cost: 10€</b></p>
+      <p className={styles.p}><b>Total cost: € total</b></p>
+      <div className={styles.payment}>
       <h1 marginTop="5px">PAYMENT</h1>
       <CardElement id="card-element" options={cardStyle} onChange={handleChange} />
       <div style={{display: "flex", alignItems: "center", justifyContent:"center", margin: "10px"}}>
@@ -148,7 +150,7 @@ const CheckoutForm: React.FC = () => {
         </a> Refresh the page to pay again.
       </p>
       </div>
-      <Button color="primary" size="lg" >Cancel the Checkout</Button>
+      <Button color="primary" size="lg" style={{marginTop:"20px"}} >Cancel the Checkout</Button>
     </form> 
   );
 }
