@@ -1,7 +1,7 @@
 .footer {
     text-align: center;
     padding: 3px;
-    background-color: var(--color-lightblue);
-    color: var(--color-dark);
+    background-color: var(--color-night);
+    color: var(--color-light);
     width: 100%;
   }

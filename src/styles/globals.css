@@ -27,6 +27,7 @@ html {
   --color-selection: #99cbff;
   --border-radius: 6px;
   --color-description:#666;
+  --color-night: #252850;
 }
 
 @media only screen and (max-width: 768px) {

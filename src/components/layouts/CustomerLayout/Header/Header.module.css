@@ -1,25 +1,26 @@
 .navbar{
-    background-color: var(--color-lightblue);
+    background-color: var(--color-night);
+    color: var(--color-light)
 }
 
 .siteTitle {
     font-size: 3rem;
-    font-weight: 600;
-    color: var(--color-dark);
+    font-weight: 800;
   }
 
 .navbar a{
-    font-weight: 600;
-    color: var(--color-dark);
+    font-weight: 800;
+    color: var(--color-light);
 }
 /* Change the color of links on hover */
 .navbar a:hover {
-    background-color: var(--color-gray);
     color: var(--color-dark);
+    background-color: var(--color-gray);
+    height: 40;
   }
   
   /* Style the "active" element to highlight the current page */
   .navbar a.active {
     background-color: var(--color-gray-light);
-    color: var(--color-light);
+    color: var(--color-dark);
   }

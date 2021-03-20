@@ -7,7 +7,7 @@ const Footer: React.FC = () => {
   
   return (
     <div className={styles.footer}>
-      <p>NOME AZIENDA</p>
+      <p style={{marginTop: "10px"}} >NOME AZIENDA</p>
       <p>partita iva</p>
       <p>indirizzo</p>
       <p>Contatti:</p>
