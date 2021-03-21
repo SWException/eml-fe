@@ -25,7 +25,7 @@ const Header: React.FC = () => {
   return (
     <Fragment>
       <Navbar className={styles.navbar} expand="md">
-            <img src="logo.png"  href="/" style={{width:100, height: 80}}/>
+            <img src="logo.png"  href="/" style={{width:120, height: 80}}/>
           <NavLink  href="/" className={styles.siteTitle}><a hover>COMPANY NAME</a></NavLink>
           <SearchBar/>
         <NavbarToggler onClick={toggle} />

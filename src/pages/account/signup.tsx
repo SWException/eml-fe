@@ -118,6 +118,7 @@ const SignUp: React.FC = () => {
                     </div>
 
             ) : (
+                <div>
                 <div className={styles.div}>
                     <h1 style={{marginTop: "5px"}}>Create account</h1>
                     <Form>
@@ -149,6 +150,7 @@ const SignUp: React.FC = () => {
                         {displayErr()}
                         {displayInfo()}
                     </div>
+                </div>
                 </div>
             )}
         </CustomerLayout>

@@ -29,8 +29,8 @@ const Products: React.FC = () => {
     return (
         <CustomerLayout header categories footer>
           <div>
-            <div className={styles.div}>  Price:<Filters/> </div>
-            <div className={styles.div}>  Price Ordinament:<Sort/></div>
+            <div className={styles.filter}>  Price:<Filters/> </div>
+            <div className={styles.filter}>  Price Ordinament:<Sort/></div>
             <div>
             {products.length > 0 ? (
             <ProductList products={products} />

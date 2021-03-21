@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from 'next/router';
 import { Button } from 'reactstrap';
 import { CustomerLayout } from 'components/layouts/CustomerLayout';
+import styles from "styles/Order.module.css"
 
 
 /*interface Props {
@@ -48,33 +49,43 @@ const OrderDetails = ({orderdetails}) => { //IN VERITA' E' :React.FC<Props>
 
     return (
         <CustomerLayout header>
-            <div className="items">
-                <div className="title-main">
+            <div>
+                <div>
                     <h1>Order Summary</h1>
                 </div>
-                <div className="detailsorder-layout">
-                  <p><strong>ORDER ID:</strong>  {order.id}</p>
-                  <p><strong>Date:</strong>  {order.date}</p>
-                  <p><strong>State:</strong>  {order.state}</p>
+                <div className={styles.detailsorder}>
+                  <div className={styles.div}><strong>ORDER ID:</strong>  {order.id}</div>
+                  <div className={styles.div}><strong>Date:</strong>  {order.date}</div>
+                  <div style={{padding: 10}}><strong>State:</strong>  {order.state}</div>
                 </div>
-                <div className="item-layout">
+                <div className={styles.itemlayout}>
                   <h2>Products</h2>
                   {products.map((product) => (
                       <DetailOrderProductCard 
-                      idp={product._id}
+                      primaryPhoto={product.primaryPhoto}
+                      idp={product.id}
                       name = {product.name}
                       price={product.price}
                       quantity={10}
                       /> 
                   ))}
                 </div>
-                <div><strong>Total: {order.total}{" €"} </strong></div>
-                <div><strong>Shipping address: Address</strong></div>
-                <div><strong>Billing address: Address</strong></div>
-                <div> 
-                  <Button color="primary">Assistenza</Button>{'    '}
-                  <Button color="primary">Richiedi Reso</Button>{'   '}
-                  <Button color="primary">Annulla ordine</Button>
+                <div className={styles.info}><strong>Total: {" € "}{order.total} </strong></div>
+                <div className={styles.info}><strong>Shipping address: Address</strong></div>
+                <div className={styles.info}><strong>Billing address: Address</strong></div>
+                <div>
+                  <div className={styles.button}>
+                    <p>Do you need assistance?</p> 
+                    <Button color="primary" size="lg" style={{marginLeft:20}}>Assistance</Button>
+                  </div>
+                  <div className={styles.button}>
+                    <p>Do you want to ask for a return?</p> 
+                    <Button color="primary" size="lg" style={{marginLeft:20, marginTop:20}}>Request Return</Button>
+                  </div>
+                  <div className={styles.button}>
+                    <p>Do you want cancel your order? </p> 
+                    <Button color="primary" size="lg" style={{marginLeft:20, marginTop:20}}>Cancel Order</Button>
+                  </div>
                 </div>
             </div> 
         </CustomerLayout>

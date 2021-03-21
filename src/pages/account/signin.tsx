@@ -128,11 +128,11 @@ const Login: React.FC = () => {
                     <div style={{marginTop: "60px"}}>
                         <h1 style={{fontSize: "20px"}}>Are you not registered? Do it now!</h1>
                     </div>
-                    <div className="">
+                    <div>
                     {loading ? (
                             <Spinner color="primary"  style={{marginTop: "20px"}}/>
                         ) : (
-                            <div className="">
+                            <div>
                             <Button onClick={signUp} color="primary" size="lg" style={{marginLeft:"40%"}} >SignUp</Button>
                         </div>
                         )

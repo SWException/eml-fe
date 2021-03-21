@@ -1,0 +1,20 @@
+.item {
+    padding: 20px 30px;
+    display: flex;
+    border:  1px solid #E1E8EE;
+  }
+   
+.information {
+    padding-top: 30px;
+    margin-left:10px;
+    width: 135px;
+    text-align: center;
+    display: flex;
+  }
+   
+.information span {
+    display: flex;
+    font-size: 14px;
+    font-weight: 400;
+    padding: 20px;
+  }

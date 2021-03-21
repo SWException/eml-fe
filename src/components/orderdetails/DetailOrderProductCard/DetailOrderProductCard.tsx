@@ -2,30 +2,27 @@ import React, {useEffect, useState} from 'react';
 import styles from './DetailOrderProductCard.module.css';
 
 interface Props {   //DA RIVEDERE ASSOLUTAMENTE
-    id?: number,
-    date?: string,
-    total?: number,
-    state?: string, 
     idp?: number,
     name?: string,
     price?: number,
     quantity?: number,
 }
 
-const DetailOrderProductCard: React.FC<Props> = ({id, date, total, state, idp, name, price, quantity}) => {
+
+const DetailOrderProductCard: React.FC<Props> = ({ primaryPhoto, idp, name, price, quantity}) => {
     
+    const totart=price*quantity;
+
     return (
         <div className="">
-            <div className="">
-                <div className="">
-                    <div className="DetOrder" style={{}}>
-                        <p>{id} {date} {total} {state}</p>
-                    </div>
-                    <div className="DetProducts" style={{}}>
-                        <p>{idp} {name} {price}{" €"} x{quantity}</p>
-                    </div>
-                </div>
-            </div>
+            <div className={styles.item}>
+            <img src={primaryPhoto} height="100" width="100" alt="..."/>
+            <span className={styles.information}><strong>ID: </strong>{idp}</span>
+            <span className={styles.information}><strong>NAME: </strong>{name.toUpperCase()}</span>
+            <span className={styles.information}><strong>PRICE: </strong>{price}</span>
+            <span className={styles.information}><strong>QUANTITY: </strong>{quantity}</span>
+            <span className={styles.information}><strong>SUBTOTAL: € {totart} </strong></span>
+            </div>    
         </div>
     );
 };
