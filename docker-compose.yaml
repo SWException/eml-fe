@@ -11,9 +11,9 @@ services:
       - .env
     ports:
       - "3000:3000"
-    volumes:
+    #volumes:
       #Permette il live update, da omettere nel deploy
-      - ./src:/app/src
+      #- ./src:/app/src
   EML-FE:
     container_name: "eml-fe"
     image: "eml-fe:latest"
