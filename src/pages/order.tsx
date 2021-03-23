@@ -48,7 +48,7 @@ const OrderDetails = ({orderdetails}) => { //IN VERITA' E' :React.FC<Props>
 
 
     return (
-        <CustomerLayout header>
+        <CustomerLayout header footer>
             <div>
                 <div>
                     <h1>Order Summary</h1>
@@ -80,11 +80,11 @@ const OrderDetails = ({orderdetails}) => { //IN VERITA' E' :React.FC<Props>
                   </div>
                   <div className={styles.button}>
                     <p>Do you want to ask for a return?</p> 
-                    <Button color="primary" size="lg" style={{marginLeft:20, marginTop:20}}>Request Return</Button>
+                    <Button color="primary" size="lg" style={{marginLeft:20}}>Request Return</Button>
                   </div>
                   <div className={styles.button}>
                     <p>Do you want cancel your order? </p> 
-                    <Button color="primary" size="lg" style={{marginLeft:20, marginTop:20}}>Cancel Order</Button>
+                    <Button color="primary" size="lg" style={{marginLeft:20}}>Cancel Order</Button>
                   </div>
                 </div>
             </div> 

@@ -2,13 +2,12 @@
     margin-bottom: 2rem;
     margin-left: 25px;
     margin-top: 25px;
-    display:inline-flex;
+    display:flex;
 }
 
 .productInfo {
     margin-left: 70px;
     padding: 2rem;
-    display:block;
 }
 
 .productAction {
@@ -43,8 +42,9 @@
 .carousel{
     margin-left: 25px;
     margin-top: 25px;
-    height:400px; 
     width: 400px;
+    height: 400px;
+    display: flex;
 }
 
-.carousel-inner > .item > img { width:130px; height:130px; }
+.carousel-inner > .item > img { width:130px; height:130px;}

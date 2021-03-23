@@ -24,8 +24,10 @@ const ProductCard: React.FC<Props> = ({id, name, photo, price, quantity}) => {
         <div className={styles.item}>
             <button className={styles.delete}>X</button>
             <img className={styles.img} src={photo} height="100" width="100" alt="..."/>
-            <span className={styles.information}><strong>ID: </strong>{id}</span>
-            <span className={styles.information}><strong>NAME: </strong>{name.toUpperCase()}</span>
+            <span className={styles.information}>
+            <div><strong>ID: </strong>{id}</div>
+            <div><strong>{name.toUpperCase()}</strong></div>
+            </span>
             <span className={styles.information}><strong>PRICE: </strong>€ {price}</span>
             <div className={styles.quantity}>
                 <button className={styles.plus} type="button" name="button">

@@ -19,7 +19,7 @@ const DetailOrderProductCard: React.FC<Props> = ({ primaryPhoto, idp, name, pric
             <img src={primaryPhoto} height="100" width="100" alt="..."/>
             <span className={styles.information}><strong>ID: </strong>{idp}</span>
             <span className={styles.information}><strong>NAME: </strong>{name.toUpperCase()}</span>
-            <span className={styles.information}><strong>PRICE: </strong>{price}</span>
+            <span className={styles.information}><strong>PRICE: €</strong>{price}</span>
             <span className={styles.information}><strong>QUANTITY: </strong>{quantity}</span>
             <span className={styles.information}><strong>SUBTOTAL: € {totart} </strong></span>
             </div>    
