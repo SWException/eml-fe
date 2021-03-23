@@ -3,19 +3,19 @@ import { Collapse, Navbar, NavbarToggler, Nav, NavItem, NavLink,  UncontrolledDr
 import styles from './Header.module.css';
 import { SearchBar } from 'components/ui';
 import { LogoutButton } from 'components/ui';
+import { useAuth } from 'context';
 
 const Header: React.FC = () => {
+
   const [isOpen, setIsOpen] = useState(false);
-  const [isAuth, setIsAuth] = useState(false);
+
   const [dropdownOpen, setOpen] = useState(false);
 
   const dropeffect = () =>{setOpen(!dropdownOpen);} 
-
+  const { isAuthenticated } = useAuth()
 
   useEffect(()=>{
-    if(window.localStorage.getItem('jwt')){
-      setIsAuth(true);
-    }
+    //
   })
 
   const toggle = () => {
@@ -32,7 +32,7 @@ const Header: React.FC = () => {
         <Collapse isOpen={isOpen} navbar>
           <Nav className="ml-auto"navbar>
             <Fragment>
-              {isAuth ? (
+              {isAuthenticated ? (
                 <Fragment>
               <NavItem>
               <UncontrolledDropdown isOpen={dropdownOpen} toggle={dropeffect}>

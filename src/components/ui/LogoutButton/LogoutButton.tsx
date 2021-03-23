@@ -3,6 +3,7 @@ import Amplify, { Auth } from 'aws-amplify';
 import styles from './Button.module.css';
 import { Button, Spinner, Dropdown, DropdownToggle, DropdownMenu, DropdownItem} from 'reactstrap';
 import { useRouter } from 'next/router';
+import { useAuth } from 'context'
 
 const LogoutButton: React.FC = () =>  {
 
@@ -10,15 +11,12 @@ const LogoutButton: React.FC = () =>  {
 
     const [isOpen, setIsOpen] = useState(false);
 
+    const { logout } = useAuth()
+
     const signOut = async() => {
         console.log("HOHOHO");
         try {
-            await Auth.signOut();
-            console.log("Logout");
-            window.localStorage.removeItem('jwt');
-            window.localStorage.clear();            
-            router.push('/');
-            //Sistemare pagina reindirizzamento
+            await logout();
         } catch (error) {
             console.log('error signing out: ', error);
         }
