@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import Amplify, { Auth } from 'aws-amplify';
 import awsconfig from 'aws-exports';
 Amplify.configure(awsconfig);
+import styles from 'styles/Account.module.css'
 
 const SetNewPassword: React.FC = () =>{
 
@@ -30,8 +31,7 @@ const SetNewPassword: React.FC = () =>{
     return (
         <div>
             {newComp ? (
-                <div className="div-card">
-                <div className="loginCard">
+                    <div className={styles.div}>
                     <h1>Recupera password</h1>
                     <Form>
                     <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
@@ -52,13 +52,11 @@ const SetNewPassword: React.FC = () =>{
                     </FormGroup>
                     </Form>
                     <div className="div-button-login">
-                        <Button className="button-rec" color="primary" onClick={()=>{recuperaPassword();}}>Recupera password</Button>
+                        <Button className="button-rec" color="primary" size="lg" style={{marginTop:10}} onClick={()=>{recuperaPassword();}}>Recupera password</Button>
                     </div>
                 </div>
-            </div>
             ) : (
-                <div className="div-card">
-                <div className="loginCard">
+                <div className={styles.div}>
                 <h1>Invia codice di recupero</h1>
                 <Form>
                     <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
@@ -69,11 +67,10 @@ const SetNewPassword: React.FC = () =>{
                         <Button className="button-rec" onClick={()=>{
                             inviaCodiceRecupero();
                             setNewComp(true);
-                        }} color="primary">Invia codice</Button>
+                        }} color="primary" size="lg" style={{marginTop:10}}>Invia codice</Button>
                     </div>
                 </Form>
                 </div>
-            </div>
             )}
         </div>
     )

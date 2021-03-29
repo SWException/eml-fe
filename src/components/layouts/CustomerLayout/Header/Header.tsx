@@ -1,53 +1,38 @@
 import React, { useState, useEffect, Fragment } from 'react';
-import { Collapse, Navbar, NavbarToggler, Nav, NavItem, NavLink,  UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem, } from 'reactstrap';
+import { Navbar, Nav, NavItem, NavLink } from 'reactstrap';
 import styles from './Header.module.css';
 import { SearchBar } from 'components/ui';
 import { LogoutButton } from 'components/ui';
+import  ProfileButton  from 'components/ProfileButton';
 import { useAuth } from 'context';
+import Image from 'next/image'
 
 const Header: React.FC = () => {
 
-  const [isOpen, setIsOpen] = useState(false);
-
-  const [dropdownOpen, setOpen] = useState(false);
-
-  const dropeffect = () =>{setOpen(!dropdownOpen);} 
   const { isAuthenticated } = useAuth()
 
   useEffect(()=>{
     //
   })
 
-  const toggle = () => {
-    setIsOpen(!isOpen);
-  };
-
+  
   return (
     <Fragment>
       <Navbar className={styles.navbar} expand="md">
-            <img src="logo.png"  href="/" style={{width:120, height: 80}}/>
+        <NavLink>
+            <Image src="/logo.png"  href="/" width={120} height={80}/>
+            </NavLink>
           <NavLink  href="/" className={styles.siteTitle}><a hover>COMPANY NAME</a></NavLink>
           <SearchBar/>
-        <NavbarToggler onClick={toggle} />
-        <Collapse isOpen={isOpen} navbar>
-          <Nav className="ml-auto"navbar>
+          <Nav className="ml-auto" navbar>
             <Fragment>
               {isAuthenticated ? (
                 <Fragment>
               <NavItem>
-              <UncontrolledDropdown isOpen={dropdownOpen} toggle={dropeffect}>
-                <DropdownToggle caret class="navbar" color="--color-lightblue" size="lg" font-size="3rem" font-weight="600">
-                <a hover> Profile </a>
-                </DropdownToggle>
-                <DropdownMenu>
-                  <DropdownItem class="navbar" href="/profile"> <a hover>Account Settings</a></DropdownItem>
-                  <DropdownItem divider />
-                  <DropdownItem class="navbar" href="/orders"> <a hover>My orders</a></DropdownItem>
-                </DropdownMenu>
-              </UncontrolledDropdown>
+              <ProfileButton/>
               </NavItem>
               <NavItem>
-                <LogoutButton />
+                <LogoutButton/>
               </NavItem>
                 </Fragment>
               ) : (
@@ -60,13 +45,12 @@ const Header: React.FC = () => {
               <NavItem>
               <NavLink class="navbar" href="/cart">
                     <a hover>
-                      <img src="iconcart2.png" style={{width:40, height: 40}}/>
+                      <Image src="/iconcart2.png" width={40} height={40}/>
                     </a>
                   </NavLink>
               </NavItem>
             </Fragment>
           </Nav>
-        </Collapse>
       </Navbar>    
     </Fragment>
   );

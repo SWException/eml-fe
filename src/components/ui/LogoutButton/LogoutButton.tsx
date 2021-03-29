@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import Amplify, { Auth } from 'aws-amplify';
-import styles from './Button.module.css';
 import { Button, Spinner, Dropdown, DropdownToggle, DropdownMenu, DropdownItem} from 'reactstrap';
 import { useRouter } from 'next/router';
 import { useAuth } from 'context'
+import styles from 'components/ui/LogoutButton/LogoutButton.module.css'
 
 const LogoutButton: React.FC = () =>  {
 
@@ -27,7 +27,7 @@ const LogoutButton: React.FC = () =>  {
   return (
     <>
       <Dropdown isOpen={isOpen} toggle={toggle}>
-        <DropdownToggle>
+        <DropdownToggle className={styles.button} size="lg">
             Logout
         </DropdownToggle>
         <DropdownMenu
@@ -48,10 +48,10 @@ const LogoutButton: React.FC = () =>  {
             },
             }}
             >
-            <DropdownItem><Button onClick={()=>{
-                signOut();
-            }}>Logout</Button></DropdownItem>
-            <DropdownItem><Button>Logout all devices</Button></DropdownItem>
+            <DropdownItem onClick={()=>{signOut();}}>
+                    Logout
+            </DropdownItem>
+            <DropdownItem>Logout all devices</DropdownItem>
         </DropdownMenu>
         </Dropdown>
     </>

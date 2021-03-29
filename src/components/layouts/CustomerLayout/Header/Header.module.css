@@ -1,7 +1,6 @@
 .navbar{
     background-color: var(--color-night);
     color: var(--color-light)
-    
 }
 
 .siteTitle {
@@ -25,3 +24,4 @@
     background-color: var(--color-gray-light);
     color: var(--color-dark);
   }
+

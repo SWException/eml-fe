@@ -66,7 +66,7 @@ const Profile: React.FC = ()=>{
 
     return (
         <CustomerLayout header>
-            <strong>User: {email}</strong>
+            <strong style={{marginLeft:25, marginTop: 10}}>User: {email}</strong>
             <div className={styles.div}>
                     <h1 className={styles.h1}>Here you can manage your addresses</h1>
                     <h2>Add a new one</h2>
