@@ -132,8 +132,12 @@ const SignUp: React.FC = () => {
                             <Input type="password" name="password" onChange={(e)=>{setPass(e.target.value)}} id="examplePassword" placeholder="sUpErStrong1!" />
                         </FormGroup>
                         <FormGroup>
-                            <Label for="examplePassword" className="">Ripeti Password</Label>
-                            <Input type="password" name="password" onChange={(e)=>{isSamePassword(e)}} id="examplePassword" placeholder="sUpErStrong1!" />
+                            <Label for="examplePassword" className="">Name</Label>
+                            <Input type="name" name="name" onChange={(e)=>{isSamePassword(e)}} id="examplePassword" placeholder="Mario" />
+                        </FormGroup>
+                        <FormGroup>
+                            <Label for="examplePassword" className="">Surname</Label>
+                            <Input type="surname" name="surname" onChange={(e)=>{isSamePassword(e)}} id="examplePassword" placeholder="Rossi" />
                         </FormGroup>
                         <div>
                             {loading ? (
