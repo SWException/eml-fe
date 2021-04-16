@@ -94,25 +94,25 @@ const SignUp: React.FC = () => {
         <CustomerLayout header footer>
             {isCode ? (
                     <div className={styles.div}>
-                        <Form>
-                            <FormGroup>
-                                <Label for="exampleEmail" className="">Email</Label>
-                                <Input type="email" name="email" onChange={(e)=>{setEmailRec(e.target.value)}} id="exampleEmail" placeholder="something@idk.cool" />
-                            </FormGroup>
-                            <FormGroup>
-                                <Label for="codiceExample" className="">Codice di Recupero</Label>
-                                <Input type="text" name="codice" onChange={(e)=>{setCode(e.target.value)}} id="exampleEmail" placeholder="1234" />
-                            </FormGroup>
-                            <div>
-                                <Button size="lg" onClick={confirmSignUp} color="primary">Conferma registrazione</Button>
-                                <Button size="lg" onClick={resendConfirmationCode} color="primary" style={{marginLeft:"20px"}}>Rinvia codice</Button>
-                            </div>
-                        </Form>
-                        <div style={{marginTop: "20px"}}>
-                            {displayErr()}
-                            {displayInfo()}
+                    <Form>
+                        <FormGroup>
+                            <Label for="exampleEmail" className="">Email</Label>
+                            <Input type="email" name="email" onChange={(e)=>{setEmailRec(e.target.value)}} id="exampleEmail" placeholder="something@idk.cool" />
+                        </FormGroup>
+                        <FormGroup>
+                            <Label for="codiceExample" className="">Recovery Code</Label>
+                            <Input type="text" name="codice" onChange={(e)=>{setCode(e.target.value)}} id="exampleEmail" placeholder="1234" />
+                        </FormGroup>
+                        <div>
+                            <Button size="lg" onClick={confirmSignUp} color="primary">Confirm registration</Button>
+                            <Button size="lg" onClick={resendConfirmationCode} color="primary" style={{marginLeft:"20px"}}>Resend code</Button>
                         </div>
+                    </Form>
+                    <div style={{marginTop: "20px"}}>
+                        {displayErr()}
+                        {displayInfo()}
                     </div>
+                </div>
 
             ) : (
                 <div>
