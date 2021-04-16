@@ -2,7 +2,7 @@ import React, { useState, useEffect, Fragment } from 'react';
 import { Collapse, Navbar, NavbarToggler, Nav, NavItem, NavLink } from 'reactstrap';
 import Link from 'next/link';
 import styles from './Header.module.css';
-import { SearchBar } from 'components/ui';
+
 
 
 const Header: React.FC = () => {
@@ -23,7 +23,7 @@ const Header: React.FC = () => {
     <Fragment>
       <Navbar className={styles.navbar} expand="md">
         <Link href="/admin/dashboard">
-          <NavLink className="">Dashboard</NavLink>
+          <NavLink className={styles.siteTitle}>Dashboard</NavLink>
         </Link>
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>

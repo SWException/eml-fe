@@ -10,7 +10,7 @@ const SearchBar: React.FC = () => {
   return (
     <>
       <div className={styles.form}>
-        <input className={styles.input} type="text" placeholder="Search Product..."/>
+        <input className={styles.input} type="text" placeholder="Search Product by..."/>
         <Button className={styles.searchButton} type="submit" formAction="/products" color="light">
           <Image src="/iconsearch.png" width={20} height={20}/>
         </Button>

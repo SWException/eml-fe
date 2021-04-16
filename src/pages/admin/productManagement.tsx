@@ -1,33 +1,33 @@
 import React from 'react'
 import { useRouter } from 'next/router';
 import { AdminLayout } from 'components/layouts/AdminLayout';
+import styles from 'styles/ProductMagagement.module.css'
+import {Button} from 'reactstrap'
+import Image from 'next/image'
 
 interface Props{
     products: any,  //DA MODIFICARE NON APPENA E' PRONTO
   }
 
 const ProductManagement: React.FC<Props> = ({products}) => {
-    
+    console.log(products);
     const router = useRouter();
 
-    let products2 = {
-        "products": [
-          {
-            "id": 1,
-            "name": "giochi",
-            "description": "descrizione del prodotto",
-            "photo": "/image2.jpg",
-            "secondaryPhoto": "/image2.jpg",
-            "category": "giochi",
-            "netprice": 5.99,
-            "tax": null
-          },
-          {
-            "id": 2,
-            "name": "cucina"
-          }
-        ]
-      };
+
+      let products2 = [];
+    for(var i = 0; i < 6; i++){
+      var product= {
+        id : "ID" + i,
+        name: "giochi",
+        description:"descrizione del prodotto",
+        photo: "/image2.jpg",
+        secondary: "/image2.jpg",
+        category: "giochi",
+        netprice: 5.99,
+        tax: 22
+      };  
+      products2[i] = product;
+    }
 
     const addNewProduct = () => {
         router.push('/admin/addNewProduct');
@@ -39,9 +39,12 @@ const ProductManagement: React.FC<Props> = ({products}) => {
     
     return (
         <AdminLayout header>
-            <button type="button" onClick={addNewProduct}>ADD NEW PRODUCT</button>
-            <select>
-                <option>NO CATEGORY FILTER</option>
+            <div className={styles.div}>
+            <Button color="primary" size="lg" onClick={addNewProduct}>ADD NEW PRODUCT</Button>
+            </div>
+            <div className={styles.div}>
+            <select className={styles.category}>
+                <option>Choose a category</option>
                 <option>CATEGORY 1</option>
                 <option>CATEGORY 2</option>
                 <option>CATEGORY 3</option>
@@ -49,9 +52,14 @@ const ProductManagement: React.FC<Props> = ({products}) => {
                 <option>CATEGORY 5</option>
                 <option>CATEGORY 6</option>
             </select>
-            <input type="text" placeholder="Search by name..."/>
-            <button type="button">SEARCH</button>
-            <table>
+            </div>
+            <div className={styles.div}>
+            <input className={styles.input} type="text" placeholder="Search Product by name..."/>
+            <Button className={styles.searchButton} type="submit" formAction="/products" color="light">
+                <Image src="/iconsearch.png" width={20} height={20}/>
+            </Button>
+            </div>
+            <table className={styles.products}>
                 <th>
                     ID
                 </th>
@@ -65,19 +73,18 @@ const ProductManagement: React.FC<Props> = ({products}) => {
                     CATEGORY
                 </th>
                 <th>
-                    EDIT
+                    TAX
                 </th>
-                <th>
-                    REMOVE
-                </th>
-                {products2.products.map((product)=>(
+               
+                {products2.map((product)=>(
                     <tr>
                         <td>{product.id}</td>
                         <td>{product.name}</td>
-                        <td>{product.netprice}</td>
+                        <td>€ {product.netprice}</td>
                         <td>{product.category}</td>
-                        <td><button type="button" onClick={editProduct}>EDIT</button></td>
-                        <td><button type="button">REMOVE</button></td>
+                        <td>{product.tax}</td>
+                        <td><Button color="primary" size="lg" onClick={editProduct}>EDIT</Button></td>
+                        <td><Button color="primary" size="lg">REMOVE</Button></td>
                     </tr>
                 ))}
             </table>
