@@ -39,7 +39,3 @@ export const StoreProvider: React.FC<InitialStateProps> = ({ children, currentUs
     </ProviderComposer>
   );
 };
-
-/*<ToastProvider key="1" />,
-        <AuthProvider currentUser={currentUser} key="2" />,
-        <CartProvider key="3" />, */

@@ -26,8 +26,6 @@ interface InitialStateType {
   error: null | string;
   logout(): void;
   login(email: string, password: string, adminRedirect?: boolean): void;
-  //loginWithGoogle(tokenId: string): void;
-  //signUp(userDetails: UserDetails): void;
   //updateUser(user: User): void;
 }
 
@@ -37,8 +35,6 @@ const initialState = {
   error: null,
   logout: () => null,
   login: () => null,
-  //signUp: () => null,
-  //loginWithGoogle: () => null,
   //updateUser: () => null,
 };
 
@@ -61,24 +57,16 @@ export const AuthProvider: React.FC<Props> = ({ children, currentUser }) => {
 
   const login = async (email: string, password: string, adminRedirect?: boolean): Promise<void> => {
     const { user, token } = await AuthService.login(email, password);
+    console.log(user);
+    console.log(token);
+    window.localStorage.setItem('token', token);
     dispatch({ type: SET_CURRENT_USER, payload: user });
   };
 
-  /*const loginWithGoogle = async (tokenId: string) => {
-    const { user, token } = await AuthService.verifyGoogleIdToken(tokenId);
-    loginSuccess(user, token);
-  };
-
-  const signUp = async ({ email, password, name }: UserDetails) => {
-    const { user, token } = await AuthService.signUp({ email, password, name });
-    loginSuccess(user, token);
-  };
-*/
-  const logout = async() => {  
-      console.log("HOHOHO");
+  const logout = async() => {
       try {
           await Auth.signOut();
-          console.log("Logout");
+          console.log("Logout successfull");
       } catch (error) {
           console.log('error signing out: ', error);
       }

@@ -8,13 +8,13 @@ import { useRouter } from 'next/router';
 Amplify.configure(awsconfig);
 import styles from 'styles/Account.module.css'
 
-/*
-TODO:
-- Sistemare display di Errori e Messaggi di successo in inglese
-- Sistemare useState unificando
-- Creare due componenti per l'HTML tipo SignupCredentials & SignupCode per
-    migliorare leggibilità codice?
-*/
+
+/**
+ * TODO: 
+ * controllare per bene errori ritornati
+ * Fare check client side delle informazioni inserite (es email e confirmEmail sono uguali, stessa cosa password)
+ * Aggiungere ripeti password piuttosto che ripeti email
+ */
 
 const SignUp: React.FC = () => {
 
@@ -28,6 +28,8 @@ const SignUp: React.FC = () => {
     const [code, setCode] = useState('');
     const [loading, setLoading] = useState(false);
     const [same, setSame] = useState(true);
+    const [name, setPrimaryName] = useState('')
+    const [family, setFamilyName] = useState('')
     const [error, setError] = useState('');
     const [isCode, setIsCode] = useState(false);
     const [message, setMessage] = useState('');
@@ -35,7 +37,7 @@ const SignUp: React.FC = () => {
     async function signUp() {
         setLoading(true);
         try {
-            const { confirmCode } = await AuthService.signUp(email, password)
+            const { confirmCode } = await AuthService.signUp(email, password, name, family)
             setMessage('Registrazione avvenuta con successo! Conferma la tua mail inserendo il codice ricevuto');
             setError('')
             displayInfo();
@@ -133,11 +135,11 @@ const SignUp: React.FC = () => {
                         </FormGroup>
                         <FormGroup>
                             <Label for="examplePassword" className="">Name</Label>
-                            <Input type="name" name="name" onChange={(e)=>{isSamePassword(e)}} id="examplePassword" placeholder="Mario" />
+                            <Input name="name" onChange={(e)=>{setPrimaryName(e.target.value)}} id="examplePassword" placeholder="Mario" />
                         </FormGroup>
                         <FormGroup>
                             <Label for="examplePassword" className="">Surname</Label>
-                            <Input type="surname" name="surname" onChange={(e)=>{isSamePassword(e)}} id="examplePassword" placeholder="Rossi" />
+                            <Input name="surname" onChange={(e)=>{setFamilyName(e.target.value)}} id="examplePassword" placeholder="Rossi" />
                         </FormGroup>
                         <div>
                             {loading ? (

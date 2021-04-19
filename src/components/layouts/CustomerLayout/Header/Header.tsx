@@ -19,10 +19,10 @@ const Header: React.FC = () => {
   return (
     <Fragment>
       <Navbar className={styles.navbar} expand="md">
-        <NavLink>
-            <Image src="/logo.png"  href="/" width={120} height={80}/>
+          <NavLink href="/">
+            <Image src="/logo.png" width={120} height={80}/>
             </NavLink>
-          <NavLink  href="/" className={styles.siteTitle}><a hover>COMPANY NAME</a></NavLink>
+          <NavLink  href="/" className={styles.siteTitle}><a>COMPANY NAME</a></NavLink>
           <SearchBar/>
           <Nav className="ml-auto" navbar>
             <Fragment>
@@ -38,13 +38,13 @@ const Header: React.FC = () => {
               ) : (
                 <Fragment>
                 <NavItem>
-                  <NavLink class="navbar" href="/account/signin"><a hover>Login</a></NavLink>
+                  <NavLink class="navbar" href="/account/signin"><a>Login</a></NavLink>
                 </NavItem>
                 </Fragment>
               )}
               <NavItem>
               <NavLink class="navbar" href="/cart">
-                    <a hover>
+                    <a>
                       <Image src="/iconcart2.png" width={40} height={40}/>
                     </a>
                   </NavLink>

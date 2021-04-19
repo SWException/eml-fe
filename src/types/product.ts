@@ -23,6 +23,14 @@ export interface ProductData {
     product: Product;
 }
 
+export interface ProductCart {
+    id: number;
+    name: string;
+    primaryPhoto: string;
+    price: number;
+    quantity: number;
+}
+
   
 /*
 export interface AddProduct {

@@ -35,54 +35,6 @@ const Login: React.FC = () => {
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
 
-    /*const getJwt = () =>{
-        Auth.currentSession()
-    .then(res => {
-        let accessToken = res.getAccessToken()
-        let jwt = accessToken.getJwtToken()
-        window.localStorage.setItem('jwt', jwt);
-        console.log(`myJwt: ${jwt}`)
-    })
-    .catch(err => {console.log("Errore2: " + err); });
-    }
-
-    async function signIn() {
-        setLoading(true);
-        Auth.signIn(email, password)
-            .then(user => {
-                if (user.challengeName === 'NEW_PASSWORD_REQUIRED') { // Non dovrebbe essere necessario credo se la password non ha scadenza. Da capire meglio
-                    var newPassword = password + "new";
-                    const { requiredAttributes } = user.challengeParam; // the array of required attributes, e.g ['email', 'phone_number']
-                    Auth.completeNewPassword(
-                        user,               // the Cognito User Object
-                        newPassword       // the new password
-                    )
-                        .then(user => {
-                            // at this time the user is logged in if no MFA required
-                            console.log(user);
-                        })
-                        .catch(e => {
-                            console.log(e);
-                        });
-                } else {
-                    console.log(user);
-                }
-                setLoading(false);
-                getJwt();
-                window.localStorage.setItem('mex', `Welcome ${email}, find the right product for you!`);
-                //window.location.reload();
-                setError('');
-                redirectToHomePage();
-            })
-            .catch(error => {
-                console.log('error signing in', error);
-                setLoading(false);
-                setError(`Error in entering data! Check your password and / or email and try again`);
-                setMessage('');
-                displayErr();
-            });
-    };*/
-
     const signIn = async() => {
         setLoading(true);
         try {
@@ -105,10 +57,6 @@ const Login: React.FC = () => {
 
     const signUp = () =>{
         router.push('/account/signup');
-    }
-
-    const redirectToHomePage = () =>{
-        router.push('/');
     }
 
     return (

@@ -4,18 +4,37 @@ import { useRouter } from 'next/router';
 import { Button } from 'reactstrap';
 import { CustomerLayout } from 'components/layouts/CustomerLayout';
 import styles from 'styles/Cart.module.css'
+import { CartService } from 'services';
+import { Cart } from 'types';
 
 interface Props {
-    cartItems: any, //ASSOLUTAMENTE DA CONTROLLARE
+    cart: Cart,
 }
 
-const Cart: React.FC<Props>= ({cartItems}) => { 
-    console.log(cartItems);
-    //Inserire Fetch
+/**
+ * Inserire fetch del Service per ADD e REMOVE
+ */
+
+const CartUser: React.FC<Props>= ({cart}) => {
+
+    useEffect(()=>{
+        setCartShow({
+            id: cart.id,
+            product: cart.product,
+            tax: cart.tax,
+            total: cart.total
+        })
+    }, [])
  
     const router = useRouter();
 
     const [total, setTotal] = useState(0);
+    const [cartShow, setCartShow] = useState<Cart>({
+        id: 0,
+        product: [],
+        tax: 0,
+        total: 0
+    });
 
     const onSubmit = () => {
         router.push('/payment/checkout');
@@ -28,11 +47,11 @@ const Cart: React.FC<Props>= ({cartItems}) => {
             </div>
             <div className={styles.cart}>
                 <div className="cart-item-layout">
-                {cartItems.products.map((product) => (
+                {cartShow.product.map((product) => (
                     <ProductCard 
                     id={product.id}
                     name = {product.name}
-                    photo={product.photo}
+                    photo={product.primaryPhoto}
                     price={product.price}
                     quantity={product.quantity}
                     /> 
@@ -43,8 +62,8 @@ const Cart: React.FC<Props>= ({cartItems}) => {
                 <Button color="primary" size="lg">Remove all</Button>
             </div>
             <div className={styles.total}>
-                <div><strong>Total: {cartItems.total}{" €"} </strong></div>
-                <div><strong>Taxes: {cartItems.tax}{" €"} </strong></div>
+                <div><strong>Total: {cartShow.total}{" €"} </strong></div>
+                <div><strong>Taxes: {cartShow.tax}{" €"} </strong></div>
                 <Button color="primary" size="lg" style={{marginTop: "10px"}} onClick={()=>{onSubmit()}}>Checkout</Button>
             </div>
 
@@ -52,22 +71,14 @@ const Cart: React.FC<Props>= ({cartItems}) => {
     );
 };
 
-export async function getStaticProps() {
-    const res = await fetch('https://virtserver.swaggerhub.com/swexception4/OpenAPI/0.0.1/getCart', {
-        method: 'POST',
-        headers: {
-            "Accept":"application/json",
-            "Content-Type":"application/json",
-            'id': '1',
-        }
-    });
-    const cart = await res.json();
+export async function getServerSideProps() {
+    const { cart } = await CartService.fetchCart();
 
     return {
         props: {
-            cartItems: cart,
+            cart
         }
     };    
 }
 
-export default Cart;
+export default CartUser;
