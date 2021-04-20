@@ -1,12 +1,13 @@
 import Amplify, { Auth } from 'aws-amplify';
 import awsconfig from 'aws-exports';
 import { CustomerLayout } from 'components/layouts/CustomerLayout';
-import { AuthService } from 'services'
+import { AuthService } from 'services';
 import React, { useState } from 'react';
 import { Spinner, Button, Form, FormGroup, Label, Input } from 'reactstrap';
-import { useRouter } from 'next/router';
+import { useRouter} from 'next/router';
+
 Amplify.configure(awsconfig);
-import styles from 'styles/Account.module.css'
+import styles from 'styles/Account.module.css';
 
 
 /**
@@ -20,6 +21,7 @@ const SignUp: React.FC = () => {
 
     const router = useRouter()
 
+
     //Lavorare su state configurato meglio stile Reducer
     const [email, setEmail] = useState('');
     const [emailRec, setEmailRec] = useState('');
@@ -27,14 +29,31 @@ const SignUp: React.FC = () => {
     const [pasRes, setPassRes] = useState('');
     const [code, setCode] = useState('');
     const [loading, setLoading] = useState(false);
-    const [same, setSame] = useState(true);
     const [name, setPrimaryName] = useState('')
     const [family, setFamilyName] = useState('')
     const [error, setError] = useState('');
     const [isCode, setIsCode] = useState(false);
     const [message, setMessage] = useState('');
+    const [confirm_password, setConfirmPassword] = useState('');
+    const [confirm_email, setConfirmEmail] = useState('');
+    
+
+    const onVerifyPassword = () => {
+        if (password !== confirm_password) {
+            alert("Passwords don't match");
+        }
+    } 
+    const onVerifyEmail = () => {
+        if (email !== confirm_email) {
+            alert("Emails don't match");
+        }
+    } 
     
     async function signUp() {
+        if(!password || !email || !name || !family){
+            alert('Email, Password, Name and Surname are required fields');
+        }
+        else{
         setLoading(true);
         try {
             const { confirmCode } = await AuthService.signUp(email, password, name, family)
@@ -48,6 +67,7 @@ const SignUp: React.FC = () => {
             setMessage('');
             displayErr();
         }
+    }
         setLoading(false)
     }
     
@@ -88,10 +108,6 @@ const SignUp: React.FC = () => {
         return (message ? <div className="alert alert-info">{message}</div> : '');
     }
 
-    const isSamePassword = (e) => {
-        console.log(e.target.value.length)
-    }
-
     return (
         <CustomerLayout header footer>
             {isCode ? (
@@ -123,27 +139,27 @@ const SignUp: React.FC = () => {
                     <Form>
                         <FormGroup>
                             <Label for="exampleEmail" className="">Email</Label>
-                            <Input type="email" name="email" onChange={(e)=>{setEmail(e.target.value)}} id="exampleEmail" placeholder="something@idk.cool" />
+                            <Input type="email" name="email" onChange={(e)=>{setEmail(e.target.value)}} id="email" placeholder="something@idk.cool" required/>
                         </FormGroup>
                         <FormGroup>
                             <Label for="exampleEmail" className="">Repeat Email</Label>
-                            <Input type="email" name="email" onChange={(e)=>{setEmail(e.target.value)}} id="exampleEmail" placeholder="something@idk.cool" />
+                            <Input type="email" name="confirm_email" onChange={(e)=>{setConfirmEmail(e.target.value)}} onBlur={onVerifyEmail} id="confirm_email" placeholder="something@idk.cool" required/>
                         </FormGroup>
                         <FormGroup >
                             <Label for="examplePassword" className="">Password</Label>
-                            <Input type="password" name="password" onChange={(e)=>{setPass(e.target.value)}} id="examplePassword" placeholder="sUpErStrong1!" />
+                            <Input type="password" name="password" onChange={(e)=>{setPass(e.target.value)}} id="password" placeholder="sUpErStrong1!" required/>
                         </FormGroup>
                         <FormGroup >
                             <Label for="examplePassword" className="">Repeat Password</Label>
-                            <Input type="password" name="password" onChange={(e)=>{setPass(e.target.value)}} id="examplePassword" placeholder="sUpErStrong1!" />
+                            <Input type="password" name="confirm_password" onChange={(e) => setConfirmPassword(e.target.value)} onBlur={onVerifyPassword} id="confirm_password" placeholder="sUpErStrong1!"  required/>
                         </FormGroup>
                         <FormGroup>
                             <Label for="examplePassword" className="">Name</Label>
-                            <Input name="name" onChange={(e)=>{setPrimaryName(e.target.value)}} id="exampleName" placeholder="Mario" />
+                            <Input name="name" onChange={(e)=>{setPrimaryName(e.target.value)}} id="name" placeholder="Mario" required/>
                         </FormGroup>
                         <FormGroup>
                             <Label for="examplePassword" className="">Surname</Label>
-                            <Input name="surname" onChange={(e)=>{setFamilyName(e.target.value)}} id="exampleSurname" placeholder="Rossi" />
+                            <Input name="surname" onChange={(e)=>{setFamilyName(e.target.value)}} id="surname" placeholder="Rossi" required/>
                         </FormGroup>
                         <div>
                             {loading ? (
