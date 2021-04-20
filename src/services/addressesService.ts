@@ -1,4 +1,4 @@
-import { Address } from '@stripe/stripe-js';
+import { Address } from 'types'
 
 interface AddressData {
     addresses: Address[]
@@ -37,7 +37,7 @@ const fetchAddresses = async (): Promise<AddressData> => {
   }
 };
 
-const createNewAddress = async (address:object): Promise<AddressResponse> => {
+const createNewAddress = async (address:Address): Promise<AddressResponse> => {
     const token = window.localStorage.getItem('token');
   try {
     const requestOptions = {
@@ -64,7 +64,7 @@ const createNewAddress = async (address:object): Promise<AddressResponse> => {
   }
 };
 
-const deleteAddress = async (id: string): Promise<AddressResponse> => {
+const deleteAddress = async (id: number): Promise<AddressResponse> => {
     const token = window.localStorage.getItem('token');
   try {
     const requestOptions = {

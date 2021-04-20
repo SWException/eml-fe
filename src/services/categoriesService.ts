@@ -1,7 +1,7 @@
-import { Categories } from 'types';
+import { Categories, Category } from 'types';
 
 interface CategoriesData {
-    categories: Categories
+    categories: Category[]
 }
 
 const fetchAllCategories = async (): Promise<CategoriesData> => {

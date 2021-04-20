@@ -1,11 +1,14 @@
 import Amplify, { Auth } from 'aws-amplify';
 import awsconfig from 'aws-exports';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 import { AddressForm } from 'components/checkout';
 import { CustomerLayout } from 'components/layouts/CustomerLayout';
 import styles from 'styles/Profile.module.css';
+import { AddressesService, AuthService } from 'services';
+import { useAuth } from 'context';
+import {Address} from 'types'
 Amplify.configure(awsconfig);
 
 // Salva in automatico i cookie per ricordare se il login è stato fatto
@@ -13,11 +16,31 @@ Amplify.configure(awsconfig);
 const Profile: React.FC = ()=>{
 
     const router = useRouter();
+
+    const { isAuthenticated, currentUser } = useAuth();
+
+    useEffect(()=>{
+        if(isAuthenticated){
+            setEmail(currentUser.email);
+        }
+        getAddresses()
+    }, [])
     //mostrare messaggi ed errori nel successo o no del cambio di password + confirmPass
 
     const [oldPass, setOldPass] = useState("");
     const [newPass, setNewPass] = useState("");
     const [email, setEmail] = useState("");
+    const [address, setAddress] = useState<Address[]>([]);
+    const [values, setValues] = useState<Address>({
+        id: 1, //Mock da cambiare in seguito, chiedere BE significato
+        description: "Indirizzo di casa",
+        recipientName: "Mario",
+        recipientSurname: "Rossi",
+        address: "Via Roma 12/A",
+        city: "Padova",
+        code: "35100",
+        district: "PD"
+    });
 
     const changeOld = (e) =>{
         setOldPass(e.target.value);      
@@ -29,40 +52,58 @@ const Profile: React.FC = ()=>{
 
     const changeEmail = () => {
         console.log("CHANGING THE MAIL");
-        /*Auth.currentAuthenticatedUser()
-            .then(user => {
-                return Auth.changePassword(user, oldPass, newPass);
-            })
-            .then(data => console.log(data))
-            .catch(err => console.log(err));
-            */
     }
 
-    const changePassword = () => {
-        Auth.currentAuthenticatedUser()
-            .then(user => {
-                return Auth.changePassword(user, oldPass, newPass);
-            })
-            .then(data => console.log(data))
-            .catch(err => console.log(err));
+    const changePassword = async() => {
+        try {
+            await AuthService.changePassword(oldPass, newPass)
+        } catch(err) {
+            console.log(err)
+        }
     }
 
-    Auth.currentSession()
-    .then(res => {
-        let accessToken = res.getAccessToken()
-        let jwt = accessToken.getJwtToken()
-        //console.log(`myJwt: ${jwt}`)
-    })
-    .catch(err => { setEmail(err); console.log("Errore2: " + err); });
+    const getAddresses = async() => {
+        try {
+            const { addresses } = await AddressesService.fetchAddresses();
+            setAddress(addresses)
+            console.log(address);
+        } catch(err) {
+            console.log(err)
+        }
+    }
 
-    Auth.currentAuthenticatedUser()
-    .then(user => {
-        setEmail(user.attributes.email);
-        //console.log(user);
-    })
-    .catch(err => { setEmail(err); console.log("Errore1: " + err); });
+    const handleChange = (name:string, e:React.FormEvent<HTMLInputElement>) :void => {
+        setValues({
+            ...values,
+            [name]: e.currentTarget.value
+        })
+    }
 
+    const submitNewAddress = async() =>{
+        //Check se info inserite sono giuste?
+        try {
+            const { status, message } = await AddressesService.createNewAddress(values);
+            console.log(status + ' ---- ' + message)
+            if(status == "success"){
+                getAddresses();
+            }
+        } catch(err) {
+            console.log(err);
+        }
+    }
 
+    const deleteAddress = async() => {
+        try {
+            //Ovviamente mockato, capire come selezionare id da un elemento selected
+            const { status, message } = await AddressesService.deleteAddress(0);
+            console.log(status + ' ---- ' + message)
+            if(status == "success"){
+                getAddresses();
+            }
+        } catch(err) {
+            console.log(err);
+        }
+    }
 
     return (
         <CustomerLayout header>
@@ -70,18 +111,33 @@ const Profile: React.FC = ()=>{
             <div className={styles.div}>
                     <h1 className={styles.h1}>Here you can manage your addresses</h1>
                     <h2>Add a new one</h2>
-                    <AddressForm/>
+                    <Form>
+                        <Label>Name:</Label>
+                        <Input type="text" onChange={(e)=>{handleChange('recipientName', e)}} placeholder="Name"/>
+                        <Label>Surname:</Label>
+                        <Input type="text" onChange={(e)=>{handleChange('recipientSurname', e)}} placeholder="Surname"/>
+                        <Label>Address:</Label>
+                        <Input type="text" onChange={(e)=>{handleChange('address', e)}} placeholder="Address"/>
+                        <Label>City:</Label>
+                        <Input type="text" onChange={(e)=>{handleChange('city', e)}} placeholder="City"/>
+                        <Label>Province:</Label>
+                        <Input type="text" onChange={(e)=>{handleChange('district', e)}} placeholder="Province (TV)"/>
+                        <Label>CAP:</Label>
+                        <Input type="text" onChange={(e)=>{handleChange('code', e)}} placeholder="CAP"/>
+                        <Label>Description:</Label>
+                        <Input type="text" onChange={(e)=>{handleChange('description', e)}} placeholder="House Address"/>
+                    </Form>
                     <p/> 
-                    <Button>Add</Button>
+                    <Button onClick={submitNewAddress}>Add</Button>
                     <p/>
                     <h2>Or delete an existing one</h2>
                     <select>
-                        <option>Address 1</option>
-                        <option>Address 2</option>
-                        <option>Address 3</option>
+                        {address.map((address)=>(
+                            <option value={`${address.id}`}>{`${address.address}`}</option>
+                        ))}
                     </select>
                     <p/>
-                    <Button>Delete this address</Button>
+                    <Button onClick={deleteAddress}>Delete this address</Button>
             </div>
             <div className={styles.div}>
                 <Form>
