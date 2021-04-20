@@ -38,8 +38,8 @@ const SignUp: React.FC = () => {
         setLoading(true);
         try {
             const { confirmCode } = await AuthService.signUp(email, password, name, family)
-            setMessage('Registrazione avvenuta con successo! Conferma la tua mail inserendo il codice ricevuto');
-            setError('')
+            setMessage('Registration was successful! Confirm your email by entering the code received');
+            setError('');
             displayInfo();
             setIsCode(confirmCode);
         } catch (e) {
@@ -126,20 +126,24 @@ const SignUp: React.FC = () => {
                             <Input type="email" name="email" onChange={(e)=>{setEmail(e.target.value)}} id="exampleEmail" placeholder="something@idk.cool" />
                         </FormGroup>
                         <FormGroup>
-                            <Label for="exampleEmail" className="">Ripeti Email</Label>
+                            <Label for="exampleEmail" className="">Repeat Email</Label>
                             <Input type="email" name="email" onChange={(e)=>{setEmail(e.target.value)}} id="exampleEmail" placeholder="something@idk.cool" />
                         </FormGroup>
                         <FormGroup >
                             <Label for="examplePassword" className="">Password</Label>
                             <Input type="password" name="password" onChange={(e)=>{setPass(e.target.value)}} id="examplePassword" placeholder="sUpErStrong1!" />
                         </FormGroup>
+                        <FormGroup >
+                            <Label for="examplePassword" className="">Repeat Password</Label>
+                            <Input type="password" name="password" onChange={(e)=>{setPass(e.target.value)}} id="examplePassword" placeholder="sUpErStrong1!" />
+                        </FormGroup>
                         <FormGroup>
                             <Label for="examplePassword" className="">Name</Label>
-                            <Input name="name" onChange={(e)=>{setPrimaryName(e.target.value)}} id="examplePassword" placeholder="Mario" />
+                            <Input name="name" onChange={(e)=>{setPrimaryName(e.target.value)}} id="exampleName" placeholder="Mario" />
                         </FormGroup>
                         <FormGroup>
                             <Label for="examplePassword" className="">Surname</Label>
-                            <Input name="surname" onChange={(e)=>{setFamilyName(e.target.value)}} id="examplePassword" placeholder="Rossi" />
+                            <Input name="surname" onChange={(e)=>{setFamilyName(e.target.value)}} id="exampleSurname" placeholder="Rossi" />
                         </FormGroup>
                         <div>
                             {loading ? (

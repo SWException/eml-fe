@@ -42,7 +42,7 @@ const Login: React.FC = () => {
             router.push('/');
         } catch(e) {
             setLoading(false);
-            setError(e);
+            setError('Something went wrong! Retry!');
             displayErr();
         }
     }
