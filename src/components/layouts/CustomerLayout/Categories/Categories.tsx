@@ -30,7 +30,7 @@ const CategoriesToShow: React.FC = () => {
         <Navbar className={styles.bar} color="light" expand="md">
           <Nav navbar className={styles.container}>
             {categories ? (
-              <div>
+              <div className={styles.container}>
                 {categories.map((category)=>(
                   <NavItem>
                     <NavLink href='/products'>{`${category.name.toUpperCase()}`}</NavLink>
@@ -38,7 +38,7 @@ const CategoriesToShow: React.FC = () => {
                 ))}
               </div>
             ) : (
-              <div>
+              <div className={styles.container}>
                 <NavItem>
                   <NavLink href="/products">CATEGORY 1</NavLink>
                 </NavItem>
