@@ -3,7 +3,6 @@ import { CheckoutForm } from "components/checkout";
 import {Elements} from '@stripe/react-stripe-js';
 import {loadStripe} from '@stripe/stripe-js';
 import { CustomerLayout } from "components/layouts/CustomerLayout";
-import styles from "styles/Checkout.module.css"
 
 /**
  * TODO: Aggiungere pagina intermedia tra Cart e Checkout per fare
