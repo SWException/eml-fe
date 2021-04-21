@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { CardElement, useStripe, useElements} from "@stripe/react-stripe-js";
 import { Button, Spinner } from 'reactstrap';
 import {Address} from 'types';
-import { AddressesService, AuthService } from 'services';
+import { AddressesService, AuthService, CheckoutService } from 'services';
 
 
 const CheckoutForm: React.FC = () => {
@@ -23,7 +23,7 @@ const CheckoutForm: React.FC = () => {
 
   useEffect(() => {
     // Create PaymentIntent as soon as the page loads
-    window.fetch("https://5qsqmpfpm8.execute-api.eu-central-1.amazonaws.com/dev/createCharge", {
+    /*window.fetch("https://5qsqmpfpm8.execute-api.eu-central-1.amazonaws.com/dev/createCharge", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -36,7 +36,8 @@ const CheckoutForm: React.FC = () => {
       })
       .then(data => {
         setClientSecret(data['paymentIntent']['client_secret']);
-      });
+      });*/
+      createIntent();
   }, []);
 
   const cardStyle = {
@@ -56,6 +57,14 @@ const CheckoutForm: React.FC = () => {
       }
     }
   };
+
+  const createIntent = async() =>{
+    const shipping: string = 'My Address'
+    const billing: string = 'My Address'
+    const { checkout } = await CheckoutService.fetchCheckout(shipping, billing);
+    //setClientSecret(checkout.data['payment_intent']['client_secret']);
+    console.log(checkout)
+  }
 
   const handleChange = async (event) => {
     // Listen for changes in the CardElement
@@ -97,129 +106,129 @@ const CheckoutForm: React.FC = () => {
 
   return (
 
-      <div class="container">
-      <div class="py-5 text-center">
+      <div className="container">
+      <div className="py-5 text-center">
         <h1>Checkout form</h1>
     </div>
-    <div class="row">
-        <div class="col-md-4 order-md-2 mb-4">
-            <h4 class="d-flex justify-content-between align-items-center mb-3">
-                <span class="text-muted">Your cart</span>
+    <div className="row">
+        <div className="col-md-4 order-md-2 mb-4">
+            <h4 className="d-flex justify-content-between align-items-center mb-3">
+                <span className="text-muted">Your cart</span>
             </h4>
-            <ul class="list-group mb-3 sticky-top">
-                <li class="list-group-item d-flex justify-content-between">
+            <ul className="list-group mb-3 sticky-top">
+                <li className="list-group-item d-flex justify-content-between">
                     <span>Shipping cost</span>
                     <strong>€10</strong>
                 </li>
-                <li class="list-group-item d-flex justify-content-between">
+                <li className="list-group-item d-flex justify-content-between">
                     <span>Taxes</span>
                     <strong>€2</strong>
                 </li>
-                <li class="list-group-item d-flex justify-content-between">
+                <li className="list-group-item d-flex justify-content-between">
                     <span><b>Total</b></span>
                     <strong>€20</strong>
                 </li>
             </ul>
         </div>
-        <div class="col-md-8 order-md-1">
-            <h2 class="mb-3">Billing address</h2>
-            <form class="needs-validation" novalidate="">
-                <div class="row">
-                    <div class="col-md-6 mb-3">
-                        <label for="firstName">First name</label>
-                        <input type="text" class="form-control" id="firstName" placeholder="" value="" />
-                        <div class="invalid-feedback"> Valid first name is required. </div>
+        <div className="col-md-8 order-md-1">
+            <h2 className="mb-3">Billing address</h2>
+            <form className="needs-validation">
+                <div className="row">
+                    <div className="col-md-6 mb-3">
+                        <label>First name</label>
+                        <input type="text" className="form-control" id="firstName" placeholder="" value="" />
+                        <div className="invalid-feedback"> Valid first name is required. </div>
                     </div>
-                    <div class="col-md-6 mb-3">
-                        <label for="lastName">Last name</label>
-                        <input type="text" class="form-control" id="lastName" placeholder="" value=""/>
-                        <div class="invalid-feedback"> Valid last name is required. </div>
-                    </div>
-                </div>
-                <div class="mb-3">
-                    <label for="address">Address</label>
-                    <input type="text" class="form-control" id="address" placeholder="1234 Main St"/>
-                    <div class="invalid-feedback"> Please enter your shipping address. </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-5 mb-3">
-                        <label for="country">Country</label>
-                        <input type="text" class="form-control" id="country" placeholder="ex.Padova"/>
-                        <div class="invalid-feedback"> Please select a valid country. </div>
-                    </div>
-                    <div class="col-md-4 mb-3">
-                        <label for="state">State</label>
-                        <input type="text" class="form-control" id="state" placeholder="ex.Italy"/>
-                        <div class="invalid-feedback"> Please provide a valid state. </div>
-                    </div>
-                    <div class="col-md-3 mb-3">
-                        <label for="zip">Zip</label>
-                        <input type="text" class="form-control" id="zip" placeholder=""/>
-                        <div class="invalid-feedback"> Zip code required. </div>
+                    <div className="col-md-6 mb-3">
+                        <label>Last name</label>
+                        <input type="text" className="form-control" id="lastName" placeholder="" value=""/>
+                        <div className="invalid-feedback"> Valid last name is required. </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-md-5 mb-3" style={{marginTop:"20px"}}>
-                        <label for="saveaddress">Choose a saved address:</label>
-                        <select class="custom-select d-block w-100" id="saveaddress">
+                <div className="mb-3">
+                    <label >Address</label>
+                    <input type="text" className="form-control" id="address" placeholder="1234 Main St"/>
+                    <div className="invalid-feedback"> Please enter your shipping address. </div>
+                </div>
+                <div className="row">
+                    <div className="col-md-5 mb-3">
+                        <label >Country</label>
+                        <input type="text" className="form-control" id="country" placeholder="ex.Padova"/>
+                        <div className="invalid-feedback"> Please select a valid country. </div>
+                    </div>
+                    <div className="col-md-4 mb-3">
+                        <label >State</label>
+                        <input type="text" className="form-control" id="state" placeholder="ex.Italy"/>
+                        <div className="invalid-feedback"> Please provide a valid state. </div>
+                    </div>
+                    <div className="col-md-3 mb-3">
+                        <label>Zip</label>
+                        <input type="text" className="form-control" id="zip" placeholder=""/>
+                        <div className="invalid-feedback"> Zip code required. </div>
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="col-md-5 mb-3" style={{marginTop:"20px"}}>
+                        <label>Choose a saved address:</label>
+                        <select className="custom-select d-block w-100" id="saveaddress">
                         {address.map((address)=>(
                             <option value={`${address.id}`}>{`${address.address}`}</option>
                         ))}
                     </select>
-                        <div class="invalid-feedback"> Please select a valid address. </div>
+                        <div className="invalid-feedback"> Please select a valid address. </div>
                     </div>
                 </div>
-                <h2 class="mb-3" style={{marginTop:"20px"}}>Shipping address</h2>
-                <div class="row">
-                    <div class="col-md-6 mb-3">
-                        <label for="firstName">First name</label>
-                        <input type="text" class="form-control" id="firstName" placeholder="" value="" />
-                        <div class="invalid-feedback"> Valid first name is required. </div>
+                <h2 className="mb-3" style={{marginTop:"20px"}}>Shipping address</h2>
+                <div className="row">
+                    <div className="col-md-6 mb-3">
+                        <label>First name</label>
+                        <input type="text" className="form-control" id="firstName" placeholder="" value="" />
+                        <div className="invalid-feedback"> Valid first name is required. </div>
                     </div>
-                    <div class="col-md-6 mb-3">
-                        <label for="lastName">Last name</label>
-                        <input type="text" class="form-control" id="lastName" placeholder="" value="" />
-                        <div class="invalid-feedback"> Valid last name is required. </div>
+                    <div className="col-md-6 mb-3">
+                        <label >Last name</label>
+                        <input type="text" className="form-control" id="lastName" placeholder="" value="" />
+                        <div className="invalid-feedback"> Valid last name is required. </div>
                     </div>
                 </div>
-                <div class="mb-3">
-                    <label for="address">Address</label>
-                    <input type="text" class="form-control" id="address" placeholder="1234 Main St"/>
-                    <div class="invalid-feedback"> Please enter your shipping address. </div>
+                <div className="mb-3">
+                    <label>Address</label>
+                    <input type="text" className="form-control" id="address" placeholder="1234 Main St"/>
+                    <div className="invalid-feedback"> Please enter your shipping address. </div>
                 </div>
-                <div class="row">
-                    <div class="col-md-5 mb-3">
-                        <label for="country">Country</label>
-                        <input type="text" class="form-control" id="country" placeholder="ex.Padova"/>
-                        <div class="invalid-feedback"> Please select a valid country. </div>
+                <div className="row">
+                    <div className="col-md-5 mb-3">
+                        <label >Country</label>
+                        <input type="text" className="form-control" id="country" placeholder="ex.Padova"/>
+                        <div className="invalid-feedback"> Please select a valid country. </div>
                     </div>
-                    <div class="col-md-4 mb-3">
-                        <label for="state">State</label>
-                        <input type="text" class="form-control" id="state" placeholder="ex.Italy"/>
-                        <div class="invalid-feedback"> Please provide a valid state. </div>
+                    <div className="col-md-4 mb-3">
+                        <label >State</label>
+                        <input type="text" className="form-control" id="state" placeholder="ex.Italy"/>
+                        <div className="invalid-feedback"> Please provide a valid state. </div>
                     </div>
-                    <div class="col-md-3 mb-3">
-                        <label for="zip">Zip</label>
-                        <input type="text" class="form-control" id="zip" placeholder=""/>
-                        <div class="invalid-feedback"> Zip code required. </div>
+                    <div className="col-md-3 mb-3">
+                        <label >Zip</label>
+                        <input type="text" className="form-control" id="zip" placeholder=""/>
+                        <div className="invalid-feedback"> Zip code required. </div>
                     </div>
-                    <div class="custom-control custom-checkbox"style={{marginTop:"20px"}}>
-                      <input type="checkbox" class="custom-control-input" id="same-address"/>
-                      <label class="custom-control-label" for="same-address">Shipping address is the same as my billing address</label>
+                    <div className="custom-control custom-checkbox"style={{marginTop:"20px"}}>
+                      <input type="checkbox" className="custom-control-input" id="same-address"/>
+                      <label className="custom-control-label">Shipping address is the same as my billing address</label>
                   </div>
                 </div>
-                <div class="row">
-                    <div class="col-md-5 mb-3"style={{marginTop:"20px"}}>
-                        <label for="saveaddress">Choose a saved address:</label>
-                        <select class="custom-select d-block w-100" id="saveaddress">
+                <div className="row">
+                    <div className="col-md-5 mb-3"style={{marginTop:"20px"}}>
+                        <label >Choose a saved address:</label>
+                        <select className="custom-select d-block w-100" id="saveaddress">
                         {address.map((address)=>(
                             <option value={`${address.id}`}>{`${address.address}`}</option>
                         ))}
                     </select>
-                        <div class="invalid-feedback"> Please select a valid address. </div>
+                        <div className="invalid-feedback"> Please select a valid address. </div>
                     </div>
                 </div>
-                <h2 class="mb-3"  style={{marginTop:"20px"}}>Payment</h2>
+                <h2 className="mb-3"  style={{marginTop:"20px"}}>Payment</h2>
                 <form onSubmit={handleSubmit}>
                     <CardElement id="card-element" options={cardStyle} onChange={handleChange} />
                     <div style={{display: "flex", alignItems: "center", justifyContent:"center", margin: "20px"}}>
