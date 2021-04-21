@@ -5,14 +5,24 @@ import { SearchBar } from 'components/ui';
 import { LogoutButton } from 'components/ui';
 import  ProfileButton  from 'components/ProfileButton';
 import { useAuth } from 'context';
-import Image from 'next/image'
+import Image from 'next/image';
+import { sessionService } from 'services'
+
+/**
+ * Context check isAuthenticated
+ */
 
 const Header: React.FC = () => {
 
-  const { isAuthenticated } = useAuth()
+  //const { isAuthenticated } = useAuth();
+  const [auth, setAuth] = useState(false);
 
   useEffect(()=>{
-    //
+    if(sessionService.isAuth()){
+      setAuth(true)
+    } else {
+      setAuth(false)
+    }
   })
 
   
@@ -26,7 +36,7 @@ const Header: React.FC = () => {
           <SearchBar/>
           <Nav className="ml-auto" navbar>
             <Fragment>
-              {isAuthenticated ? (
+              {auth ? (
                 <Fragment>
               <NavItem>
               <ProfileButton/>

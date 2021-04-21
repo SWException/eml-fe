@@ -5,9 +5,9 @@ import { useRouter } from 'next/router';
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 import { CustomerLayout } from 'components/layouts/CustomerLayout';
 import styles from 'styles/Profile.module.css';
-import { AddressesService, AuthService } from 'services';
+import { AddressesService, AuthService, sessionService } from 'services';
 import { useAuth } from 'context';
-import {Address} from 'types'
+import {Address, User} from 'types'
 Amplify.configure(awsconfig);
 
 // Salva in automatico i cookie per ricordare se il login è stato fatto
@@ -16,11 +16,12 @@ const Profile: React.FC = ()=>{
 
     const router = useRouter();
 
-    const { isAuthenticated, currentUser } = useAuth();
+    //const { isAuthenticated, currentUser } = useAuth();
 
     useEffect(()=>{
-        if(isAuthenticated){
-            setEmail(currentUser.email);
+        if(sessionService.isAuth()){
+            let user: User = sessionService.getLocalStorage()
+            setEmail(user.email);
         }
         getAddresses()
     }, [])

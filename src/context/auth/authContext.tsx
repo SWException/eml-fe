@@ -5,12 +5,17 @@ import { LOGOUT_USER, SET_CURRENT_USER, UPDATE_USER } from './authTypes';
 import { User } from '../../types/user';
 import reducer from './authReducer';
 import Amplify, { Auth } from 'aws-amplify';
-import { AuthService } from 'services';
+import { AuthService, sessionService } from 'services';
 
 interface UserDetails {
   email: string;
   password: string;
   name: string;
+}
+
+interface UserData {
+  user: User;
+  token: string;
 }
 
 /*
@@ -59,13 +64,21 @@ export const AuthProvider: React.FC<Props> = ({ children, currentUser }) => {
     const { user, token } = await AuthService.login(email, password);
     console.log(user);
     console.log(token);
-    window.localStorage.setItem('token', token);
+    const data:UserData = {
+      user,
+      token
+    }
+    sessionService.authenticate(data, ()=>{
+      console.log('Done')
+    })
     dispatch({ type: SET_CURRENT_USER, payload: user });
   };
 
   const logout = async() => {
       try {
           await Auth.signOut();
+          sessionService.removeCookie('token')
+          sessionService.removeLocalStorage('user')
           console.log("Logout successfull");
       } catch (error) {
           console.log('error signing out: ', error);
