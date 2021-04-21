@@ -3,7 +3,6 @@ import awsconfig from 'aws-exports';
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
-import { AddressForm } from 'components/checkout';
 import { CustomerLayout } from 'components/layouts/CustomerLayout';
 import styles from 'styles/Profile.module.css';
 import { AddressesService, AuthService } from 'services';
@@ -106,7 +105,7 @@ const Profile: React.FC = ()=>{
     }
 
     return (
-        <CustomerLayout header>
+        <CustomerLayout header footer>
             <strong style={{marginLeft:25, marginTop: 10}}>User: {email}</strong>
             <div className={styles.div}>
                     <h1 className={styles.h1}>Here you can manage your addresses</h1>

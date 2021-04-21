@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { CardElement, useStripe, useElements} from "@stripe/react-stripe-js";
 import { Button, Spinner } from 'reactstrap';
+import {Address} from 'types';
+import { AddressesService, AuthService } from 'services';
 
 
 const CheckoutForm: React.FC = () => {
@@ -13,6 +15,11 @@ const CheckoutForm: React.FC = () => {
   const [clientSecret, setClientSecret] = useState('');
   const stripe = useStripe();
   const elements = useElements();
+  const [address, setAddress] = useState<Address[]>([]);
+
+  useEffect(()=>{
+    getAddresses()
+  }, [])
 
   useEffect(() => {
     // Create PaymentIntent as soon as the page loads
@@ -77,6 +84,16 @@ const CheckoutForm: React.FC = () => {
       setMessage("Payment succeeded, see the result in your Stripe Dashboard");
     }
   };
+
+  const getAddresses = async() => {
+    try {
+        const { addresses } = await AddressesService.fetchAddresses();
+        setAddress(addresses)
+        console.log(address);
+    } catch(err) {
+        console.log(err)
+    }
+}
 
   return (
 
@@ -144,11 +161,11 @@ const CheckoutForm: React.FC = () => {
                 <div class="row">
                     <div class="col-md-5 mb-3" style={{marginTop:"20px"}}>
                         <label for="saveaddress">Choose a saved address:</label>
-                        <select class="custom-select d-block w-100" id="country">
-                            <option value="">Choose...</option>
-                            <option>Address1</option>
-                            <option>Address2</option>
-                        </select>
+                        <select class="custom-select d-block w-100" id="saveaddress">
+                        {address.map((address)=>(
+                            <option value={`${address.id}`}>{`${address.address}`}</option>
+                        ))}
+                    </select>
                         <div class="invalid-feedback"> Please select a valid address. </div>
                     </div>
                 </div>
@@ -194,11 +211,11 @@ const CheckoutForm: React.FC = () => {
                 <div class="row">
                     <div class="col-md-5 mb-3"style={{marginTop:"20px"}}>
                         <label for="saveaddress">Choose a saved address:</label>
-                        <select class="custom-select d-block w-100" id="country">
-                            <option value="">Choose...</option>
-                            <option>Address1</option>
-                            <option>Address2</option>
-                        </select>
+                        <select class="custom-select d-block w-100" id="saveaddress">
+                        {address.map((address)=>(
+                            <option value={`${address.id}`}>{`${address.address}`}</option>
+                        ))}
+                    </select>
                         <div class="invalid-feedback"> Please select a valid address. </div>
                     </div>
                 </div>

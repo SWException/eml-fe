@@ -1,0 +1,10 @@
+
+.p{
+    margin-top: 20px;
+}
+
+.payment{
+    border-radius: 10px;
+    border: ridge var(--color-gray-dark);
+    padding: 20px;
+}
