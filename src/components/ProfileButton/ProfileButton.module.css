@@ -1,4 +1,4 @@
-.profile{
+.profile {
     font-weight: 800;
     background-color: var(--color-night);
     color: var(--color-light);
@@ -10,6 +10,12 @@
     background-color: var(--color-gray);
 }
 
-.item{
+.profile:active{
     color: var(--color-dark);
+    background-color: var(--color-gray);
+}
+
+.dropmenu{
+    color: var(--color-dark);
+    background-color: var(--color-gray);
 }

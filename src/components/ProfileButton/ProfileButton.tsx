@@ -14,10 +14,10 @@ const ProfileButton: React.FC = () =>  {
             <DropdownToggle caret className={styles.profile} size="lg" >
                 Profile
             </DropdownToggle>
-            <DropdownMenu>
-                <DropdownItem href="/profile" className={styles.item} >Account Settings</DropdownItem>
+            <DropdownMenu className={styles.dropmenu} >
+                <DropdownItem href="/profile">Account Settings</DropdownItem>
                 <DropdownItem divider />
-                <DropdownItem href="/orders" className={styles.item}>My orders</DropdownItem>
+                <DropdownItem href="/orders">My orders</DropdownItem>
             </DropdownMenu>
         </Dropdown>
     </>
