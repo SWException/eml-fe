@@ -9,14 +9,13 @@ interface Props {   //DA RIVEDERE ASSOLUTAMENTE
 }
 
 
-const DetailOrderProductCard: React.FC<Props> = ({ primaryPhoto, idp, name, price, quantity}) => {
+const DetailOrderProductCard: React.FC<Props> = ({ idp, name, price, quantity}) => {
     
     const totart=price*quantity;
 
     return (
         <div className="">
             <div className={styles.item}>
-            <img src={primaryPhoto} height="100" width="100" alt="..."/>
             <span className={styles.information}><strong>ID: </strong>{idp}</span>
             <span className={styles.information}><strong>NAME: </strong>{name.toUpperCase()}</span>
             <span className={styles.information}><strong>PRICE: €</strong>{price}</span>

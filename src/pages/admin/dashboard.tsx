@@ -30,21 +30,21 @@ const Dashboard: React.FC = () => {
           <table className={styles.table}>
                 <tr>
                     <th className={styles.th}>
-                        <button className={styles.div} onClick={redirectProductManagement} hover>
+                        <button className={styles.div} onClick={redirectProductManagement}>
                         <Image src="/product.png" width={40} height={40}/>
                         <p><b>Manage product</b></p>
                         <p>Here you can add, edit and remove a product</p>
                         </button>
                     </th>
                     <th className={styles.th}>
-                        <button className={styles.div} onClick={redirectOrdersManagement} hover>
+                        <button className={styles.div} onClick={redirectOrdersManagement}>
                         <Image src="/orders.png" width={40} height={40}/>
                         <p><b>Manage orders</b></p>
                         <p>Here you can see all clients's orders and manage them.</p>
                         </button>
                     </th>
                     <th className={styles.th}>
-                        <button className={styles.div} onClick={redirectCategoryManagement} hover>
+                        <button className={styles.div} onClick={redirectCategoryManagement}>
                         <Image src="/category.png" width={40} height={40}/>
                         <p><b>Manage categories</b></p>
                         <p>Here you can add, edit and remove a category</p>
@@ -53,14 +53,14 @@ const Dashboard: React.FC = () => {
                 </tr>
                 <tr>
                     <th className={styles.th}>
-                        <button className={styles.div} onClick={redirectTaxManagement} hover>
+                        <button className={styles.div} onClick={redirectTaxManagement}>
                         <Image src="/tax.png" width={40} height={40}/>
                         <p><b>Manage taxes</b></p>
                         <p>Here you can add, edit and remove a taxes</p>
                         </button>
                     </th>
                     <th className={styles.th}>
-                        <button className={styles.div} onClick={redirectCustomerManagement} hover>
+                        <button className={styles.div} onClick={redirectCustomerManagement}>
                         <Image src="/customers.png" width={40} height={40}/>
                         <p><b>Manage customers</b></p>
                         <p>Here you can see all customers and contact them</p>

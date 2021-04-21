@@ -48,12 +48,12 @@ const Header: React.FC = () => {
               ) : (
                 <Fragment>
                 <NavItem>
-                  <NavLink class="navbar" href="/account/signin"><a>Login</a></NavLink>
+                  <NavLink className="navbar" href="/account/signin"><a>Login</a></NavLink>
                 </NavItem>
                 </Fragment>
               )}
               <NavItem>
-              <NavLink class="navbar" href="/cart">
+              <NavLink className="navbar" href="/cart">
                     <a>
                       <Image src="/iconcart2.png" width={40} height={40}/>
                     </a>
