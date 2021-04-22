@@ -6,6 +6,6 @@ module.exports = {
         AWS_ENDPOINT: process.env.AWS_ENDPOINT,
     },
     images: {
-        domains: ['dress-shop.vercel.app', 'localhost', 'www.focusjunior.it'],
+        domains: ['dress-shop.vercel.app', 'localhost', 'www.focusjunior.it', 'imagebucket-products-dev.s3.eu-central-1.amazonaws.com'],
     },
 }

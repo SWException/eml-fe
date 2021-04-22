@@ -1,30 +1,19 @@
 import { useRouter } from 'next/router';
-import { Container, Filters, Sort } from 'components/ui';
+import {Filters, Sort } from 'components/ui';
 import { ProductList } from 'components/products';
-import React from 'react';
+import React, { useEffect } from 'react';
 import styles from 'styles/PLP.module.css';
-import { Product } from 'types';
+import { useShop } from '../context/shop';
 import { CustomerLayout } from 'components/layouts/CustomerLayout';
 
 const Products: React.FC = () => {
-    const router = useRouter()
+    const router = useRouter();
 
-    let products = [];
-    for(var i = 0; i < 20; i++){
-      var prodotto: Product = {
-        id : "ID" + i,
-        name: "TEST",
-        primaryPhoto: "/image2.jpg",
-        categories: ['CAT'],
-        description: "DESCR",
-        price: 50 + i,
-        show: true,
-        showHome: false,
-        stock: 20,
-        tax: 10,
-      }; 
-      products[i] = prodotto;
-    }
+    const { loadProducts, products } = useShop();
+
+    useEffect(()=>{
+      products.length === 0 && loadProducts();
+    }, []);
 
     return (
         <CustomerLayout header categories footer>
