@@ -70,6 +70,7 @@ const Detail: React.FC<Props> = ({product}) => {
         if(name == 'plus'){
             setQuantity(_quantity+1);
         } else {
+            if(_quantity!=1)
             setQuantity(_quantity-1);
         }
     }

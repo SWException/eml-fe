@@ -16,6 +16,6 @@
 }
 
 .dropmenu{
-    color: var(--color-dark);
-    background-color: var(--color-gray);
+    background-color: var(--color-night);
+    border-color: var(--color-light);
 }
