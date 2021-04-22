@@ -1,5 +1,5 @@
 import React, { useState, useEffect, Fragment } from 'react';
-import { Navbar, Nav, NavItem, NavLink } from 'reactstrap';
+import { Navbar, Nav, NavItem, NavLink, Collapse, NavbarToggler, NavbarBrand } from 'reactstrap';
 import styles from './Header.module.css';
 import { SearchBar } from 'components/ui';
 import { LogoutButton } from 'components/ui';
@@ -16,6 +16,9 @@ const Header: React.FC = () => {
 
   //const { isAuthenticated } = useAuth();
   const [auth, setAuth] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggle = () => setIsOpen(!isOpen);
 
   useEffect(()=>{
     if(sessionService.isAuth()){
@@ -29,10 +32,12 @@ const Header: React.FC = () => {
   return (
     <Fragment>
       <Navbar className={styles.navbar} expand="md">
-          <NavLink href="/">
+          <NavbarBrand href="/">
             <Image src="/logo.png" width={120} height={80}/>
-            </NavLink>
-          <NavLink  href="/" className={styles.siteTitle}><a>COMPANY NAME</a></NavLink>
+            </NavbarBrand>
+          <NavbarBrand  href="/" className={styles.siteTitle}><a>COMPANY NAME</a></NavbarBrand>
+          <NavbarToggler onClick={toggle}  className={styles.navtoggler}>Menu</NavbarToggler>
+          <Collapse isOpen={isOpen} navbar>
           <SearchBar/>
           <Nav className="ml-auto" navbar>
             <Fragment>
@@ -61,6 +66,7 @@ const Header: React.FC = () => {
               </NavItem>
             </Fragment>
           </Nav>
+          </Collapse>
       </Navbar>    
     </Fragment>
   );
