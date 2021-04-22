@@ -36,10 +36,10 @@ const fetchCart = async (): Promise<CartData> => {
 
     const cartsData: CartData = {
       cart: {
-        id: cartsReturned.data.id,
-        product: cartsReturned.data.products,
-        tax: cartsReturned.data.tax,
-        total: cartsReturned.data.total
+        id: cartsReturned.data?.id,
+        product: (cartsReturned.data?.products)? cartsReturned.data?.products : [],
+        tax: cartsReturned.data?.tax,
+        total: cartsReturned.data?.total
       }
     };
 
