@@ -9,7 +9,7 @@ import { CustomerLayout } from "components/layouts/CustomerLayout";
  * scegliere al cliente il BillingAddress e il ShippingAddress
  */
 
-const stripePromise = loadStripe('pk_test_51IJio8KnuuioxVCyNkNNVQvZ7pVmXvDHmpesl62KNjoKA5NKsI4GbQwcgygl34JDSjXup5IsJGFQ9ECazwbNHT6w005VgbREdZ');
+const stripePromise = loadStripe(process.env.STRIPE_TOKEN);
 
 const Checkout: React.FC = () => {
   return (
