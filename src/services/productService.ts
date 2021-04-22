@@ -16,7 +16,7 @@ const fetchProducts = async (payload?: ProductPayload): Promise<ProductsData> =>
        }
     };
 
-    const res = await fetch('https://95kq9eggu9.execute-api.eu-central-1.amazonaws.com/dev/products', requestOptions)
+    const res = await fetch(`${process.env.AWS_ENDPOINT}/products`, requestOptions);
     const products = await res.json();
 
     console.log(products.data);
