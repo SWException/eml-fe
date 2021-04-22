@@ -32,14 +32,14 @@ const Profile: React.FC = ()=>{
     const [email, setEmail] = useState("");
     const [address, setAddress] = useState<Address[]>([]);
     const [values, setValues] = useState<Address>({
-        id: 1, //Mock da cambiare in seguito, chiedere BE significato
-        description: "Indirizzo di casa",
-        recipientName: "Mario",
-        recipientSurname: "Rossi",
-        address: "Via Roma 12/A",
-        city: "Padova",
-        code: "35100",
-        district: "PD"
+        // id: 1, //Mock da cambiare in seguito, chiedere BE significato
+        description: "",
+        recipientName: "",
+        recipientSurname: "",
+        address: "",
+        city: "",
+        code: "",
+        district: ""
     });
 
     const changeOld = (e) =>{

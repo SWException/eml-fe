@@ -36,7 +36,7 @@ const fetchAddresses = async (): Promise<AddressData> => {
   }
 };
 
-const createNewAddress = async (address:Address): Promise<AddressResponse> => {
+const createNewAddress = async (address: Address): Promise<AddressResponse> => {
   const token = await sessionService.getCookie('token');
   try {
     const requestOptions = {
