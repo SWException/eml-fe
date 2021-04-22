@@ -1,6 +1,5 @@
 import { ProductQuantity } from 'components/products';
 import React, {useEffect, useState} from 'react';
-import {Button} from 'reactstrap'
 import styles from 'components/cart/ProductCard/ProductCard.module.css'
 import { CartService } from 'services';
 interface Props {
@@ -14,8 +13,8 @@ interface Props {
 
 const ProductCard: React.FC<Props> = ({id, name, photo, price, loadCart, quantity}) => {
 
-    const [_quantity, setQuantity] = useState(0);
-    const [_subTotal, setSubTotal] = useState(0);
+    const [_quantity, setQuantity] = useState(quantity);
+    const [_subTotal, setSubTotal] = useState(price*quantity);
 
     useEffect(()=>{
         setQuantity(quantity);

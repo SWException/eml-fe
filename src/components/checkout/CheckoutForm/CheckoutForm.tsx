@@ -19,7 +19,8 @@ const CheckoutForm: React.FC = () => {
   const [address, setAddress] = useState<Address[]>([]);
 
   useEffect(()=>{
-    getAddresses()
+    createIntent();
+    getAddresses();
   }, [])
 
   useEffect(() => {
@@ -38,7 +39,7 @@ const CheckoutForm: React.FC = () => {
       .then(data => {
         setClientSecret(data['paymentIntent']['client_secret']);
       });*/
-      createIntent();
+      //createIntent();
   }, []);
 
   const cardStyle = {
@@ -59,13 +60,25 @@ const CheckoutForm: React.FC = () => {
     }
   };
 
+  //ADDRESSES HARDCODED! DA SISTEMARE CAZZO
   const createIntent = async() =>{
-    const shipping: string = 'My Address'
-    const billing: string = 'My Address'
-    const { checkout } = await CheckoutService.fetchCheckout(shipping, billing);
-    setId(checkout.id);
-    //setClientSecret(checkout.data['payment_intent']['client_secret']);
-    console.log(checkout)
+    await getAddresses();
+    console.log("address", address);
+    try{
+      //const shipping: string = address[0].id;
+      //const billing: string = address[0].id;
+      const shipping: string = 'a5a8e464-f5be-4869-9c3b-cabf6de3ec96';
+      const billing: string = 'a5a8e464-f5be-4869-9c3b-cabf6de3ec96';
+      const { checkout } = await CheckoutService.fetchCheckout(shipping, billing);
+      const secret = await stripe.paymentIntents.retrieve(checkout.id);
+      setId(checkout.id);
+      setClientSecret(secret);
+      console.log(checkout);
+      console.log("hoho", secret);
+    }catch(e){
+      console.log(e);
+      console.log("CAZZO PT 2");
+    }
   }
 
   const handleChange = async (event) => {
@@ -99,7 +112,7 @@ const CheckoutForm: React.FC = () => {
   const getAddresses = async() => {
     try {
         const { addresses } = await AddressesService.fetchAddresses();
-        setAddress(addresses)
+        await setAddress(addresses);
         console.log(address);
     } catch(err) {
         console.log(err)
@@ -109,7 +122,8 @@ const CheckoutForm: React.FC = () => {
   const confirmPayment = async() => {
     try {
       const { status } = await CheckoutService.confirmCheckout(id);
-      console.log(status)
+      console.log("HAI LETTO ERA LO STATUS");
+      console.log(status);
       if(status == "success"){
         //Pagamento andato a buon fine
       }

@@ -1,5 +1,5 @@
 import { Address } from 'types'
-
+import { sessionService } from './sessionService';
 interface AddressData {
     addresses: Address[]
 }
@@ -10,18 +10,17 @@ interface AddressResponse {
 }
 
 const fetchAddresses = async (): Promise<AddressData> => {
-    const token = window.localStorage.getItem('token');
-    //Sistemare token con cookies
+  const token = await sessionService.getCookie('token');
+
   try {
     const requestOptions = {
       method: 'GET',
       headers: { 
-        "Access-Control-Allow-Origin": "*",
         'Content-Type': 'application/json',
         "Authorization": `${token}`
        }
     };
-    const res = await fetch('https://virtserver.swaggerhub.com/swexception4/OpenAPI/0.4.0/addresses', requestOptions)
+    const res = await fetch(`${process.env.AWS_ENDPOINT}/addresses`, requestOptions)
     const addressesReturn = await res.json();
 
     const addressesDataToReturn: AddressData = {
@@ -38,18 +37,17 @@ const fetchAddresses = async (): Promise<AddressData> => {
 };
 
 const createNewAddress = async (address:Address): Promise<AddressResponse> => {
-    const token = window.localStorage.getItem('token');
+  const token = await sessionService.getCookie('token');
   try {
     const requestOptions = {
       method: 'POST',
       headers: { 
-        "Access-Control-Allow-Origin": "*",
         'Content-Type': 'application/json',
         "Authorization": `${token}`
        },
        body: JSON.stringify(address)       
     };
-    const res = await fetch('https://virtserver.swaggerhub.com/swexception4/OpenAPI/0.4.0/addresses', requestOptions)
+    const res = await fetch(`${process.env.AWS_ENDPOINT}/addresses`, requestOptions)
     const response = await res.json();
 
     const addressCreateRespo: AddressResponse = {
@@ -65,17 +63,16 @@ const createNewAddress = async (address:Address): Promise<AddressResponse> => {
 };
 
 const deleteAddress = async (id: number): Promise<AddressResponse> => {
-    const token = window.localStorage.getItem('token');
+  const token = await sessionService.getCookie('token');
   try {
     const requestOptions = {
       method: 'DELETE',
       headers: { 
-        "Access-Control-Allow-Origin": "*",
         'Content-Type': 'application/json',
         "Authorization": `${token}`
        }      
     };
-    const res = await fetch(`https://virtserver.swaggerhub.com/swexception4/OpenAPI/0.4.0/addresses/${id}`, requestOptions)
+    const res = await fetch(`${process.env.AWS_ENDPOINT}/addresses/${id}`, requestOptions)
     const response = await res.json();
 
     const addressDeleteResponse: AddressResponse = {

@@ -10,25 +10,26 @@ interface ConfirmCheckout {
   message: string;
 }
 
-const fetchCheckout = async (shippingAddresss: string, billingAddress: string): Promise<ResponseCheckout> => {
-  //Da implementare meglio richiesta token jwt
-  const addresses = { shippingAddresss, billingAddress }
+const fetchCheckout = async (shippingAddress: string, billingAddress: string): Promise<ResponseCheckout> => {
+  let token = sessionService.getCookie('token');
+  const addresses = { shippingAddress, billingAddress }
   try {
     const requestOptions = {
       method: 'POST',
       headers: { 
-        "Access-Control-Allow-Origin": "*",
         'Content-Type': 'application/json',
+        "Authorization": `${token}`
        },
        body: JSON.stringify(addresses)
     };
-    const res = await fetch('https://virtserver.swaggerhub.com/swexception4/OpenAPI/0.4.0/checkout', requestOptions)
+    console.log(requestOptions);
+    const res = await fetch(`${process.env.AWS_ENDPOINT}/checkout`, requestOptions)
     const checkoutReturned = await res.json();
 
     const checkoutData: ResponseCheckout = {
       checkout: {
           status: checkoutReturned.status,
-          id: checkoutReturned.id
+          id: checkoutReturned.data,
       }
     };
 
@@ -45,12 +46,11 @@ const confirmCheckout = async (id: string): Promise<ConfirmCheckout> => {
     const requestOptions = {
       method: 'PATCH',
       headers: { 
-        "Access-Control-Allow-Origin": "*",
         'Content-Type': 'application/json',
         "Authorization": `${token}`
        }
     };
-    const res = await fetch(`https://virtserver.swaggerhub.com/swexception4/OpenAPI/0.4.0/checkout/${id}`, requestOptions)
+    const res = await fetch(`${process.env.AWS_ENDPOINT}/checkout/${id}`, requestOptions)
     const checkoutReturned = await res.json();
 
     const checkoutData: ConfirmCheckout = {
