@@ -1,4 +1,4 @@
-import { DetailOrderProductCard } from 'components/orderdetails'
+import { AdminDetailOrderProductCard } from 'components/orderdetails'
 import { Product } from 'types'
 import React from "react";
 import { useRouter } from 'next/router';
@@ -59,7 +59,7 @@ const OrderDetailsAdmin: React.FC<Props> = ({orderdetails}) => { //IN VERITA' E'
                 <div className="">
                   <h2>Products</h2>
                   {products.map((product) => (
-                      <DetailOrderProductCard 
+                      <AdminDetailOrderProductCard 
                       id={product._id}
                       name = {product.name}
                       price={product.price}

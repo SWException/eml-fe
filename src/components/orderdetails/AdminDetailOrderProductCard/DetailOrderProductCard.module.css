@@ -1,0 +1,19 @@
+.item {
+    padding: 20px 30px;
+    display: flex;
+    border:  1px solid #E1E8EE;
+    text-align: center;
+  }
+   
+.information {
+    padding-top: 30px;
+    margin-left:10px;
+    text-align: center;
+    display: flex;
+  }
+   
+.information span {
+    font-size: 14px;
+    padding: 20px;
+    height: 100%
+  }

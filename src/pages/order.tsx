@@ -63,7 +63,7 @@ const OrderDetails = ({orderdetails}) => { //IN VERITA' E' :React.FC<Props>
                   {products.map((product) => (
                       <DetailOrderProductCard 
                       primaryPhoto={product.primaryPhoto}
-                      idp={product.id}
+                      id={product.id}
                       name = {product.name}
                       price={product.price}
                       quantity={10}
