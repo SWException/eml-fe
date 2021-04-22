@@ -18,6 +18,10 @@ interface UserData {
   token: string;
 }
 
+interface AdminData {
+  admin: boolean
+}
+
 /*
 TODO: 
 - Capire ad inizializzazione app come prendere utente
