@@ -29,7 +29,8 @@ const fetchCheckout = async (shippingAddress: string, billingAddress: string): P
     const checkoutData: ResponseCheckout = {
       checkout: {
           status: checkoutReturned.status,
-          id: checkoutReturned.data,
+          id: checkoutReturned.data.id,
+          secret: checkoutReturned.data.secret,
       }
     };
 

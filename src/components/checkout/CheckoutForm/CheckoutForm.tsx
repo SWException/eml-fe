@@ -70,11 +70,10 @@ const CheckoutForm: React.FC = () => {
       const shipping: string = 'a5a8e464-f5be-4869-9c3b-cabf6de3ec96';
       const billing: string = 'a5a8e464-f5be-4869-9c3b-cabf6de3ec96';
       const { checkout } = await CheckoutService.fetchCheckout(shipping, billing);
-      const secret = await stripe.paymentIntents.retrieve(checkout.id);
+      //const secret = await stripe.PaymentIntents.retrieve(checkout.id);
       setId(checkout.id);
-      setClientSecret(secret);
+      setClientSecret(checkout.secret);
       console.log(checkout);
-      console.log("hoho", secret);
     }catch(e){
       console.log(e);
       console.log("CAZZO PT 2");
