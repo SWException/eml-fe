@@ -15,6 +15,7 @@ const CheckoutForm: React.FC = () => {
   const [clientSecret, setClientSecret] = useState('');
   const stripe = useStripe();
   const elements = useElements();
+  const [id, setId] = useState('');
   const [address, setAddress] = useState<Address[]>([]);
 
   useEffect(()=>{
@@ -62,6 +63,7 @@ const CheckoutForm: React.FC = () => {
     const shipping: string = 'My Address'
     const billing: string = 'My Address'
     const { checkout } = await CheckoutService.fetchCheckout(shipping, billing);
+    setId(checkout.id);
     //setClientSecret(checkout.data['payment_intent']['client_secret']);
     console.log(checkout)
   }
@@ -102,7 +104,19 @@ const CheckoutForm: React.FC = () => {
     } catch(err) {
         console.log(err)
     }
-}
+  }
+
+  const confirmPayment = async() => {
+    try {
+      const { status } = await CheckoutService.confirmCheckout(id);
+      console.log(status)
+      if(status == "success"){
+        //Pagamento andato a buon fine
+      }
+    } catch(err) {
+      console.log(err);
+    }
+  }
 
   return (
 
@@ -232,7 +246,7 @@ const CheckoutForm: React.FC = () => {
                 <form onSubmit={handleSubmit}>
                     <CardElement id="card-element" options={cardStyle} onChange={handleChange} />
                     <div style={{display: "flex", alignItems: "center", justifyContent:"center", margin: "20px"}}>
-                      <Button color="primary" size="lg" disabled={processing || disabled || succeeded} id="submit">
+                      <Button color="primary" size="lg" onClick={confirmPayment} disabled={processing || disabled || succeeded} id="submit">
                         <span id="button-text">
                           {processing ? (
                             <Spinner />
