@@ -12,11 +12,11 @@ const fetchProducts = async (payload?: ProductPayload): Promise<ProductsData> =>
     const requestOptions = {
       method: 'GET',
       headers: { 
-        "Access-Control-Allow-Origin": "*",
         'Content-Type': 'application/json'
        }
     };
-    const res = await fetch('https://virtserver.swaggerhub.com/swexception4/OpenAPI/0.0.2/products', requestOptions)
+
+    const res = await fetch('https://95kq9eggu9.execute-api.eu-central-1.amazonaws.com/dev/products', requestOptions)
     const products = await res.json();
 
     console.log(products.data);
@@ -38,11 +38,10 @@ export const fetchProduct = async (id: string): Promise<ProductData> => {
     const requestOptions = {
       method: 'GET',
       headers: { 
-        "Access-Control-Allow-Origin": "*",
         'Content-Type': 'application/json'
        }
     };
-    const res = await fetch(`https://virtserver.swaggerhub.com/swexception4/OpenAPI/0.0.2/products/${id}`, requestOptions)
+    const res = await fetch(`${process.env.AWS_ENDPOINT}/products/${id}`, requestOptions)
     const data = await res.json();
 
     const productData: ProductData = {
