@@ -25,3 +25,9 @@
     color: var(--color-dark);
   }
 
+.navtoggler{
+  float:right;
+  border-color: var(--color-light);
+  color:var(--color-light);
+  font-size: 2rem;
+}
