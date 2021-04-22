@@ -10,11 +10,10 @@ const fetchAllCategories = async (): Promise<CategoriesData> => {
     const requestOptions = {
       method: 'GET',
       headers: { 
-        "Access-Control-Allow-Origin": "*",
         'Content-Type': 'application/json',
        }
     };
-    const res = await fetch('https://virtserver.swaggerhub.com/swexception4/OpenAPI/0.4.0/categories', requestOptions)
+    const res = await fetch(`${process.env.AWS_ENDPOINT}/categories`, requestOptions)
     const categoriesReturned = await res.json();
 
     const categoriesData: CategoriesData = {
