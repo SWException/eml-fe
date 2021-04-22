@@ -48,3 +48,16 @@
 }
 
 .carousel-inner > .item > img { width:130px; height:130px;}
+
+.input {
+    text-align: center;
+}
+   
+  
+  .minus {
+    margin-bottom: 3px;
+  }
+  .plus {
+    margin-top: 2px;
+  }
+  
