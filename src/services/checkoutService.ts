@@ -33,7 +33,8 @@ const fetchCheckout = async (shippingAddress: string, billingAddress: string): P
           secret: checkoutReturned.data.secret,
       }
     };
-
+    console.log("checkout", checkoutData);
+    
     return checkoutData;
     
   } catch (error) {

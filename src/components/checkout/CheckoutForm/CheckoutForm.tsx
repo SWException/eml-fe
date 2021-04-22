@@ -4,7 +4,6 @@ import { Button, Spinner } from 'reactstrap';
 import {Address} from 'types';
 import { AddressesService, AuthService, CheckoutService } from 'services';
 
-
 const CheckoutForm: React.FC = () => {
 
   const [succeeded, setSucceeded] = useState(false);
@@ -75,7 +74,7 @@ const CheckoutForm: React.FC = () => {
       setClientSecret(checkout.secret);
       console.log(checkout);
     }catch(e){
-      console.log(e);
+      console.log(e.message);
       console.log("CAZZO PT 2");
     }
   }
@@ -90,6 +89,8 @@ const CheckoutForm: React.FC = () => {
 
 
   const handleSubmit = async ev => {
+    console.log("STRART STRIPE");
+    
     ev.preventDefault();
     setProcessing(true);
     const payload = await stripe.confirmCardPayment(clientSecret, {
@@ -97,10 +98,13 @@ const CheckoutForm: React.FC = () => {
         card: elements.getElement(CardElement)
       }
     });
+    console.log("STRIPE RES", payload);
+    
     if (payload.error) {
       setError(`Payment failed. Refresh the page to pay again.`);
       setProcessing(false);
     } else {
+      confirmPayment();
       setError(null);
       setProcessing(false);
       setSucceeded(true);
@@ -256,10 +260,10 @@ const CheckoutForm: React.FC = () => {
                     </div>
                 </div>
                 <h2 className="mb-3"  style={{marginTop:"20px"}}>Payment</h2>
-                <form onSubmit={handleSubmit}>
+                <form onSubmit={confirmPayment}>
                     <CardElement id="card-element" options={cardStyle} onChange={handleChange} />
                     <div style={{display: "flex", alignItems: "center", justifyContent:"center", margin: "20px"}}>
-                      <Button color="primary" size="lg" onClick={confirmPayment} disabled={processing || disabled || succeeded} id="submit">
+                      <Button color="primary" size="lg" onClick={handleSubmit} disabled={processing || disabled || succeeded} id="submit">
                         <span id="button-text">
                           {processing ? (
                             <Spinner />
