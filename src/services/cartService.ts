@@ -1,5 +1,6 @@
-import { Card } from 'reactstrap';
+
 import { Cart } from 'types';
+import { sessionService } from './sessionService';
 
 interface CartData {
   cart: Cart;
@@ -15,18 +16,19 @@ interface RemoveCart {
   message: string;
 }
 
+
 const fetchCart = async (): Promise<CartData> => {
-  //Da implementare meglio richiesta token jwt
+  const token = await sessionService.getCookie('token');
+
   try {
     const requestOptions = {
       method: 'GET',
       headers: { 
-        "Access-Control-Allow-Origin": "*",
+        'Authorization': token,
         'Content-Type': 'application/json',
-        //Should add jwt token
        }
     };
-    const res = await fetch('https://virtserver.swaggerhub.com/swexception4/OpenAPI/0.4.0/cart', requestOptions)
+    const res = await fetch(`${process.env.AWS_ENDPOINT}/cart`, requestOptions)
     const cartsReturned = await res.json();
 
     console.log(cartsReturned);
@@ -50,18 +52,18 @@ const fetchCart = async (): Promise<CartData> => {
 
 
 const addCart = async (quantity: number, id: string): Promise<AddCart> => {
-  //add Jwt 
+  const token = await sessionService.getCookie('token');
   try {
     const data = { quantity, id };
     const requestOptions = {
       method: 'POST',
       headers: { 
-        "Access-Control-Allow-Origin": "*",
+        'Authorization': token,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(data)
     };
-    const res = await fetch('https://virtserver.swaggerhub.com/swexception4/OpenAPI/0.4.0/cart', requestOptions)
+    const res = await fetch(`${process.env.AWS_ENDPOINT}/cart`, requestOptions)
     const cartsReturned = await res.json();
 
     console.log(cartsReturned);
@@ -82,7 +84,6 @@ const removeProductCart = async (id: string): Promise<RemoveCart> => {
     const requestOptions = {
       method: 'DELETE',
       headers: { 
-        "Access-Control-Allow-Origin": "*",
         'Content-Type': 'application/json',
       }
     };
@@ -134,8 +135,7 @@ const updateCart = async (quantity: number, productId: string): Promise<AddCart>
     const data = { quantity, productId };
     const requestOptions = {
       method: 'PATCH',
-      headers: { 
-        "Access-Control-Allow-Origin": "*",
+      headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(data)
