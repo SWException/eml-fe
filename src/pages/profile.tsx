@@ -32,7 +32,7 @@ const Profile: React.FC = ()=>{
     const [email, setEmail] = useState("");
     const [address, setAddress] = useState<Address[]>([]);
     const [values, setValues] = useState<Address>({
-        // id: 1, //Mock da cambiare in seguito, chiedere BE significato
+        // id: 1, 
         description: "",
         recipientName: "",
         recipientSurname: "",
@@ -41,6 +41,7 @@ const Profile: React.FC = ()=>{
         code: "",
         district: ""
     });
+    const [selectedAddress, setSelected] = useState("");
 
     const changeOld = (e) =>{
         setOldPass(e.target.value);      
@@ -79,8 +80,11 @@ const Profile: React.FC = ()=>{
         })
     }
 
+    const addressChange = (e:React.ChangeEvent<HTMLSelectElement>) :void => {
+        setSelected(e.currentTarget.value)
+    }
+
     const submitNewAddress = async() =>{
-        //Check se info inserite sono giuste?
         try {
             const { status, message } = await AddressesService.createNewAddress(values);
             console.log(status + ' ---- ' + message)
@@ -95,7 +99,7 @@ const Profile: React.FC = ()=>{
     const deleteAddress = async() => {
         try {
             //Ovviamente mockato, capire come selezionare id da un elemento selected
-            const { status, message } = await AddressesService.deleteAddress(0);
+            const { status, message } = await AddressesService.deleteAddress(selectedAddress);
             console.log(status + ' ---- ' + message)
             if(status == "success"){
                 getAddresses();
@@ -131,7 +135,7 @@ const Profile: React.FC = ()=>{
                     <Button onClick={submitNewAddress}>Add</Button>
                     <p/>
                     <h2>Or delete an existing one</h2>
-                    <select>
+                    <select onChange={(e)=>{addressChange(e)}}>
                         {address.map((address)=>(
                             <option value={`${address.id}`}>{`${address.address}`}</option>
                         ))}

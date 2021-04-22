@@ -62,7 +62,7 @@ const createNewAddress = async (address: Address): Promise<AddressResponse> => {
   }
 };
 
-const deleteAddress = async (id: number): Promise<AddressResponse> => {
+const deleteAddress = async (id: string): Promise<AddressResponse> => {
   const token = await sessionService.getCookie('token');
   try {
     const requestOptions = {
