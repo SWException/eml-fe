@@ -65,7 +65,7 @@ const OrdersList: React.FC<Props> = ({ ord }) => { //IN VERITA' E' :React.FC<Pro
                         </tr>
                     </table>
                     <table className={styles.orders}>
-                        {orders.map((order) => (
+                        {orders?.map((order) => (
                             <>
                                 <tr>
                                     <OrderCard

@@ -149,7 +149,7 @@ const Profile: React.FC = ()=>{
                             <option value={`${address.id}`}>{`${address.description}`}</option>
                         ))}
                     </select>
-                    <p>{`${currentAddress.description} - ${currentAddress.city}, ${currentAddress.address}, ${currentAddress.code}, ${currentAddress.description} - ${currentAddress.recipientName} ${currentAddress.recipientSurname}`}</p>
+                    <p>{`${currentAddress?.description} - ${currentAddress?.city}, ${currentAddress?.address}, ${currentAddress?.code}, ${currentAddress?.description} - ${currentAddress?.recipientName} ${currentAddress?.recipientSurname}`}</p>
                     <p/>
                     <Button onClick={deleteAddress}>Delete this address</Button>
             </div>
