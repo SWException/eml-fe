@@ -5,3 +5,4 @@ export * from './checkoutService';
 export * from './categoriesService';
 export * from './addressesService';
 export * from './sessionService';
+export * from './ordersService';

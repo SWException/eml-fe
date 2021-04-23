@@ -142,25 +142,6 @@ const CheckoutForm: React.FC = () => {
         <h1>Checkout form</h1>
     </div>
     <div className="row">
-        <div className="col-md-4 order-md-2 mb-4">
-            <h4 className="d-flex justify-content-between align-items-center mb-3">
-                <span className="text-muted">Your cart</span>
-            </h4>
-            <ul className="list-group mb-3 sticky-top">
-                <li className="list-group-item d-flex justify-content-between">
-                    <span>Shipping cost</span>
-                    <strong>€10</strong>
-                </li>
-                <li className="list-group-item d-flex justify-content-between">
-                    <span>Taxes</span>
-                    <strong>€2</strong>
-                </li>
-                <li className="list-group-item d-flex justify-content-between">
-                    <span><b>Total</b></span>
-                    <strong>€20</strong>
-                </li>
-            </ul>
-        </div>
         <div className="col-md-8 order-md-1">
             <h2 className="mb-3">Billing address</h2>
             <form className="needs-validation">

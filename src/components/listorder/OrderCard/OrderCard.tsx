@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import styles from 'components/listorder/OrderCard/OrderCard.module.css';
 
 interface Props {
-    id: number,
+    id: string,
     date: string,
     total: number,
     totart: number,

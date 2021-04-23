@@ -4,8 +4,8 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from 'next/router';
 import { Button } from 'reactstrap';
 import { CustomerLayout } from 'components/layouts/CustomerLayout';
-import styles from "styles/Order.module.css"
-
+import styles from "styles/Order.module.css";
+import { OrdersService } from 'services';
 
 /*interface Props {
     cartItems: string, //ASSOLUTAMENTE DA CONTROLLARE
@@ -17,33 +17,24 @@ const OrderDetails = ({orderdetails}) => { //IN VERITA' E' :React.FC<Props>
  
     const router = useRouter();
     
-    let orders = [];
-    for(var i = 0; i < 1; i++){
-      var order= {
-        id : "ID" + i,
-        date: "19/01/2021",
-        total: 10 + i,
-        totart: "2",
-        state: "pending",
-      };  
-      orders[i] = order;
-    }
+    const [order, setOrder] = useState(null);
+    const [products, setProducts] = useState(null);
+
+    useEffect(()=>{
+      reloadOrder();
+      reloadProducts();
+    }, []);
     
-    let products = [];
-    for(var i = 0; i < 2; i++){
-      var prodotto: Product = {
-        id : "ID" + i,
-        name: "TEST",
-        primaryPhoto: "/image2.jpg",
-        categories: ['CAT'],
-        description: "DESCR",
-        price: 50 + i,
-        show: true,
-        showHome: false,
-        stock: 20,
-        tax: 10,
-      };  
-      products[i] = prodotto;
+    const reloadOrder = async() => {
+      const { order } = await OrdersService.fetchOrder(orderdetails);
+      setOrder(order);
+      console.log('Done');
+    }
+
+    const reloadProducts = async() => {
+      const { product } = (await OrdersService.fetchOrder(orderdetails)).order.cart;
+      setProducts(product);
+      console.log('Done');
     }
 
 

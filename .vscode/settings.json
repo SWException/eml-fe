@@ -1,0 +1,24 @@
+{
+    "search.exclude": {
+        "_build/": true,
+        ".serverless/": true,
+        ".dynamodb/": true,
+        ".webpack/": true,
+        "coverage/": true,
+        "node_modules/": true,
+        ".next/": true,
+        ".serverless_nextjs": true
+    },
+    "files.exclude": {
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.hg": true,
+        "**/CVS": true,
+        "**/.DS_Store": true,
+        ".serverless/": true,
+        "node_modules/": true,
+        ".dynamodb/": true,
+        ".next/": true,
+        ".serverless_nextjs": true
+    }
+}
