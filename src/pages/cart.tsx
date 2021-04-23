@@ -18,10 +18,11 @@ interface Props {
 const CartUser: React.FC<Props>= () => {
  
     const router = useRouter();
+    const [message, setMessage] = useState('');
 
     const [total, setTotal] = useState(0);
     const [cartShow, setCartShow] = useState<Cart>({
-        id: 0,
+        id: "",
         product: [],
         tax: 0,
         total: 0
@@ -62,7 +63,7 @@ const CartUser: React.FC<Props>= () => {
                 <div className="cart-item-layout">
                 {cartShow.product.map((product) => (
                     <ProductCard 
-                    id={product.id}
+                    id={product.productId}
                     name = {product.name}
                     photo={product.primaryPhoto}
                     price={product.price}

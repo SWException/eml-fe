@@ -80,14 +80,16 @@ const addCart = async (quantity: number, id: string): Promise<AddCart> => {
 };
 
 const removeProductCart = async (id: string): Promise<RemoveCart> => {
+  const token = await sessionService.getCookie('token');
   try {
     const requestOptions = {
       method: 'DELETE',
       headers: { 
+        'Authorization': token,
         'Content-Type': 'application/json',
       }
     };
-    const res = await fetch(`https://virtserver.swaggerhub.com/swexception4/OpenAPI/0.4.0/cart/product/${id}`, requestOptions)
+    const res = await fetch(`${process.env.AWS_ENDPOINT}/cart/product/${id}`, requestOptions)
     const cartsReturned = await res.json();
 
     console.log(cartsReturned);
@@ -104,16 +106,16 @@ const removeProductCart = async (id: string): Promise<RemoveCart> => {
 };
 
 const removeAllCart = async (): Promise<RemoveCart> => {
-  //Add Jwt
+  const token = await sessionService.getCookie('token');
   try {
     const requestOptions = {
       method: 'DELETE',
       headers: { 
-        "Access-Control-Allow-Origin": "*",
+        'Authorization': token,
         'Content-Type': 'application/json',
       }
     };
-    const res = await fetch(`https://virtserver.swaggerhub.com/swexception4/OpenAPI/0.4.0/cart`, requestOptions)
+    const res = await fetch(`${process.env.AWS_ENDPOINT}/cart`, requestOptions)
     const cartsReturned = await res.json();
 
     console.log(cartsReturned);
@@ -129,18 +131,19 @@ const removeAllCart = async (): Promise<RemoveCart> => {
   }
 };
 
-const updateCart = async (quantity: number, productId: string): Promise<AddCart> => {
-  //add Jwt 
+const updateCart = async (quantity: number, id: string): Promise<AddCart> => {
+  const token = await sessionService.getCookie('token');
   try {
-    const data = { quantity, productId };
+    const data = { quantity, id };
     const requestOptions = {
       method: 'PATCH',
       headers: {
+        'Authorization': token,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(data)
     };
-    const res = await fetch(`https://virtserver.swaggerhub.com/swexception4/OpenAPI/0.4.0/cart/product/${productId}`, requestOptions)
+    const res = await fetch(`${process.env.AWS_ENDPOINT}/cart/product/${id}`, requestOptions)
     const cartsReturned = await res.json();
 
     console.log(cartsReturned);
