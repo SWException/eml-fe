@@ -3,7 +3,7 @@ import React, {useEffect, useState} from 'react';
 import styles from 'components/cart/ProductCard/ProductCard.module.css'
 import { CartService } from 'services';
 interface Props {
-    id: number,
+    id: string,
     name: string,
     photo: string,
     price: number,
@@ -14,10 +14,10 @@ interface Props {
 const ProductCard: React.FC<Props> = ({id, name, photo, price, loadCart, quantity}) => {
 
     const [_quantity, setQuantity] = useState(quantity);
-    const [_subTotal, setSubTotal] = useState(price*quantity);
+    const [_subTotal, setSubTotal] = useState(price*_quantity);
 
     useEffect(()=>{
-        setQuantity(quantity);
+        setQuantity(_quantity);
         setSubTotal(price*_quantity);
     }, [])
 
@@ -25,17 +25,18 @@ const ProductCard: React.FC<Props> = ({id, name, photo, price, loadCart, quantit
         if(name == 'plus'){
             setQuantity(_quantity+1);
         } else {
+            if(_quantity!=1)
             setQuantity(_quantity-1);
         }
         setSubTotal(price*_quantity);
-        const { status, message } = await CartService.updateCart(_quantity, id.toString())
+        const { status, message } = await CartService.updateCart(_quantity, id)
         if(status == "success"){
             loadCart();
         }
     }
 
     const deleteProduct = async() =>{
-        const { status, message } = await CartService.removeProductCart(id.toString());
+        const { status, message } = await CartService.removeProductCart(id);
         if(status == "success"){
             loadCart();
         }
@@ -54,7 +55,7 @@ const ProductCard: React.FC<Props> = ({id, name, photo, price, loadCart, quantit
                 <button className={styles.plus} onClick={()=>{modifyQuantity('minus')}} type="button" name="button">
                     -
                 </button>
-                <input type="text" name="name" value={_quantity}></input>
+                <input type="text" name="name" value={_quantity} min="1"></input>
                 <button className={styles.minus} onClick={()=>{modifyQuantity('plus')}} type="button" name="button">
                     +
                 </button>

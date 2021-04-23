@@ -21,7 +21,7 @@ const ProductList: React.FC<Props> = ({products}) => {
             <a>
               <div>
                 <div className={styles.productImgWrapper}>
-                  <Image
+                  <img
                     src={product.primaryPhoto}
                     alt="Picture of the author"
                     width={500}

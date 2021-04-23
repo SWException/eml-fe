@@ -33,7 +33,7 @@ const Header: React.FC = () => {
     <Fragment>
       <Navbar className={styles.navbar} expand="md">
           <NavbarBrand href="/">
-            <Image src="/logo.png" width={120} height={80}/>
+            <img src="/logo.png" width={120} height={80}/>
             </NavbarBrand>
           <NavbarBrand  href="/" className={styles.siteTitle}><a>COMPANY NAME</a></NavbarBrand>
           <NavbarToggler onClick={toggle}  className={styles.navtoggler}>Menu</NavbarToggler>
@@ -60,7 +60,7 @@ const Header: React.FC = () => {
               <NavItem>
               <NavLink className="navbar" href="/cart">
                     <a>
-                      <Image src="/iconcart2.png" width={40} height={40}/>
+                      <img src="/iconcart2.png" width={40} height={40}/>
                     </a>
                   </NavLink>
               </NavItem>
