@@ -14,7 +14,7 @@ const OrderCard: React.FC<Props> = ({id, date, total, totart, state}) => {
     const router = useRouter();
 
     const orderSummary = () => {
-        router.push('/order');
+        router.push('/order?id=' + id);
     }
 
     return (

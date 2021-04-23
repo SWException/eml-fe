@@ -5,7 +5,7 @@ import styles from './DetailOrderProductCard.module.css';
 
 
 interface Props {   //DA RIVEDERE ASSOLUTAMENTE
-    id?: number,
+    id?: string,
     name?: string,
     price?: number,
     quantity?: number,
