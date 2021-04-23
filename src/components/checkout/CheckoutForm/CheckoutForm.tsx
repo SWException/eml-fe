@@ -22,7 +22,7 @@ const CheckoutForm: React.FC = () => {
   })
   const [address, setAddress] = useState<Address[]>([]);
   const [shippingAddress, setShippingAddress] = useState<Address>({
-    id: '',
+    id: 'a5a8e464-f5be-4869-9c3b-cabf6de3ec96',
     description: '',
     recipientName: '',
     recipientSurname: '',
@@ -33,7 +33,7 @@ const CheckoutForm: React.FC = () => {
     user: ''
   });
   const [billingAddress, setbillingAddress] = useState<Address>({
-    id: '',
+    id: 'a5a8e464-f5be-4869-9c3b-cabf6de3ec96',
     description: '',
     recipientName: '',
     recipientSurname: '',
@@ -129,7 +129,6 @@ const CheckoutForm: React.FC = () => {
   }
 
   const getAddresses = async() => {
-
     try {
         const { addresses } = await AddressesService.fetchAddresses();
         setAddress(addresses);
@@ -236,7 +235,7 @@ const CheckoutForm: React.FC = () => {
                         <select className="custom-select d-block w-100" id="saveaddress">
                         {address.map((address)=>(                          
                             <option onClickCapture={()=>{setAddressToShow('billing', address.id)}} value={`${address.id}`}>
-                              {`${address.address}`}
+                              {`${address.description}`}
                               </option>
                         ))}
                     </select>
@@ -283,7 +282,7 @@ const CheckoutForm: React.FC = () => {
                         <label >Choose a saved address:</label>
                         <select className="custom-select d-block w-100" id="saveaddress">
                         {address.map((address)=>(
-                            <option onClickCapture={()=>{setAddressToShow('shipping', address.id)}} value={`${address.id}`}>{`${address.address}`}</option>
+                            <option onClickCapture={()=>{setAddressToShow('shipping', address.id)}} value={`${address.id}`}>{`${address.description}`}</option>
                         ))}
                     </select>
                         <div className="invalid-feedback"> Please select a valid address. </div>
