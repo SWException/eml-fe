@@ -5,7 +5,7 @@ import { Button } from 'reactstrap';
 import { CustomerLayout } from 'components/layouts/CustomerLayout';
 import styles from 'styles/Cart.module.css'
 import { CartService } from 'services';
-import { Cart } from 'types';
+import { Cart, ProductCart } from 'types';
 
 interface Props {
     cart: Cart,

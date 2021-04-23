@@ -24,7 +24,7 @@ export interface ProductData {
 }
 
 export interface ProductCart {
-    id: string;
+    productId: string;
     name: string;
     primaryPhoto: string;
     price: number;
