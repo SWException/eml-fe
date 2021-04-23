@@ -39,7 +39,8 @@ const Profile: React.FC = ()=>{
         address: "",
         city: "",
         code: "",
-        district: ""
+        district: "",
+        user: ""
     });
     const [selectedAddress, setSelected] = useState("");
     const [currentAddress, setCurrentAddress] = useState<Address>(null);
