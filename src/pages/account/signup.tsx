@@ -57,10 +57,16 @@ const SignUp: React.FC = () => {
         setLoading(true);
         try {
             const { confirmCode } = await AuthService.signUp(email, password, name, family)
-            setMessage('Registration was successful! Confirm your email by entering the code received');
-            setError('');
-            displayInfo();
-            setIsCode(confirmCode);
+            if(confirmCode == true){
+                setMessage('Registration was successful! Confirm your email by entering the code received');
+                setError('');
+                displayInfo();
+                setIsCode(true);
+            } else {
+                setError('Password did not conform with policy: Password not long enough')
+                setMessage('');
+                displayErr();
+            }
         } catch (e) {
             console.log(e)
             setError('Something went wrong! Retry!')

@@ -17,11 +17,23 @@ const OrderCard: React.FC<Props> = ({id, date, total, totart, state}) => {
         router.push('/order?id=' + id);
     }
 
+    const [dateShow, setDateShow] = useState('')
+
+    useEffect(()=>{
+        setDateShow(getDate(date))
+    }, [])
+
+    const getDate = (timestamp):string => {
+        var date = new Date(timestamp * 1000);
+
+        return (date.getDate()+ "/"+(date.getMonth()+1)+ "/"+date.getFullYear()+ " "+date.getHours()+ ":"+date.getMinutes()+ ":"+date.getSeconds()).toString()
+      }
+
     return (
         <table className={styles.orders}>
             <tr>
                 <td>{id}</td>
-                <td>{date}</td>
+                <td>{dateShow}</td>
                 <td>€ {total}</td>
                 <td>{totart}</td>
                 <td>{state}</td>

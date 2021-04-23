@@ -11,9 +11,9 @@ const LogoutButton: React.FC = () =>  {
     const { logout } = useAuth()
 
     const signOut = async() => {
-        console.log("HOHOHO");
         try {
             await logout();
+            window.location.reload();
         } catch (error) {
             console.log('error signing out: ', error);
         }

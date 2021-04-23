@@ -40,6 +40,12 @@ const OrdersList: React.FC<Props> = ({ ord }) => { //IN VERITA' E' :React.FC<Pro
 
     }
 
+    const getDate = (timestamp):string => {
+        var date = new Date(timestamp * 1000);
+        // Hours part from the timestamp
+        return (date.getDate()+ "/"+(date.getMonth()+1)+ "/"+date.getFullYear()+ " "+date.getHours()+ ":"+date.getMinutes()+ ":"+date.getSeconds())
+      }
+
 
     return (
         <CustomerLayout header footer>

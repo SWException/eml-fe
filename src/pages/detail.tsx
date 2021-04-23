@@ -96,6 +96,11 @@ const Detail: React.FC<Props> = ({product}) => {
                     ...info,
                     messageShow: "Product Added to Cart"
                 })
+            } else {
+                setInfo({
+                    ...info,
+                    error: "Error on loading the product to the cart! Try again.."
+                })
             }
         } catch(err) {
             setInfo({
