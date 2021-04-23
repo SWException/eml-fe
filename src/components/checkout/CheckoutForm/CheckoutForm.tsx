@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { CardElement, useStripe, useElements} from "@stripe/react-stripe-js";
 import { Button, Spinner } from 'reactstrap';
-import {Address} from 'types';
+import {Address, Checkout} from 'types';
 import { AddressesService, AuthService, CheckoutService } from 'services';
 
 const CheckoutForm: React.FC = () => {
@@ -15,6 +15,11 @@ const CheckoutForm: React.FC = () => {
   const stripe = useStripe();
   const elements = useElements();
   const [id, setId] = useState('');
+  const [checkoutRet, setCheckout] = useState<Checkout>({
+    secret: '',
+    id: '',
+    status: ''
+  })
   const [address, setAddress] = useState<Address[]>([]);
   const [shippingAddress, setShippingAddress] = useState<Address>({
     id: '',
@@ -41,27 +46,7 @@ const CheckoutForm: React.FC = () => {
 
   useEffect(()=>{
     getAddresses();
-    createIntent();
   }, [])
-
-  useEffect(() => {
-    // Create PaymentIntent as soon as the page loads
-    /*window.fetch("https://5qsqmpfpm8.execute-api.eu-central-1.amazonaws.com/dev/createCharge", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({items: [{ "id": "demo" }]})
-      })
-      .then(res => {
-        console.log(res);
-        return res.json();
-      })
-      .then(data => {
-        setClientSecret(data['paymentIntent']['client_secret']);
-      });*/
-      //createIntent();
-  }, []);
 
   const cardStyle = {
     style: {
@@ -81,24 +66,24 @@ const CheckoutForm: React.FC = () => {
     }
   };
 
-  //ADDRESSES HARDCODED! DA SISTEMARE CAZZO
-  const createIntent = async() =>{
-
-
+  const createIntent = async(): Promise<string> =>{
     try{
-
-      //const shipping: string = address[0].id;
-      //const billing: string = address[0].id;
       const shipping: string = 'a5a8e464-f5be-4869-9c3b-cabf6de3ec96';
       const billing: string = 'a5a8e464-f5be-4869-9c3b-cabf6de3ec96';
-      const { checkout } = await CheckoutService.fetchCheckout(shipping, billing);
+      const { checkout } = await CheckoutService.fetchCheckout(shippingAddress.id, billingAddress.id);
       //const secret = await stripe.PaymentIntents.retrieve(checkout.id);
       setId(checkout.id);
       setClientSecret(checkout.secret);
-      console.log(checkout);
+      setCheckout({
+        ...checkoutRet,
+        secret: checkout.secret,
+        id: checkoutRet.id,
+        status: checkoutRet.status
+      });
+      return checkout.secret;
     }catch(e){
       console.log(e.message);
-      console.log("CAZZO PT 2");
+      console.log('There is a problem')
     }
   }
 
@@ -116,7 +101,15 @@ const CheckoutForm: React.FC = () => {
     
     ev.preventDefault();
     setProcessing(true);
-    const payload = await stripe.confirmCardPayment(clientSecret, {
+    await createIntent().then((res)=>{
+      console.log(res);
+      confirmPaymentStripe(res);
+    })
+    
+  };
+
+  const confirmPaymentStripe = async(secret) => {
+    const payload = await stripe.confirmCardPayment(secret, {
       payment_method: {
         card: elements.getElement(CardElement)
       }
@@ -133,7 +126,7 @@ const CheckoutForm: React.FC = () => {
       setSucceeded(true);
       setMessage("Payment succeeded, see the result in your Stripe Dashboard");
     }
-  };
+  }
 
   const getAddresses = async() => {
 
