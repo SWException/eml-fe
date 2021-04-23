@@ -16,6 +16,28 @@ const CheckoutForm: React.FC = () => {
   const elements = useElements();
   const [id, setId] = useState('');
   const [address, setAddress] = useState<Address[]>([]);
+  const [shippingAddress, setShippingAddress] = useState<Address>({
+    id: '',
+    description: '',
+    recipientName: '',
+    recipientSurname: '',
+    address: '',
+    city: '',
+    code: '',
+    district: '',
+    user: ''
+  });
+  const [billingAddress, setbillingAddress] = useState<Address>({
+    id: '',
+    description: '',
+    recipientName: '',
+    recipientSurname: '',
+    address: '',
+    city: '',
+    code: '',
+    district: '',
+    user: ''
+  });
 
   useEffect(()=>{
     getAddresses();
@@ -61,9 +83,10 @@ const CheckoutForm: React.FC = () => {
 
   //ADDRESSES HARDCODED! DA SISTEMARE CAZZO
   const createIntent = async() =>{
-    await getAddresses();
-    console.log("address", address);
+
+
     try{
+
       //const shipping: string = address[0].id;
       //const billing: string = address[0].id;
       const shipping: string = 'a5a8e464-f5be-4869-9c3b-cabf6de3ec96';
@@ -113,9 +136,10 @@ const CheckoutForm: React.FC = () => {
   };
 
   const getAddresses = async() => {
+
     try {
         const { addresses } = await AddressesService.fetchAddresses();
-        await setAddress(addresses);
+        setAddress(addresses);
         console.log(address);
     } catch(err) {
         console.log(err)
@@ -135,6 +159,40 @@ const CheckoutForm: React.FC = () => {
     }
   }
 
+  const setAddressToShow = (name:string, id:string) =>{
+    let addressFound:Address;
+    address.forEach(add=>{
+      if(add.id == id) {
+        return addressFound = add;
+      }
+    })
+    if(name=='billing'){
+      setbillingAddress({
+        ...billingAddress,
+        id: addressFound.id,
+        description: addressFound.description,
+        recipientName: addressFound.recipientName,
+        recipientSurname: addressFound.recipientSurname,
+        address: addressFound.address,
+        city: addressFound.city,
+        code: addressFound.code,
+        district: addressFound.district
+      })
+    } else {
+      setShippingAddress({
+        ...billingAddress,
+        id: addressFound.id,
+        description: addressFound.description,
+        recipientName: addressFound.recipientName,
+        recipientSurname: addressFound.recipientSurname,
+        address: addressFound.address,
+        city: addressFound.city,
+        code: addressFound.code,
+        district: addressFound.district
+      })
+    }
+  }
+
   return (
 
       <div className="container">
@@ -148,43 +206,45 @@ const CheckoutForm: React.FC = () => {
                 <div className="row">
                     <div className="col-md-6 mb-3">
                         <label>First name</label>
-                        <input type="text" className="form-control" id="firstName" placeholder="" value="" />
-                        <div className="invalid-feedback"> Valid first name is required. </div>
+                        <input type="text" className="form-control" onChange={()=>{}} id="firstName" placeholder="" value={billingAddress.recipientName} />
+                        <div className="invalid-feedback">{`${billingAddress.recipientName}`}</div>
                     </div>
                     <div className="col-md-6 mb-3">
                         <label>Last name</label>
-                        <input type="text" className="form-control" id="lastName" placeholder="" value=""/>
-                        <div className="invalid-feedback"> Valid last name is required. </div>
+                        <input type="text" className="form-control" onChange={()=>{}} id="lastName" placeholder="" value={billingAddress.recipientSurname}/>
+                        <div className="invalid-feedback">{`${billingAddress.recipientSurname}`}</div>
                     </div>
                 </div>
                 <div className="mb-3">
                     <label >Address</label>
-                    <input type="text" className="form-control" id="address" placeholder="1234 Main St"/>
-                    <div className="invalid-feedback"> Please enter your shipping address. </div>
+                    <input type="text" className="form-control" onChange={()=>{}} id="address" value={billingAddress.address} placeholder="1234 Main St"/>
+                    <div className="invalid-feedback">{billingAddress.address}</div>
                 </div>
                 <div className="row">
                     <div className="col-md-5 mb-3">
                         <label >Country</label>
-                        <input type="text" className="form-control" id="country" placeholder="ex.Padova"/>
-                        <div className="invalid-feedback"> Please select a valid country. </div>
+                        <input type="text" className="form-control" onChange={()=>{}} id="country" value={billingAddress.city} placeholder="ex.Padova"/>
+                        <div className="invalid-feedback">{billingAddress.city}</div>
                     </div>
                     <div className="col-md-4 mb-3">
                         <label >State</label>
-                        <input type="text" className="form-control" id="state" placeholder="ex.Italy"/>
-                        <div className="invalid-feedback"> Please provide a valid state. </div>
+                        <input type="text" className="form-control" onChange={()=>{}} id="state" value={billingAddress.district} placeholder="ex.Italy"/>
+                        <div className="invalid-feedback">{billingAddress.district}</div>
                     </div>
                     <div className="col-md-3 mb-3">
                         <label>Zip</label>
-                        <input type="text" className="form-control" id="zip" placeholder=""/>
-                        <div className="invalid-feedback"> Zip code required. </div>
+                        <input type="text" className="form-control" onChange={()=>{}} id="zip" value={billingAddress.code} placeholder=""/>
+                        <div className="invalid-feedback">{billingAddress.code}</div>
                     </div>
                 </div>
                 <div className="row">
                     <div className="col-md-5 mb-3" style={{marginTop:"20px"}}>
                         <label>Choose a saved address:</label>
                         <select className="custom-select d-block w-100" id="saveaddress">
-                        {address.map((address)=>(
-                            <option value={`${address.id}`}>{`${address.address}`}</option>
+                        {address.map((address)=>(                          
+                            <option onClickCapture={()=>{setAddressToShow('billing', address.id)}} value={`${address.id}`}>
+                              {`${address.address}`}
+                              </option>
                         ))}
                     </select>
                         <div className="invalid-feedback"> Please select a valid address. </div>
@@ -194,47 +254,43 @@ const CheckoutForm: React.FC = () => {
                 <div className="row">
                     <div className="col-md-6 mb-3">
                         <label>First name</label>
-                        <input type="text" className="form-control" id="firstName" placeholder="" value="" />
+                        <input type="text" className="form-control" id="firstName" placeholder="" value={shippingAddress.code} />
                         <div className="invalid-feedback"> Valid first name is required. </div>
                     </div>
                     <div className="col-md-6 mb-3">
                         <label >Last name</label>
-                        <input type="text" className="form-control" id="lastName" placeholder="" value="" />
+                        <input type="text" className="form-control" id="lastName" placeholder="" value={shippingAddress.code} />
                         <div className="invalid-feedback"> Valid last name is required. </div>
                     </div>
                 </div>
                 <div className="mb-3">
                     <label>Address</label>
-                    <input type="text" className="form-control" id="address" placeholder="1234 Main St"/>
+                    <input type="text" className="form-control" id="address" value={shippingAddress.code} placeholder="1234 Main St"/>
                     <div className="invalid-feedback"> Please enter your shipping address. </div>
                 </div>
                 <div className="row">
                     <div className="col-md-5 mb-3">
                         <label >Country</label>
-                        <input type="text" className="form-control" id="country" placeholder="ex.Padova"/>
+                        <input type="text" className="form-control" id="country" value={shippingAddress.code} placeholder="ex.Padova"/>
                         <div className="invalid-feedback"> Please select a valid country. </div>
                     </div>
                     <div className="col-md-4 mb-3">
                         <label >State</label>
-                        <input type="text" className="form-control" id="state" placeholder="ex.Italy"/>
+                        <input type="text" className="form-control" id="state" value={shippingAddress.code} placeholder="ex.Italy"/>
                         <div className="invalid-feedback"> Please provide a valid state. </div>
                     </div>
                     <div className="col-md-3 mb-3">
                         <label >Zip</label>
-                        <input type="text" className="form-control" id="zip" placeholder=""/>
+                        <input type="text" className="form-control" id="zip" value={shippingAddress.code} placeholder=""/>
                         <div className="invalid-feedback"> Zip code required. </div>
                     </div>
-                    <div className="custom-control custom-checkbox"style={{marginTop:"20px"}}>
-                      <input type="checkbox" className="custom-control-input" id="same-address"/>
-                      <label className="custom-control-label">Shipping address is the same as my billing address</label>
-                  </div>
                 </div>
                 <div className="row">
                     <div className="col-md-5 mb-3"style={{marginTop:"20px"}}>
                         <label >Choose a saved address:</label>
                         <select className="custom-select d-block w-100" id="saveaddress">
                         {address.map((address)=>(
-                            <option value={`${address.id}`}>{`${address.address}`}</option>
+                            <option onClickCapture={()=>{setAddressToShow('shipping', address.id)}} value={`${address.id}`}>{`${address.address}`}</option>
                         ))}
                     </select>
                         <div className="invalid-feedback"> Please select a valid address. </div>

@@ -7,6 +7,7 @@ export interface Address {
     city: string,
     code: string,
     district: string;
+    user: string;
 }
 
 export interface Addresses {
