@@ -3,12 +3,14 @@ import { Navbar, Nav, NavItem, NavLink } from 'reactstrap';
 import { CategoriesService } from 'services';
 import { Categories, Category } from 'types';
 import styles from './Categories.module.css';
+import { useRouter } from 'next/router';
 
 /**
  * Sistemare display orizzontale di tutte le categorie trovate?
  */
 
 const CategoriesToShow: React.FC = () => {
+    const router = useRouter();
 
     const [categories, setCategories] = useState<Category[]>()
 
@@ -25,6 +27,13 @@ const CategoriesToShow: React.FC = () => {
       }
     }
 
+    const categoryProducts = async (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+        console.log(e.target);
+        const T: any = e.target;
+        await router.push('/products?category=' + T.name);
+        window.location.reload();
+    }
+
     return (
       <div>
         <Navbar className={styles.bar} color="light" expand="md">
@@ -33,7 +42,7 @@ const CategoriesToShow: React.FC = () => {
               <div className={styles.container}>
                 {categories.map((category)=>(
                   <NavItem>
-                    <NavLink href='/products'>{`${category.name.toUpperCase()}`}</NavLink>
+                    <NavLink onClick={(e)=>{categoryProducts(e)}} name={category.id} >{`${category.name.toUpperCase()}`}</NavLink>
                   </NavItem>
                 ))}
               </div>

@@ -5,14 +5,19 @@ import React, { useEffect } from 'react';
 import styles from 'styles/PLP.module.css';
 import { useShop } from '../context/shop';
 import { CustomerLayout } from 'components/layouts/CustomerLayout';
+import { GetServerSideProps } from 'next';
 
-const Products: React.FC = () => {
+interface Props {
+  id: string;
+}
+
+const Products: React.FC<Props> = ({id}) => {
     const router = useRouter();
 
     const { loadProducts, products } = useShop();
 
     useEffect(()=>{
-      products.length === 0 && loadProducts();
+      products.length === 0 && loadProducts(id);
     }, []);
 
     return (
@@ -34,5 +39,21 @@ const Products: React.FC = () => {
     );
 };
 
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const id = context?.query?.category as string;
+
+  try {
+      console.log(id);
+      return {
+          props: { id },
+      };
+  } catch (error) {
+      return {
+          props: {
+              id: null
+          },
+      };
+  }
+};
 
 export default Products;

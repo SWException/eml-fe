@@ -9,7 +9,7 @@ interface InitialStateType {
   isLoading: boolean;
   hasLoadMore: boolean;
   currentPage: number;
-  loadProducts(): void;
+  loadProducts(id?: string): void;
 }
 
 const initialState = {
@@ -25,10 +25,11 @@ const ShopContext = createContext<InitialStateType>(initialState);
 export const ShopProvider: React.FC = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  async function loadProducts() {
+  async function loadProducts(category?: string) {
     const payload = {
-      params: { page: state.currentPage, limit: 10 },
+      params: { page: state.currentPage, limit: 10, category: category},
     };
+
     const data = await ProductService.fetchProducts(payload);
 
     dispatch({ type: LOAD_PRODUCTS, payload: data });

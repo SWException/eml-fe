@@ -3,7 +3,7 @@ import { Products, ProductsData, ProductData } from '../types/product';
 //import { catchError } from 'utils/catchError';
 //import apiClient from 'utils/apiClient';
 
-type ProductPayload = { params: unknown };
+type ProductPayload = { params: any };
 
 //mockare fetchProducts
 
@@ -16,7 +16,8 @@ const fetchProducts = async (payload?: ProductPayload): Promise<ProductsData> =>
        }
     };
 
-    const res = await fetch(`${process.env.AWS_ENDPOINT}/products`, requestOptions);
+    const category = (payload.params.category)? "category="+payload.params.category : null;
+    const res = await fetch(`${process.env.AWS_ENDPOINT}/products?${category}`, requestOptions);
     const products = await res.json();
 
     console.log(products.data);
