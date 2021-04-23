@@ -93,15 +93,15 @@ const OrderDetails: React.FC<Props> = ({ id }) => { //IN VERITA' E' :React.FC<Pr
         <div>
           <div className={styles.button}>
             <p>Do you need assistance?</p>
-            <Button color="primary" size="lg" style={{ marginLeft: 20 }}>Assistance</Button>
+            <a href="mailto:farmaciapadovana@gmail.com?subject=Assistance%20Required&body=This%20is%20an%20example"><Button color="primary" size="lg" style={{ marginLeft: 20 }}>Assistance</Button></a>
           </div>
           <div className={styles.button}>
             <p>Do you want to ask for a return?</p>
-            <Button color="primary" size="lg" style={{ marginLeft: 20 }}>Request Return</Button>
+            <a href="mailto:farmaciapadovana@gmail.com?subject=Return%20request&body=This%20is%20an%20example"><Button color="primary" size="lg" style={{ marginLeft: 20 }}>Request Return</Button></a>
           </div>
           <div className={styles.button}>
             <p>Do you want cancel your order? </p>
-            <Button color="primary" size="lg" style={{ marginLeft: 20 }}>Cancel Order</Button>
+            <a href="mailto:farmaciapadovana@gmail.com?subject=Cancel%20Request&body=This%20is%20an%20example"><Button color="primary" size="lg" style={{ marginLeft: 20 }}>Cancel Order</Button></a>
           </div>
         </div>
       </div>
