@@ -28,10 +28,10 @@ const ProductCard: React.FC<Props> = ({id, name, photo, price, loadCart, quantit
             if(_quantity!=1)
             setQuantity(_quantity-1);
         }
+        const { status, message } = await CartService.updateCart(_quantity, id);
         setSubTotal(price*_quantity);
-        const { status, message } = await CartService.updateCart(_quantity, id)
         if(status == "success"){
-            loadCart();
+            await loadCart();
         }
     }
 
