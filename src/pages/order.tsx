@@ -20,6 +20,14 @@ const OrderDetails: React.FC<Props> = ({ id }) => { //IN VERITA' E' :React.FC<Pr
 
   const router = useRouter();
 
+  const [dateShow, setDateShow] = useState('')
+
+  const getDate = (timestamp): string => {
+    var date = new Date(+timestamp);
+    // Hours part from the timestamp
+    return (date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear() + " " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds());
+}
+
   const [order, setOrder]: [Order, React.Dispatch<Order>] = useState({
     orderid: "",
     timestamp: "",
@@ -38,6 +46,7 @@ const OrderDetails: React.FC<Props> = ({ id }) => { //IN VERITA' E' :React.FC<Pr
 
   useEffect(() => {
     reloadOrder();
+    setDateShow(getDate("0"));
   }, []);
   
   const reloadOrder = async() => {
@@ -51,6 +60,7 @@ const OrderDetails: React.FC<Props> = ({ id }) => { //IN VERITA' E' :React.FC<Pr
     console.log(order.cart);
     console.log(order.cart.products);
     setProducts(order.cart.products);
+    setDateShow(getDate(order.timestamp));
     console.log('Done reloadProducts');
   }
 
@@ -62,7 +72,7 @@ const OrderDetails: React.FC<Props> = ({ id }) => { //IN VERITA' E' :React.FC<Pr
         </div>
         <div className={styles.detailsorder}>
           <div className={styles.div}><strong>ORDER ID:</strong>  {order.orderid}</div>
-          <div className={styles.div}><strong>Date:</strong>  {order.timestamp}</div>
+          <div className={styles.div}><strong>Date:</strong>  {dateShow}</div>
           <div style={{ padding: 10 }}><strong>State:</strong>  {order.orderStatus}</div>
         </div>
         <div className={styles.itemlayout}>

@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import styles from 'components/listorder/OrderCard/OrderCard.module.css';
 
@@ -7,10 +7,10 @@ interface Props {
     date: string,
     total: number,
     totart: number,
-    state: string,    
+    state: string,
 }
 
-const OrderCard: React.FC<Props> = ({id, date, total, totart, state}) => {
+const OrderCard: React.FC<Props> = ({ id, date, total, totart, state }) => {
     const router = useRouter();
 
     const orderSummary = () => {
@@ -19,15 +19,15 @@ const OrderCard: React.FC<Props> = ({id, date, total, totart, state}) => {
 
     const [dateShow, setDateShow] = useState('')
 
-    useEffect(()=>{
+    useEffect(() => {
         setDateShow(getDate(date))
     }, [])
 
-    const getDate = (timestamp):string => {
-        var date = new Date(timestamp * 1000);
+    const getDate = (timestamp): string => {
+        var date = new Date(+timestamp);
 
-        return (date.getDate()+ "/"+(date.getMonth()+1)+ "/"+date.getFullYear()+ " "+date.getHours()+ ":"+date.getMinutes()+ ":"+date.getSeconds()).toString()
-      }
+        return (date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear() + " " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds()).toString()
+    }
 
     return (
         <table className={styles.orders}>
