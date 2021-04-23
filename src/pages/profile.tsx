@@ -42,6 +42,7 @@ const Profile: React.FC = ()=>{
         district: ""
     });
     const [selectedAddress, setSelected] = useState("");
+    const [currentAddress, setCurrentAddress] = useState<Address>(null);
 
     const changeOld = (e) =>{
         setOldPass(e.target.value);      
@@ -81,7 +82,14 @@ const Profile: React.FC = ()=>{
     }
 
     const addressChange = (e:React.ChangeEvent<HTMLSelectElement>) :void => {
-        setSelected(e.currentTarget.value)
+        setSelected(e.currentTarget.value);
+        let curAddress=null;
+        address.forEach((add)=>{
+            if (add.id==e.currentTarget.value){
+                curAddress=add;
+            }
+        })
+        setCurrentAddress(curAddress);
     }
 
     const submitNewAddress = async() =>{
@@ -137,9 +145,10 @@ const Profile: React.FC = ()=>{
                     <h2>Or delete an existing one</h2>
                     <select onChange={(e)=>{addressChange(e)}}>
                         {address.map((address)=>(
-                            <option value={`${address.id}`}>{`${address.address}`}</option>
+                            <option value={`${address.id}`}>{`${address.description}`}</option>
                         ))}
                     </select>
+                    <p>{`${currentAddress.description} - ${currentAddress.city}, ${currentAddress.address}, ${currentAddress.code}, ${currentAddress.description} - ${currentAddress.recipientName} ${currentAddress.recipientSurname}`}</p>
                     <p/>
                     <Button onClick={deleteAddress}>Delete this address</Button>
             </div>

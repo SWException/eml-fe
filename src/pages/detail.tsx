@@ -13,7 +13,6 @@ interface Props {
     product: Product;
 }
 
-
 const Detail: React.FC<Props> = ({product}) => {
 
     const router = useRouter();
