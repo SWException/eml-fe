@@ -18,8 +18,8 @@ const CheckoutForm: React.FC = () => {
   const [address, setAddress] = useState<Address[]>([]);
 
   useEffect(()=>{
-    createIntent();
     getAddresses();
+    createIntent();
   }, [])
 
   useEffect(() => {
