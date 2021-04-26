@@ -1,17 +1,17 @@
 .products {
     font-family: Arial, Helvetica, sans-serif;
     border-collapse: collapse;
-    margin-left: 10px; 
-    margin-right: 10px;
-    margin-top: 10px;
+    margin-left: 1rem; 
+    margin-right:1rem; 
+    margin-top: 1rem; 
     text-align: center;
   }
   
   .products td {
     border: 1px solid #ddd;
     padding: 5px;
-    width: 200px;
-    
+    width: 20rem;
+  
   }
 
   .products tr:nth-child(even){background-color: #f2f2f2;}
@@ -26,23 +26,23 @@
   }
 
   .div{
-    margin-top: 10px;
-    margin-left: 10px;
+    margin-top: 1rem; 
+    margin-left: 1rem; 
   }
 
   .input[type=text] {
-    width: 400px;
+    width: 40rem;
     border: 2px solid #ccc;
-    font-size: 15px;
+    font-size: 1.5rem;
     background-color: var(--color-light);
     background-position: 5px 5px; 
     background-repeat: no-repeat;
-    padding: 4px 10px 4px 10px;
+    padding: 0.4rem 1rem 0.4rem 1rem;
   } 
 
   .category{
-    width: 400px;
+    width: 40rem;
     border: 2px solid #ccc;
-    font-size: 15px;
-    padding: 4px 10px 4px 10px;
+    font-size: 1.5rem;
+    padding: 0.4rem 1rem 0.4rem 1rem;
   }
