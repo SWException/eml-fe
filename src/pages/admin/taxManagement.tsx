@@ -1,6 +1,8 @@
-import React from 'react'
+import React from 'react';
 import { useRouter } from 'next/router';
 import { AdminLayout } from 'components/layouts/AdminLayout';
+import styles from 'styles/ProductMagagement.module.css';
+import {Button} from 'reactstrap';
 
 interface Props{
     tax: any,  //DA MODIFICARE NON APPENA E' PRONTO
@@ -27,10 +29,14 @@ const TaxManagement: React.FC<Props> = ({tax}) => {
 
     return (
         <AdminLayout header>
-            <input type="text" placeholder="New tax name..."/>
-            <input type="number" placeholder="Percentage"/>
-            <button type="button">CREATE TAX</button>
-            <table>
+            <div className={styles.div}>
+            <Button color="primary" size="lg">Add New Tax</Button>
+            </div>
+            <div className={styles.div}>
+            <input type="text" placeholder="Search by Name..."/>
+            <Button color="primary" size="lg">SEARCH</Button>
+            </div>
+            <table className={styles.products}>
                 <th>
                     ID
                 </th>
@@ -40,19 +46,13 @@ const TaxManagement: React.FC<Props> = ({tax}) => {
                 <th>
                     VALUE %
                 </th>
-                <th>
-                    EDIT
-                </th>
-                <th>
-                    REMOVE
-                </th>
-                {taxes2.tax.map((product)=>(
+                {taxes2.tax.map((tax)=>(
                     <tr>
-                        <td>{product.id}</td>
-                        <td>{product.name}</td>
-                        <td>{product.value}</td>
-                        <td><button type="button">EDIT</button></td>
-                        <td><button type="button">REMOVE</button></td>
+                        <td>{tax.id}</td>
+                        <td>{tax.name}</td>
+                        <td>{tax.value}</td>
+                        <td><Button color="primary" size="lg">EDIT</Button></td>
+                        <td><Button color="primary" size="lg">REMOVE</Button></td>
                     </tr>
                 ))}
             </table>

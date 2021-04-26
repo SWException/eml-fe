@@ -1,6 +1,8 @@
 import React from 'react'
 import { useRouter } from 'next/router';
 import { AdminLayout } from 'components/layouts/AdminLayout';
+import styles from 'styles/ProductMagagement.module.css'
+import {Button} from 'reactstrap'
 
 interface Props{
     orders: any,  //DA MODIFICARE NON APPENA E' PRONTO
@@ -8,27 +10,20 @@ interface Props{
   
 
 const OrderManagement: React.FC<Props> = ({orders}) => {
-    
+    console.log(orders);
     const router = useRouter();
 
-    let orders2 = {
-        "orders": [
-          {
-            "id": 1,
-            "emailcustomer": "test@somemail.com",
-            "status": "pending",
-            "date": "22/05/2057 at 15:22:13",
-            "total": 2500,
-          },
-          {
-            "id": 2,
-            "emailcustomer": "tes2t@somemail.com",
-            "status": "pending",
-            "date": "22/11/2057 at 15:11:13",
-            "total": 32,
-          }
-        ]
-      };
+    let orders2 = [];
+    for(var i = 0; i < 6; i++){
+      var order= {
+        id : "ID" + i,
+        emailcustomer: "test@gmail.com",
+        status:"peding",
+        date:"2021/12/12",
+        total: 120+i,
+      };  
+      orders2[i] = order;
+    }
 
     const orderDetailsAdmin = () => {
         router.push('/admin/orderDetailsAdmin');
@@ -37,14 +32,16 @@ const OrderManagement: React.FC<Props> = ({orders}) => {
 
     return (
         <AdminLayout header>
+            <div className={styles.div}>
             <input type="text" placeholder="Search by ID..."/>
-            <button type="button">SEARCH</button>
-            <table>
+            <Button color="primary" size="lg">SEARCH</Button>
+            </div>
+            <table className={styles.products}>
                 <th>
                     ID
                 </th>
                 <th>
-                    CUSTOMER MAIL
+                    CUSTOMER EMAIL
                 </th>
                 <th>
                     STATUS
@@ -55,39 +52,23 @@ const OrderManagement: React.FC<Props> = ({orders}) => {
                 <th>
                     TOTAL
                 </th>
-                <th>
-                    STAMPA BOLLA
-                </th>
-                <th>
-                    OPEN ORDER DETAILS PAGE
-                </th>
-                {orders2.orders.map((order)=>(
+                {orders2.map((order)=>(
                     <tr>
                         <td>{order.id}</td>
-                        <td>
-                            <a href = {"mailto:" + order.emailcustomer + "?subject = Feedback&body = Message"}>
-                                {order.emailcustomer}
-                            </a>
-                        </td>
-                        <td>
-                            <select>
-                                <option>accettato</option>
-                                <option>in elaborazione</option>
-                                <option>spedito</option>
-                                <option>consegnato</option>
-                                <option>cancellato</option>
-                            </select>
-                        </td>
+                        <td>{order.emailcustomer}</td>
+                        <td>{order.status}</td>
                         <td>{order.date}</td>
-                        <td>{order.total}</td>
-                        <td><button type="button">Stampa bolla</button></td>
-                        <td><button type="button" onClick={orderDetailsAdmin}>OPEN ORDER DETAILS PAGE</button></td>
+                        <td>€{order.total}</td>
+                        <td><Button color="primary" size="lg">Print Shipping Note</Button></td>
+                        <td><Button color="primary" size="lg"onClick={orderDetailsAdmin}>Order Summary</Button></td>
                     </tr>
                 ))}
             </table>
         </AdminLayout>
     );
 };
+
+
 
 /*export async function getStaticProps() {
     const res = await fetch('https://virtserver.swaggerhub.com/swexception4/OpenAPI/0.0.1/getProducts');

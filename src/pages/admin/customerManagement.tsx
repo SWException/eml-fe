@@ -1,6 +1,8 @@
 import React from 'react'
 import { useRouter } from 'next/router';
 import { AdminLayout } from 'components/layouts/AdminLayout';
+import styles from 'styles/ProductMagagement.module.css';
+import {Button} from 'reactstrap';
 
 interface Props{
     customers: any,  //DA MODIFICARE NON APPENA E' PRONTO
@@ -33,9 +35,11 @@ const OrderManagement: React.FC<Props> = ({customers}) => {
 
     return (
         <AdminLayout header>
-            <input type="text" placeholder="Search by email..."/>
-            <button type="button">SEARCH</button>
-            <table>
+            <div className={styles.div}>
+            <input type="text" placeholder="Search by Name..."/>
+            <Button color="primary" size="lg">SEARCH</Button>
+            </div>
+            <table className={styles.products}>
                 <th>
                     NAME
                 </th>
@@ -50,6 +54,7 @@ const OrderManagement: React.FC<Props> = ({customers}) => {
                         <td>{customer.name}</td>
                         <td>{customer.surname}</td>
                         <td>{customer.email}</td>
+                        <td><Button color="primary" size="lg">Delete</Button></td>
                     </tr>
                 ))}
             </table>

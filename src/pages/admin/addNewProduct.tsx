@@ -53,7 +53,7 @@ const AddNewProduct: React.FC<Props> = ({product}) => {
                 </div> 
                 <div className={styles.div}> 
                 <label>Net price</label>
-                <input className={styles.input} type="number" placeholder="Insert product net price"/>
+                <input className={styles.input} type="number" min="1" placeholder="Insert product net price"/>
                 </div> 
                 <div className={styles.div}> 
                 <label>VAT</label>
@@ -72,7 +72,7 @@ const AddNewProduct: React.FC<Props> = ({product}) => {
                 </div> 
                 <div className={styles.div}> 
                 <label>Warehouse stock:</label>
-                <input className={styles.input} type="number" placeholder="Insert product net price"/>
+                <input className={styles.input} type="number" min="0" placeholder="Insert product net price"/>
                 </div> 
                 <div className={styles.div}> 
                 <label>Visible in Best Product:</label>

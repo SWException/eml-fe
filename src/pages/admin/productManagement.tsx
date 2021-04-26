@@ -2,8 +2,9 @@ import React from 'react'
 import { useRouter } from 'next/router';
 import { AdminLayout } from 'components/layouts/AdminLayout';
 import styles from 'styles/ProductMagagement.module.css'
-import {Button} from 'reactstrap'
-import Image from 'next/image'
+import {Button} from 'reactstrap';
+import Image from 'next/image';
+
 
 interface Props{
     products: any,  //DA MODIFICARE NON APPENA E' PRONTO

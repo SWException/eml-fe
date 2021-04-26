@@ -1,6 +1,8 @@
-import React from 'react'
+import React from 'react';
 import { useRouter } from 'next/router';
 import { AdminLayout } from 'components/layouts/AdminLayout';
+import styles from 'styles/ProductMagagement.module.css';
+import {Button} from 'reactstrap';
 
 interface Props{
     categories: any, //DA MODIFICARE NON APPENA E' PRONTO
@@ -10,40 +12,32 @@ const CategoryManagement: React.FC<Props> = ({categories}) => {
     
     const router = useRouter();
 
-    let categories2 = {
-        "categories": [
-          {
-            "id": 1,
-            "name": "giochi"
-          },
-          {
-            "id": 2,
-            "name": "cucina"
-          }
-        ]
-      };
+      let categories2 = [];
+    for(var i = 0; i < 6; i++){
+      var category= {
+        name : "category" + i
+      };  
+      categories2[i] = category;
+    }
 
     return (
         <AdminLayout header>
-            <input type="text" placeholder="New category name...."/>
-            <button type="button">Add category</button>
-            <br/>      
-            
-            <table>
+            <div className={styles.div}>
+            <Button color="primary" size="lg">Add New Category</Button>
+            </div>
+            <div className={styles.div}>
+            <input type="text" placeholder="Search by Name..."/>
+            <Button color="primary" size="lg">SEARCH</Button>
+            </div>
+            <table className={styles.products}>
                 <th>
-                    CATEGORY
+                    NAME
                 </th>
-                <th>
-                    EDIT
-                </th>
-                <th>
-                    REMOVE
-                </th>
-                {categories2.categories.map((category)=>(
+                {categories2.map((category)=>(
                     <tr>
                         <td>{category.name}</td>
-                        <td><button type="button">EDIT</button></td>
-                        <td><button type="button">REMOVE</button></td>
+                        <td><Button color="primary" size="lg">Edit</Button></td>
+                        <td><Button color="primary" size="lg">Remove</Button></td>
                     </tr>
                 ))}
             </table>

@@ -52,7 +52,7 @@ const EditExistingProduct: React.FC<Props> = ({product}) => {
                 </div> 
                 <div className={styles.div}> 
                 <label>Net price</label>
-                <input className={styles.input} type="number" placeholder="Insert product net price"/>
+                <input className={styles.input} type="number" min="1" placeholder="Insert product net price"/>
                 </div> 
                 <div className={styles.div}> 
                 <label>VAT</label>
@@ -63,7 +63,7 @@ const EditExistingProduct: React.FC<Props> = ({product}) => {
                 </select>
                 </div> 
                 <div className={styles.div}> 
-                <label >Visibility:</label>
+                <label>Visibility:</label>
                 <input className={styles.inputcheck} type="radio" id="visible" name="visibilty" value="visible"/>
                 <label>Visible</label>
                 <input className={styles.inputcheck} type="radio" id="notVisible" name="visibilty" value="notVisible" checked/>
@@ -71,7 +71,7 @@ const EditExistingProduct: React.FC<Props> = ({product}) => {
                 </div> 
                 <div className={styles.div}> 
                 <label>Warehouse stock:</label>
-                <input className={styles.input} type="number" placeholder="Insert product net price"/>
+                <input className={styles.input} type="number" min="0" placeholder="Insert product net price"/>
                 </div> 
                 <div className={styles.div}> 
                 <label>Visible in Best Product:</label>
