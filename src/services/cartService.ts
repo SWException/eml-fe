@@ -51,7 +51,7 @@ const fetchCart = async (): Promise<CartData> => {
 };
 
 
-const addCart = async (quantity: number, id: string): Promise<AddCart> => {
+const addToCart = async (quantity: number, id: string): Promise<AddCart> => {
   const token = await sessionService.getCookie('token');
   try {
     const data = { quantity, id };
@@ -79,7 +79,7 @@ const addCart = async (quantity: number, id: string): Promise<AddCart> => {
   }
 };
 
-const removeProductCart = async (id: string): Promise<RemoveCart> => {
+const removeProductFromCart = async (id: string): Promise<RemoveCart> => {
   const token = await sessionService.getCookie('token');
   try {
     const requestOptions = {
@@ -105,7 +105,7 @@ const removeProductCart = async (id: string): Promise<RemoveCart> => {
   }
 };
 
-const removeAllCart = async (): Promise<RemoveCart> => {
+const removeCart = async (): Promise<RemoveCart> => {
   const token = await sessionService.getCookie('token');
   try {
     const requestOptions = {
@@ -162,8 +162,8 @@ const updateCart = async (quantity: number, id: string): Promise<AddCart> => {
 
 export const CartService = {
   fetchCart,
-  addCart,
-  removeProductCart,
-  removeAllCart,
+  addToCart,
+  removeProductFromCart,
+  removeCart,
   updateCart,
 };

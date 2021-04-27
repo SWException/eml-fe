@@ -67,7 +67,33 @@ const confirmCheckout = async (id: string): Promise<ConfirmCheckout> => {
   }
 };
 
+const deleteCheckout = async (id: string): Promise<ConfirmCheckout> => {
+  let token = sessionService.getCookie('token');
+  try {
+    const requestOptions = {
+      method: 'DELETE',
+      headers: { 
+        'Content-Type': 'application/json',
+        "Authorization": `${token}`
+       }
+    };
+    const res = await fetch(`${process.env.AWS_ENDPOINT}/checkout/${id}`, requestOptions)
+    const checkoutReturned = await res.json();
+
+    const checkoutData: ConfirmCheckout = {
+        status: checkoutReturned.status,
+        message: checkoutReturned.message
+    };
+
+    return checkoutData;
+    
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const CheckoutService = {
   fetchCheckout,
-  confirmCheckout
+  confirmCheckout,
+  deleteCheckout
 };

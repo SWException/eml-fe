@@ -31,6 +31,14 @@ export interface ProductCart {
     quantity: number;
 }
 
+export interface ProductToAdd {
+    name: string;
+    description: string;
+    price: number;
+    tax: number;
+    stock: number;
+}
+
   
 /*
 export interface AddProduct {
