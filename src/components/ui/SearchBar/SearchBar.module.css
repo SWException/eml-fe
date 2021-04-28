@@ -1,22 +1,16 @@
-.input[type=text] {
-  width: 400px;
-  border: 2px solid #ccc;
-  border-radius: 25px 0px 0px 25px;
-  font-size: 1.5rem;
-  background-color: var(--color-light);
-  background-position: 5px 5px; 
-  background-repeat: no-repeat;
-  padding: 4px 10px 4px 10px;
-} 
+ .input[type=text] {
+    width: 40rem;
+    font-size: 1.5rem;
+    border-color: none;
+    background-color: var(--color-light);
+    background-position: 5px 5px; 
+    background-repeat: no-repeat;
+    padding: 0.4rem 1rem 0.4rem 1rem;
+    margin-top: 1rem;
+    border-radius: 25px 0px 0px 25px;
+  } 
 
-.searchButton{
-  border-radius: 0px 25px 25px 0px;
+.div{
   width: auto;
-  border-left: transparent;
-
-}
-
-.form{
-  width: auto;
-  margin-left: 5%;
+  margin-left: 7%;
 }

@@ -35,8 +35,10 @@ const TaxManagement: React.FC<Props> = ({tax}) => {
             <AddNewTax/>
             </div>
             <div className={styles.div}>
-            <input type="text" placeholder="Search by Name..."/>
-            <Button color="primary" size="lg">SEARCH</Button>
+            <input className={styles.input} type="text" placeholder="Search tax by name..."/>
+            <Button type="submit" formAction="/products" style={{border: "2px solid #ccc", backgroundColor: "#ccc", borderRadius:"0"}}>
+                <img src="/iconsearch.png" style={{width:"2.3rem", height:"2.3rem"}}/>
+            </Button>
             </div>
             <table className={styles.products}>
                 <th>

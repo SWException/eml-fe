@@ -1,6 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
 import styles from './SearchBar.module.css';
-import Image from 'next/image'
 import {Button} from 'reactstrap';
 
 const SearchBar: React.FC = () => {
@@ -9,11 +8,11 @@ const SearchBar: React.FC = () => {
 
   return (
     <>
-      <div className={styles.form}>
-        <input className={styles.input} type="text" placeholder="Search Product by..."/>
-        <Button className={styles.searchButton} type="submit" formAction="/products" color="light">
-          <Image src="/iconsearch.png" width={20} height={20}/>
-        </Button>
+      <div className={styles.div}>
+            <input className={styles.input} type="text" placeholder="Search Product by name..."/>
+            <Button type="submit" formAction="/products" color="light" style={{borderRadius: "0px 25px 25px 0px"}}>
+                <img src="/iconsearch.png" style={{width:"2.1rem", height:"2.1rem"}}/>
+            </Button>
       </div>
     </>
   );
