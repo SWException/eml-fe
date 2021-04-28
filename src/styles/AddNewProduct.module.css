@@ -2,7 +2,7 @@
     border: 2px solid #ccc;
     font-size: 15px;
     padding: 4px 10px 4px 10px;
-    margin-left: 10px;
+    margin-left: 1rem;
   }
 
 .form{
@@ -11,8 +11,8 @@
     padding: 20px;
     margin-left:15%;
     margin-right: 15%;
-    margin-top: 10px;
-    margin-bottom: 10px;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
 }
 .input{
     border: 2px solid #ccc;
@@ -21,22 +21,22 @@
     background-position: 5px 5px; 
     background-repeat: no-repeat;
     padding: 4px 10px 4px 10px;
-    margin-left:10px;
+    margin-left:1rem;
   } 
 
   .div{
-      margin-top:10px;
+      margin-top:1rem;
   }
 
   .inputfile{
-      margin-left:10px;
+      margin-left:1rem;
   }
 
   .inputcheck{
-      margin-left:10px;
+      margin-left:1rem;
   }
 
   .textarea{
     vertical-align: middle;
-    margin-left: 10px;
+    margin-left: 1rem;
   }

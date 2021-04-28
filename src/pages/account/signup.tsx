@@ -169,9 +169,13 @@ const SignUp: React.FC = () => {
                         </FormGroup>
                         <div>
                             {loading ? (
+                                <div style={{ justifyContent: "center", textAlign:"center"}}>
                                 <Spinner color="primary" style={{marginTop: "20px"}}/>
+                                </div>
                             ) : (
-                                <Button color="primary" size="lg" onClick={signUp} style={{marginLeft:"30%"}}>Create your account</Button>
+                                <div style={{ justifyContent: "center", textAlign:"center"}}>
+                                <Button color="primary" size="lg" onClick={signUp}>Create your account</Button>
+                                </div>
                             )}                    
                         </div>
                     </Form>

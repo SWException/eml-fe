@@ -24,8 +24,7 @@ const ProductList: React.FC<Props> = ({products}) => {
                   <img
                     src={product.primaryPhoto}
                     alt="Picture of the author"
-                    width={150}
-                    height={150}
+                    style={{width:"20rem", height:"20rem"}}
                   />
                 </div>
                 <div className={styles.productInfo}>

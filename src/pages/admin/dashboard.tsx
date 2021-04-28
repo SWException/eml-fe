@@ -28,7 +28,7 @@ const Dashboard: React.FC = () => {
     return (
         <AdminLayout header>
           <table className={styles.table}>
-                <tr>
+                <tr className={styles.tr}>
                     <th className={styles.th}>
                         <button className={styles.div} onClick={redirectProductManagement}>
                         <Image src="/product.png" width={40} height={40}/>
@@ -43,6 +43,8 @@ const Dashboard: React.FC = () => {
                         <p>Here you can see all clients's orders and manage them.</p>
                         </button>
                     </th>
+                </tr>
+                <tr className={styles.tr}>
                     <th className={styles.th}>
                         <button className={styles.div} onClick={redirectCategoryManagement}>
                         <Image src="/category.png" width={40} height={40}/>
@@ -50,8 +52,6 @@ const Dashboard: React.FC = () => {
                         <p>Here you can add, edit and remove a category</p>
                         </button>
                     </th>
-                </tr>
-                <tr>
                     <th className={styles.th}>
                         <button className={styles.div} onClick={redirectTaxManagement}>
                         <Image src="/tax.png" width={40} height={40}/>
@@ -59,7 +59,9 @@ const Dashboard: React.FC = () => {
                         <p>Here you can add, edit and remove a taxes</p>
                         </button>
                     </th>
-                    <th className={styles.th}>
+                </tr>
+                <tr className={styles.tr}>
+                <th className={styles.th}>
                         <button className={styles.div} onClick={redirectCustomerManagement}>
                         <Image src="/customers.png" width={40} height={40}/>
                         <p><b>Manage customers</b></p>

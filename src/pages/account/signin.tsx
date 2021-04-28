@@ -83,14 +83,18 @@ const Login: React.FC = () => {
                     </FormGroup>
                     <div>
                         {loading ? (
+                            <div style={{ justifyContent: "center", textAlign:"center"}}>
                             <Spinner color="primary" style={{marginTop: "20px"}}/>
-                        ) : (
-                        <div>
-                            <Button color="primary" size="lg" onClick={signIn}>Login</Button> 
-                            <div>
-                                <p className={styles.p}>Forgot your password?</p>
-                                <Button onClick={()=>{setRemember(true)}} color="primary" size="lg" style={{marginLeft: "10px"}}>Recover</Button>
                             </div>
+                        ) : (
+                            <div>
+                                <div style={{ justifyContent: "center", textAlign:"center"}}>
+                                <Button color="primary" size="lg" onClick={signIn}>Login</Button>
+                                </div>
+                                <div>
+                                    <p className={styles.p}>Forgot your password?</p>
+                                    <Button onClick={()=>{setRemember(true)}} color="primary" size="lg">Recover</Button>
+                                </div>
                         </div>
                         )}
                     </div>
@@ -99,10 +103,12 @@ const Login: React.FC = () => {
                     </div>
                     <div>
                     {loading ? (
+                            <div style={{ justifyContent: "center", textAlign:"center"}}>
                             <Spinner color="primary"  style={{marginTop: "20px"}}/>
+                            </div>
                         ) : (
-                            <div>
-                            <Button onClick={signUp} color="primary" size="lg" style={{marginLeft:"40%"}} >SignUp</Button>
+                            <div style={{ justifyContent: "center", textAlign:"center"}}>
+                            <Button onClick={signUp} color="primary" size="lg">SignUp</Button>
                         </div>
                         )
                         }

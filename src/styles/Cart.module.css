@@ -1,5 +1,5 @@
 .title{
-    margin-top: 25px;
+    margin-top: 2rem;
 }
 
 .cart {
@@ -10,13 +10,13 @@
   }
   
   .total{
-      margin-top: 25px;
+      margin-top: 2rem;
       text-align: right;
-      margin-right: 70px;
+      margin-right: 7rem;
   }
   
   .remove{
-    margin-top: 15px;
+    margin-top: 1rem;
     text-align: left;
-    margin-left: 50px;
+    margin-left: 5rem;
   }

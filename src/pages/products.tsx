@@ -29,7 +29,7 @@ const Products: React.FC<Props> = ({id}) => {
             {products.length > 0 ? (
             <ProductList products={products} />
             ) : (
-            <div className={styles.message}>
+            <div style={{textAlign:"center"}}>
                 No products found. Try searching for other keyword.
             </div>
             )}

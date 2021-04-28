@@ -5,9 +5,6 @@ import { Categories, Category } from 'types';
 import styles from './Categories.module.css';
 import { useRouter } from 'next/router';
 
-/**
- * Sistemare display orizzontale di tutte le categorie trovate?
- */
 
 const CategoriesToShow: React.FC = () => {
     const router = useRouter();

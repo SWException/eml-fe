@@ -1,14 +1,21 @@
 .table{
-    width: 100%;
-    margin: 5% 2%;
-    align-items: center;
+    margin-top:2rem;
+    margin-left: auto;
+    margin-right: auto;
+    justify-content: "center"; 
+    text-align:"center";
+    
 }
 
 .th{
-    padding:10px;
-    margin-top:25px;
+    margin-top:2rem;
+    padding:1rem;
 }
 
+.div{
+    width: 30rem;
+    height: 15rem;
+}
 .div:hover{
     background-color: lightslategray;
 }
