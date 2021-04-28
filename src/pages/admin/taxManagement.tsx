@@ -3,6 +3,8 @@ import { useRouter } from 'next/router';
 import { AdminLayout } from 'components/layouts/AdminLayout';
 import styles from 'styles/ProductMagagement.module.css';
 import {Button} from 'reactstrap';
+import AddNewTax from 'components/admin/AddNewTax';
+import EditTax from 'components/admin/EditTax';
 
 interface Props{
     tax: any,  //DA MODIFICARE NON APPENA E' PRONTO
@@ -30,7 +32,7 @@ const TaxManagement: React.FC<Props> = ({tax}) => {
     return (
         <AdminLayout header>
             <div className={styles.div}>
-            <Button color="primary" size="lg">Add New Tax</Button>
+            <AddNewTax/>
             </div>
             <div className={styles.div}>
             <input type="text" placeholder="Search by Name..."/>
@@ -51,7 +53,7 @@ const TaxManagement: React.FC<Props> = ({tax}) => {
                         <td>{tax.id}</td>
                         <td>{tax.name}</td>
                         <td>{tax.value}</td>
-                        <td><Button color="primary" size="lg">EDIT</Button></td>
+                        <td><EditTax/></td>
                         <td><Button color="primary" size="lg">REMOVE</Button></td>
                     </tr>
                 ))}

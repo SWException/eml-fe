@@ -3,6 +3,8 @@ import { useRouter } from 'next/router';
 import { AdminLayout } from 'components/layouts/AdminLayout';
 import styles from 'styles/ProductMagagement.module.css';
 import {Button} from 'reactstrap';
+import AddNewCategory from 'components/admin/AddNewCategory';
+import EditCategory from 'components/admin/Editcategory';
 
 interface Props{
     categories: any, //DA MODIFICARE NON APPENA E' PRONTO
@@ -23,7 +25,7 @@ const CategoryManagement: React.FC<Props> = ({categories}) => {
     return (
         <AdminLayout header>
             <div className={styles.div}>
-            <Button color="primary" size="lg">Add New Category</Button>
+            <AddNewCategory/>
             </div>
             <div className={styles.div}>
             <input type="text" placeholder="Search by Name..."/>
@@ -36,8 +38,8 @@ const CategoryManagement: React.FC<Props> = ({categories}) => {
                 {categories2.map((category)=>(
                     <tr>
                         <td>{category.name}</td>
-                        <td><Button color="primary" size="lg">Edit</Button></td>
-                        <td><Button color="primary" size="lg">Remove</Button></td>
+                        <td><EditCategory/></td>
+                        <td><Button color="primary" size="lg">REMOVE</Button></td>
                     </tr>
                 ))}
             </table>

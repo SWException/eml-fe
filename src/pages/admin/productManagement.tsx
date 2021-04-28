@@ -57,7 +57,7 @@ const ProductManagement: React.FC<Props> = ({products}) => {
             <div className={styles.div}>
             <input className={styles.input} type="text" placeholder="Search Product by name..."/>
             <Button className={styles.searchButton} type="submit" formAction="/products" color="light">
-                <Image src="/iconsearch.png" width={20} height={20}/>
+                <img src="/iconsearch.png" width={20} height={20}/>
             </Button>
             </div>
             <table className={styles.products}>

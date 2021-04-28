@@ -54,7 +54,7 @@ const OrderManagement: React.FC<Props> = ({customers}) => {
                         <td>{customer.name}</td>
                         <td>{customer.surname}</td>
                         <td>{customer.email}</td>
-                        <td><Button color="primary" size="lg">Delete</Button></td>
+                        <td><Button color="primary" size="lg">DELETE</Button></td>
                     </tr>
                 ))}
             </table>

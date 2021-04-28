@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import styles from 'components/listorder/OrderCard/OrderCard.module.css';
+import {Button} from 'reactstrap'
 
 interface Props {
     id: string,
@@ -37,8 +38,7 @@ const OrderCard: React.FC<Props> = ({ id, date, total, totart, state }) => {
                 <td>€ {total}</td>
                 <td>{totart}</td>
                 <td>{state}</td>
-                <div>   </div>
-                <button type="button" onClick={orderSummary}>Order Summary</button>
+                <td><Button color="primary" size="lg" onClick={orderSummary}>Order Summary</Button></td>
             </tr>
         </table>
     );
