@@ -1,8 +1,8 @@
 .detailsorder{
     display: flex;
-    margin-left: 20px;
+    margin-left: 2rem;
     margin-right: auto;
-    margin-top: 25px;
+    margin-top: 2.5rem;
 }
 
 .div{
@@ -12,16 +12,16 @@
 }
 
 .itemlayout {
-    margin: 20px; 
+    margin: 2rem; 
 }
 
  .info{
-     margin-top: 20px;
-     margin-left:25px;
+     margin-top: 2rem;
+     margin-left:2rem;
  }
 
 .button{
-    margin-top: 25px;
+    margin-top: 2.5rem;
     display: flex;
-    margin-left:20px;
+    margin-left:2rem;
 }

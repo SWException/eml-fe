@@ -120,7 +120,9 @@ const Profile: React.FC = ()=>{
 
     return (
         <CustomerLayout header footer>
-            <strong style={{marginLeft:25, marginTop: 10}}>User: {email}</strong>
+          <div className={styles.user}>
+            <strong>User: {email}</strong>
+          </div>
             <div className={styles.div}>
                     <h1 className={styles.h1}>Here you can manage your addresses</h1>
                     <h2>Add a new one</h2>
@@ -141,17 +143,17 @@ const Profile: React.FC = ()=>{
                         <Input type="text" onChange={(e)=>{handleChange('description', e)}} placeholder="House Address"/>
                     </Form>
                     <p/> 
-                    <Button onClick={submitNewAddress}>Add</Button>
+                    <Button size="lg" onClick={submitNewAddress}>Add</Button>
                     <p/>
                     <h2>Or delete an existing one</h2>
-                    <select onChange={(e)=>{addressChange(e)}}>
+                    <select style={{width:"20rem"}} onChange={(e)=>{addressChange(e)}}>
                         {address.map((address)=>(
                             <option value={`${address.id}`}>{`${address.description}`}</option>
                         ))}
                     </select>
                     <p>{`${currentAddress?.description} - ${currentAddress?.city}, ${currentAddress?.address}, ${currentAddress?.code}, ${currentAddress?.description} - ${currentAddress?.recipientName} ${currentAddress?.recipientSurname}`}</p>
                     <p/>
-                    <Button onClick={deleteAddress}>Delete this address</Button>
+                    <Button size="lg" onClick={deleteAddress}>Delete this address</Button>
             </div>
             <div className={styles.div}>
                 <Form>
@@ -169,7 +171,7 @@ const Profile: React.FC = ()=>{
                         <Input type="password" onChange={(e)=>{changeNew(e);}} name="confirmNewPassword" id="confirmNewPassword" placeholder="Confirm New Password" />
                     </FormGroup>
                     <div>
-                        <Button onClick={changePassword}>Change Password</Button>
+                        <Button size="lg" onClick={changePassword}>Change Password</Button>
                     </div>  
                 </Form>
             </div>
@@ -185,13 +187,15 @@ const Profile: React.FC = ()=>{
                         <Input type="email" onChange={(e)=>{changeNew(e);}} name="confirmNewEmail" id="confirmNewEmail" placeholder="Confirm New Email" />
                     </FormGroup>
                     <div>
-                        <Button onClick={changeEmail}>Change Email</Button>
+                        <Button size="lg" onClick={changeEmail}>Change Email</Button>
                     </div>  
                 </Form>
             </div>
             <div className={styles.div}>
-                <h1>DANGER ZONE! Here you can request the delation of the account</h1>
-                <Button>Request account deletion</Button>
+                <div className={styles.danger}>
+                <h1>DANGER ZONE! Here you can request the deletion of the account</h1>
+                <Button size="lg">Request account deletion</Button>
+                </div>
             </div>
         </CustomerLayout>
     );

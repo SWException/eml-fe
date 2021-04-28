@@ -20,12 +20,16 @@ const DetailOrderProductCard: React.FC<Props> = ({ id, name, price, quantity, pr
     return (
         <div className="">
             <div className={styles.item}>
-                <img src={primaryPhoto} height="100" width="100" alt="..."/>
-                <span className={styles.information}><strong>ID: </strong>{id}</span>
-                <span className={styles.information}><strong>NAME: </strong>{name.toUpperCase()}</span>
-                <span className={styles.information}><strong>PRICE: €</strong>{price}</span>
-                <span className={styles.information}><strong>QUANTITY: </strong>{quantity}</span>
-                <span className={styles.information}><strong>SUBTOTAL: € {totart} </strong></span>
+                <table className={styles.order}>
+                    <tr>
+                        <td><img src={primaryPhoto} height="100" width="100" alt="..."/></td>
+                        <td> <div><strong>ID:</strong></div><div>{id}</div></td>
+                        <td> <div><strong>NAME:</strong></div><div>{name.toUpperCase()}</div></td>
+                        <td> <div><strong>PRICE:</strong></div><div> € {price}</div></td>
+                        <td><div><strong>QUANTITY:</strong></div><div>{quantity}</div></td>
+                        <td> <div><strong>SUBTOTAL:</strong></div><div>€ {totart}</div></td>
+                    </tr>
+                </table>
             </div>    
         </div>
     );

@@ -2,8 +2,8 @@
     background-color: var(--color-gray-light);
     border-radius: 5px;
     border: ridge var(--color-gray-dark);
-    padding: 60px;
-    margin:  50px 50px;
+    padding: 4rem;
+    margin: 3rem;
 }
 
 .h1{
@@ -18,4 +18,14 @@
   border-radius: 4px;
   box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
   padding:  4px 20px 4px 20px;
+}
+
+.user{
+    margin-top: 2rem;
+    text-align: center;
+    justify-content:center;
+}
+.danger{
+    text-align: center;
+    justify-content:center;
 }

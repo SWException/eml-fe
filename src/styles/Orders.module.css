@@ -6,19 +6,15 @@
     margin-top: 1rem; 
     text-align: center;
   }
-  
-  .orders td {
-    border: 1px solid #ddd;
-    padding: 0.5rem;
-    width: 20rem;
-  }
 
   .orders tr:nth-child(even){background-color: #f2f2f2;}
   
   .orders tr:hover {background-color: #ddd;}
 
   .orders th {
+    text-align:center;
     padding: 0.5rem;
+    width: 30rem;
     text-align: left;
     background-color: var(--color-light);
     color:var(--color-lightblue);

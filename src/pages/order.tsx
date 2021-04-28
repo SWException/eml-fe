@@ -71,13 +71,15 @@ const OrderDetails: React.FC<Props> = ({ id }) => { //IN VERITA' E' :React.FC<Pr
           <h1>Order Summary</h1>
         </div>
         <div className={styles.detailsorder}>
-          <div className={styles.div}><strong>ORDER ID:</strong>  {order.orderid}</div>
+          <div className={styles.div}><strong>Order ID:</strong>  {order.orderid}</div>
           <div className={styles.div}><strong>Date:</strong>  {dateShow}</div>
           <div style={{ padding: 10 }}><strong>State:</strong>  {order.orderStatus}</div>
         </div>
         <div className={styles.itemlayout}>
           <h2>Products</h2>
+            <table>
           {products?.map((product) => (
+            <tr>
             <DetailOrderProductCard
               primaryPhoto={product.primaryPhoto}
               id={product.productId}
@@ -85,7 +87,9 @@ const OrderDetails: React.FC<Props> = ({ id }) => { //IN VERITA' E' :React.FC<Pr
               price={product.price}
               quantity={product.quantity}
             />
+            </tr>
           ))} 
+          </table>
         </div>
         <div className={styles.info}><strong>Total: {" € "}{order.cart.total} </strong></div>
         <div className={styles.info}><strong>Shipping address:</strong> {`${order.shippingAddress.description} - ${order.shippingAddress.city}, ${order.shippingAddress.address}, ${order.shippingAddress.code}, ${order.shippingAddress.district}`}</div>
