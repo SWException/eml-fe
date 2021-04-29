@@ -48,7 +48,7 @@ const CartUser: React.FC<Props>= () => {
     }
 
     const removeAllCart = async() => {
-        const { status, message } = await CartService.removeAllCart();
+        const { status, message } = await CartService.removeCart();
         if(status == "success"){
             reloadCart();
         }

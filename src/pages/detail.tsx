@@ -89,7 +89,7 @@ const Detail: React.FC<Props> = ({product}) => {
 
     const addCart = async() =>{
         try {
-            const { status, message } = await CartService.addCart(_quantity, id);
+            const { status, message } = await CartService.addToCart(_quantity, id);
             if(status == "success"){
                 setInfo({
                     ...info,

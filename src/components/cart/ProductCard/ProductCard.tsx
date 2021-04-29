@@ -36,7 +36,7 @@ const ProductCard: React.FC<Props> = ({id, name, photo, price, loadCart, quantit
     }
 
     const deleteProduct = async() =>{
-        const { status, message } = await CartService.removeProductCart(id);
+        const { status, message } = await CartService.removeProductFromCart(id);
         if(status == "success"){
             loadCart();
         }

@@ -4,7 +4,7 @@ import { AdminLayout } from 'components/layouts/AdminLayout';
 import styles from 'styles/ProductMagagement.module.css';
 import {Button} from 'reactstrap';
 import AddNewCategory from 'components/admin/AddNewCategory';
-import EditCategory from 'components/admin/Editcategory';
+import EditCategory from 'components/admin/EditCategory';
 
 interface Props{
     categories: any, //DA MODIFICARE NON APPENA E' PRONTO
