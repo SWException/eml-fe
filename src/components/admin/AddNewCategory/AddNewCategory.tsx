@@ -13,15 +13,15 @@ const AddNewCategory: React.FC = () =>{
         messageShow: ''
     })
 
-    const [values, setValues] = useState<Category>({
-        name:""
+    const [newCategory, setNewCategory] = useState({
+        name: "",
     });
 
 
     const createCategories = async() =>{
         try {
-            const { status, message } = await CategoriesService.createCategories(values);
-            console.log(status);
+            const { status, message } = await CategoriesService.createCategories(newCategory);
+            console.log(status, message);
             if(status == "success"){
                 setInfo({
                     ...info,
@@ -41,11 +41,8 @@ const AddNewCategory: React.FC = () =>{
         }
     }
 
-    const handleChange = (name:string, e:React.FormEvent<HTMLInputElement>) :void => {
-        setValues({
-            ...values,
-            [name]: e.currentTarget.value
-        })
+    const handleChange = (e:React.FormEvent<HTMLInputElement>) :void => {
+        setNewCategory({name: e.target.value});
     }
 
 
@@ -56,7 +53,7 @@ const AddNewCategory: React.FC = () =>{
                 <PopoverHeader style={{fontSize:"1.5em"}}>Add New Category</PopoverHeader>
                 <PopoverBody>
                 <label style={{fontSize:"1.5em"}}>Name:</label>
-                <input type="text" className="form-control" onChange={(e)=>{handleChange('recipientName', e)}} placeholder="Insert name.." style={{fontSize:"1.5em"}}/>
+                <input type="text" className="form-control" onChange={(e)=>{handleChange(e)}} placeholder="Insert name.." style={{fontSize:"1.5em"}}/>
                 <Button size="lg" color="primary" style={{marginTop:"1em"}} onClick={createCategories}>Save</Button>
                 </PopoverBody>
             </UncontrolledPopover>

@@ -27,34 +27,45 @@ const CategoryManagement: React.FC = () => {
         console.log(err)
       }
     }
+
+    const deleteCategory = async(id: string) =>
+    {
+      try {
+        const { status, message } = await CategoriesService.deleteCategory(id);
+      } catch(err) {
+        console.log(err)
+      }
+    }
+
     return (
         <AdminLayout header>
             <div className={styles.div}>
-            <AddNewCategory/>
+              <AddNewCategory/>
             </div>
             <div className={styles.div}>
-            <input className={styles.input} type="text" placeholder="Search category by name..."/>
-            <Button type="submit" formAction="/products" style={{border: "2px solid #ccc", backgroundColor: "#ccc", borderRadius:"0"}}>
-                <img src="/iconsearch.png" style={{width:"2.3rem", height:"2.3rem"}}/>
-            </Button>
+              <input className={styles.input} type="text" placeholder="Search category by name..."/>
+              <Button type="submit" formAction="/products" style={{border: "2px solid #ccc", backgroundColor: "#ccc", borderRadius:"0"}}>
+                  <img src="/iconsearch.png" style={{width:"2.3rem", height:"2.3rem"}}/>
+              </Button>
             </div>
-            <table className={styles.products}>
-                {categories ? (
-              <div>
-                {categories.map((category)=>(
-                  <tr>
-                  <td>{category.name}</td>
-                  <td><EditCategory/></td>
-                  <td><Button color="primary" size="lg">REMOVE</Button></td>
-                </tr>
-                ))}
-              </div>
+            {categories ? (
+              <table className={styles.products}>
+                <tbody>
+                  {categories.map((category)=>(
+                    <tr key={category.id}>
+                      <td>{category.name}</td>
+                      <td><EditCategory category={category}/></td>
+                      <td><Button color="primary" size="lg" onClick={() => deleteCategory(category.id)}>REMOVE</Button></td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             ) : (
               <div>
                 No categories 
               </div>
             )}
-            </table>
+            
         </AdminLayout>
     );
 };

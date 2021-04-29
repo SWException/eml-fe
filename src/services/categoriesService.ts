@@ -8,7 +8,7 @@ interface CategoriesData {
 
 interface Data {
   id: string;
-  categoryName: string;
+  name: string;
 }
 
 interface CategoryData {
@@ -45,7 +45,7 @@ const fetchAllCategories = async (): Promise<CategoriesData> => {
 };
 
 const createCategories = async (name: string): Promise<Response> => {
-  const token = sessionService.getCookie('token')
+  const token = sessionService.getCookie('token');
   try {
     const requestOptions = {
       method: 'POST',
@@ -53,8 +53,9 @@ const createCategories = async (name: string): Promise<Response> => {
         'Content-Type': 'application/json',
         'Authorization': `${token}`
        },
-      body: JSON.stringify(name) 
+      body: JSON.stringify(name),
     };
+    //console.log(requestOptions);
     const res = await fetch(`${process.env.AWS_ENDPOINT}/categories`, requestOptions)
     const categoriesReturned = await res.json();
 
@@ -85,7 +86,7 @@ const fetchCategory = async (id: string): Promise<CategoryData> => {
     const categoryData: CategoryData = {
       status: categoryReturned.status,
       data: {
-        categoryName: categoryReturned.data.categoryName,
+        name: categoryReturned.data.name,
         id: categoryReturned.data.id
       }
     };
@@ -97,8 +98,7 @@ const fetchCategory = async (id: string): Promise<CategoryData> => {
   }
 };
 
-const updateCategory = async (id: string): Promise<Data> => {
-  //Da implementare meglio richiesta token jwt
+const updateCategory = async (category: Category): Promise<Response> => {
   const token = sessionService.getCookie('token')
   try {
     const requestOptions = {
@@ -106,20 +106,21 @@ const updateCategory = async (id: string): Promise<Data> => {
       headers: { 
         'Content-Type': 'application/json',
         'Authorization': `${token}`
-       }
+       },
+      body: JSON.stringify(category),
     };
-    const res = await fetch(`${process.env.AWS_ENDPOINT}/categories/${id}`, requestOptions)
-    const categoryReturned = await res.json();
+    const res = await fetch(`${process.env.AWS_ENDPOINT}/categories/${category.id}`, requestOptions)
+    const response = await res.json();
 
-    const categoryData: Data = {
-      categoryName: categoryReturned.data.categoryName,
-      id: categoryReturned.data.id
+    const responseData: Response = {
+      status: response.status,
+      message: response.message
     };
 
-    return categoryData;
+    return responseData;
     
   } catch (error) {
-    throw new Error('Error on updating Category')
+    throw new Error('Error on updating Category');  
   }
 };
 
