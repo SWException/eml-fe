@@ -4,8 +4,6 @@ import { Categories, Category } from 'types';
 import React, { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 
-
-
 const AddNewCategory: React.FC = () =>{
 
     const [info, setInfo] = useState({
@@ -13,9 +11,7 @@ const AddNewCategory: React.FC = () =>{
         messageShow: ''
     })
 
-    const [newCategory, setNewCategory] = useState({
-        name: "",
-    });
+    const [newCategory, setNewCategory] = useState("");
 
 
     const createCategories = async() =>{
@@ -42,9 +38,8 @@ const AddNewCategory: React.FC = () =>{
     }
 
     const handleChange = (e:React.FormEvent<HTMLInputElement>) :void => {
-        setNewCategory({name: e.target.value});
+        setNewCategory((e.target as HTMLTextAreaElement).value);
     }
-
 
     return (
         <div>
@@ -53,7 +48,7 @@ const AddNewCategory: React.FC = () =>{
                 <PopoverHeader style={{fontSize:"1.5em"}}>Add New Category</PopoverHeader>
                 <PopoverBody>
                 <label style={{fontSize:"1.5em"}}>Name:</label>
-                <input type="text" className="form-control" onChange={(e)=>{handleChange(e)}} placeholder="Insert name.." style={{fontSize:"1.5em"}}/>
+                <input type="text" className="form-control" onChange={(e:React.FormEvent<HTMLInputElement>)=>{handleChange(e)}} placeholder="Insert name.." style={{fontSize:"1.5em"}}/>
                 <Button size="lg" color="primary" style={{marginTop:"1em"}} onClick={createCategories}>Save</Button>
                 </PopoverBody>
             </UncontrolledPopover>

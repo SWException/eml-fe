@@ -21,6 +21,7 @@ interface Response {
   message: string;
 }
 
+
 const fetchAllCategories = async (): Promise<CategoriesData> => {
   //Da implementare meglio richiesta token jwt
   try {
@@ -45,6 +46,7 @@ const fetchAllCategories = async (): Promise<CategoriesData> => {
 };
 
 const createCategories = async (name: string): Promise<Response> => {
+  console.log(JSON.stringify({name}));
   const token = sessionService.getCookie('token');
   try {
     const requestOptions = {
@@ -53,7 +55,7 @@ const createCategories = async (name: string): Promise<Response> => {
         'Content-Type': 'application/json',
         'Authorization': `${token}`
        },
-      body: JSON.stringify(name),
+      body: JSON.stringify({name}),
     };
     //console.log(requestOptions);
     const res = await fetch(`${process.env.AWS_ENDPOINT}/categories`, requestOptions)

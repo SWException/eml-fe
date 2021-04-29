@@ -8,7 +8,7 @@ interface Props{
     category: Category,
 }
 
-const EditCategory: React.FC = ({category}) =>{
+const EditCategory: React.FC<Props> = ({category}) =>{
 
     const [newCategoryName, setNewCategory] = useState("");
 
@@ -37,7 +37,7 @@ const EditCategory: React.FC = ({category}) =>{
     }
 
     const handleChange = (e:React.FormEvent<HTMLInputElement>) :void => {
-        setNewCategory(e.target.value);
+        setNewCategory((e.target as HTMLTextAreaElement).value);
     }
 
     return (
