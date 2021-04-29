@@ -9,16 +9,6 @@ interface Props{
 }
 
 const AddNewProduct: React.FC<Props> = ({product}) => {
-    let product2 =  {
-        "id": 1,
-        "name": "giochi",
-        "description": "descrizione del prodotto",
-        "photo": "/image2.jpg",
-        "secondaryPhoto": "/image2.jpg",
-        "category": "giochi",
-        "netprice": 5.99,
-        "tax": null
-    };
 
     return (
         <AdminLayout header>

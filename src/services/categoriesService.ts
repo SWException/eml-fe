@@ -1,7 +1,6 @@
 import { Categories, Category } from 'types';
 import { sessionService } from './sessionService';
 
-//5 chiamate agli endpoint, 4 tipi ritornati diversi????
 
 interface CategoriesData {
     categories: Category[]
@@ -46,7 +45,6 @@ const fetchAllCategories = async (): Promise<CategoriesData> => {
 };
 
 const createCategories = async (name: string): Promise<Response> => {
-  //Da implementare meglio richiesta token jwt
   const token = sessionService.getCookie('token')
   try {
     const requestOptions = {

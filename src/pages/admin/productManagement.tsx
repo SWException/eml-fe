@@ -93,16 +93,4 @@ const ProductManagement: React.FC<Props> = ({products}) => {
     );
 };
 
-/*export async function getStaticProps() {
-    const res = await fetch('https://virtserver.swaggerhub.com/swexception4/OpenAPI/0.0.1/getProducts');
-
-    const products = await res.json();
-
-    return {
-        props: {
-            products: products,
-        }
-    };    
-}*/
-
 export default ProductManagement;

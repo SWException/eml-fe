@@ -39,6 +39,14 @@ export interface ProductToAdd {
     stock: number;
 }
 
+export interface ProductAdmin{
+    productId: string;
+    name: string;
+    price: number;
+    tax: number;
+    categories: string[];
+}
+
   
 /*
 export interface AddProduct {

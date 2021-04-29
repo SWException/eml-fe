@@ -1,27 +1,32 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { AdminLayout } from 'components/layouts/AdminLayout';
 import styles from 'styles/ProductMagagement.module.css';
 import {Button} from 'reactstrap';
 import AddNewCategory from 'components/admin/AddNewCategory';
 import EditCategory from 'components/admin/EditCategory';
+import { CategoriesService } from 'services';
+import { Categories, Category } from 'types';
 
-interface Props{
-    categories: any, //DA MODIFICARE NON APPENA E' PRONTO
-}
 
-const CategoryManagement: React.FC<Props> = ({categories}) => {
+const CategoryManagement: React.FC = () => {
     
     const router = useRouter();
 
-      let categories2 = [];
-    for(var i = 0; i < 6; i++){
-      var category= {
-        name : "category" + i
-      };  
-      categories2[i] = category;
-    }
+    const [categories, setCategories] = useState<Category[]>()
 
+    useEffect(()=>{
+      getAllCategories()
+    }, [])
+
+    const getAllCategories = async() => {
+      try {
+        const { categories } = await CategoriesService.fetchAllCategories();
+        setCategories(categories);
+      } catch(err) {
+        console.log(err)
+      }
+    }
     return (
         <AdminLayout header>
             <div className={styles.div}>
@@ -34,31 +39,25 @@ const CategoryManagement: React.FC<Props> = ({categories}) => {
             </Button>
             </div>
             <table className={styles.products}>
-                <th>
-                    NAME
-                </th>
-                {categories2.map((category)=>(
-                    <tr>
-                        <td>{category.name}</td>
-                        <td><EditCategory/></td>
-                        <td><Button color="primary" size="lg">REMOVE</Button></td>
-                    </tr>
+                {categories ? (
+              <div>
+                {categories.map((category)=>(
+                  <tr>
+                  <td>{category.name}</td>
+                  <td><EditCategory/></td>
+                  <td><Button color="primary" size="lg">REMOVE</Button></td>
+                </tr>
                 ))}
+              </div>
+            ) : (
+              <div>
+                No categories 
+              </div>
+            )}
             </table>
         </AdminLayout>
     );
 };
 
-/*export async function getStaticProps() {
-    const res = await fetch('https://virtserver.swaggerhub.com/swexception4/OpenAPI/0.0.1/getProducts');
-
-    const products = await res.json();
-
-    return {
-        props: {
-            products: products,
-        }
-    };    
-}*/
 
 export default CategoryManagement;
