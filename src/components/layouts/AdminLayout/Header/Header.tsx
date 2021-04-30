@@ -2,6 +2,7 @@ import React, { useState, useEffect, Fragment } from 'react';
 import { Collapse, Navbar, NavbarToggler, Nav, NavItem, NavLink } from 'reactstrap';
 import Link from 'next/link';
 import styles from './Header.module.css';
+import { LogoutButton } from 'components/ui'; 
 
 
 
@@ -32,7 +33,7 @@ const Header: React.FC = () => {
               {isAuth ? (
                 <Fragment>
                   <NavItem className="">
-                    <Link href="/account/signout"><NavLink>Logout</NavLink></Link>
+                    <LogoutButton/>
                   </NavItem>
                 </Fragment>
               ) : (

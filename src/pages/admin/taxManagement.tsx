@@ -1,33 +1,41 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import { useRouter } from 'next/router';
 import { AdminLayout } from 'components/layouts/AdminLayout';
 import styles from 'styles/ProductMagagement.module.css';
 import {Button} from 'reactstrap';
 import AddNewTax from 'components/admin/AddNewTax';
 import EditTax from 'components/admin/EditTax';
+import { Taxes, Tax } from 'types';
+import { TaxesService } from 'services'; 
 
-interface Props{
-    tax: any,  //DA MODIFICARE NON APPENA E' PRONTO
-  }
-
-const TaxManagement: React.FC<Props> = ({tax}) => {
+const TaxManagement: React.FC = () => {
     
     const router = useRouter();
+    
+    const [taxes, setTaxes] = useState<Taxes[]>()
 
-    let taxes2 = {
-        "tax": [
-            {
-            "id": 1,
-            "name": "IVA 22",
-            "value": 22,
-            },
-            {
-            "id": 2,
-            "name": "Alimentari",
-            "value": 10
-            }
-        ]
-    };
+    useEffect(()=>{
+      getAllTaxes()
+    }, [])
+
+    const getAllTaxes = async() => {
+      try {
+            const { data } = await TaxesService.getVATTaxes();
+            setTaxes(data);
+      } catch(err) {
+            console.log(err)
+      }
+    }
+
+    const deleteTax = async(id: string) =>
+    {
+      try {
+          console.log(id)
+            const { status, message } = await TaxesService.deleteTax(id);
+      } catch(err) {
+            console.log(err)
+      }
+    }
 
     return (
         <AdminLayout header>
@@ -40,40 +48,40 @@ const TaxManagement: React.FC<Props> = ({tax}) => {
                 <img src="/iconsearch.png" style={{width:"2.3rem", height:"2.3rem"}}/>
             </Button>
             </div>
-            <table className={styles.products}>
-                <th>
-                    ID
-                </th>
-                <th>
-                    NAME
-                </th>
-                <th>
-                    VALUE %
-                </th>
-                {taxes2.tax.map((tax)=>(
-                    <tr>
-                        <td>{tax.id}</td>
-                        <td>{tax.name}</td>
-                        <td>{tax.value}</td>
-                        <td><EditTax/></td>
-                        <td><Button color="primary" size="lg">REMOVE</Button></td>
-                    </tr>
-                ))}
-            </table>
+            {taxes ? (
+                <table className={styles.products}>
+                    <thead>
+                        <tr>
+                            <th>
+                                ID
+                            </th>
+                            <th>
+                                DESCRIPTION
+                            </th>
+                            <th>
+                                VALUE %
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {taxes.map((tax)=>(
+                            <tr key={tax.id}>
+                                <td>{tax.id}</td>
+                                <td>{tax.description}</td>
+                                <td>{tax.value}</td>
+                                <td><EditTax tax={tax}/></td>
+                                <td><Button color="primary" size="lg" onClick={() => deleteTax(tax.id)}>REMOVE</Button></td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+              ) : (
+                <div>
+                  No Taxes 
+                </div>
+              )}  
         </AdminLayout>
     );
 };
-
-/*export async function getStaticProps() {
-    const res = await fetch('https://virtserver.swaggerhub.com/swexception4/OpenAPI/0.0.1/getProducts');
-
-    const products = await res.json();
-
-    return {
-        props: {
-            products: products,
-        }
-    };    
-}*/
 
 export default TaxManagement;

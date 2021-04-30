@@ -1,8 +1,5 @@
-import { APIClass } from 'aws-amplify';
-import { Products, ProductsData, ProductData, ProductToAdd } from '../types/product';
-import { sessionService } from './sessionService';
 
-type ProductPayload = { params: any };
+import { sessionService } from './sessionService';
 
 interface TaxObject {
     id: string;
@@ -10,17 +7,17 @@ interface TaxObject {
     description: string;
 }
 
-interface Response {
+interface TaxData {
   status: string;
   data: TaxObject[]
 }
 
-interface ResponseNormal {
+interface Response {
     status: string;
     message: string;
 }
 
-const getVATTaxes = async (payload?: ProductPayload): Promise<Response> => {
+const getVATTaxes = async (): Promise<TaxData> => {
   try {
     const requestOptions = {
       method: 'GET',
@@ -32,7 +29,7 @@ const getVATTaxes = async (payload?: ProductPayload): Promise<Response> => {
     const res = await fetch(`${process.env.AWS_ENDPOINT}/taxes`, requestOptions);
     const taxesReturned = await res.json();
 
-    const taxesData: Response = {
+    const taxesData: TaxData = {
       status: taxesReturned.status,
       data: taxesReturned.data
     };
@@ -44,15 +41,17 @@ const getVATTaxes = async (payload?: ProductPayload): Promise<Response> => {
   }
 };
 
-const createTax = async (value: number, description: string): Promise<ResponseNormal> => {
+const createTax = async (value: number, description: string): Promise<Response> => {
     const bodySend = {
         value, 
         description
     }
+    const token = sessionService.getCookie('token');
     try {
       const requestOptions = {
         method: 'POST',
         headers: { 
+          'Authorization': `${token}`,
           'Content-Type': 'application/json'
         },
         body: JSON.stringify(bodySend)
@@ -61,7 +60,7 @@ const createTax = async (value: number, description: string): Promise<ResponseNo
       const res = await fetch(`${process.env.AWS_ENDPOINT}/taxes`, requestOptions);
       const taxesReturned = await res.json();
   
-      const taxesData: ResponseNormal = {
+      const taxesData: Response = {
         status: taxesReturned.status,
         message: taxesReturned.message
       };
@@ -73,7 +72,7 @@ const createTax = async (value: number, description: string): Promise<ResponseNo
     }
 };
 
-const getSingleTax = async (id: string): Promise<Response> => {
+const getSingleTax = async (id: string): Promise<TaxData> => {
     try {
       const requestOptions = {
         method: 'GET',
@@ -85,7 +84,7 @@ const getSingleTax = async (id: string): Promise<Response> => {
       const res = await fetch(`${process.env.AWS_ENDPOINT}/taxes/${id}`, requestOptions);
       const taxesReturned = await res.json();
   
-      const taxesData: Response = {
+      const taxesData: TaxData = {
         status: taxesReturned.status,
         data: taxesReturned.data
       };
@@ -97,10 +96,11 @@ const getSingleTax = async (id: string): Promise<Response> => {
     }
 };
 
-const modifyTax = async (value: number, id: string): Promise<ResponseNormal> => {
+const modifyTax = async (id: string, value: number, description:string): Promise<Response> => {
     const bodySend = {
-        value, 
-        id
+        id,
+        value,
+        description,
     }
     const token = sessionService.getCookie('token');
     try {
@@ -116,7 +116,7 @@ const modifyTax = async (value: number, id: string): Promise<ResponseNormal> => 
       const res = await fetch(`${process.env.AWS_ENDPOINT}/taxes/${id}`, requestOptions);
       const taxesReturned = await res.json();
   
-      const taxesData: ResponseNormal = {
+      const taxesData: Response = {
         status: taxesReturned.status,
         message: taxesReturned.message
       };
@@ -128,7 +128,7 @@ const modifyTax = async (value: number, id: string): Promise<ResponseNormal> => 
     }
 };
 
-const deleteTax = async (id: string): Promise<ResponseNormal> => {
+const deleteTax = async (id: string): Promise<Response> => {
     const token = sessionService.getCookie('token');
     try {
       const requestOptions = {
@@ -142,7 +142,7 @@ const deleteTax = async (id: string): Promise<ResponseNormal> => {
       const res = await fetch(`${process.env.AWS_ENDPOINT}/taxes/${id}`, requestOptions);
       const taxesReturned = await res.json();
   
-      const taxesData: ResponseNormal = {
+      const taxesData: Response = {
         status: taxesReturned.status,
         message: taxesReturned.message
       };
@@ -154,7 +154,7 @@ const deleteTax = async (id: string): Promise<ResponseNormal> => {
     }
 };
 
-export const ProductService = {
+export const TaxesService = {
   getVATTaxes,
   createTax,
   getSingleTax,
