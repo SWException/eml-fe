@@ -3,8 +3,6 @@ import { ProductList } from 'components/products';
 import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
 import { useShop } from '../context/shop';
-import { Product } from 'types';
-import { useAuth } from 'context/auth';
 import styles from 'styles/Home.module.css'
 import { CustomerLayout } from 'components/layouts/CustomerLayout';
 

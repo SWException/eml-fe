@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-//import { useRouter } from 'next/router';
 import { AdminLayout } from 'components/layouts/AdminLayout';
 import styles from 'styles/ProductMagagement.module.css';
 import {Button} from 'reactstrap';
@@ -10,8 +9,6 @@ import { Category } from 'types';
 
 
 const CategoryManagement: React.FC = () => {
-    
-    //const router = useRouter();
 
     const [categories, setCategories] = useState<Category[]>();
 
