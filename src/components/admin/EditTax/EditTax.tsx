@@ -10,7 +10,7 @@ interface Props{
 const EditTax: React.FC<Props> = ({tax}) =>{
 
     const [newTaxDescription, setNewTaxDescription] = useState("");
-    const [newTaxValue, setNewTaxValue] = useState("");
+    const [newTaxValue, setNewTaxValue] = useState<number>(0);
 
     const editTax = async(id: string, value:number, description:string) =>
     {
@@ -54,7 +54,7 @@ const EditTax: React.FC<Props> = ({tax}) =>{
                     <br/>
                     <label style={{fontSize:"1.5em"}}>Value:</label>
                     <input type="number" className="form-control" placeholder="Insert value.."  onChange={(e)=>{valueChange(e)}} min="0" style={{fontSize:"1.5em"}}/>
-                    <Button size="lg" color="primary" style={{marginTop:"1em"}} onClick={() => editTax(tax.id, newTaxValue, setNewTaxDescription )}>Save</Button>
+                    <Button size="lg" color="primary" style={{marginTop:"1em"}} onClick={() => editTax(tax.id, newTaxValue, newTaxDescription )}>Save</Button>
                 </PopoverBody>
             </UncontrolledPopover>
         </div>

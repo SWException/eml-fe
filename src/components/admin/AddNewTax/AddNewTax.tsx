@@ -12,7 +12,7 @@ const AddNewTax: React.FC = () =>{
     })
 
     const [newTaxDescription, setNewTaxDescription] = useState("");
-    const [newTaxValue, setNewTaxValue] = useState("");
+    const [newTaxValue, setNewTaxValue] = useState<number>(0);
 
     const createTax = async() =>{
         try {
