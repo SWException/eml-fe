@@ -1,7 +1,7 @@
 export type Tax = {
-    id: number;
-    name: string;
+    id: string;
     value: number;
+    description: string;
 };
 
 export type Taxes = Tax[];

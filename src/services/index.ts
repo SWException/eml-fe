@@ -7,3 +7,4 @@ export * from './categoriesService';
 export * from './addressesService';
 export * from './sessionService';
 export * from './ordersService';
+export * from './taxesService';

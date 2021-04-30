@@ -6,3 +6,4 @@ export * from './checkout';
 export * from './addresses';
 export * from './order';
 export * from './customer';
+export * from './tax';

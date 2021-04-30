@@ -44,6 +44,7 @@ const CustomerManagment: React.FC = () => {
 
     return (
         <AdminLayout header>
+                <h1>Management Customers</h1>
             <div className={styles.div}>
             <input type="text" className={styles.input} placeholder="Search client by mail..." onChange={(e) => {handleChange(e)}}/>
             <Button type="submit" formAction="/products" style={{border: "2px solid #ccc", backgroundColor: "#ccc", borderRadius:"0"}}>
