@@ -80,6 +80,8 @@ const CheckoutForm: React.FC = () => {
         id: checkoutRet.id,
         status: checkoutRet.status
       });
+      console.log(clientSecret)
+      console.log(checkout.secret)
       return checkout.secret;
     }catch(e){
       console.log(e.message);
@@ -198,34 +200,52 @@ const CheckoutForm: React.FC = () => {
                 <div className="row">
                     <div className="col-md-6 mb-3">
                         <label>First name</label>
-                        <input type="text" className="form-control" onChange={()=>{}} id="firstName" placeholder="" value={billingAddress.recipientName} />
+                        <input type="text" className="form-control" onChange={(e)=>{setbillingAddress({
+                          ...billingAddress,
+                          recipientName: e.target.value
+                        })}} id="firstName" placeholder="" value={billingAddress.recipientName} />
                         <div className="invalid-feedback">{`${billingAddress.recipientName}`}</div>
                     </div>
                     <div className="col-md-6 mb-3">
                         <label>Last name</label>
-                        <input type="text" className="form-control" onChange={()=>{}} id="lastName" placeholder="" value={billingAddress.recipientSurname}/>
+                        <input type="text" className="form-control" onChange={(e)=>{setbillingAddress({
+                          ...billingAddress,
+                          recipientSurname: e.target.value
+                        })}} id="lastName" placeholder="" value={billingAddress.recipientSurname}/>
                         <div className="invalid-feedback">{`${billingAddress.recipientSurname}`}</div>
                     </div>
                 </div>
                 <div className="mb-3">
                     <label >Address</label>
-                    <input type="text" className="form-control" onChange={()=>{}} id="address" value={billingAddress.address} placeholder="1234 Main St"/>
+                    <input type="text" className="form-control" onChange={(e)=>{setbillingAddress({
+                          ...billingAddress,
+                          address: e.target.value
+                        })}} id="address" value={billingAddress.address} placeholder="1234 Main St"/>
                     <div className="invalid-feedback">{billingAddress.address}</div>
                 </div>
                 <div className="row">
                     <div className="col-md-5 mb-3">
                         <label >Country</label>
-                        <input type="text" className="form-control" onChange={()=>{}} id="country" value={billingAddress.city} placeholder="ex.Padova"/>
+                        <input type="text" className="form-control" onChange={(e)=>{setbillingAddress({
+                          ...billingAddress,
+                          city: e.target.value
+                        })}} id="country" value={billingAddress.city} placeholder="ex.Padova"/>
                         <div className="invalid-feedback">{billingAddress.city}</div>
                     </div>
                     <div className="col-md-4 mb-3">
                         <label >State</label>
-                        <input type="text" className="form-control" onChange={()=>{}} id="state" value={billingAddress.district} placeholder="ex.Italy"/>
+                        <input type="text" className="form-control" onChange={(e)=>{setbillingAddress({
+                          ...billingAddress,
+                          district: e.target.value
+                        })}} id="state" value={billingAddress.district} placeholder="ex.Italy"/>
                         <div className="invalid-feedback">{billingAddress.district}</div>
                     </div>
                     <div className="col-md-3 mb-3">
                         <label>Zip</label>
-                        <input type="text" className="form-control" onChange={()=>{}} id="zip" value={billingAddress.code} placeholder=""/>
+                        <input type="text" className="form-control" onChange={(e)=>{setbillingAddress({
+                          ...billingAddress,
+                          code: e.target.value
+                        })}} id="zip" value={billingAddress.code} placeholder=""/>
                         <div className="invalid-feedback">{billingAddress.code}</div>
                     </div>
                 </div>
@@ -235,7 +255,7 @@ const CheckoutForm: React.FC = () => {
                         <select className="custom-select d-block w-100" id="saveaddress">
                         {address.map((address)=>(                          
                             <option onClickCapture={()=>{setAddressToShow('billing', address.id)}} value={`${address.id}`}>
-                              {`${address.description}`}
+                              {`${address.address}`}
                               </option>
                         ))}
                     </select>
@@ -246,34 +266,53 @@ const CheckoutForm: React.FC = () => {
                 <div className="row">
                     <div className="col-md-6 mb-3">
                         <label>First name</label>
-                        <input type="text" className="form-control" id="firstName" placeholder="" value={shippingAddress.code} />
+                        <input type="text" className="form-control" id="firstName" onChange={(e)=>{setShippingAddress({
+                          ...shippingAddress,
+                          recipientName: e.target.value
+                        })}} placeholder="" value={shippingAddress.code} />
                         <div className="invalid-feedback"> Valid first name is required. </div>
                     </div>
                     <div className="col-md-6 mb-3">
                         <label >Last name</label>
-                        <input type="text" className="form-control" id="lastName" placeholder="" value={shippingAddress.code} />
+                        <input type="text" className="form-control" id="lastName" onChange={(e)=>{setShippingAddress({
+                          ...shippingAddress,
+                          recipientSurname: e.target.value
+                        })}} placeholder="" value={shippingAddress.code} />
                         <div className="invalid-feedback"> Valid last name is required. </div>
                     </div>
+
                 </div>
                 <div className="mb-3">
                     <label>Address</label>
-                    <input type="text" className="form-control" id="address" value={shippingAddress.code} placeholder="1234 Main St"/>
+                    <input type="text" className="form-control" onChange={(e)=>{setShippingAddress({
+                          ...shippingAddress,
+                          address: e.target.value
+                        })}} id="address" value={shippingAddress.code} placeholder="1234 Main St"/>
                     <div className="invalid-feedback"> Please enter your shipping address. </div>
                 </div>
                 <div className="row">
                     <div className="col-md-5 mb-3">
                         <label >Country</label>
-                        <input type="text" className="form-control" id="country" value={shippingAddress.code} placeholder="ex.Padova"/>
+                        <input type="text" className="form-control" onChange={(e)=>{setShippingAddress({
+                          ...shippingAddress,
+                          city: e.target.value
+                        })}} id="country" value={shippingAddress.code} placeholder="ex.Padova"/>
                         <div className="invalid-feedback"> Please select a valid country. </div>
                     </div>
                     <div className="col-md-4 mb-3">
                         <label >State</label>
-                        <input type="text" className="form-control" id="state" value={shippingAddress.code} placeholder="ex.Italy"/>
+                        <input type="text" className="form-control" onChange={(e)=>{setShippingAddress({
+                          ...shippingAddress,
+                          district: e.target.value
+                        })}} id="state" value={shippingAddress.code} placeholder="ex.Italy"/>
                         <div className="invalid-feedback"> Please provide a valid state. </div>
                     </div>
                     <div className="col-md-3 mb-3">
                         <label >Zip</label>
-                        <input type="text" className="form-control" id="zip" value={shippingAddress.code} placeholder=""/>
+                        <input type="text" className="form-control" onChange={(e)=>{setShippingAddress({
+                          ...shippingAddress,
+                          code: e.target.value
+                        })}} id="zip" value={shippingAddress.code} placeholder=""/>
                         <div className="invalid-feedback"> Zip code required. </div>
                     </div>
                 </div>
@@ -282,7 +321,7 @@ const CheckoutForm: React.FC = () => {
                         <label >Choose a saved address:</label>
                         <select className="custom-select d-block w-100" id="saveaddress">
                         {address.map((address)=>(
-                            <option onClickCapture={()=>{setAddressToShow('shipping', address.id)}} value={`${address.id}`}>{`${address.description}`}</option>
+                            <option onClickCapture={()=>{setAddressToShow('shipping', address.id)}} value={`${address.id}`}>{`${address.address}`}</option>
                         ))}
                     </select>
                         <div className="invalid-feedback"> Please select a valid address. </div>
