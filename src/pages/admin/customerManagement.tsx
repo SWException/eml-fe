@@ -16,9 +16,9 @@ const CustomerManagment: React.FC = () => {
         getAllCustomer();
     }, [])
 
-    const getSearchedCustomer = async(mail: string) => {
+    const getCustomersByMail = async(mail: string) => {
         try {
-            const { status, data } = await CustomerService.fetchCustomerByMail(mail);
+            const { status, data } = await CustomerService.fetchCustomersByMail(mail);
             setCustomers(data);
             console.log(data);
         } catch(err) {
@@ -41,7 +41,7 @@ const CustomerManagment: React.FC = () => {
         if(value == ''){
             getAllCustomer();
         }else{
-            getSearchedCustomer(value);  
+            getCustomersByMail(value);  
         }   
     }
 
@@ -81,7 +81,7 @@ const CustomerManagment: React.FC = () => {
             </table>
             ):(
             <div>
-                <p>No user in the system</p>
+                No user in the system
             </div>
             )}
         </AdminLayout>
