@@ -147,7 +147,7 @@ const Profile: React.FC = ()=>{
                     <p/>
                     <h2>Or delete an existing one</h2>
                     <select style={{width:"20rem"}} onChange={(e)=>{addressChange(e)}}>
-                        {address.map((address)=>(
+                        {address?.map((address)=>(
                             <option value={`${address.id}`}>{`${address.description}`}</option>
                         ))}
                     </select>

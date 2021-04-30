@@ -1,22 +1,22 @@
 import React, { useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
+//import { useRouter } from 'next/router';
 import { AdminLayout } from 'components/layouts/AdminLayout';
 import styles from 'styles/ProductMagagement.module.css';
 import {Button} from 'reactstrap';
 import AddNewCategory from 'components/admin/AddNewCategory';
 import EditCategory from 'components/admin/EditCategory';
 import { CategoriesService } from 'services';
-import { Categories, Category } from 'types';
+import { Category } from 'types';
 
 
 const CategoryManagement: React.FC = () => {
     
-    const router = useRouter();
+    //const router = useRouter();
 
-    const [categories, setCategories] = useState<Category[]>()
+    const [categories, setCategories] = useState<Category[]>();
 
     useEffect(()=>{
-      getAllCategories()
+      getAllCategories();
     }, [])
 
     const getAllCategories = async() => {
@@ -24,7 +24,7 @@ const CategoryManagement: React.FC = () => {
         const { categories } = await CategoriesService.fetchAllCategories();
         setCategories(categories);
       } catch(err) {
-        console.log(err)
+        console.log(err);
       }
     }
 
@@ -32,6 +32,7 @@ const CategoryManagement: React.FC = () => {
     {
       try {
         const { status, message } = await CategoriesService.deleteCategory(id);
+        //STATUS HANDLING
       } catch(err) {
         console.log(err)
       }

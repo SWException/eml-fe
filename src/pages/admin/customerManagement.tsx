@@ -1,79 +1,91 @@
-import React from 'react'
-import { useRouter } from 'next/router';
+import React, { useEffect, useState } from 'react'
+//import { useRouter } from 'next/router';
 import { AdminLayout } from 'components/layouts/AdminLayout';
 import styles from 'styles/ProductMagagement.module.css';
 import {Button} from 'reactstrap';
+import { CustomerService } from 'services';
+import { Customer } from 'types';
 
-interface Props{
-    customers: any,  //DA MODIFICARE NON APPENA E' PRONTO
-}
-
-const OrderManagement: React.FC<Props> = ({customers}) => {
+const CustomerManagment: React.FC = () => {
     
-    const router = useRouter();
+    //const router = useRouter();
 
-    let customers2 = {
-        "customers": [
-          {
-            "id": 1,
-            "name": "Auricchio",
-            "surname": "Lampredotto",
-            "email": "test@somemail.com",
-          },
-          {
-            "id": 2,
-            "name": "Matteo",
-            "surname": "Belmonte",
-            "email": "test2@somemail.com",
-          }
-        ]
-      };
+    const [customers, setCustomers] = useState<Customer[]>();
 
-    const addNewProduct = () => {
-        router.push('/admin/addNewProduct');
+    useEffect(()=>{
+        getAllCustomer();
+    }, [])
+
+    const getSearchedCustomer = async(mail: string) => {
+        try {
+            const { status, data } = await CustomerService.fetchCustomerByMail(mail);
+            setCustomers(data);
+            console.log(data);
+        } catch(err) {
+            console.log(err);
+        }
+    }
+
+    const getAllCustomer = async() => {
+        try {
+            const { status, data } = await CustomerService.fetchAllCustomers();
+            setCustomers(data);
+            console.log(data);
+        } catch(err) {
+            console.log(err);
+        }
+    }
+
+    const handleChange = (e:React.FormEvent<HTMLInputElement>) :void => {
+        const value = (e.target as HTMLTextAreaElement).value;
+        if(value == ''){
+            getAllCustomer();
+        }else{
+            getSearchedCustomer(value);  
+        }   
     }
 
     return (
         <AdminLayout header>
-             <div className={styles.div}>
-            <input className={styles.input} type="text" placeholder="Search client by name..."/>
+            <div className={styles.div}>
+            <input type="text" className={styles.input} placeholder="Search client by mail..." onChange={(e) => {handleChange(e)}}/>
             <Button type="submit" formAction="/products" style={{border: "2px solid #ccc", backgroundColor: "#ccc", borderRadius:"0"}}>
                 <img src="/iconsearch.png" style={{width:"2.3rem", height:"2.3rem"}}/>
             </Button>
             </div>
+            
+            {customers ? (
             <table className={styles.products}>
-                <th>
-                    NAME
-                </th>
-                <th>
-                    SURNAME
-                </th>
-                <th>
-                    EMAIL
-                </th>
-                {customers2.customers.map((customer)=>(
+                <thead>
                     <tr>
+                        <th>
+                            NAME
+                        </th>
+                        <th>
+                            SURNAME
+                        </th>
+                        <th>
+                            EMAIL
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {customers?.map((customer)=> (
+                    <tr key={customer.id}>
                         <td>{customer.name}</td>
                         <td>{customer.surname}</td>
-                        <td>{customer.email}</td>
-                        <td><Button color="primary" size="lg">DELETE</Button></td>
+                        <td><a href={"mailto:" + customer.email + "?subject=Emporio%20Lambda&body=This%20is%20an%20example"}>{customer.email}</a></td>
                     </tr>
-                ))}
+                    ))}
+                </tbody>
             </table>
+            ):(
+            <div>
+                <p>No user in the system</p>
+            </div>
+            )}
         </AdminLayout>
     );
 };
 
-/*export async function getStaticProps() {
-    const res = await fetch('https://virtserver.swaggerhub.com/swexception4/OpenAPI/0.0.1/getProducts');
-
-    const products = await res.json();
-
-    return {
-        props: {
-            products: products,
-        }
-    };    
-}*/
-
-export default OrderManagement;
+export default CustomerManagment;

@@ -1,4 +1,4 @@
-import { Categories, Category } from 'types';
+import { Category } from 'types';
 import { sessionService } from './sessionService';
 
 
