@@ -19,6 +19,16 @@ const CategoryManagement: React.FC = () => {
       getAllCategories();
     }, [])
 
+    const getCategoriesByName = async(name: string) => {
+      console.log(name);
+      try {
+        const { categories } = await CategoriesService.fetchCategoriesByName(name);
+        setCategories(categories);
+      } catch(err) {
+        console.log(err);
+      }
+    }
+
     const getAllCategories = async() => {
       try {
         const { categories } = await CategoriesService.fetchAllCategories();
@@ -38,13 +48,22 @@ const CategoryManagement: React.FC = () => {
       }
     }
 
+    const handleChange = (e:React.FormEvent<HTMLInputElement>) :void => {
+      const value = (e.target as HTMLTextAreaElement).value;
+      if(value == ''){
+          getAllCategories();
+      }else{
+          getCategoriesByName(value);  
+      }   
+  }
+
     return (
         <AdminLayout header>
             <div className={styles.div}>
               <AddNewCategory/>
             </div>
             <div className={styles.div}>
-              <input className={styles.input} type="text" placeholder="Search category by name..."/>
+              <input className={styles.input} type="text" placeholder="Search category by name..." onChange={(e) => {handleChange(e)}}/>
               <Button type="submit" formAction="/products" style={{border: "2px solid #ccc", backgroundColor: "#ccc", borderRadius:"0"}}>
                   <img src="/iconsearch.png" style={{width:"2.3rem", height:"2.3rem"}}/>
               </Button>

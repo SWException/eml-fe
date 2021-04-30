@@ -30,7 +30,7 @@ const fetchAllCustomers = async (): Promise<CustomersData> => {
   }
 };
 
-const fetchCustomerByMail = async (mail: string): Promise<CustomersData> => {
+const fetchCustomersByMail = async (mail: string): Promise<CustomersData> => {
   const token = sessionService.getCookie('token');
   try {
     const requestOptions = {
@@ -50,5 +50,5 @@ const fetchCustomerByMail = async (mail: string): Promise<CustomersData> => {
 
 export const CustomerService = {
   fetchAllCustomers,
-  fetchCustomerByMail,
+  fetchCustomersByMail,
 };

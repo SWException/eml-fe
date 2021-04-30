@@ -1,4 +1,4 @@
-import { Category } from 'types';
+import { Categories, Category } from 'types';
 import { sessionService } from './sessionService';
 
 
@@ -100,6 +100,28 @@ const fetchCategory = async (id: string): Promise<CategoryData> => {
   }
 };
 
+const fetchCategoriesByName = async (name: string): Promise<CategoriesData> => {
+  try {
+    const requestOptions = {
+      method: 'GET',
+      headers: { 
+        'Content-Type': 'application/json',
+       }
+    };
+    const res = await fetch(`${process.env.AWS_ENDPOINT}/categories?search=${name}`, requestOptions)
+    const categoriesReturned = await res.json();
+
+    const categoriesData: CategoriesData = {
+      categories: categoriesReturned.data
+    };
+
+    return categoriesData;
+    
+  } catch (error) {
+    throw new Error('Error on fetching a single Category')
+  }
+};
+
 const updateCategory = async (category: Category): Promise<Response> => {
   const token = sessionService.getCookie('token')
   try {
@@ -155,6 +177,7 @@ const deleteCategory = async (id: string): Promise<Response> => {
 export const CategoriesService = {
   fetchAllCategories,
   fetchCategory,
+  fetchCategoriesByName,
   updateCategory,
   deleteCategory,
   createCategories
