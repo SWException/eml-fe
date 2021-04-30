@@ -1,5 +1,5 @@
 import { APIClass } from 'aws-amplify';
-import { Products, ProductsData, ProductData, ProductToAdd } from '../types/product';
+import { Product, ProductsData, ProductData } from '../types/product';
 import { sessionService } from './sessionService';
 
 type ProductPayload = { params: any };
@@ -36,7 +36,7 @@ const fetchProducts = async (payload?: ProductPayload): Promise<ProductsData> =>
   }
 };
 
-const addProduct = async (product: ProductToAdd): Promise<Response> => {
+const addProduct = async (product: Product): Promise<Response> => {
   const token = sessionService.getCookie('token')
   try {
     const requestOptions = {

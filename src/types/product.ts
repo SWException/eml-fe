@@ -1,14 +1,14 @@
 export type Product = {
-    id: string;
+    id?: string;
     name: string;
     description: string;
-    primaryPhoto: string;
+    primaryPhoto?: string;
     secondaryPhotos?: string[];
-    categoryId: string;
+    categoryId?: string;
     category: string;
-    price: number;
+    price?: number;
     netPrice: number;
-    taxId: string;
+    taxId?: string;
     tax: number;
     show: boolean;
     showHome: boolean;
@@ -34,13 +34,6 @@ export interface ProductCart {
     quantity: number;
 }
 
-export interface ProductToAdd {
-    name: string;
-    description: string;
-    price: number;
-    tax: number;
-    stock: number;
-}
 
 export interface ProductAdmin{
     productId: string;

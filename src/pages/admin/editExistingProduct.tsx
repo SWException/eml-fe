@@ -5,62 +5,40 @@ import {Button} from 'reactstrap'
 import { Category, Product } from 'types';
 import { CategoriesService, ProductService } from 'services';
 import { GetServerSideProps } from 'next';
-import { TaxService } from 'services/taxesService';
+import { TaxesService } from 'services/taxesService';
+import { Tax } from 'types/tax';
 
 interface Props{
     product: Product,
     categories: Category[],
+    taxes: Tax[],
 }
 
 const EditExistingProduct: React.FC<Props> = ({product, categories, taxes}) => { 
 
   
     const renderShow = () :void => {
-        if(product.show == true){
-            return (
-                <div className={styles.div}>
-                    <label>Show:</label>
-                    <input className={styles.inputcheck} type="radio" id="visible" name="visibilty" value="visible" checked/>
-                    <label>Visible</label>
-                    <input className={styles.inputcheck} type="radio" id="notVisible" name="visibilty" value="notVisible"/>
-                    <label>Not visible</label>
-                </div>
-            );
-        }else {
-            return (
-                <div className={styles.div}>
-                    <label>Show:</label>
-                    <input className={styles.inputcheck} type="radio" id="visible" name="visibilty" value="visible"/>
-                    <label>Visible</label>
-                    <input className={styles.inputcheck} type="radio" id="notVisible" name="visibilty" value="notVisible" checked/>
-                    <label>Not visible</label>
-                </div>
-            );
-        }
+        return (
+            <div className={styles.div}>
+                <label>Show:</label>
+                <input className={styles.inputcheck} type="radio" id="visible" name="visibilty" value="visible" checked = {product.show == true}/>
+                <label>Visible</label>
+                <input className={styles.inputcheck} type="radio" id="notVisible" name="visibilty" value="notVisible" checked = {product.show == false}/>
+                <label>Not visible</label>
+            </div>
+        );
     }
 
     const renderShowHome = () :void => {
-        if(product.showHome == true){
-            return (
-                <div className={styles.div}> 
-                    <label>Show in Best Product:</label>
-                    <input className={styles.inputcheck} type="radio" id="BPv" name="BP" value="v" checked/>
-                    <label>Visible</label>
-                    <input className={styles.inputcheck} type="radio" id="BPnv" name="BP" value="nv" />
-                    <label>Not visible</label>
-                </div> 
-            );
-        }else {
-            return (
-                <div className={styles.div}> 
-                    <label>Show in Best Product:</label>
-                    <input className={styles.inputcheck} type="radio" id="BPv" name="BP" value="v" />
-                    <label>Visible</label>
-                    <input className={styles.inputcheck} type="radio" id="BPnv" name="BP" value="nv" checked/>
-                    <label>Not visible</label>
-                </div> 
-            );
-        }
+        return (
+            <div className={styles.div}> 
+                <label>Show in Best Product:</label>
+                <input className={styles.inputcheck} type="radio" id="BPv" name="BP" value="v" checked = {product.showHome == true}/>
+                <label>Visible</label>
+                <input className={styles.inputcheck} type="radio" id="BPnv" name="BP" value="nv" checked = {product.showHome == false}/>
+                <label>Not visible</label>
+            </div> 
+        );
     }
       
     const renderCategoryCombobox = () :void => {
@@ -79,10 +57,10 @@ const EditExistingProduct: React.FC<Props> = ({product, categories, taxes}) => {
     const renderTaxesCombobox = () :void => {
         return (
             <div className={styles.div}> 
-                <label>Category:</label>
+                <label>VAT</label>
                 <select className={styles.select}>
                     {taxes?.map((tax)=>(
-                        <option value={tax.id} selected = {tax.id == product.categoryId}>{tax.value} - {tax.description}</option>
+                        <option value={tax.id} selected = {tax.id == product.taxId}>{tax.value} - {tax.description}</option>
                     ))}
                 </select>
             </div> 
@@ -115,14 +93,7 @@ const EditExistingProduct: React.FC<Props> = ({product, categories, taxes}) => {
                 <label>Price</label>
                 <input className={styles.input} type="number" min="1" value={product.netPrice}/>
                 </div> 
-                <div className={styles.div}> 
-                <label>VAT</label>
-                <select className={styles.select}>
-                    <option>10%</option>
-                    <option>22%</option>
-                    <option>24%</option>
-                </select>
-                </div> 
+                {renderTaxesCombobox()}
                 {renderShow()}
                 <div className={styles.div}> 
                 <label>Warehouse stock:</label>
@@ -148,9 +119,10 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     try {
         const { product } = await ProductService.fetchProduct(id);
         const { categories } = await CategoriesService.fetchAllCategories();
-        const { taxes } = await TaxService.getVATTaxes();
+        const { data } = await TaxesService.getVATTaxes();
+        const taxes = data; // DA VEDERE PORCAMANADOONA
         return {
-            props: {product, categories},
+            props: {product, categories, taxes},
         }
     } catch(err) {
         console.log(err);
