@@ -7,70 +7,69 @@ interface CategoriesData {
 }
 
 interface Data {
-  id: string;
-  name: string;
+	id: string;
+	name: string;
 }
 
 interface CategoryData {
-  status: string;
-  data: Data
+	status: string;
+	data: Data
 }
 
 interface Response {
-  status: string;
-  message: string;
+	status: string;
+	message: string;
 }
 
 
 const fetchAllCategories = async (): Promise<CategoriesData> => {
-  //Da implementare meglio richiesta token jwt
   try {
     const requestOptions = {
-      method: 'GET',
-      headers: { 
-        'Content-Type': 'application/json',
-       }
+		method: 'GET',
+		headers: { 
+			'Content-Type': 'application/json',
+		}
     };
     const res = await fetch(`${process.env.AWS_ENDPOINT}/categories`, requestOptions)
     const categoriesReturned = await res.json();
 
     const categoriesData: CategoriesData = {
-      categories: categoriesReturned.data
+		categories: categoriesReturned.data
     };
 
     return categoriesData;
     
-  } catch (error) {
-    console.log(error);
-  }
+	} catch (error) {
+		console.log(error);
+	}
 };
 
 const createCategories = async (name: string): Promise<Response> => {
-  console.log(JSON.stringify({name}));
-  const token = sessionService.getCookie('token');
-  try {
+	console.log(JSON.stringify({name}));
+	const token = sessionService.getCookie('token');
+	try {
     const requestOptions = {
-      method: 'POST',
-      headers: { 
-        'Content-Type': 'application/json',
-        'Authorization': `${token}`
-       },
-      body: JSON.stringify({name}),
+		method: 'POST',
+		headers: { 
+			'Content-Type': 'application/json',
+			'Authorization': `${token}`
+		},
+		body: JSON.stringify({name}),
     };
     //console.log(requestOptions);
     const res = await fetch(`${process.env.AWS_ENDPOINT}/categories`, requestOptions)
     const categoriesReturned = await res.json();
 
     const categoriesData: Response = {
-      status: categoriesReturned.status,
-      message: categoriesReturned.message
+		status: categoriesReturned.status,
+		message: categoriesReturned.message
     };
 
     return categoriesData;
     
-  } catch (error) {
-    console.log(error);
-  }
+	} catch (error) {
+		console.log(error);
+	}
 };
 
 const fetchCategory = async (id: string): Promise<CategoryData> => {

@@ -6,12 +6,6 @@ interface CustomersData {
   data: Customer[];
 }
 
-/*interface Response {
-  status: string;
-  message: string;
-}*/
-
-
 const fetchAllCustomers = async (): Promise<CustomersData> => {
   const token = sessionService.getCookie('token');
   try {

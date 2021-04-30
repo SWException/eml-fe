@@ -4,8 +4,11 @@ export type Product = {
     description: string;
     primaryPhoto: string;
     secondaryPhotos?: string[];
-    categories: string[];
+    categoryId: string;
+    category: string;
     price: number;
+    netPrice: number;
+    taxId: string;
     tax: number;
     show: boolean;
     showHome: boolean;
