@@ -59,6 +59,7 @@ const CategoryManagement: React.FC = () => {
 
     return (
         <AdminLayout header>
+            <h1>Management Categories</h1> 
             <div className={styles.div}>
               <AddNewCategory/>
             </div>

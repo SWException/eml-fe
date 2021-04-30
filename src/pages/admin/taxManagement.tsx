@@ -39,6 +39,7 @@ const TaxManagement: React.FC = () => {
 
     return (
         <AdminLayout header>
+            <h1>Management Taxes</h1>
             <div className={styles.div}>
             <AddNewTax/>
             </div>
