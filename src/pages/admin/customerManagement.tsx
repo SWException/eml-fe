@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-//import { useRouter } from 'next/router';
 import { AdminLayout } from 'components/layouts/AdminLayout';
 import styles from 'styles/ProductMagagement.module.css';
 import {Button} from 'reactstrap';
@@ -8,8 +7,6 @@ import { Customer } from 'types';
 
 const CustomerManagment: React.FC = () => {
     
-    //const router = useRouter();
-
     const [customers, setCustomers] = useState<Customer[]>();
 
     useEffect(()=>{
@@ -18,7 +15,7 @@ const CustomerManagment: React.FC = () => {
 
     const getCustomersByMail = async(mail: string) => {
         try {
-            const { status, data } = await CustomerService.fetchCustomersByMail(mail);
+            const { status, data} = await CustomerService.fetchCustomersByMail(mail);
             setCustomers(data);
             console.log(data);
         } catch(err) {

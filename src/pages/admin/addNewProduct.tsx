@@ -3,12 +3,7 @@ import React from 'react';
 import styles from 'styles/AddNewProduct.module.css'
 import {Button} from 'reactstrap'
 
-
-interface Props{
-    product: any; //DA MODIFICARE NON APPENA E' PRONTO
-}
-
-const AddNewProduct: React.FC<Props> = ({product}) => {
+const AddNewProduct: React.FC = () => {
 
     return (
         <AdminLayout header>

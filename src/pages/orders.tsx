@@ -28,14 +28,7 @@ const OrdersList: React.FC<Props> = ({ ord }) => { //IN VERITA' E' :React.FC<Pro
         console.log("Start reloadOrders");
 
         const { orders } = await OrdersService.fetchOrders();
-        setOrder(orders);/*
-        setOrderShow({
-            id:orders.orderid,
-            orderStatus: string;
-            cart: Cart;
-            billingaddress: Address;
-            shippingAddress: Address;
-        });*/
+        setOrder(orders);
         console.log('Done', orders);
 
     }

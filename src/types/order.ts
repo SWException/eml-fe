@@ -10,7 +10,7 @@ export type Order = {
     shippingAddress:Address;
 };
 export interface OrderCart {
-    id: number;
+    id: string;
     products: OrderProducts;
     tax: number;
     total: number;
@@ -22,7 +22,7 @@ export interface OrderProduct{
     description: string;
     primaryPhoto: string;
     secondaryPhotos?: string[];
-    categories: string[];
+    category: string;
     price: number;
     tax: number;
     show: boolean;
