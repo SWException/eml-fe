@@ -1,8 +1,8 @@
 import { AdminLayout } from 'components/layouts/AdminLayout';
-import React, { useEffect, useState, ChangeEvent } from 'react'
+import React, { useState, ChangeEvent } from 'react'
 import styles from 'styles/AddNewProduct.module.css'
 import { Button } from 'reactstrap'
-import { Category, Product, InsertProduct, Tax, EditProduct } from 'types';
+import { Category, Product, Tax, EditProduct } from 'types';
 import { CategoriesService, ProductService } from 'services';
 import { GetServerSideProps } from 'next';
 import { TaxesService } from 'services/taxesService';
@@ -17,8 +17,8 @@ const EditExistingProduct: React.FC<Props> = ({ product, categories, taxes }) =>
 
     const [productName, setProductName] = useState(product.name);
     const [productDescription, setProductDescription] = useState(product.description);
-    const [productPrimaryPhoto, setProductPrimaryPhoto] = useState(product.primaryPhoto);
-    const [productSecondaryPhotos, setProductSecondaryPhotos] = useState([]);
+    const [productPrimaryPhoto, setProductPrimaryPhoto] = useState<any>();
+    const [productSecondaryPhotos, setProductSecondaryPhotos] = useState<any[]>([]);
     const [productCategoryId, setProductCategoryId] = useState(product.categoryId);
     const [productNetPrice, setProductNetPrice] = useState(product.netPrice);
     const [productTaxId, setProductTaxId] = useState(product.taxId);
@@ -51,10 +51,10 @@ const EditExistingProduct: React.FC<Props> = ({ product, categories, taxes }) =>
     const getPhotos = async (primaryPhoto: Blob, secondaryPhotos: Blob[]): Promise<{ productPrimaryPhotoBase64: string, productSecondaryPhotosBase64: string[] }> => {
         let productPrimaryPhotoBase64;
         let productSecondaryPhotosBase64 = [];
-        if (primaryPhoto != product.primaryPhoto) {
+        if (primaryPhoto) {
             productPrimaryPhotoBase64 = await onFileUpload(primaryPhoto);
         }
-        if (secondaryPhotos != product.secondaryPhotos) {
+        if (secondaryPhotos) {
             for (var i = 0; i < productSecondaryPhotos.length; i++) {
                 productSecondaryPhotosBase64.push(await onFileUpload(secondaryPhotos[i]));
             }
@@ -81,9 +81,9 @@ const EditExistingProduct: React.FC<Props> = ({ product, categories, taxes }) =>
     const renderShow = (): any => (
         <div className={styles.div}>
             <label>Show:</label>
-            <input className={styles.inputcheck} type="radio" id="visible" name="visibilty" value="visible" checked={productShow == true} onChange={(e) => showHandler(true)} />
+            <input className={styles.inputcheck} type="radio" id="visible" name="visibility" value="visible" checked={productShow == true} onChange={(e) => showHandler(true)} />
             <label>Visible</label>
-            <input className={styles.inputcheck} type="radio" id="notVisible" name="visibilty" value="notVisible" checked={productShow == false} onChange={(e) => showHandler(false)} />
+            <input className={styles.inputcheck} type="radio" id="notVisible" name="visibility" value="notVisible" checked={productShow == false} onChange={(e) => showHandler(false)} />
             <label>Not visible</label>
         </div>
     )
