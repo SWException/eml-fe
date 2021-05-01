@@ -17,7 +17,8 @@ export type Product = {
 
 export type Products = Product[];
 
-export type InsertProduct = Omit<Product, 'tax' | 'id' | 'categoryId' | 'price' | 'taxId'> & { tax: string }
+export type InsertProduct = Omit<Product, 'tax' | 'id' | 'categoryId' | 'price' | 'taxId'> & { tax: string };
+export type EditProduct = InsertProduct;
 
 export type ProductsData = {
     products: Products;
@@ -28,7 +29,7 @@ export type ProductData = {
     product: Product;
 }
 
-export type ProductCart  = {
+export type ProductCart = {
     productId: string;
     name: string;
     primaryPhoto: string;

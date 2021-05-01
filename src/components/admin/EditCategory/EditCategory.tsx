@@ -8,7 +8,7 @@ interface Props {
     category: Category,
 }
 
-const EditCategory: React.FC<Props> = ({ category }) => {
+const EditExistingCategory: React.FC<Props> = ({ category }) => {
 
     const [newCategoryName, setNewCategory] = useState("");
 
@@ -55,4 +55,4 @@ const EditCategory: React.FC<Props> = ({ category }) => {
 
 }
 
-export default EditCategory;
+export default EditExistingCategory;

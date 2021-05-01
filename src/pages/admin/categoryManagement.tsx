@@ -2,12 +2,12 @@ import React, { ChangeEvent, useEffect, useState } from 'react';
 import { AdminLayout } from 'components/layouts/AdminLayout';
 import styles from 'styles/ProductManagement.module.css';
 import { Button } from 'reactstrap';
-import { AddNewCategory, EditCategory } from 'components/admin/';
+import { AddNewCategory, EditExistingCategory } from 'components/admin/';
 import { CategoriesService } from 'services';
-import { Category } from 'types';
+import { Categories } from 'types';
 
 const CategoryManagement: React.FC = () => {
-    const [categories, setCategories] = useState<Category[]>();
+    const [categories, setCategories] = useState<Categories>();
 
     useEffect(() => {
         getAllCategories();
@@ -68,7 +68,7 @@ const CategoryManagement: React.FC = () => {
                         {categories.map((category) => (
                             <tr key={category.id}>
                                 <td>{category.name}</td>
-                                <td><EditCategory category={category} /></td>
+                                <td><EditExistingCategory category={category} /></td>
                                 <td><Button color="primary" size="lg" onClick={() => deleteCategory(category.id)}>REMOVE</Button></td>
                             </tr>
                         ))}

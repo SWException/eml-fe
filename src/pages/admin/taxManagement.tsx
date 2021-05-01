@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, ChangeEvent } from 'react';
 import { useRouter } from 'next/router';
 import styles from 'styles/ProductManagement.module.css';
 import { Button } from 'reactstrap';
 import { AdminLayout } from 'components/layouts/AdminLayout';
-import { EditTax, AddNewTax } from 'components/admin';
+import { AddNewTax, EditExistingTax } from 'components/admin';
 import { Taxes } from 'types';
 import { TaxesService } from 'services';
 
@@ -17,21 +17,42 @@ const TaxManagement: React.FC = () => {
         getAllTaxes()
     }, [])
 
+
     const getAllTaxes = async () => {
         try {
-            const { data } = await TaxesService.getVATTaxes();
-            setTaxes(data);
+            const taxes: Taxes = await TaxesService.fetchTaxes();
+            setTaxes(taxes);
         } catch (err) {
+            //HANDLING ERROR
             console.log(err)
+        }
+    }
+
+    const getTaxesByDescription = async (description: string) => {
+        try {
+            const taxes: Taxes = await TaxesService.fetchTaxesByDescription(description);
+            setTaxes(taxes);
+        } catch (err) {
+            //HANDLING ERROR
+            console.log(err);
         }
     }
 
     const deleteTax = async (id: string) => {
         try {
-            console.log(id)
-            const { status, message } = await TaxesService.deleteTax(id);
+            const result: boolean = await TaxesService.deleteTax(id);
+            console.log(result);
         } catch (err) {
-            console.log(err)
+            //HANDLING ERROR
+        }
+    }
+
+    const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
+        const value = e.target.value;
+        if (value == '') {
+            getAllTaxes();
+        } else {
+            getTaxesByDescription(value);
         }
     }
 
@@ -42,7 +63,7 @@ const TaxManagement: React.FC = () => {
                 <AddNewTax />
             </div>
             <div className={styles.div}>
-                <input className={styles.input} type="text" placeholder="Search tax by name..." />
+                <input className={styles.input} type="text" placeholder="Search tax by name..." onChange={(e) => { handleChange(e) }} />
                 <Button type="submit" formAction="/products" style={{ border: "2px solid #ccc", backgroundColor: "#ccc", borderRadius: "0" }}>
                     <img src="/iconsearch.png" style={{ width: "2.3rem", height: "2.3rem" }} />
                 </Button>
@@ -68,7 +89,7 @@ const TaxManagement: React.FC = () => {
                                 <td>{tax.id}</td>
                                 <td>{tax.description}</td>
                                 <td>{tax.value}</td>
-                                <td><EditTax tax={tax} /></td>
+                                <td><EditExistingTax tax={tax} /></td>
                                 <td><Button color="primary" size="lg" onClick={() => deleteTax(tax.id)}>REMOVE</Button></td>
                             </tr>
                         ))}

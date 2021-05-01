@@ -1,37 +1,25 @@
 import { Button, PopoverHeader, PopoverBody, UncontrolledPopover } from 'reactstrap';
 import React, { ChangeEvent, useState } from 'react';
-import { Tax } from 'types';
+import { EditTax, Tax } from 'types';
 import { TaxesService } from 'services';
 
 interface Props {
     tax: Tax,
 }
 
-const EditTax: React.FC<Props> = ({ tax }) => {
+const EditExistingTax: React.FC<Props> = ({ tax }) => {
 
-    const [newTaxDescription, setNewTaxDescription] = useState("");
-    const [newTaxValue, setNewTaxValue] = useState<number>(0);
+    const [newTaxDescription, setNewTaxDescription] = useState(tax.description);
+    const [newTaxValue, setNewTaxValue] = useState(tax.value);
 
-    const editTax = async (id: string, value: number, description: string) => {
+    const editTax = async () => {
         try {
-            let tax: Tax = { id, value, description };
-            console.log(tax);
-            const { status, message } = await TaxesService.modifyTax(tax.id, newTaxValue, newTaxDescription);
-            console.log(status, message);
-            if (status == "success") {
-                //AGGIUNGERE ESITO POSITIVO
-                /*setInfo({
-                    ...info,
-                    messageShow: "Tax added"
-                })*/
-            } else {
-                /*setInfo({
-                    ...info,
-                    error: "Error on loading the tax! Try again.."
-                })*/
-            }
+            const editTax: EditTax = { value: newTaxValue, description: newTaxDescription };
+            const result: boolean = await TaxesService.modifyTax(tax.id, editTax);
+            console.log(result);
         } catch (err) {
-            console.log("Errore", err)
+            console.log(err);
+            //HANDLING ERRORS
         }
     }
 
@@ -39,7 +27,7 @@ const EditTax: React.FC<Props> = ({ tax }) => {
         setNewTaxDescription(e.target.value);
     }
     const valueChange = (e: ChangeEvent<HTMLInputElement>): void => {
-        setNewTaxValue(parseFloat(e.target.value));
+        setNewTaxValue(+e.target.value);
     }
 
     return (
@@ -49,15 +37,15 @@ const EditTax: React.FC<Props> = ({ tax }) => {
                 <PopoverHeader style={{ fontSize: "1.5em" }}>Edit Tax</PopoverHeader>
                 <PopoverBody>
                     <label style={{ fontSize: "1.5em" }}>Description:</label>
-                    <input type="text" className="form-control" placeholder="Insert name.." onChange={(e) => { descriptionChange(e) }} style={{ fontSize: "1.5em" }} />
+                    <input type="text" className="form-control" placeholder="Insert name.." value={newTaxDescription} onChange={(e) => { descriptionChange(e) }} style={{ fontSize: "1.5em" }} />
                     <br />
                     <label style={{ fontSize: "1.5em" }}>Value:</label>
-                    <input type="number" className="form-control" placeholder="Insert value.." onChange={(e) => { valueChange(e) }} min="0" style={{ fontSize: "1.5em" }} />
-                    <Button size="lg" color="primary" style={{ marginTop: "1em" }} onClick={() => editTax(tax.id, newTaxValue, newTaxDescription)}>Save</Button>
+                    <input type="number" className="form-control" placeholder="Insert value.." value={newTaxValue} onChange={(e) => { valueChange(e) }} min="0" style={{ fontSize: "1.5em" }} />
+                    <Button size="lg" color="primary" style={{ marginTop: "1em" }} onClick={() => editTax()}>Save</Button>
                 </PopoverBody>
             </UncontrolledPopover>
         </div>
     )
 }
 
-export default EditTax;
+export default EditExistingTax;

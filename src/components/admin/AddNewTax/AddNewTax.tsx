@@ -2,6 +2,7 @@ import { Button, PopoverHeader, PopoverBody, UncontrolledPopover } from 'reactst
 import React, { ChangeEvent } from 'react';
 import { TaxesService } from 'services';
 import { useState } from 'react';
+import { InsertTax } from 'types';
 
 
 const AddNewTax: React.FC = () => {
@@ -16,20 +17,11 @@ const AddNewTax: React.FC = () => {
 
     const createTax = async () => {
         try {
-            const { status, message } = await TaxesService.createTax(newTaxValue, newTaxDescription);
-            console.log(status, message);
-            if (status == "success") {
-                setInfo({
-                    ...info,
-                    messageShow: "Tax added"
-                })
-            } else {
-                setInfo({
-                    ...info,
-                    error: "Error on loading the tax! Try again.."
-                })
-            }
+            const newTax: InsertTax = { value: newTaxValue, description: newTaxDescription }
+            const result: boolean = await TaxesService.createTax(newTax);
+            console.log(result);
         } catch (err) {
+            console.log(err);
             setInfo({
                 ...info,
                 error: "Error on loading tax! Try later..."

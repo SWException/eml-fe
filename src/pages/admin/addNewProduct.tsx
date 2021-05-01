@@ -16,8 +16,8 @@ const AddNewProduct: React.FC<Props> = ({ categories, taxes }) => {
 
     const [productName, setProductName] = useState("");
     const [productDescription, setProductDescription] = useState("");
-    const [productPrimaryPhoto, setProductPrimaryPhoto] = useState("");
-    const [productSecondaryPhotos, setProductSecondaryPhotos] = useState([]);
+    const [productPrimaryPhoto, setProductPrimaryPhoto] = useState<any>();
+    const [productSecondaryPhotos, setProductSecondaryPhotos] = useState<any>([]);
     const [productCategoryId, setProductCategoryId] = useState("");
     const [productNetPrice, setProductNetPrice] = useState(0);
     const [productTaxId, setProductTaxId] = useState("");
@@ -26,11 +26,7 @@ const AddNewProduct: React.FC<Props> = ({ categories, taxes }) => {
     const [productShowHome, setProductShowHome] = useState(false);
 
     const addProduct = async () => {
-        let productPrimaryPhotoBase64 = await onFileUpload(productPrimaryPhoto);
-        let productSecondaryPhotosBase64 = [];
-        for (var i = 0; i < productSecondaryPhotos.length; i++) {
-            productSecondaryPhotosBase64.push(await onFileUpload(productSecondaryPhotos[i]));
-        }
+        const { productPrimaryPhotoBase64, productSecondaryPhotosBase64 } = await getPhotos(productPrimaryPhoto, productSecondaryPhotos);
         try {
             const newProduct: InsertProduct = {
                 name: productName,
@@ -52,8 +48,21 @@ const AddNewProduct: React.FC<Props> = ({ categories, taxes }) => {
         }
     };
 
-    const onFileUpload = async (file: Blob) => {
+    const getPhotos = async (primaryPhoto: Blob, secondaryPhotos: Blob[]): Promise<{ productPrimaryPhotoBase64: string, productSecondaryPhotosBase64: string[] }> => {
+        let productPrimaryPhotoBase64;
+        let productSecondaryPhotosBase64 = [];
+        if (primaryPhoto) {
+            productPrimaryPhotoBase64 = await onFileUpload(primaryPhoto);
+        }
+        if (secondaryPhotos) {
+            for (var i = 0; i < productSecondaryPhotos.length; i++) {
+                productSecondaryPhotosBase64.push(await onFileUpload(secondaryPhotos[i]));
+            }
+        }
+        return { productPrimaryPhotoBase64, productSecondaryPhotosBase64 }
+    }
 
+    const onFileUpload = async (file: Blob): Promise<string> => {
         return new Promise<string>((resolve, reject) => {
             try {
                 const fileReader = new FileReader();
@@ -92,8 +101,8 @@ const AddNewProduct: React.FC<Props> = ({ categories, taxes }) => {
     const renderCategoryCombobox = (): any => (
         <div className={styles.div}>
             <label>Category:</label>
-            <select className={styles.select} onChange={(e) => categoryIdHandler(e)}>
-                <option value='' selected disabled> - - - </option>
+            <select className={styles.select} value='#' onChange={(e) => categoryIdHandler(e)}>
+                <option value='#' selected disabled> - - - </option>
                 {categories?.map((category) => (
                     <option value={category.id}>{category.name}</option>
                 ))}
@@ -104,8 +113,8 @@ const AddNewProduct: React.FC<Props> = ({ categories, taxes }) => {
     const renderTaxesCombobox = (): any => (
         <div className={styles.div}>
             <label>VAT</label>
-            <select className={styles.select} onChange={(e) => taxIdHandler(e)}>
-                <option value='' selected disabled> - - - </option>
+            <select className={styles.select} value='#' onChange={(e) => taxIdHandler(e)}>
+                <option value='#' disabled> - - - </option>
                 {taxes?.map((tax) => (
                     <option value={tax.id}>{tax.value} - {tax.description}</option>
                 ))}
@@ -137,7 +146,7 @@ const AddNewProduct: React.FC<Props> = ({ categories, taxes }) => {
     };
 
     const categoryIdHandler = (e: ChangeEvent<HTMLSelectElement>): void => {
-        const categoryId = e.target.value; //COMBOBOX
+        const categoryId = e.target.value;
         setProductCategoryId(categoryId);
     };
 
@@ -211,8 +220,7 @@ export default AddNewProduct;
 export const getServerSideProps: GetServerSideProps = async (context) => {
     try {
         const categories = await CategoriesService.fetchAllCategories();
-        const { data } = await TaxesService.getVATTaxes();
-        const taxes = data; // DA VEDERE PORCAMANADOONA
+        const taxes = await TaxesService.fetchTaxes();
         return {
             props: { categories, taxes },
         }

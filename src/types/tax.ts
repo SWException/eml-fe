@@ -5,3 +5,6 @@ export type Tax = {
 };
 
 export type Taxes = Tax[];
+
+export type InsertTax = Omit<Tax, 'id'>;
+export type EditTax = InsertTax;

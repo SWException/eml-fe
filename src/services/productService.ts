@@ -1,4 +1,4 @@
-import { ProductsData, ProductData, InsertProduct } from '../types/product';
+import { ProductsData, ProductData, InsertProduct, EditProduct } from '../types/product';
 import { sessionService } from './sessionService';
 
 type ProductPayload = { params: any };
@@ -84,20 +84,16 @@ export const fetchProduct = async (id: string): Promise<ProductData> => {
     }
 };
 
-export const modifyProduct = async (id: string, price: number): Promise<Response> => {
-    const token = sessionService.getCookie('token')
-    const modify = {
-        id,
-        price
-    }
+export const modifyProduct = async (id: string, product: EditProduct): Promise<Response> => {
+    const token = sessionService.getCookie('token');
     try {
         const requestOptions = {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `${token}`
+                'Authorization': `${token}`,
             },
-            body: JSON.stringify(modify)
+            body: JSON.stringify(product),
         };
         const res = await fetch(`${process.env.AWS_ENDPOINT}/products/${id}`, requestOptions)
         const data = await res.json();

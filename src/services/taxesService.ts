@@ -1,162 +1,116 @@
+import { EditTax, InsertTax, Taxes } from 'types';
 import { sessionService } from './sessionService';
 
-interface TaxObject {
-    id: string;
-    value: number;
-    description: string;
-}
+const fetchTaxes = async (): Promise<Taxes> => {
+    const requestOptions = {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    };
 
-interface TaxData {
-    status: string;
-    data: TaxObject[]
-}
+    const res = await fetch(`${process.env.AWS_ENDPOINT}/taxes`, requestOptions)
+        .catch(() => { throw new Error('Error on fetching all taxes') });
 
-interface Response {
-    status: string;
-    message: string;
-}
+    const taxesReturned = await res.json();
 
-const getVATTaxes = async (): Promise<TaxData> => {
-    try {
-        const requestOptions = {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        };
+    if (taxesReturned.status == 'error')
+        throw new Error(taxesReturned.message);
 
-        const res = await fetch(`${process.env.AWS_ENDPOINT}/taxes`, requestOptions);
-        const taxesReturned = await res.json();
-
-        const taxesData: TaxData = {
-            status: taxesReturned.status,
-            data: taxesReturned.data
-        };
-
-        return taxesData;
-
-    } catch (error) {
-        throw new Error('Error on fetching all taxes');
-    }
+    const taxes: Taxes = taxesReturned.data;
+    return taxes;
 };
 
-const createTax = async (value: number, description: string): Promise<Response> => {
-    const bodySend = {
-        value,
-        description
-    }
+const fetchTaxesByDescription = async (description: string): Promise<Taxes> => {
+    const requestOptions = {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    };
+
+    const res = await fetch(`${process.env.AWS_ENDPOINT}/taxes?search=${description}`, requestOptions)
+        .catch(() => { throw new Error('Error on fetching all taxes') });
+
+    const taxesReturned = await res.json();
+
+    if (taxesReturned.status == 'error')
+        throw new Error(taxesReturned.message);
+
+    const taxes: Taxes = taxesReturned.data;
+    return taxes;
+};
+
+
+const createTax = async (tax: InsertTax): Promise<boolean> => {
     const token = sessionService.getCookie('token');
-    try {
-        const requestOptions = {
-            method: 'POST',
-            headers: {
-                'Authorization': `${token}`,
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(bodySend)
-        };
+    const requestOptions = {
+        method: 'POST',
+        headers: {
+            'Authorization': `${token}`,
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(tax),
+    };
 
-        const res = await fetch(`${process.env.AWS_ENDPOINT}/taxes`, requestOptions);
-        const taxesReturned = await res.json();
+    const res = await fetch(`${process.env.AWS_ENDPOINT}/taxes`, requestOptions)
+        .catch(() => { throw new Error('Error on creating new tax') });
 
-        const taxesData: Response = {
-            status: taxesReturned.status,
-            message: taxesReturned.message
-        };
+    const response = await res.json();
 
-        return taxesData;
+    if (response.status == 'error')
+        throw new Error(response.message);
 
-    } catch (error) {
-        throw new Error('Error on create a new tax');
-    }
+    return true;
 };
 
-const getSingleTax = async (id: string): Promise<TaxData> => {
-    try {
-        const requestOptions = {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        };
-
-        const res = await fetch(`${process.env.AWS_ENDPOINT}/taxes/${id}`, requestOptions);
-        const taxesReturned = await res.json();
-
-        const taxesData: TaxData = {
-            status: taxesReturned.status,
-            data: taxesReturned.data
-        };
-
-        return taxesData;
-
-    } catch (error) {
-        throw new Error('Error on fetching single tax');
-    }
-};
-
-const modifyTax = async (id: string, value: number, description: string): Promise<Response> => {
-    const bodySend = {
-        id,
-        value,
-        description,
-    }
+const deleteTax = async (id: string): Promise<boolean> => {
     const token = sessionService.getCookie('token');
-    try {
-        const requestOptions = {
-            method: 'PATCH',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `${token}`
-            },
-            body: JSON.stringify(bodySend)
-        };
+    const requestOptions = {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `${token}`
+        }
+    };
 
-        const res = await fetch(`${process.env.AWS_ENDPOINT}/taxes/${id}`, requestOptions);
-        const taxesReturned = await res.json();
+    const res = await fetch(`${process.env.AWS_ENDPOINT}/taxes/${id}`, requestOptions)
+        .catch(() => { throw new Error('Error on deleting new tax') });
 
-        const taxesData: Response = {
-            status: taxesReturned.status,
-            message: taxesReturned.message
-        };
+    const response = await res.json();
 
-        return taxesData;
+    if (response.status == 'error')
+        throw new Error(response.message);
 
-    } catch (error) {
-        throw new Error('Error on create a new tax');
-    }
+    return true;
 };
 
-const deleteTax = async (id: string): Promise<Response> => {
+const modifyTax = async (id: string, tax: EditTax): Promise<boolean> => {
     const token = sessionService.getCookie('token');
-    try {
-        const requestOptions = {
-            method: 'DELETE',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `${token}`
-            }
-        };
+    const requestOptions = {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `${token}`
+        },
+        body: JSON.stringify(tax),
+    };
 
-        const res = await fetch(`${process.env.AWS_ENDPOINT}/taxes/${id}`, requestOptions);
-        const taxesReturned = await res.json();
+    const res = await fetch(`${process.env.AWS_ENDPOINT}/taxes/${id}`, requestOptions)
+        .catch(() => { throw new Error('Error on editing tax') });
 
-        const taxesData: Response = {
-            status: taxesReturned.status,
-            message: taxesReturned.message
-        };
+    const response = await res.json();
 
-        return taxesData;
+    if (response.status == 'error')
+        throw new Error(response.message);
 
-    } catch (error) {
-        throw new Error('Error on create a new tax');
-    }
-};
+    return true;
+}
 
 export const TaxesService = {
-    getVATTaxes,
+    fetchTaxes,
+    fetchTaxesByDescription,
     createTax,
-    getSingleTax,
     modifyTax,
     deleteTax
 };
