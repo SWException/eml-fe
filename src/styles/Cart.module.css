@@ -1,4 +1,4 @@
-.title{
+.title {
     margin-top: 2rem;
 }
 
@@ -7,16 +7,16 @@
     margin-right: auto;
     display: flex;
     flex-direction: column;
-  }
-  
-  .total{
-      margin-top: 2rem;
-      text-align: right;
-      margin-right: 7rem;
-  }
-  
-  .remove{
+}
+
+.total {
+    margin-top: 2rem;
+    text-align: right;
+    margin-right: 7rem;
+}
+
+.remove {
     margin-top: 1rem;
     text-align: left;
     margin-left: 5rem;
-  }
+}

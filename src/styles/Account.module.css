@@ -1,15 +1,14 @@
-.div{
+.div {
     border-radius: 10px;
     border: ridge var(--color-gray-dark);
     padding: 20px;
-    margin-left:30%;
+    margin-left: 30%;
     margin-right: 30%;
     margin-top: 2rem;
 }
 
-
-.p{
-    font-size:12px;
-    display:inline-flex;
+.p {
+    font-size: 12px;
+    display: inline-flex;
     margin-top: 2rem;
 }

@@ -1,25 +1,25 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styles from './Filters.module.css';
 
 const Filters: React.FC = () => {
-  return (
-    <>
-      <form>
-        <div className="d-flex align-items-center mt-4 pb-1">
-          <div className="md-form md-outline my-0">
-            <input id="from" type="number" min="0" placeholder="€ Min"/>
-          </div>
-          <p> - </p>
-          <div className="md-form md-outline my-0">
-            <input id="to" type="number" min="0" placeholder="€ Max"/>
-          </div>
-          <button className={styles.filterButton} formAction="/plp">
-          FILTER
+    return (
+        <>
+            <form>
+                <div className="d-flex align-items-center mt-4 pb-1">
+                    <div className="md-form md-outline my-0">
+                        <input id="from" type="number" min="0" placeholder="€ Min" />
+                    </div>
+                    <p> - </p>
+                    <div className="md-form md-outline my-0">
+                        <input id="to" type="number" min="0" placeholder="€ Max" />
+                    </div>
+                    <button className={styles.filterButton} formAction="/plp">
+                        FILTER
         </button>
-        </div>
-      </form>
-    </>
-  );
+                </div>
+            </form>
+        </>
+    );
 };
 
 export default Filters;

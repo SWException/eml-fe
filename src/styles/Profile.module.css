@@ -1,4 +1,4 @@
-.div{
+.div {
     background-color: var(--color-gray-light);
     border-radius: 5px;
     border: ridge var(--color-gray-dark);
@@ -6,26 +6,27 @@
     margin: 3rem;
 }
 
-.h1{
+.h1 {
     text-align: center;
 }
 
-.p{
+.p {
     font: bold;
 }
 
-.button{
-  border-radius: 4px;
-  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
-  padding:  4px 20px 4px 20px;
+.button {
+    border-radius: 4px;
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    padding: 4px 20px 4px 20px;
 }
 
-.user{
+.user {
     margin-top: 2rem;
     text-align: center;
-    justify-content:center;
+    justify-content: center;
 }
-.danger{
+
+.danger {
     text-align: center;
-    justify-content:center;
+    justify-content: center;
 }

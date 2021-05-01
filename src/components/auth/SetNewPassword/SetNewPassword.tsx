@@ -11,8 +11,8 @@ const SetNewPassword: React.FC = () =>{
     const [codice, setCodice] = useState('');
     const [password, setPassword] = useState('');
     const [newPass, setNewPassword] = useState('');
-    const [error, setError] = useState(''); //implemetare show errori
-    const [message, setMessage] = useState(''); //implementare showMEssaggi
+    const [error, setError] = useState(''); // implementare show errori
+    const [message, setMessage] = useState(''); // implementare showMEssaggi
     const [newComp, setNewComp] = useState(false);
 
     

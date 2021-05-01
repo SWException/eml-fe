@@ -7,9 +7,9 @@ Amplify.configure(awsconfig);
 
 const AdminLogin: React.FC = () => {
 
-    useEffect(()=>{
+    useEffect(() => {
         let mex = window.localStorage.getItem('mex');
-        if(mex){
+        if (mex) {
             setMessage(mex);
             window.localStorage.removeItem('mex');
         }
@@ -22,15 +22,15 @@ const AdminLogin: React.FC = () => {
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
 
-    const getJwt = () =>{
+    const getJwt = () => {
         Auth.currentSession()
-    .then(res => {
-        let accessToken = res.getAccessToken()
-        let jwt = accessToken.getJwtToken()
-        window.localStorage.setItem('jwt', jwt);
-        console.log(`myJwt: ${jwt}`)
-    })
-    .catch(err => {console.log("Errore2: " + err); });
+            .then(res => {
+                let accessToken = res.getAccessToken()
+                let jwt = accessToken.getJwtToken()
+                window.localStorage.setItem('jwt', jwt);
+                console.log(`myJwt: ${jwt}`)
+            })
+            .catch(err => { console.log("Errore2: " + err); });
     }
 
     async function signIn() {
@@ -70,11 +70,11 @@ const AdminLogin: React.FC = () => {
             });
     };
 
-    const displayErr = () =>{
+    const displayErr = () => {
         return (error ? <div className="alert alert-danger">{error}</div> : '');
     }
 
-    const displayInfo = () =>{
+    const displayInfo = () => {
         return (message ? <div className="alert alert-info">{message}</div> : '');
     }
 
@@ -86,19 +86,19 @@ const AdminLogin: React.FC = () => {
                     <Form>
                         <FormGroup className="">
                             <Label for="exampleEmail" className="">Email</Label>
-                            <Input type="email" name="email" onChange={(e)=>{setEmail(e.target.value)}} id="exampleEmail" placeholder="something@idk.cool" />
+                            <Input type="email" name="email" onChange={(e) => { setEmail(e.target.value) }} id="exampleEmail" placeholder="something@idk.cool" />
                         </FormGroup>
                         <FormGroup className="">
                             <Label for="examplePassword" className="">Password</Label>
-                            <Input type="password" name="password" onChange={(e)=>{setPassword(e.target.value)}} id="examplePassword" placeholder="sUpErStrong1!" />
+                            <Input type="password" name="password" onChange={(e) => { setPassword(e.target.value) }} id="examplePassword" placeholder="sUpErStrong1!" />
                         </FormGroup>
                         <div className="">
                             {loading ? (
-                                <Spinner color="" style={{marginTop: "20px"}}/>
+                                <Spinner color="" style={{ marginTop: "20px" }} />
                             ) : (
-                            <div className="">
-                                <Button className="" color="primary" onClick={signIn}>Login</Button>
-                            </div>
+                                <div className="">
+                                    <Button className="" color="primary" onClick={signIn}>Login</Button>
+                                </div>
                             )}
                         </div>
                     </Form>
@@ -107,7 +107,7 @@ const AdminLogin: React.FC = () => {
                         {displayInfo()}
                     </div>
                 </div>
-            </div>           
+            </div>
         </AdminLayout>
     );
 };

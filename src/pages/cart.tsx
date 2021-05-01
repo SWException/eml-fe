@@ -5,7 +5,7 @@ import { Button } from 'reactstrap';
 import { CustomerLayout } from 'components/layouts/CustomerLayout';
 import styles from 'styles/Cart.module.css'
 import { CartService } from 'services';
-import { Cart, ProductCart } from 'types';
+import { Cart } from 'types';
 
 interface Props {
     cart: Cart,
@@ -15,12 +15,9 @@ interface Props {
  * Inserire fetch del Service per ADD e REMOVE
  */
 
-const CartUser: React.FC<Props>= () => {
- 
-    const router = useRouter();
-    const [message, setMessage] = useState('');
+const CartUser: React.FC<Props> = () => {
 
-    const [total, setTotal] = useState(0);
+    const router = useRouter();
     const [cartShow, setCartShow] = useState<Cart>({
         id: "",
         product: [],
@@ -28,7 +25,7 @@ const CartUser: React.FC<Props>= () => {
         total: 0
     });
 
-    useEffect(()=>{
+    useEffect(() => {
         reloadCart();
     }, [])
 
@@ -36,7 +33,7 @@ const CartUser: React.FC<Props>= () => {
         router.push('/payment/checkout');
     }
 
-    const reloadCart = async() => {
+    const reloadCart = async () => {
         const { cart } = await CartService.fetchCart();
         setCartShow({
             id: cart.id,
@@ -47,30 +44,30 @@ const CartUser: React.FC<Props>= () => {
         console.log('Done');
     }
 
-    const removeAllCart = async() => {
+    const removeAllCart = async () => {
         const { status, message } = await CartService.removeCart();
-        if(status == "success"){
+        if (status == "success") {
             reloadCart();
         }
     }
 
     return (
         <CustomerLayout header footer>
-             <div className={styles.title}>
-                    <h1>Cart</h1>
+            <div className={styles.title}>
+                <h1>Cart</h1>
             </div>
             <div className={styles.cart}>
                 <div className="cart-item-layout">
-                {cartShow.product.map((product) => (
-                    <ProductCard 
-                    id={product.productId}
-                    name = {product.name}
-                    photo={product.primaryPhoto}
-                    price={product.price}
-                    loadCart={()=>{reloadCart()}}
-                    quantity={product.quantity}
-                    /> 
-                ))}
+                    {cartShow.product.map((product) => (
+                        <ProductCard
+                            id={product.productId}
+                            name={product.name}
+                            photo={product.primaryPhoto}
+                            price={product.price}
+                            loadCart={() => { reloadCart() }}
+                            quantity={product.quantity}
+                        />
+                    ))}
                 </div>
             </div>
             <div className={styles.remove}>
@@ -79,7 +76,7 @@ const CartUser: React.FC<Props>= () => {
             <div className={styles.total}>
                 <div><strong>Total: {cartShow.total}{" €"} </strong></div>
                 <div><strong>Taxes: {cartShow.tax}{" €"} </strong></div>
-                <Button color="primary" size="lg" style={{marginTop: "10px"}} onClick={()=>{onSubmit()}}>Checkout</Button>
+                <Button color="primary" size="lg" style={{ marginTop: "10px" }} onClick={() => { onSubmit() }}>Checkout</Button>
             </div>
 
         </CustomerLayout>

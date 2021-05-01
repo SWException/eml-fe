@@ -5,17 +5,17 @@
     border: transparent;
 }
 
-.profile:hover{
+.profile:hover {
     color: var(--color-dark);
     background-color: var(--color-gray);
 }
 
-.profile:active{
+.profile:active {
     color: var(--color-dark);
     background-color: var(--color-gray);
 }
 
-.dropmenu{
+.dropmenu {
     background-color: var(--color-night);
     border-color: var(--color-light);
 }

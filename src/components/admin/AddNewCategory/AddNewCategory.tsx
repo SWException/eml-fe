@@ -1,11 +1,9 @@
-import { Button, PopoverHeader, PopoverBody,UncontrolledPopover } from 'reactstrap';
+import { Button, PopoverHeader, PopoverBody, UncontrolledPopover } from 'reactstrap';
 import { CategoriesService } from 'services';
-import { Categories, Category } from 'types';
-import React, { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import React from 'next/router';
+import { ChangeEvent, useState } from 'react';
 
-const AddNewCategory: React.FC = () =>{
-
+const AddNewCategory: React.FC = () => {
     const [info, setInfo] = useState({
         error: '',
         messageShow: ''
@@ -13,12 +11,11 @@ const AddNewCategory: React.FC = () =>{
 
     const [newCategory, setNewCategory] = useState("");
 
-
-    const createCategories = async() =>{
+    const createCategories = async () => {
         try {
             const { status, message } = await CategoriesService.createCategories(newCategory);
             console.log(status, message);
-            if(status == "success"){
+            if (status == "success") {
                 setInfo({
                     ...info,
                     messageShow: "Category added"
@@ -29,7 +26,7 @@ const AddNewCategory: React.FC = () =>{
                     error: "Error on loading the category! Try again.."
                 })
             }
-        } catch(err) {
+        } catch (err) {
             setInfo({
                 ...info,
                 error: "Error on loading category! Try later..."
@@ -37,19 +34,19 @@ const AddNewCategory: React.FC = () =>{
         }
     }
 
-    const handleChange = (e:React.FormEvent<HTMLInputElement>) :void => {
-        setNewCategory((e.target as HTMLTextAreaElement).value);
+    const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
+        setNewCategory(e.target.value);
     }
 
     return (
         <div>
             <Button color="primary" size="lg" id="PopoverLegacy" type="button">Add New Category</Button>
             <UncontrolledPopover trigger="legacy" placement="bottom" target="PopoverLegacy">
-                <PopoverHeader style={{fontSize:"1.5em"}}>Add New Category</PopoverHeader>
+                <PopoverHeader style={{ fontSize: "1.5em" }}>Add New Category</PopoverHeader>
                 <PopoverBody>
-                <label style={{fontSize:"1.5em"}}>Name:</label>
-                <input type="text" className="form-control" onChange={(e:React.FormEvent<HTMLInputElement>)=>{handleChange(e)}} placeholder="Insert name.." style={{fontSize:"1.5em"}}/>
-                <Button size="lg" color="primary" style={{marginTop:"1em"}} onClick={createCategories}>Save</Button>
+                    <label style={{ fontSize: "1.5em" }}>Name:</label>
+                    <input type="text" className="form-control" onChange={(e) => { handleChange(e) }} placeholder="Insert name.." style={{ fontSize: "1.5em" }} />
+                    <Button size="lg" color="primary" style={{ marginTop: "1em" }} onClick={createCategories}>Save</Button>
                 </PopoverBody>
             </UncontrolledPopover>
         </div>

@@ -1,11 +1,11 @@
-.button{
+.button {
     font-weight: 800;
     background-color: var(--color-night);
     color: var(--color-light);
     border: transparent;
 }
 
-.button:hover{
+.button:hover {
     color: var(--color-dark);
     background-color: var(--color-gray);
 }

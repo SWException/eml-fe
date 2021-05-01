@@ -1,8 +1,8 @@
-.productContainer{
+.productContainer {
     margin-bottom: 2rem;
     margin-left: 25px;
     margin-top: 25px;
-    display:flex;
+    display: flex;
 }
 
 .productInfo {
@@ -38,8 +38,7 @@
     padding: 0 2rem;
 }
 
-
-.carousel{
+.carousel {
     margin-left: 25px;
     margin-top: 25px;
     width: 400px;
@@ -47,17 +46,19 @@
     display: flex;
 }
 
-.carousel-inner > .item > img { width:130px; height:130px;}
+.carousel-inner>.item>img {
+    width: 130px;
+    height: 130px;
+}
 
 .input {
     text-align: center;
 }
-   
-  
-  .minus {
+
+.minus {
     margin-bottom: 3px;
-  }
-  .plus {
+}
+
+.plus {
     margin-top: 2px;
-  }
-  
+}

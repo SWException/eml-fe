@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import styles from './DetailOrderProductCard.module.css';
 
 //ADMIN DETAIL ORDER
@@ -12,9 +12,9 @@ interface Props {   //DA RIVEDERE ASSOLUTAMENTE
 }
 
 
-const DetailOrderProductCard: React.FC<Props> = ({id, name, price, quantity}) => {
-    
-    const totart=price*quantity;
+const DetailOrderProductCard: React.FC<Props> = ({ id, name, price, quantity }) => {
+
+    const totart = price * quantity;
 
     return (
         <div className="">
@@ -24,7 +24,7 @@ const DetailOrderProductCard: React.FC<Props> = ({id, name, price, quantity}) =>
                 <span className={styles.information}><strong>PRICE: €</strong>{price}</span>
                 <span className={styles.information}><strong>QUANTITY: </strong>{quantity}</span>
                 <span className={styles.information}><strong>SUBTOTAL: € {totart} </strong></span>
-            </div>    
+            </div>
         </div>
     );
 };

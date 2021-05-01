@@ -1,9 +1,8 @@
-
-.p{
+.p {
     margin-top: 2rem;
 }
 
-.payment{
+.payment {
     border-radius: 10px;
     border: ridge var(--color-gray-dark);
     padding: 20px;

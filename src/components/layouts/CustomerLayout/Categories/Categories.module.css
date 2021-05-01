@@ -1,25 +1,29 @@
-.bar{
+.bar {
     padding: 0;
 }
-.bar a{
+
+.bar a {
     font-weight: 600;
     color: var(--color-dark);
     margin-left: 25px;
 }
+
 /* Change the color of links on hover */
+
 .bar a:hover {
-  background-color: var(--color-gray-dark);
-  color: var(--color-dark);
+    background-color: var(--color-gray-dark);
+    color: var(--color-dark);
 }
 
 /* Style the "active" element to highlight the current page */
+
 .bar a.active {
-  background-color: var(--color-gray-light);
-  color: var(--color-dark);
+    background-color: var(--color-gray-light);
+    color: var(--color-dark);
 }
 
-.container{
-  display: inline-flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
+.container {
+    display: inline-flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
 }

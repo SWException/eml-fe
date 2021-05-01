@@ -1,42 +1,43 @@
-.select{
+.select {
     border: 2px solid #ccc;
     font-size: 15px;
     padding: 4px 10px 4px 10px;
     margin-left: 1rem;
-  }
+}
 
-.form{
+.form {
     border-radius: 10px;
     border: ridge var(--color-gray-dark);
     padding: 20px;
-    margin-left:15%;
+    margin-left: 15%;
     margin-right: 15%;
     margin-top: 1rem;
     margin-bottom: 1rem;
 }
-.input{
+
+.input {
     border: 2px solid #ccc;
     font-size: 15px;
     background-color: var(--color-light);
-    background-position: 5px 5px; 
+    background-position: 5px 5px;
     background-repeat: no-repeat;
     padding: 4px 10px 4px 10px;
-    margin-left:1rem;
-  } 
+    margin-left: 1rem;
+}
 
-  .div{
-      margin-top:1rem;
-  }
+.div {
+    margin-top: 1rem;
+}
 
-  .inputfile{
-      margin-left:1rem;
-  }
+.inputfile {
+    margin-left: 1rem;
+}
 
-  .inputcheck{
-      margin-left:1rem;
-  }
+.inputcheck {
+    margin-left: 1rem;
+}
 
-  .textarea{
+.textarea {
     vertical-align: middle;
     margin-left: 1rem;
-  }
+}

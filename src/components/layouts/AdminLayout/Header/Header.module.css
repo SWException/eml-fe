@@ -1,4 +1,4 @@
-.navbar{
+.navbar {
     background-color: var(--color-night);
     color: var(--color-light);
 }
@@ -7,21 +7,24 @@
     font-size: 3rem;
     font-weight: 800;
     text-align: center;
-  }
+}
 
-.navbar a{
+.navbar a {
     font-weight: 800;
     color: var(--color-light);
 }
+
 /* Change the color of links on hover */
+
 .navbar a:hover {
     color: var(--color-dark);
     background-color: var(--color-gray);
     height: 40;
-  }
-  
-  /* Style the "active" element to highlight the current page */
-  .navbar a.active {
+}
+
+/* Style the "active" element to highlight the current page */
+
+.navbar a.active {
     background-color: var(--color-gray-light);
     color: var(--color-dark);
-  }
+}

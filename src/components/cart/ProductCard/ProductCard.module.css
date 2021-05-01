@@ -3,60 +3,57 @@
     display: flex;
     margin-left: 2rem;
     margin-right: 2rem;
-    border-top:  1px solid #E1E8EE;
-    border-bottom:  1px solid #E1E8EE;
-  }
-
+    border-top: 1px solid #E1E8EE;
+    border-bottom: 1px solid #E1E8EE;
+}
 
 .image {
-  padding: 30px;
-  }
-   
+    padding: 30px;
+}
+
 .information {
     padding-top: 30px;
     width: 13rem;
     text-align: center;
-    
-  }
-   
+}
+
 .information span {
     font-size: 14px;
     color: #43484D;
     font-weight: 400;
     margin-left: 10%;
     margin-right: 10%;
-  }
-
+}
 
 .quantity {
-  padding-top: 25px;
-  width: 165px;
-  margin-left: 5%;
-  margin-right: 5%;
+    padding-top: 25px;
+    width: 165px;
+    margin-left: 5%;
+    margin-right: 5%;
 }
+
 .quantity input {
-  -webkit-appearance: none;
-  border: none;
-  text-align: center;
-  width: 5rem;
-  font-size: 16px;
-  color: #43484D;
-  font-weight: 300;
+    -webkit-appearance: none;
+    border: none;
+    text-align: center;
+    width: 5rem;
+    font-size: 16px;
+    color: #43484D;
+    font-weight: 300;
 }
- 
 
 .minus {
-  margin-bottom: 3px;
+    margin-bottom: 3px;
 }
+
 .plus {
-  margin-top: 2px;
+    margin-top: 2px;
 }
 
-.delete{
-  margin-right:2rem;
-  width: 2rem;
-  height: 2rem;
-  margin-top: 3rem;
-  padding: 0;
+.delete {
+    margin-right: 2rem;
+    width: 2rem;
+    height: 2rem;
+    margin-top: 3rem;
+    padding: 0;
 }
-

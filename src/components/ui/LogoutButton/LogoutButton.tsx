@@ -1,29 +1,25 @@
 import React from 'react';
-import { Button} from 'reactstrap';
-import { useRouter } from 'next/router';
+import { Button } from 'reactstrap';
 import { useAuth } from 'context'
 import styles from 'components/ui/LogoutButton/LogoutButton.module.css'
 
-const LogoutButton: React.FC = () =>  {
-
-    const router = useRouter();
-
+const LogoutButton: React.FC = () => {
     const { logout } = useAuth()
 
-    const signOut = async() => {
+    const signOut = async () => {
         try {
-            await logout();
+            logout();
             window.location.reload();
         } catch (error) {
             console.log('error signing out: ', error);
         }
     }
 
-  return (
-    <>
-      <Button className={styles.button} size="lg" onClick={()=>{signOut();}}>Logout</Button>
-    </>
-  );
+    return (
+        <>
+            <Button className={styles.button} size="lg" onClick={() => { signOut(); }}>Logout</Button>
+        </>
+    );
 };
 
 export default LogoutButton;

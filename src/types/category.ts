@@ -3,6 +3,4 @@ export type Category = {
     name: string;
 };
 
-export interface Categories {
-    categories: Category[]
-}
+export type Categories = Category[];

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import styles from 'components/listorder/OrderCard/OrderCard.module.css';
-import {Button} from 'reactstrap'
+import styles from './OrderCard.module.css';
+import { Button } from 'reactstrap'
 
 interface Props {
     id: string,

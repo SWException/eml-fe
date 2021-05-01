@@ -1,11 +1,11 @@
-import { User } from '../types/user';
+import { User } from 'types/user';
 import awsconfig from 'aws-exports';
 import Amplify, { Auth } from 'aws-amplify';
 Amplify.configure(awsconfig);
 
 interface UserData {
-  user: User;
-  token: string;
+    user: User;
+    token: string;
 }
 
 interface NewUser {
@@ -13,7 +13,7 @@ interface NewUser {
 }
 
 interface NewPassword {
-  confirmPassword: boolean;
+    confirmPassword: boolean;
 }
 
 const login = async (email: string, password: string): Promise<UserData> => {
@@ -23,62 +23,62 @@ const login = async (email: string, password: string): Promise<UserData> => {
     let token: string;
 
     try {
-      let userObject = await LoginSupport(email, password);
-          
-      userReturn = {
-        user: {
-          email: userObject.attributes.email,
-          name: userObject.attributes.email,
-          imageURL: '',
-          carts: [],
-          role: 'user'
-        },
-        token: userObject.signInUserSession.accessToken.jwtToken, //isIDTOKEN?
-      };
-      return userReturn;
-  } catch (error) {
-    console.log(error);
-  }
+        let userObject = await LoginSupport(email, password);
+
+        userReturn = {
+            user: {
+                email: userObject.attributes.email,
+                name: userObject.attributes.email,
+                imageURL: '',
+                carts: [],
+                role: 'user'
+            },
+            token: userObject.signInUserSession.accessToken.jwtToken, //is ID_TOKEN?
+        };
+        return userReturn;
+    } catch (error) {
+        console.log(error);
+    }
 };
 
-const LoginSupport = async (email:string, password:string) =>{
-  let answer = Auth.signIn(email, password)
-    .then(userObject => {
-      if (userObject.challengeName === 'NEW_PASSWORD_REQUIRED') { 
-        var newPassword = password + "new";
-        const { requiredAttributes } = userObject.challengeParam;
-        Auth.completeNewPassword(
-            userObject, 
-            newPassword
-        )
+const LoginSupport = async (email: string, password: string) => {
+    let answer = Auth.signIn(email, password)
         .then(userObject => {
-            return userObject;
-        })
-        .catch(e => {
-            console.log(e);
+            if (userObject.challengeName === 'NEW_PASSWORD_REQUIRED') {
+                var newPassword = password + "new";
+                const { requiredAttributes } = userObject.challengeParam;
+                Auth.completeNewPassword(
+                    userObject,
+                    newPassword
+                )
+                    .then(userObject => {
+                        return userObject;
+                    })
+                    .catch(e => {
+                        console.log(e);
+                    });
+            } else {
+                return userObject;
+            }
         });
-      } else {
-        return userObject;
-      }
-    });
     return answer;
 }
 
-const signUp = async (email: string, password:string, name:string, family_name: string): Promise<NewUser> => {
+const signUp = async (email: string, password: string, name: string, family_name: string): Promise<NewUser> => {
     let confirm = false;
-    try {        
-      console.log(email);
-      const { user } = await Auth.signUp({
-          username: email,
-          password,
-          attributes: {
-            name,
-            family_name
-          }
-      });
-      console.log("Registrazione effettuata");
-      console.log(user);
-      confirm = true;
+    try {
+        console.log(email);
+        const { user } = await Auth.signUp({
+            username: email,
+            password,
+            attributes: {
+                name,
+                family_name
+            }
+        });
+        console.log("Registrazione effettuata");
+        console.log(user);
+        confirm = true;
     } catch (error) {
         console.log(error)
         confirm = false;
@@ -90,60 +90,60 @@ const signUp = async (email: string, password:string, name:string, family_name: 
     return userData;
 };
 
-const confirmCode = async(email: string, code: string): Promise<NewUser> => {
+const confirmCode = async (email: string, code: string): Promise<NewUser> => {
     //Sistemare codice
     try {
-      await Auth.confirmSignUp(email, code);
-      console.log("Codice confermato");
+        await Auth.confirmSignUp(email, code);
+        console.log("Codice confermato");
     } catch (error) {
         console.log('error confirming sign up', error);
     }
     //Rimandare a Login (da Context?)
-    return ;
+    return;
 }
 
 export const changePassword = async (oldPass: string, newPass: string): Promise<UserData> => {
-  try {
-    Auth.currentAuthenticatedUser()
-      .then(user => {
-        console.log(user);
-        return Auth.changePassword(user, oldPass, newPass);
-      })
-      .then(data => console.log('success' + data))
-    /*const userData: UserData = {
-      user: data.data.user,
-      token: data.data.token,
-    };*/
-    return ;
-  } catch (error) {
-    console.log(error)
-  }
+    try {
+        Auth.currentAuthenticatedUser()
+            .then(user => {
+                console.log(user);
+                return Auth.changePassword(user, oldPass, newPass);
+            })
+            .then(data => console.log('success' + data))
+        /*const userData: UserData = {
+          user: data.data.user,
+          token: data.data.token,
+        };*/
+        return;
+    } catch (error) {
+        console.log(error)
+    }
 };
 
 Auth.currentAuthenticatedUser()
-  .then(user => {
-      console.log('User authenticated is ' + user);
-  })
-  .catch(err =>{ console.log(err) });
+    .then(user => {
+        console.log('User authenticated is ' + user);
+    })
+    .catch(err => { console.log(err) });
 
 
 
-const forgotPassword = async(email: string): Promise<NewPassword> =>{
-  let answer = Auth.forgotPassword(email)
-  .then(data => {
-    console.log("invio codice " + data)
-  })
-  .catch(err => console.log(err));
+const forgotPassword = async (email: string): Promise<NewPassword> => {
+    let answer = Auth.forgotPassword(email)
+        .then(data => {
+            console.log("invio codice " + data)
+        })
+        .catch(err => console.log(err));
 
-  return ;
+    return;
 }
 
-const isNewPassword = async(email: string, code: string, password: string): Promise<NewPassword> =>{
-  let answer = Auth.forgotPasswordSubmit(email, code, password)
-  .then(data => console.log("recuperato "+data))
-  .catch(err => console.log(err));
+const isNewPassword = async (email: string, code: string, password: string): Promise<NewPassword> => {
+    let answer = Auth.forgotPasswordSubmit(email, code, password)
+        .then(data => console.log("recuperato " + data))
+        .catch(err => console.log(err));
 
-  return ;
+    return;
 }
 /*
 export const updateProfile = async (
@@ -167,12 +167,12 @@ export const updateProfile = async (
 };*/
 
 export const AuthService = {
-  //getMe,
-  login,
-  signUp,
-  confirmCode,
-  changePassword,
-  forgotPassword,
-  isNewPassword
-  //updateProfile,
+    //getMe,
+    login,
+    signUp,
+    confirmCode,
+    changePassword,
+    forgotPassword,
+    isNewPassword
+    //updateProfile,
 };

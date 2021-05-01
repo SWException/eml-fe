@@ -1,21 +1,21 @@
-.table{
-    margin-top:2rem;
+.table {
+    margin-top: 2rem;
     margin-left: auto;
     margin-right: auto;
-    justify-content: "center"; 
-    text-align:"center";
-    
+    justify-content: "center";
+    text-align: "center";
 }
 
-.th{
-    margin-top:2rem;
-    padding:1rem;
+.th {
+    margin-top: 2rem;
+    padding: 1rem;
 }
 
-.div{
+.div {
     width: 30rem;
     height: 15rem;
 }
-.div:hover{
+
+.div:hover {
     background-color: lightslategray;
 }

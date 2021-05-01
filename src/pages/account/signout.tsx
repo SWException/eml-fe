@@ -1,6 +1,5 @@
 import Amplify, { Auth } from 'aws-amplify';
 import awsconfig from 'aws-exports';
-import { Button } from 'reactstrap';
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 Amplify.configure(awsconfig);
@@ -9,16 +8,16 @@ Amplify.configure(awsconfig);
 
 const Logout: React.FC = () => {
 
-    const [message, setMessage] = useState('');
+    // const [message, setMessage] = useState('');
     const [error, setError] = useState('');
 
     const router = useRouter();
 
-    useEffect(()=>{
+    useEffect(() => {
         signOut();
         let err = window.localStorage.getItem('err');
-        if(err){
-            setMessage(err);
+        if (err) {
+            // setMessage(err);
             window.localStorage.removeItem('err');
         }
     }, [])
@@ -37,23 +36,23 @@ const Logout: React.FC = () => {
         } catch (error) {
             console.log('error signing out: ', error);
             setError('Errore durante il logout, riprovare');
-            setMessage('');
+            // setMessage('');
             displayErr();
         }
     }
-  
-    const displayErr = () =>{
+
+    const displayErr = () => {
         return (error ? <div className="alert alert-danger">{error}</div> : '');
     }
 
 
-    const redirectToHomePage = () =>{
+    const redirectToHomePage = () => {
         router.push('/');
     }
 
-    return(
+    return (
         <>
-            <p>test</p> 
+            <p>test</p>
         </>
     );
 

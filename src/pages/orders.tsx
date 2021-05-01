@@ -3,20 +3,15 @@ import React, { useEffect, useState } from "react";
 import { CustomerLayout } from 'components/layouts/CustomerLayout';
 import styles from 'styles/Orders.module.css';
 import { OrdersService } from 'services';
-import { Order, Orders } from 'types';
-
-/*interface Props {
-    cartItems: string, //ASSOLUTAMENTE DA CONTROLLARE
-}*/
+import { Orders } from 'types';
 
 interface Props {
     ord: Orders;
 }
 
-const OrdersList: React.FC<Props> = ({ ord }) => { //IN VERITA' E' :React.FC<Props>
+const OrdersList: React.FC<Props> = ({ ord }) => {
     console.log(ord);
     //Inserire Fetch
-
 
     useEffect(() => {
         reloadOrders();
@@ -30,15 +25,7 @@ const OrdersList: React.FC<Props> = ({ ord }) => { //IN VERITA' E' :React.FC<Pro
         const { orders } = await OrdersService.fetchOrders();
         setOrder(orders);
         console.log('Done', orders);
-
     }
-
-    const getDate = (timestamp): string => {
-        var date = new Date(+timestamp);
-        // Hours part from the timestamp
-        return (date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear() + " " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds())
-    }
-
 
     return (
         <CustomerLayout header footer>

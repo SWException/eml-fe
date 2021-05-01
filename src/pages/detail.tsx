@@ -1,11 +1,10 @@
-import React, { useRouter } from 'next/router';
+import React from 'next/router';
 import { useEffect, useState } from 'react';
 import styles from 'styles/Detail.module.css';
 import { ProductService } from 'services/productService';
-import { ProductQuantity } from 'components/products';
 import { CustomerLayout } from 'components/layouts/CustomerLayout';
-import { Product } from '../types/product'
-import { Button, Carousel, CarouselItem,CarouselControl,CarouselIndicators,CarouselCaption} from 'reactstrap';
+import { Product } from 'types/product'
+import { Button, Carousel, CarouselItem, CarouselControl, CarouselIndicators } from 'reactstrap';
 import { GetServerSideProps } from 'next';
 import { CartService } from 'services';
 
@@ -13,9 +12,7 @@ interface Props {
     product: Product;
 }
 
-const Detail: React.FC<Props> = ({product}) => {
-
-    const router = useRouter();
+const Detail: React.FC<Props> = ({ product }) => {
 
     const [images, setImages] = useState<string[]>([]);
     const [activeIndex, setActiveIndex] = useState(0);
@@ -26,7 +23,7 @@ const Detail: React.FC<Props> = ({product}) => {
         messageShow: ''
     })
 
-    useEffect(()=>{
+    useEffect(() => {
         addImagesToCarousel();
         setQuantity(1);
     }, [])
@@ -36,10 +33,10 @@ const Detail: React.FC<Props> = ({product}) => {
 
     const items = [
         {
-        src: 'https://images-na.ssl-images-amazon.com/images/I/61GqztpFduL._AC_UX679_.jpg',
+            src: 'https://images-na.ssl-images-amazon.com/images/I/61GqztpFduL._AC_UX679_.jpg',
         }
     ];
-    
+
     const addImagesToCarousel = () => {
         const arrayImg = [];
         arrayImg.push(primaryPhoto);
@@ -65,32 +62,32 @@ const Detail: React.FC<Props> = ({product}) => {
         setActiveIndex(newIndex);
     }
 
-    const modifyQuantity = async(name:string) => {
-        if(name == 'plus'){
-            setQuantity(_quantity+1);
+    const modifyQuantity = async (name: string) => {
+        if (name == 'plus') {
+            setQuantity(_quantity + 1);
         } else {
-            if(_quantity!=1)
-            setQuantity(_quantity-1);
+            if (_quantity != 1)
+                setQuantity(_quantity - 1);
         }
     }
 
     const slides = images.map((image, i) => {
         return (
-        <CarouselItem
-            key={i}
-            onExiting={() => setAnimating(true)}
-            onExited={() => setAnimating(false)}
-            height="400" width="400"
-        >
-            <img src={image} height="400" width="400" alt={'Product Image'} />
-        </CarouselItem>
+            <CarouselItem
+                key={i}
+                onExiting={() => setAnimating(true)}
+                onExited={() => setAnimating(false)}
+                height="400" width="400"
+            >
+                <img src={image} height="400" width="400" alt={'Product Image'} />
+            </CarouselItem>
         );
     });
 
-    const addCart = async() =>{
+    const addCart = async () => {
         try {
             const { status, message } = await CartService.addToCart(_quantity, id);
-            if(status == "success"){
+            if (status == "success") {
                 setInfo({
                     ...info,
                     messageShow: "Product Added to Cart"
@@ -101,7 +98,7 @@ const Detail: React.FC<Props> = ({product}) => {
                     error: "Error on loading the product to the cart! Try again.."
                 })
             }
-        } catch(err) {
+        } catch (err) {
             setInfo({
                 ...info,
                 error: "Error on loading cart! Try later..."
@@ -109,44 +106,44 @@ const Detail: React.FC<Props> = ({product}) => {
         }
     }
 
-    const displayErr = () =>{
+    const displayErr = () => {
         return (error ? <div className="alert alert-danger">{error}</div> : '');
     }
 
-    const displayInfo = () =>{
+    const displayInfo = () => {
         return (messageShow ? <div className="alert alert-info">{messageShow}</div> : '');
     }
 
-        
+
     return (
         <CustomerLayout header categories footer>
             <div className={styles.productContainer}>
                 <Carousel className={styles.carousel} activeIndex={activeIndex} next={next} previous={previous}>
-                            <CarouselIndicators items={items} activeIndex={activeIndex}  color="dark" onClickHandler={goToIndex} />
-                            {slides}
-                            <CarouselControl style={{borderColor:"black"}}direction="prev" directionText="Previous" onClickHandler={previous} />
-                            <CarouselControl direction="next" directionText="Next" onClickHandler={next} />
+                    <CarouselIndicators items={items} activeIndex={activeIndex} color="dark" onClickHandler={goToIndex} />
+                    {slides}
+                    <CarouselControl style={{ borderColor: "black" }} direction="prev" directionText="Previous" onClickHandler={previous} />
+                    <CarouselControl direction="next" directionText="Next" onClickHandler={next} />
                 </Carousel>
                 <div className={styles.productInfo}>
-                        <div className={styles.productName}>{name}</div>
-                        <div className={styles.productPrice}>Price: € {price}</div>
-                        <div className={styles.productDesc}>{description}</div>
-                        <div className={styles.productAction}>
-                            <div>
-                                <button className={styles.plus} onClick={()=>{modifyQuantity('minus')}} type="button" name="button">
-                                    -
+                    <div className={styles.productName}>{name}</div>
+                    <div className={styles.productPrice}>Price: € {price}</div>
+                    <div className={styles.productDesc}>{description}</div>
+                    <div className={styles.productAction}>
+                        <div>
+                            <button className={styles.plus} onClick={() => { modifyQuantity('minus') }} type="button" name="button">
+                                -
                                 </button>
-                                <input type="text" name="name" value={_quantity} className={styles.input}></input>
-                                <button className={styles.minus} onClick={()=>{modifyQuantity('plus')}} type="button" name="button">
-                                    +
+                            <input type="text" name="name" value={_quantity} className={styles.input}></input>
+                            <button className={styles.minus} onClick={() => { modifyQuantity('plus') }} type="button" name="button">
+                                +
                                 </button>
-                            </div>
                         </div>
-                        <div className={styles.productAction}>
-                            <Button color="primary" onClick={addCart} size="lg" marginTop="20px">Add to Cart</Button>
-                        </div>
+                    </div>
+                    <div className={styles.productAction}>
+                        <Button color="primary" onClick={addCart} size="lg" marginTop="20px">Add to Cart</Button>
+                    </div>
                 </div>
-                <div  style={{marginTop: "20px"}}>
+                <div style={{ marginTop: "20px" }}>
                     {displayErr()}
                     {displayInfo()}
                 </div>

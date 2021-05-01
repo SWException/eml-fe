@@ -2,21 +2,21 @@ import { Products, Address } from "types";
 
 export type Order = {
     userid: string;
-    timestamp:string;
-    orderid:string;
-    orderStatus:string;
-    cart:OrderCart;
-    billingAddress:Address;
-    shippingAddress:Address;
+    timestamp: string;
+    orderid: string;
+    orderStatus: string;
+    cart: OrderCart;
+    billingAddress: Address;
+    shippingAddress: Address;
 };
-export interface OrderCart {
+export type OrderCart = {
     id: string;
     products: OrderProducts;
     tax: number;
     total: number;
-  }
+}
 
-export interface OrderProduct{
+export type OrderProduct = {
     productId: string;
     name: string;
     description: string;
@@ -32,11 +32,11 @@ export interface OrderProduct{
 }
 export type Orders = Order[];
 export type OrderProducts = OrderProduct[];
- 
-export interface OrdersData {
-    orders: Orders[];
+
+export type OrdersData = {
+    orders: Orders;
 }
 
-export interface OrderData {
+export type OrderData = {
     order: Order;
 }
