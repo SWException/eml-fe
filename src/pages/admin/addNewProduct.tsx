@@ -151,8 +151,8 @@ const AddNewProduct: React.FC<Props> = ({ categories, taxes }) => {
     };
 
     const netPriceHandler = (e: ChangeEvent<HTMLInputElement>): void => {
-        const netPrice = e.target.value;
-        setProductNetPrice(+netPrice);
+        const netPrice = e.target.valueAsNumber;
+        setProductNetPrice(netPrice);
     };
 
     const taxIdHandler = (e: ChangeEvent<HTMLSelectElement>): void => {
@@ -166,8 +166,8 @@ const AddNewProduct: React.FC<Props> = ({ categories, taxes }) => {
     };
 
     const stockHandler = (e: ChangeEvent<HTMLInputElement>): void => {
-        const stock = e.target.value;
-        setProductStock(+stock);
+        const stock = e.target.valueAsNumber;
+        setProductStock(stock);
     };
 
     const showHomeHandler = (value: boolean): void => {

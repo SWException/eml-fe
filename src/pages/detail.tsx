@@ -1,5 +1,5 @@
 import React from 'next/router';
-import { useEffect, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import styles from 'styles/Detail.module.css';
 import { ProductService } from 'services/productService';
 import { CustomerLayout } from 'components/layouts/CustomerLayout';
@@ -17,7 +17,7 @@ const Detail: React.FC<Props> = ({ product }) => {
     const [images, setImages] = useState<string[]>([]);
     const [activeIndex, setActiveIndex] = useState(0);
     const [animating, setAnimating] = useState(false);
-    const [_quantity, setQuantity] = useState(0);
+    const [quantity, setQuantity] = useState(0);
     const [info, setInfo] = useState({
         error: '',
         messageShow: ''
@@ -28,7 +28,7 @@ const Detail: React.FC<Props> = ({ product }) => {
         setQuantity(1);
     }, [])
 
-    const { name, description, primaryPhoto, secondaryPhotos, price, id } = product;
+    const { name, description, primaryPhoto, secondaryPhotos, price, id, stock } = product;
     const { error, messageShow } = info;
 
     const items = [
@@ -62,13 +62,25 @@ const Detail: React.FC<Props> = ({ product }) => {
         setActiveIndex(newIndex);
     }
 
-    const modifyQuantity = async (name: string) => {
-        if (name == 'plus') {
-            setQuantity(_quantity + 1);
-        } else {
-            if (_quantity != 1)
-                setQuantity(_quantity - 1);
+    const modifyQuantityByStep = async (increment: boolean) => {
+        const QTA = quantity;
+        if (increment) {
+            setQuantity(QTA + 1);
         }
+        else {
+            if (QTA != 1)
+                setQuantity(QTA - 1);
+        }
+    }
+
+    const modifyQuantity = async (e: ChangeEvent<HTMLInputElement>) => {
+        const QTA = Math.trunc(e.target.valueAsNumber);
+        console.log(QTA);
+
+        if (QTA && QTA > 0) {
+            setQuantity(QTA);
+        }
+        e.target.setAttribute("value", quantity.toString());
     }
 
     const slides = images.map((image, i) => {
@@ -86,19 +98,21 @@ const Detail: React.FC<Props> = ({ product }) => {
 
     const addCart = async () => {
         try {
-            const { status, message } = await CartService.addToCart(_quantity, id);
+            const { status, message } = await CartService.addToCart(quantity, id);
             if (status == "success") {
                 setInfo({
                     ...info,
                     messageShow: "Product Added to Cart"
                 })
-            } else {
+            }
+            else {
                 setInfo({
                     ...info,
                     error: "Error on loading the product to the cart! Try again.."
                 })
             }
-        } catch (err) {
+        }
+        catch (err) {
             setInfo({
                 ...info,
                 error: "Error on loading cart! Try later..."
@@ -130,13 +144,14 @@ const Detail: React.FC<Props> = ({ product }) => {
                     <div className={styles.productDesc}>{description}</div>
                     <div className={styles.productAction}>
                         <div>
-                            <button className={styles.plus} onClick={() => { modifyQuantity('minus') }} type="button" name="button">
+                            <button className={styles.plus} onClick={() => { modifyQuantityByStep(false) }} type="button" name="button">
                                 -
-                                </button>
-                            <input type="text" name="name" value={_quantity} className={styles.input}></input>
-                            <button className={styles.minus} onClick={() => { modifyQuantity('plus') }} type="button" name="button">
+                            </button>
+                            <input type="number" name="name" value={quantity} 
+                                className={styles.input} onChange={(e) => modifyQuantity(e)} max={stock}></input>
+                            <button className={styles.minus} onClick={() => { modifyQuantityByStep(true) }} type="button" name="button">
                                 +
-                                </button>
+                            </button>
                         </div>
                     </div>
                     <div className={styles.productAction}>
@@ -161,7 +176,8 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         return {
             props: { product },
         };
-    } catch (error) {
+    }
+    catch (error) {
         return {
             props: {
                 product: null,

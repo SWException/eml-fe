@@ -51,8 +51,10 @@
     height: 130px;
 }
 
-.input {
+.input::-webkit-outer-spin-button, .input::-webkit-inner-spin-button, .input, .input[type=number] {
     text-align: center;
+    -webkit-appearance: none;
+    -moz-appearance: textfield;
 }
 
 .minus {

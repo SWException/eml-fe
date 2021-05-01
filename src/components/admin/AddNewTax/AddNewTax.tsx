@@ -33,7 +33,7 @@ const AddNewTax: React.FC = () => {
         setNewTaxDescription(e.target.value);
     }
     const valueChange = (e: ChangeEvent<HTMLInputElement>): void => {
-        setNewTaxValue(parseFloat(e.target.value));
+        setNewTaxValue(e.target.valueAsNumber);
 
     }
 

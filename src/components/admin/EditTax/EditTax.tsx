@@ -27,7 +27,7 @@ const EditExistingTax: React.FC<Props> = ({ tax }) => {
         setNewTaxDescription(e.target.value);
     }
     const valueChange = (e: ChangeEvent<HTMLInputElement>): void => {
-        setNewTaxValue(+e.target.value);
+        setNewTaxValue(e.target.valueAsNumber);
     }
 
     return (
