@@ -27,5 +27,6 @@
         ".serverless_nextjs": true
     },
     "editor.detectIndentation": false,
-    "editor.tabSize": 4
+    "editor.tabSize": 4,
+    "eslint.format.enable": true
 }

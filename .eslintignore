@@ -1,0 +1,8 @@
+.webpack/
+node_modules/
+src/styles/
+src/**/*.css
+public/
+.serverless/
+.next/
+.serverless_nextjs
