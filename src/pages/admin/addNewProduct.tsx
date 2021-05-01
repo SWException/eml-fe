@@ -50,19 +50,24 @@ const AddNewProduct: React.FC<Props> = ({ categories, taxes }) => {
         } catch (err) {
             console.log(err);
         }
-    }
+    };
 
-    const onFileUpload = async (file) => {
+    const onFileUpload = async (file: Blob) => {
+
         return new Promise<string>((resolve, reject) => {
-            const fileReader = new FileReader();
-            fileReader.readAsDataURL(file);
-            fileReader.onload = () => {
-                var base64 = fileReader.result as string;
-                base64 = base64.substring(base64.indexOf(",") + 1);
-                resolve(base64);
+            try {
+                const fileReader = new FileReader();
+                fileReader.readAsDataURL(file);
+                fileReader.onload = () => {
+                    var base64 = fileReader.result as string;
+                    base64 = base64.substring(base64.indexOf(",") + 1);
+                    resolve(base64);
+                }
+            } catch (e) {
+                console.log(e);
             }
         })
-    }
+    };
 
     const renderShow = (): any => (
         <div className={styles.div}>
@@ -72,7 +77,7 @@ const AddNewProduct: React.FC<Props> = ({ categories, taxes }) => {
             <input className={styles.inputcheck} type="radio" id="notVisible" name="visibilty" value="notVisible" onChange={(e) => showHandler(false)} />
             <label>Not visible</label>
         </div>
-    )
+    );
 
     const renderShowHome = (): any => (
         <div className={styles.div}>
@@ -82,7 +87,7 @@ const AddNewProduct: React.FC<Props> = ({ categories, taxes }) => {
             <input className={styles.inputcheck} type="radio" id="BPnv" name="BP" value="nv" onChange={(e) => showHomeHandler(false)} />
             <label>Not visible</label>
         </div>
-    )
+    );
 
     const renderCategoryCombobox = (): any => (
         <div className={styles.div}>
@@ -94,7 +99,7 @@ const AddNewProduct: React.FC<Props> = ({ categories, taxes }) => {
                 ))}
             </select>
         </div>
-    )
+    );
 
     const renderTaxesCombobox = (): any => (
         <div className={styles.div}>
@@ -106,22 +111,22 @@ const AddNewProduct: React.FC<Props> = ({ categories, taxes }) => {
                 ))}
             </select>
         </div>
-    )
+    );
 
     const nameHandler = (e: ChangeEvent<HTMLInputElement>): void => {
         const name = e.target.value;
         setProductName(name);
-    }
+    };
 
     const descriptionHandler = (e: ChangeEvent<HTMLTextAreaElement>): void => {
         const description = e.target.value;
         setProductDescription(description);
-    }
+    };
 
     const primaryPhotoHandler = (e: ChangeEvent<HTMLInputElement>): void => {
-        const file = e.target.value[0];
+        const file = e.target.files[0];
         setProductPrimaryPhoto(file);
-    }
+    };
 
     const secondaryPhotosHandler = (e: ChangeEvent<HTMLInputElement>): void => {
         let files = [];
@@ -129,37 +134,37 @@ const AddNewProduct: React.FC<Props> = ({ categories, taxes }) => {
             files.push(e.target.files[i]);
         }
         setProductSecondaryPhotos(files);
-    }
+    };
 
     const categoryIdHandler = (e: ChangeEvent<HTMLSelectElement>): void => {
         const categoryId = e.target.value; //COMBOBOX
         setProductCategoryId(categoryId);
-    }
+    };
 
     const netPriceHandler = (e: ChangeEvent<HTMLInputElement>): void => {
         const netPrice = e.target.value;
         setProductNetPrice(+netPrice);
-    }
+    };
 
     const taxIdHandler = (e: ChangeEvent<HTMLSelectElement>): void => {
         const taxId = e.target.value;
         setProductTaxId(taxId);
-    }
+    };
 
     const showHandler = (value: boolean): void => {
         const show = value;
         setProductShow(show);
-    }
+    };
 
     const stockHandler = (e: ChangeEvent<HTMLInputElement>): void => {
         const stock = e.target.value;
         setProductStock(+stock);
-    }
+    };
 
     const showHomeHandler = (value: boolean): void => {
         const shoeHome = value;
         setProductShowHome(shoeHome);
-    }
+    };
 
     return (
         <AdminLayout header>
@@ -190,7 +195,7 @@ const AddNewProduct: React.FC<Props> = ({ categories, taxes }) => {
                 {renderShow()}
                 <div className={styles.div}>
                     <label>Warehouse stock:</label>
-                    <input className={styles.input} type="number" min="0" placeholder="Insert product net price" onChange={(e) => stockHandler(e)} />
+                    <input className={styles.input} type="number" min="0" placeholder="Insert stock quantity" onChange={(e) => stockHandler(e)} />
                 </div>
                 {renderShowHome()}
                 <div className={styles.div}>
