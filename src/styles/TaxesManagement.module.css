@@ -1,40 +1,30 @@
-.products {
+.taxes {
     font-family: Arial, Helvetica, sans-serif;
     border-collapse: collapse;
-    margin-left: 1rem;
-    margin-right: 1rem;
+    
     margin-top: 1rem;
     text-align: center;
 }
 
-.products td {
+.taxes td {
     border: 1px solid #ddd;
     padding: 5px;
     width: 20rem;
 }
 
-.products tr:nth-child(even) {
+.taxes tr:nth-child(even) {
     background-color: #f2f2f2;
 }
 
-.products tr:hover {
+.taxes  tr:hover {
     background-color: #ddd;
 }
 
-.products th {
+.taxes th {
     padding: 5px;
     text-align: center;
     background-color: var(--color-light);
     color: var(--color-lightblue);
-}
-
-.div {
-    margin-top: 1rem;
-    margin-top:2rem;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
 }
 
 .input[type=text] {
@@ -48,9 +38,10 @@
     margin-left: 1rem;
 }
 
-.select {
-    border: 2px solid #ccc;
-    font-size: 1.5rem;
-    padding: 0.4rem 1rem 0.4rem 1rem;
-    margin-left:1rem;
+.tab{
+    margin-top:2rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
 }

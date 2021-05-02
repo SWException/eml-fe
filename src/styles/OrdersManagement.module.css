@@ -1,4 +1,4 @@
-.products {
+.orders {
     font-family: Arial, Helvetica, sans-serif;
     border-collapse: collapse;
     margin-left: 1rem;
@@ -7,21 +7,21 @@
     text-align: center;
 }
 
-.products td {
+.orders td {
     border: 1px solid #ddd;
     padding: 5px;
     width: 20rem;
 }
 
-.products tr:nth-child(even) {
+.orders tr:nth-child(even) {
     background-color: #f2f2f2;
 }
 
-.products tr:hover {
+.orders tr:hover {
     background-color: #ddd;
 }
 
-.products th {
+.orders th {
     padding: 5px;
     text-align: center;
     background-color: var(--color-light);

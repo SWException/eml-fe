@@ -33,7 +33,7 @@ const login = async (email: string, password: string): Promise<UserData> => {
                 name: userObject.attributes.name,
                 imageURL: '',
                 carts: [],
-                role: 'user' //Fix with group
+                role: 'admin' //Fix with group
             },
             token: userObject.signInUserSession.accessToken.jwtToken, //is ID_TOKEN?
         };

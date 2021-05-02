@@ -1,6 +1,6 @@
 import React, { ChangeEvent, useEffect, useState } from 'react';
 import { AdminLayout } from 'components/layouts/AdminLayout';
-import styles from 'styles/ProductManagement.module.css';
+import styles from 'styles/CustomerManagement.module.css';
 import { Button } from 'reactstrap';
 import { useRouter } from 'next/router';
 import { CustomerService, sessionService } from 'services';
@@ -54,32 +54,32 @@ const CustomerManagement: React.FC = () => {
     return (
         <AdminLayout header>
             <h1>Management Customers</h1>
-            <div className={styles.div}>
+            <div className={styles.tab}>
+                <label><strong>Search:</strong></label>
                 <input type="text" className={styles.input} placeholder="Search client by mail..." onChange={(e) => { handleChange(e) }} />
-                <Button type="submit" formAction="/products" style={{ border: "2px solid #ccc", backgroundColor: "#ccc", borderRadius: "0" }}>
-                    <img src="/iconsearch.png" style={{ width: "2.3rem", height: "2.3rem" }} />
-                </Button>
             </div>
 
             {customers ? (
-                <table className={styles.products}>
-                    <thead>
-                        <tr>
-                            <th>NAME</th>
-                            <th>SURNAME</th>
-                            <th>EMAIL</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {customers?.map((customer) => (
-                            <tr key={customer.id}>
-                                <td>{customer.name}</td>
-                                <td>{customer.surname}</td>
-                                <td><a href={"mailto:" + customer.email + "?subject=Emporio%20Lambda&body=This%20is%20an%20example"}>{customer.email}</a></td>
+                <div className={styles.tab}>
+                    <table className={styles.customers}>
+                        <thead>
+                            <tr>
+                                <th>NAME</th>
+                                <th>SURNAME</th>
+                                <th>EMAIL</th>
                             </tr>
-                        ))}
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            {customers?.map((customer) => (
+                                <tr key={customer.id}>
+                                    <td>{customer.name}</td>
+                                    <td>{customer.surname}</td>
+                                    <td><a href={"mailto:" + customer.email + "?subject=Emporio%20Lambda&body=This%20is%20an%20example"}>{customer.email}</a></td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
             ) : (
                 <div>
                     No user in the system

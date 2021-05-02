@@ -60,42 +60,43 @@ const ProductManagement: React.FC<Props> = ({ defaultProducts, categories }) => 
 
     return (
         <AdminLayout header>
+            <h1>Products Management</h1>
             <div className={styles.div}>
                 <Button color="primary" size="lg" onClick={addNewProduct}>ADD NEW PRODUCT</Button>
             </div>
             {renderCategoryCombobox()}
             <div className={styles.div}>
+                <label><strong>Search:</strong></label>
                 <input className={styles.input} type="text" placeholder="Search Product by name..." onChange={(e) => handleSearchChange(e)} />
-                <Button type="submit" formAction="/products" style={{ border: "2px solid #ccc", backgroundColor: "#ccc", borderRadius: "0" }}>
-                    <img src="/iconsearch.png" style={{ width: "2.3rem", height: "2.3rem" }} />
-                </Button>
             </div>
-            <table className={styles.products}>
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>NAME</th>
-                        <th>NET PRICE</th>
-                        <th>CATEGORY</th>
-                        <th>TAX</th>
-                        <th>EDIT</th>
-                        <th>DELETE</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {products?.map((product) => (
-                        <tr key={product.id}>
-                            <td>{product.id}</td>
-                            <td>{product.name}</td>
-                            <td>€ {product.price}</td>
-                            <td>{product.category}</td>
-                            <td>{product.tax}</td>
-                            <td><Button color="primary" size="lg" onClick={() => editProduct(product.id)}>EDIT</Button></td>
-                            <td><Button color="primary" size="lg">REMOVE</Button></td>
+            <div className={styles.div}>
+                <table className={styles.products}>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>NAME</th>
+                            <th>NET PRICE</th>
+                            <th>CATEGORY</th>
+                            <th>TAX</th>
+                            <th>EDIT</th>
+                            <th>DELETE</th>
                         </tr>
-                    ))}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        {products?.map((product) => (
+                            <tr key={product.id}>
+                                <td>{product.id}</td>
+                                <td>{product.name}</td>
+                                <td>€ {product.price}</td>
+                                <td>{product.category}</td>
+                                <td>{product.tax}</td>
+                                <td><Button color="primary" size="lg" onClick={() => editProduct(product.id)}>EDIT</Button></td>
+                                <td><Button color="primary" size="lg">REMOVE</Button></td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
         </AdminLayout>
     );
 };
