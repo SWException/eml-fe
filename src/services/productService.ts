@@ -9,11 +9,13 @@ interface Response {
 }
 
 const fetchProducts = async (payload?: ProductPayload): Promise<ProductsData> => {
+    const token = sessionService.getCookie('token');
     try {
         const requestOptions = {
             method: 'GET',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': `${token}` // Necessario se si è venditore, altrimenti ritorna solo i prodotti visibili al cliente e non quelli nascosti
             }
         };
 
@@ -31,8 +33,9 @@ const fetchProducts = async (payload?: ProductPayload): Promise<ProductsData> =>
 
         return productsData;
 
-    } catch (error) {
-        throw new Error('Error on fetching Products');
+    }
+    catch (error) {
+        throw new Error('Error on fetching Products' + error.message);
     }
 };
 
@@ -58,28 +61,36 @@ const addProduct = async (product: InsertProduct): Promise<Response> => {
 
         return productsData;
 
-    } catch (error) {
+    }
+    catch (error) {
         throw new Error('Error on posting new Product');
     }
 };
 
 export const fetchProduct = async (id: string): Promise<ProductData> => {
+    const token = sessionService.getCookie('token');
     try {
         const requestOptions = {
             method: 'GET',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': `${token}` // Necessario se si è venditore, altrimenti ritorna il prodotto solo se è visibile al cliente, se è nascosto non lo ritorna
             }
         };
         const res = await fetch(`${process.env.AWS_ENDPOINT}/products/${id}`, requestOptions)
         const data = await res.json();
+
+        if(data.status == "error"){
+            throw new Error(data.message);
+        }
 
         const productData: ProductData = {
             product: data.data
         };
 
         return productData;
-    } catch (error) {
+    }
+    catch (error) {
         throw new Error(error);
     }
 };
@@ -104,7 +115,8 @@ export const modifyProduct = async (id: string, product: EditProduct): Promise<R
         };
 
         return responseDelete;
-    } catch (error) {
+    }
+    catch (error) {
         throw new Error(error);
     }
 };
@@ -128,7 +140,8 @@ export const deleteProduct = async (id: string): Promise<Response> => {
         };
 
         return responseDelete;
-    } catch (error) {
+    }
+    catch (error) {
         throw new Error(error);
     }
 };
