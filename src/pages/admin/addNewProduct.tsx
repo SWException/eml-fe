@@ -1,5 +1,5 @@
 import { AdminLayout } from 'components/layouts/AdminLayout';
-import React, { ChangeEvent, useEffect, useState } from 'react';
+import React, { ChangeEvent, useEffect, useState, Dispatch } from 'react';
 import styles from 'styles/AddNewProduct.module.css'
 import { Button } from 'reactstrap'
 import { Category, InsertProduct, Tax } from 'types';
@@ -17,23 +17,23 @@ const AddNewProduct: React.FC<Props> = ({ categories, taxes }) => {
 
     const router = useRouter();
 
-    const [productName, setProductName] = useState("");
-    const [productDescription, setProductDescription] = useState("");
+    const [productName, setProductName]: [string, Dispatch<string>] = useState<string>("");
+    const [productDescription, setProductDescription]: [string, Dispatch<string>] = useState<string>("");
     const [productPrimaryPhoto, setProductPrimaryPhoto] = useState<any>();
     const [productSecondaryPhotos, setProductSecondaryPhotos] = useState<any>([]);
-    const [productCategoryId, setProductCategoryId] = useState("");
-    const [productNetPrice, setProductNetPrice] = useState(0);
-    const [productTaxId, setProductTaxId] = useState("");
-    const [productShow, setProductShow] = useState(true);
-    const [productStock, setProductStock] = useState(0);
-    const [productShowHome, setProductShowHome] = useState(false);
+    const [productCategoryId, setProductCategoryId]: [string, Dispatch<string>] = useState<string>("");
+    const [productNetPrice, setProductNetPrice]: [string, Dispatch<string>] = useState<number>(0);
+    const [productTaxId, setProductTaxId]: [string, Dispatch<string>] = useState<string>("");
+    const [productShow, setProductShow]: [boolean, Dispatch<boolean>] = useState<boolean>(true);
+    const [productStock, setProductStock]: [number, Dispatch<number>] = useState<number>(0);
+    const [productShowHome, setProductShowHome]: [boolean, Dispatch<boolean>] = useState<boolean>(false);
 
-    useEffect(()=>{
+    useEffect(() => {
         const user = sessionService.getLocalStorage();
-        if(sessionService.isAuth() && user.role=='user'){
+        if (sessionService.isAuth() && user.role == 'user') {
             router.push('/');
         }
-        else if (!sessionService.isAuth()){
+        else if (!sessionService.isAuth()) {
             router.push('/')
         }
     });

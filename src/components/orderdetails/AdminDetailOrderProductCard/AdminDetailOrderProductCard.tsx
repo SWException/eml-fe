@@ -4,16 +4,17 @@ import styles from './AdminDetailOrderProductCard.module.css';
 //ADMIN DETAIL ORDER
 
 
-interface Props {
+interface Props {   
     id?: string,
     name?: string,
-    primaryPhoto?: string,
     price?: number,
     quantity?: number,
+    primaryPhoto?: string,
 }
 
 
-const AdminDetailOrderProductCard: React.FC<Props> = ({ id, name, primaryPhoto, price, quantity }) => {
+
+const AdminDetailOrderProductCard: React.FC<Props> = ({ id, name, price, quantity, primaryPhoto }) => {
 
     const totart = price * quantity;
 

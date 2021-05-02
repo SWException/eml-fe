@@ -13,21 +13,6 @@
     color: var(--color-light);
 }
 
-/* Change the color of links on hover */
-
-.navbar a:hover {
-    color: var(--color-dark);
-    background-color: var(--color-gray);
-    height: 40;
-}
-
-/* Style the "active" element to highlight the current page */
-
-.navbar a.active {
-    background-color: var(--color-gray-light);
-    color: var(--color-dark);
-}
-
 .navtoggler {
     float: right;
     border-color: var(--color-light);

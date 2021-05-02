@@ -6,14 +6,20 @@ import styles from "styles/Order.module.css";
 import { AdminDetailOrderProductCard } from 'components/orderdetails'
 import { sessionService, OrdersService } from 'services';
 import { Order, OrderProducts } from 'types'
+import { GetServerSideProps } from 'next';
 
 interface Props {
-    order: Order,
-    id: any
+    id: string
 }
 
 const OrderDetailsAdmin: React.FC<Props> = ({ id }) => {
+    const [dateShow, setDateShow] = useState('')
 
+    const getDate = (timestamp): string => {
+        const date = new Date(+timestamp);
+        // Hours part from the timestamp
+        return (date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear() + " " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds());
+    }
     const [order, setOrder]: [Order, React.Dispatch<Order>] = useState({
 
         orderid: "",
@@ -34,6 +40,7 @@ const OrderDetailsAdmin: React.FC<Props> = ({ id }) => {
 
     useEffect(() => {
         reloadOrder();
+        setDateShow(getDate("0"));
     }, []);
 
     const reloadOrder = async () => {
@@ -47,6 +54,7 @@ const OrderDetailsAdmin: React.FC<Props> = ({ id }) => {
         console.log(order.cart);
         console.log(order.cart.products);
         setProducts(order.cart.products);
+        setDateShow(getDate(order.timestamp));
         console.log('Done reloadProducts');
     }
 
@@ -59,7 +67,7 @@ const OrderDetailsAdmin: React.FC<Props> = ({ id }) => {
                 <div className={styles.detailsorder}>
                     <div className={styles.div}><strong>User ID:</strong> {order.userid}</div>
                     <div className={styles.div}><strong>Order ID:</strong>  {order.orderid}</div>
-                    <div className={styles.div}><strong>Date:</strong>  {order.timestamp}</div>
+                    <div className={styles.div}><strong>Date:</strong>  {dateShow}</div>
                     <div style={{ padding: 10 }}><strong>State:</strong>  {order.orderStatus}</div>
                 </div>
                 <div className={styles.itemlayout}>
@@ -85,4 +93,12 @@ const OrderDetailsAdmin: React.FC<Props> = ({ id }) => {
         </AdminLayout>
     );
 };
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+    const id = context.query?.id as string;
+    return {
+        props: { id },
+    };
+};
+
 export default OrderDetailsAdmin;

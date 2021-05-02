@@ -22,9 +22,6 @@ const SearchBar: React.FC = () => {
         <>
             <div className={styles.div}>
                 <input className={styles.input} type="text" onChange={(e)=>{setProduct(e.target.value)}} placeholder="Search Product by name..." />
-                <Button type="submit" formAction="/products" onClick={researchProduct} color="light" style={{ borderRadius: "0px 25px 25px 0px" }}>
-                    <img src="/iconsearch.png" style={{ width: "2.1rem", height: "2.1rem" }} />
-                </Button>
             </div>
         </>
     );

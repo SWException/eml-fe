@@ -11,7 +11,7 @@ const CategoryManagement: React.FC = () => {
 
     const router = useRouter();
 
-    const [categories, setCategories] = useState<Categories>();
+    const [categories, setCategories]: [Categories, Dispatch<Categories>] = useState<Categories>();
     const [info, setInfo] = useState({
         error: '',
         messageShow: ''

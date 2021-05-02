@@ -1,5 +1,4 @@
-export interface Checkout {
-    status: string;
+export type PaymentIntent = {
     id: string;
-    secret: string;
+    clientSecret: string;
 }
