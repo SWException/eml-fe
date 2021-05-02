@@ -116,7 +116,7 @@ const AddNewProduct: React.FC<Props> = ({ categories, taxes }) => {
     const renderCategoryCombobox = (): any => (
         <div className={styles.div}>
             <label>Category:</label>
-            <select className={styles.select} value='#' onChange={(e) => categoryIdHandler(e)}>
+            <select className={styles.select} defaultValue='#' onChange={(e) => categoryIdHandler(e)}>
                 <option value='#' selected disabled> - - - </option>
                 {categories?.map((category) => (
                     <option value={category.id}>{category.name}</option>
@@ -128,7 +128,7 @@ const AddNewProduct: React.FC<Props> = ({ categories, taxes }) => {
     const renderTaxesCombobox = (): any => (
         <div className={styles.div}>
             <label>VAT</label>
-            <select className={styles.select} value='#' onChange={(e) => taxIdHandler(e)}>
+            <select className={styles.select} defaultValue='#' onChange={(e) => taxIdHandler(e)}>
                 <option value='#' disabled> - - - </option>
                 {taxes?.map((tax) => (
                     <option value={tax.id}>{tax.value} - {tax.description}</option>
