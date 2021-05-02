@@ -5,7 +5,7 @@ import { Button } from 'reactstrap';
 import { AdminLayout } from 'components/layouts/AdminLayout';
 import { AddNewTax, EditExistingTax } from 'components/admin';
 import { Taxes } from 'types';
-import { TaxesService } from 'services';
+import { sessionService, TaxesService } from 'services';
 
 const TaxManagement: React.FC = () => {
 
@@ -15,6 +15,12 @@ const TaxManagement: React.FC = () => {
 
     useEffect(() => {
         getAllTaxes()
+        const user = sessionService.getLocalStorage();
+        if(sessionService.isAuth() && user.role=='user'){
+            router.push('/');
+        } else if (!sessionService.isAuth()){
+            router.push('/')
+        }
     }, [])
 
 

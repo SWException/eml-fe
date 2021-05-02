@@ -1,11 +1,12 @@
 import { AdminLayout } from 'components/layouts/AdminLayout';
-import React, { ChangeEvent, useState } from 'react';
+import React, { ChangeEvent, useEffect, useState } from 'react';
 import styles from 'styles/AddNewProduct.module.css'
 import { Button } from 'reactstrap'
 import { Category, InsertProduct, Tax } from 'types';
-import { CategoriesService, ProductService } from 'services';
+import { CategoriesService, ProductService, sessionService } from 'services';
 import { GetServerSideProps } from 'next';
 import { TaxesService } from 'services';
+import { useRouter } from 'next/router'
 
 interface Props {
     categories: Category[],
@@ -13,6 +14,8 @@ interface Props {
 }
 
 const AddNewProduct: React.FC<Props> = ({ categories, taxes }) => {
+
+    const router = useRouter();
 
     const [productName, setProductName] = useState("");
     const [productDescription, setProductDescription] = useState("");
@@ -24,6 +27,15 @@ const AddNewProduct: React.FC<Props> = ({ categories, taxes }) => {
     const [productShow, setProductShow] = useState(true);
     const [productStock, setProductStock] = useState(0);
     const [productShowHome, setProductShowHome] = useState(false);
+
+    useEffect(()=>{
+        const user = sessionService.getLocalStorage();
+        if(sessionService.isAuth() && user.role=='user'){
+            router.push('/');
+        } else if (!sessionService.isAuth()){
+            router.push('/')
+        }
+    });
 
     const addProduct = async () => {
         const { productPrimaryPhotoBase64, productSecondaryPhotosBase64 } = await getPhotos(productPrimaryPhoto, productSecondaryPhotos);

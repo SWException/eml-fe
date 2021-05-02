@@ -5,7 +5,7 @@ import styles from 'styles/ProductManagement.module.css';
 import { Button } from 'reactstrap';
 import { Category, Products } from 'types';
 import { GetServerSideProps } from 'next';
-import { CategoriesService, ProductService } from 'services';
+import { CategoriesService, ProductService, sessionService } from 'services';
 
 interface Props {
     defaultProducts: Products,
@@ -14,6 +14,15 @@ interface Props {
 
 const ProductManagement: React.FC<Props> = ({ defaultProducts, categories }) => {
     const router = useRouter();
+
+    useEffect(()=>{
+        const user = sessionService.getLocalStorage();
+        if(sessionService.isAuth() && user.role=='user'){
+            router.push('/');
+        } else if (!sessionService.isAuth()){
+            router.push('/')
+        }
+    });
 
     const [products, setProducts] = useState<Products>(defaultProducts);
     const [currentCategory, setCurrentCategory] = useState<string>("");

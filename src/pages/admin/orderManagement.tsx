@@ -4,13 +4,19 @@ import { AdminLayout } from 'components/layouts/AdminLayout';
 import styles from 'styles/ProductManagement.module.css'
 import { Button } from 'reactstrap'
 import { Orders } from 'types'
-import { OrdersService } from 'services';
+import { OrdersService, sessionService } from 'services';
 
 const OrderManagement: React.FC = () => {
     const router = useRouter();
 
     useEffect(() => {
         loadOrders();
+        const user = sessionService.getLocalStorage();
+        if(sessionService.isAuth() && user.role=='user'){
+            router.push('/');
+        } else if (!sessionService.isAuth()){
+            router.push('/')
+        }
     }, [])
 
     const [orders, setOrder] = useState<Orders>();

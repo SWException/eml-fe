@@ -3,14 +3,24 @@ import { AdminLayout } from 'components/layouts/AdminLayout';
 import styles from 'styles/ProductManagement.module.css';
 import { Button } from 'reactstrap';
 import { AddNewCategory, EditExistingCategory } from 'components/admin/';
-import { CategoriesService } from 'services';
+import { CategoriesService, sessionService } from 'services';
 import { Categories } from 'types';
+import { useRouter } from 'next/router';
 
 const CategoryManagement: React.FC = () => {
+
+    const router = useRouter();
+    
     const [categories, setCategories] = useState<Categories>();
 
     useEffect(() => {
         getAllCategories();
+        const user = sessionService.getLocalStorage();
+        if(sessionService.isAuth() && user.role=='user'){
+            router.push('/');
+        } else if (!sessionService.isAuth()){
+            router.push('/')
+        }
     }, [])
 
     const getCategoriesByName = async (name: string) => {

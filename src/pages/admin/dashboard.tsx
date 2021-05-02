@@ -1,11 +1,21 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { AdminLayout } from 'components/layouts/AdminLayout';
 import styles from 'styles/Dashboard.module.css';
 import Image from 'next/image';
+import { sessionService } from 'services';
 
 const Dashboard: React.FC = () => {
     const router = useRouter();
+
+    useEffect(()=>{
+        const user = sessionService.getLocalStorage();
+        if(sessionService.isAuth() && user.role=='user'){
+            router.push('/');
+        } else if (!sessionService.isAuth()){
+            router.push('/')
+        }
+    });
 
     const redirectProductManagement = () => {
         router.push('/admin/productManagement');

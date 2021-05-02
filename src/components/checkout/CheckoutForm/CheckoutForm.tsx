@@ -267,7 +267,7 @@ const CheckoutForm: React.FC = () => {
                                 <select className="custom-select d-block w-100" id="saveaddress">
                                     {address.map((address) => (
                                         <option onClickCapture={() => { setAddressToShow('billing', address.id) }} value={`${address.id}`}>
-                                            {`${address.description}`}
+                                            {`${address.address}`}
                                         </option>
                                     ))}
                                 </select>
@@ -345,7 +345,7 @@ const CheckoutForm: React.FC = () => {
                                 <label >Choose a saved address:</label>
                                 <select className="custom-select d-block w-100" id="saveaddress">
                                     {address.map((address) => (
-                                        <option onClickCapture={() => { setAddressToShow('shipping', address.id) }} value={`${address.id}`}>{`${address.description}`}</option>
+                                        <option onClickCapture={() => { setAddressToShow('shipping', address.id) }} value={`${address.id}`}>{`${address.address}`}</option>
                                     ))}
                                 </select>
                                 <div className="invalid-feedback"> Please select a valid address. </div>

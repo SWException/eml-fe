@@ -1,9 +1,10 @@
 import { Product } from 'types'
-import React from "react";
+import React, { useEffect } from "react";
 import { useRouter } from 'next/router';
 import { AdminLayout } from 'components/layouts/AdminLayout';
 import styles from "styles/Order.module.css";
 import { DetailOrderProductCard } from 'components/orderdetails'
+import { sessionService } from 'services';
 
 interface Props {
     orderdetails: any,  //DA MODIFICARE NON APPENA E' PRONTO
@@ -14,6 +15,15 @@ const OrderDetailsAdmin: React.FC<Props> = ({ orderdetails }) => { //IN VERITA' 
     //Inserire Fetch
 
     const router = useRouter();
+
+    useEffect(()=>{
+        const user = sessionService.getLocalStorage();
+        if(sessionService.isAuth() && user.role=='user'){
+            router.push('/');
+        } else if (!sessionService.isAuth()){
+            router.push('/')
+        }
+    });
 
     let orders = [];
     for (var i = 0; i < 1; i++) {

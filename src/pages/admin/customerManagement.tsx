@@ -2,15 +2,24 @@ import React, { ChangeEvent, useEffect, useState } from 'react';
 import { AdminLayout } from 'components/layouts/AdminLayout';
 import styles from 'styles/ProductManagement.module.css';
 import { Button } from 'reactstrap';
-import { CustomerService } from 'services';
+import { useRouter } from 'next/router';
+import { CustomerService, sessionService } from 'services';
 import { Customer } from 'types';
 
 const CustomerManagement: React.FC = () => {
+
+    const router = useRouter();
 
     const [customers, setCustomers] = useState<Customer[]>();
 
     useEffect(() => {
         getAllCustomer();
+        const user = sessionService.getLocalStorage();
+        if(sessionService.isAuth() && user.role=='user'){
+            router.push('/');
+        } else if (!sessionService.isAuth()){
+            router.push('/')
+        }
     }, [])
 
     const getCustomersByMail = async (mail: string) => {

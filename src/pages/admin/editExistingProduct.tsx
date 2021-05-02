@@ -1,9 +1,10 @@
 import { AdminLayout } from 'components/layouts/AdminLayout';
-import React, { useState, ChangeEvent } from 'react'
+import React, { useState, useEffect, ChangeEvent } from 'react'
 import styles from 'styles/AddNewProduct.module.css'
 import { Button } from 'reactstrap'
+import { useRouter } from 'next/router';
 import { Category, Product, Tax, EditProduct } from 'types';
-import { CategoriesService, ProductService } from 'services';
+import { CategoriesService, ProductService, sessionService } from 'services';
 import { GetServerSideProps } from 'next';
 import { TaxesService } from 'services/taxesService';
 
@@ -15,6 +16,8 @@ interface Props {
 
 const EditExistingProduct: React.FC<Props> = ({ product, categories, taxes }) => {
 
+    const router = useRouter();
+
     const [productName, setProductName] = useState(product.name);
     const [productDescription, setProductDescription] = useState(product.description);
     const [productPrimaryPhoto, setProductPrimaryPhoto] = useState<any>();
@@ -25,6 +28,15 @@ const EditExistingProduct: React.FC<Props> = ({ product, categories, taxes }) =>
     const [productShow, setProductShow] = useState(product.show);
     const [productStock, setProductStock] = useState(product.stock);
     const [productShowHome, setProductShowHome] = useState(product.showHome);
+
+    useEffect(()=>{
+        const user = sessionService.getLocalStorage();
+        if(sessionService.isAuth() && user.role=='user'){
+            router.push('/');
+        } else if (!sessionService.isAuth()){
+            router.push('/')
+        }
+    });
 
     const updateProduct = async (): Promise<void> => {
         const { productPrimaryPhotoBase64, productSecondaryPhotosBase64 } = await getPhotos(productPrimaryPhoto, productSecondaryPhotos);
