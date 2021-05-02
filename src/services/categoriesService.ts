@@ -1,25 +1,5 @@
-import { Categories, Category, EditCategory } from 'types';
+import { Categories, EditCategory } from 'types';
 import { sessionService } from './sessionService';
-
-interface CategoriesData {
-    categories: Category[]
-}
-
-interface Data {
-    id: string;
-    name: string;
-}
-
-interface CategoryData {
-    status: string;
-    data: Data
-}
-
-interface Response {
-    status: string;
-    message: string;
-}
-
 
 const fetchAllCategories = async (): Promise<Categories> => {
     const requestOptions = {
