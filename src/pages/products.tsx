@@ -1,29 +1,24 @@
 import { Filters, Sort } from 'components/ui';
 import { ProductList } from 'components/products';
-import React, { useEffect } from 'react';
+import React from 'react';
 import styles from 'styles/PLP.module.css';
-import { useShop } from 'context/shop';
 import { CustomerLayout } from 'components/layouts/CustomerLayout';
 import { GetServerSideProps } from 'next';
+import { ProductService } from 'services';
+import { Products } from 'types';
 
 interface Props {
-    id: string;
+    products: Products;
 }
 
-const Products: React.FC<Props> = ({ id }) => {
-    const { loadProducts, products } = useShop();
-
-    useEffect(() => {
-        products.length === 0 && loadProducts(id);
-    }, []);
-
+const ProductsPage: React.FC<Props> = ({ products }) => {
     return (
         <CustomerLayout header categories footer>
             <div>
                 <div className={styles.filter}>  Price:<Filters /> </div>
                 <div className={styles.filter}>  Price sorting:<Sort /></div>
                 <div>
-                    {products.length > 0 ? (
+                    {products?.length > 0 ? (
                         <ProductList products={products} />
                     ) : (
                         <div style={{ textAlign: "center" }}>
@@ -38,19 +33,19 @@ const Products: React.FC<Props> = ({ id }) => {
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
     const id = context?.query?.category as string;
-
+    const products = (await ProductService.fetchProducts({params: {category: id}})).products;
     try {
         console.log(id);
         return {
-            props: { id },
+            props: { products },
         };
     } catch (error) {
         return {
             props: {
-                id: null
+                products: null
             },
         };
     }
 };
 
-export default Products;
+export default ProductsPage;

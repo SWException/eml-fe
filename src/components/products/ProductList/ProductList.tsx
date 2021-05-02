@@ -8,11 +8,10 @@ interface Props {
 }
 
 const ProductList: React.FC<Props> = ({ products }) => {
-
     return (
         <>
             <div className={styles.productGrid}>
-                {products.map((product: Product) => (
+                {products?.map((product: Product) => (
                     <Link href={`/detail?id=${product.id}`} key={product.id}>
 
                         <a>

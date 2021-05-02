@@ -28,7 +28,7 @@ const CategoriesToShow: React.FC = () => {
         console.log(e.target);
         const T: any = e.target;
         await router.push('/products?category=' + T.name);
-        window.location.reload();
+        // window.location.reload();
     }
 
     return (
