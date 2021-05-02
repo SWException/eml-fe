@@ -93,9 +93,9 @@ const AddNewProduct: React.FC<Props> = ({ categories, taxes }) => {
     const renderShow = (): any => (
         <div className={styles.div}>
             <label>Show:</label>
-            <input className={styles.inputcheck} type="radio" id="visible" name="visibilty" value="visible" onChange={(e) => showHandler(true)} />
+            <input className={styles.inputcheck} type="radio" id="visible" name="visibilty" value="visible" onChange={() => showHandler(true)} />
             <label>Visible</label>
-            <input className={styles.inputcheck} type="radio" id="notVisible" name="visibilty" value="notVisible" onChange={(e) => showHandler(false)} />
+            <input className={styles.inputcheck} type="radio" id="notVisible" name="visibilty" value="notVisible" onChange={() => showHandler(false)} />
             <label>Not visible</label>
         </div>
     );
@@ -103,9 +103,9 @@ const AddNewProduct: React.FC<Props> = ({ categories, taxes }) => {
     const renderShowHome = (): any => (
         <div className={styles.div}>
             <label>Show in Best Product:</label>
-            <input className={styles.inputcheck} type="radio" id="BPv" name="BP" value="v" onChange={(e) => showHomeHandler(true)} />
+            <input className={styles.inputcheck} type="radio" id="BPv" name="BP" value="v" onChange={() => showHomeHandler(true)} />
             <label>Visible</label>
-            <input className={styles.inputcheck} type="radio" id="BPnv" name="BP" value="nv" onChange={(e) => showHomeHandler(false)} />
+            <input className={styles.inputcheck} type="radio" id="BPnv" name="BP" value="nv" onChange={() => showHomeHandler(false)} />
             <label>Not visible</label>
         </div>
     );

@@ -93,9 +93,9 @@ const EditExistingProduct: React.FC<Props> = ({ product, categories, taxes }) =>
     const renderShow = (): any => (
         <div className={styles.div}>
             <label>Show:</label>
-            <input className={styles.inputcheck} type="radio" id="visible" name="visibility" value="visible" checked={productShow == true} onChange={(e) => showHandler(true)} />
+            <input className={styles.inputcheck} type="radio" id="visible" name="visibility" value="visible" checked={productShow == true} onChange={() => showHandler(true)} />
             <label>Visible</label>
-            <input className={styles.inputcheck} type="radio" id="notVisible" name="visibility" value="notVisible" checked={productShow == false} onChange={(e) => showHandler(false)} />
+            <input className={styles.inputcheck} type="radio" id="notVisible" name="visibility" value="notVisible" checked={productShow == false} onChange={() => showHandler(false)} />
             <label>Not visible</label>
         </div>
     )
@@ -103,9 +103,9 @@ const EditExistingProduct: React.FC<Props> = ({ product, categories, taxes }) =>
     const renderShowHome = (): any => (
         <div className={styles.div}>
             <label>Show in Best Product:</label>
-            <input className={styles.inputcheck} type="radio" id="BPv" name="BP" value="v" checked={productShowHome == true} onChange={(e) => showHomeHandler(true)} />
+            <input className={styles.inputcheck} type="radio" id="BPv" name="BP" value="v" checked={productShowHome == true} onChange={() => showHomeHandler(true)} />
             <label>Visible</label>
-            <input className={styles.inputcheck} type="radio" id="BPnv" name="BP" value="nv" checked={productShowHome == false} onChange={(e) => showHomeHandler(true)} />
+            <input className={styles.inputcheck} type="radio" id="BPnv" name="BP" value="nv" checked={productShowHome == false} onChange={() => showHomeHandler(false)} />
             <label>Not visible</label>
         </div>
     )
@@ -244,5 +244,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         }
     } catch (err) {
         console.log(err);
+        return {props: { product: null, categories: null, taxes: null }};
     }
 }
