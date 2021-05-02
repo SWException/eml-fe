@@ -5,10 +5,12 @@ import { Category } from 'types';
 import { useState } from 'react';
 
 interface Props {
-    category: Category,
+    category: Category;
+    error: ()=>void;
+    messageIn: ()=>void;
 }
 
-const EditExistingCategory: React.FC<Props> = ({ category }) => {
+const EditExistingCategory: React.FC<Props> = ({ category, error, messageIn }) => {
 
     const [newCategoryName, setNewCategory] = useState("");
 
@@ -19,16 +21,9 @@ const EditExistingCategory: React.FC<Props> = ({ category }) => {
             const { status, message } = await CategoriesService.updateCategory(category);
             console.log(status, message);
             if (status == "success") {
-                //AGGIUNGERE ESITO POSITIVO
-                /*setInfo({
-                    ...info,
-                    messageShow: "Category added"
-                })*/
+                messageIn()
             } else {
-                /*setInfo({
-                    ...info,
-                    error: "Error on loading the category! Try again.."
-                })*/
+                error()
             }
         } catch (err) {
             console.log("Errore", err)

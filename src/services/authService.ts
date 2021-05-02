@@ -53,12 +53,12 @@ const LoginSupport = async (email: string, password: string) => {
                     userObject,
                     newPassword
                 )
-                    .then(userObject => {
-                        return userObject;
-                    })
-                    .catch(e => {
-                        console.log(e);
-                    });
+                .then(userObject => {
+                    return userObject;
+                })
+                .catch(e => {
+                    console.log(e);
+                });
             } else {
                 return userObject;
             }
