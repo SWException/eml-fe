@@ -1,10 +1,12 @@
 import React, { useState, useEffect, Dispatch, ChangeEvent } from "react";
+import { useRouter } from 'next/router';
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
-import { Button, Spinner } from 'reactstrap';
+import { Button } from 'reactstrap';
 import { Address, Addresses, PaymentIntent } from 'types';
 import { AddressesService, CheckoutService } from 'services';
 
 const CheckoutForm: React.FC = () => {
+    const router = useRouter();
     const stripe = useStripe();
     const elements = useElements();
 
@@ -51,68 +53,27 @@ const CheckoutForm: React.FC = () => {
     const pay = async (): Promise<void> => {   
         const paymentIntent: PaymentIntent = await CheckoutService.fetchCheckout(idSelectedShippingAddress, idSelectedBillingAddress); 
 
-        const payload = await stripe.confirmCardPayment(paymentIntent.clientSecret, { 
+        console.log("PAYMENT INTENT", paymentIntent);
+
+        await stripe.confirmCardPayment(paymentIntent.secret, { 
             payment_method: {
                 card: elements.getElement(CardElement)
             }
-        });
-        console.log(payload.error);
-        console.log("HA FUNZIONATO");        
-    }
-
-
-
-
-
-
-    /*const confirmPayment = async () => {
-        try {
-            const { status } = await CheckoutService.confirmCheckout(id);
-            console.log("HAI LETTO ERA LO STATUS");
-            console.log(status);
-            if (status == "success") {
-                //Pagamento andato a buon fine
-            }
-        }
-        catch (err) {
-            console.log(err);
-        }
-    }*/
-
-    /*const setAddressToShow = (name: string, id: string) => {
-        let addressFound: Address;
-        addresses.forEach(add => {
-            if (add.id == id) {
-                return addressFound = add;
-            }
         })
-        if (name == 'billing') {
-            setBillingAddress({
-                ...billingAddress,
-                id: addressFound.id,
-                description: addressFound.description,
-                recipientName: addressFound.recipientName,
-                recipientSurname: addressFound.recipientSurname,
-                address: addressFound.address,
-                city: addressFound.city,
-                code: addressFound.code,
-                district: addressFound.district
+            .then(async (payload) => {
+                if(payload.error){
+                    console.error(payload.error.message);  
+                }
+                else{
+                    const response: boolean = await CheckoutService.confirmCheckout(paymentIntent.id);
+                    console.log(payload.paymentIntent.status, response);
+                    router.push('/orders');
+                }
             })
-        }
-        else {
-            setShippingAddress({
-                ...billingAddress,
-                id: addressFound.id,
-                description: addressFound.description,
-                recipientName: addressFound.recipientName,
-                recipientSurname: addressFound.recipientSurname,
-                address: addressFound.address,
-                city: addressFound.city,
-                code: addressFound.code,
-                district: addressFound.district
+            .catch((e) => {
+                console.error(e);
             })
-        }
-    }*/
+    }
 
     const handleChangeShippingAddress = (e: ChangeEvent<HTMLSelectElement>) => {
         setIdSelectedShippingAddress(e.target.value);

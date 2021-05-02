@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useEffect, useState } from 'react';
+import React, { ChangeEvent, Dispatch, useEffect, useState } from 'react';
 import { AdminLayout } from 'components/layouts/AdminLayout';
 import styles from 'styles/CategoryManagement.module.css';
 import { Button } from 'reactstrap';

@@ -22,7 +22,7 @@ const AddNewProduct: React.FC<Props> = ({ categories, taxes }) => {
     const [productPrimaryPhoto, setProductPrimaryPhoto] = useState<any>();
     const [productSecondaryPhotos, setProductSecondaryPhotos] = useState<any>([]);
     const [productCategoryId, setProductCategoryId]: [string, Dispatch<string>] = useState<string>("");
-    const [productNetPrice, setProductNetPrice]: [string, Dispatch<string>] = useState<number>(0);
+    const [productNetPrice, setProductNetPrice]: [number, Dispatch<number>] = useState<number>(0);
     const [productTaxId, setProductTaxId]: [string, Dispatch<string>] = useState<string>("");
     const [productShow, setProductShow]: [boolean, Dispatch<boolean>] = useState<boolean>(true);
     const [productStock, setProductStock]: [number, Dispatch<number>] = useState<number>(0);
