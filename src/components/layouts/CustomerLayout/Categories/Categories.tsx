@@ -19,6 +19,7 @@ const CategoriesToShow: React.FC = () => {
         try {
             const categories = await CategoriesService.fetchAllCategories();
             setCategories(categories);
+            console.log(categories)
         } catch (err) {
             console.log(err)
         }
@@ -28,7 +29,6 @@ const CategoriesToShow: React.FC = () => {
         console.log(e.target);
         const T: any = e.target;
         await router.push('/products?category=' + T.name);
-        // window.location.reload();
     }
 
     return (

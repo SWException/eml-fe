@@ -1,13 +1,13 @@
 import { Button, PopoverHeader, PopoverBody, UncontrolledPopover } from 'reactstrap';
 import React, { ChangeEvent } from 'react';
 import { CategoriesService } from 'services';
-import { Category } from 'types';
+import { Category, EditCategory } from 'types';
 import { useState } from 'react';
 
 interface Props {
     category: Category;
-    error: ()=>void;
-    messageIn: ()=>void;
+    error: () => void;
+    messageIn: () => void;
 }
 
 const EditExistingCategory: React.FC<Props> = ({ category, error, messageIn }) => {
@@ -16,11 +16,10 @@ const EditExistingCategory: React.FC<Props> = ({ category, error, messageIn }) =
 
     const editCategory = async (id: string, name: string) => {
         try {
-            let category: Category = { id, name };
-            console.log(category);
-            const { status, message } = await CategoriesService.updateCategory(category);
-            console.log(status, message);
-            if (status == "success") {
+            const editCategory: EditCategory = { name: name };
+            const response: boolean = await CategoriesService.modifyCategory(category.id, editCategory);
+            console.log(response);
+            if (response) {
                 messageIn()
             } else {
                 error()

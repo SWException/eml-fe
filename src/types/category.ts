@@ -4,3 +4,5 @@ export type Category = {
 };
 
 export type Categories = Category[];
+
+export type EditCategory = Omit<Category, 'id' >;

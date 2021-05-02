@@ -10,21 +10,21 @@ import { useRouter } from 'next/router';
 const CategoryManagement: React.FC = () => {
 
     const router = useRouter();
-    
+
     const [categories, setCategories] = useState<Categories>();
     const [info, setInfo] = useState({
         error: '',
         messageShow: ''
     })
 
-    const {error, messageShow} = info;
+    const { error, messageShow } = info;
 
     useEffect(() => {
         getAllCategories();
         const user = sessionService.getLocalStorage();
-        if(sessionService.isAuth() && user.role=='user'){
+        if (sessionService.isAuth() && user.role == 'user') {
             router.push('/');
-        } else if (!sessionService.isAuth()){
+        } else if (!sessionService.isAuth()) {
             router.push('/')
         }
     }, [])
@@ -32,7 +32,7 @@ const CategoryManagement: React.FC = () => {
     const getCategoriesByName = async (name: string) => {
         console.log(name);
         try {
-            const { categories } = await CategoriesService.fetchCategoriesByName(name);
+            const categories: Categories = await CategoriesService.fetchCategoriesByName(name);
             setCategories(categories);
         } catch (err) {
             console.log(err);
@@ -43,6 +43,7 @@ const CategoryManagement: React.FC = () => {
         try {
             const categories = await CategoriesService.fetchAllCategories();
             setCategories(categories);
+            console.log(categories);
         } catch (err) {
             console.log(err);
         }
@@ -50,8 +51,9 @@ const CategoryManagement: React.FC = () => {
 
     const deleteCategory = async (id: string) => {
         try {
-            const { status, message } = await CategoriesService.deleteCategory(id);
-            if(status == 'success'){
+            const response: boolean = await CategoriesService.deleteCategory(id);
+            console.log(response);
+            if (response) {
                 setInfo({
                     ...info,
                     messageShow: 'Category deleted successfully'
@@ -90,15 +92,15 @@ const CategoryManagement: React.FC = () => {
         <AdminLayout header>
             <h1>Management Categories</h1>
             <div className={styles.tab}>
-                <AddNewCategory 
-                    error={()=>{
+                <AddNewCategory
+                    error={() => {
                         setInfo({
                             ...info,
                             error: "Error on adding new category"
                         })
                         displayErr();
                     }}
-                messageIn={()=>{window.location.reload()}}/>
+                    messageIn={() => { window.location.reload() }} />
             </div>
             <div className={styles.tab}>
                 <label><strong>Search:</strong></label>
@@ -117,17 +119,17 @@ const CategoryManagement: React.FC = () => {
                                 {categories.map((category) => (
                                     <tr key={category.id}>
                                         <td>{category.name}</td>
-                                        <td><EditExistingCategory 
-                                            category={category} 
-                                            error={()=>{
+                                        <td><EditExistingCategory
+                                            category={category}
+                                            error={() => {
                                                 setInfo({
                                                     ...info,
                                                     error: "Error on editing category"
                                                 })
                                                 displayErr();
                                             }}
-                                            messageIn={()=>{window.location.reload()}}
-                                            /></td>
+                                            messageIn={() => { window.location.reload() }}
+                                        /></td>
                                         <td><Button color="primary" size="lg" onClick={() => deleteCategory(category.id)}>REMOVE</Button></td>
                                     </tr>
                                 ))}
