@@ -3,16 +3,15 @@ import { Collapse, Navbar, NavbarToggler, Nav, NavItem, NavLink } from 'reactstr
 import Link from 'next/link';
 import styles from './Header.module.css';
 import { LogoutButton } from 'components/ui';
+import { sessionService } from 'services';
 
 
 const Header: React.FC = () => {
     const [isOpen, setIsOpen] = useState(false);
-    const [isAuth, setIsAuth] = useState(false);
+    //const [isAuth, setIsAuth] = useState(false);
 
     useEffect(() => {
-        if (window.localStorage.getItem('jwt')) {
-            setIsAuth(true);
-        }
+        //
     })
 
     const toggle = () => {
@@ -29,7 +28,7 @@ const Header: React.FC = () => {
                 <Collapse isOpen={isOpen} navbar>
                     <Nav className="ml-auto" navbar>
                         <Fragment>
-                            {isAuth ? (
+                            {sessionService.isAuth() ? (
                                 <Fragment>
                                     <NavItem className="">
                                         <LogoutButton />

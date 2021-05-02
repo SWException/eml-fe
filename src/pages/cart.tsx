@@ -1,7 +1,7 @@
 import { ProductCard } from 'components/cart';
 import React, { useEffect, useState } from "react";
 import { useRouter } from 'next/router';
-import { Button } from 'reactstrap';
+import { Button, Spinner } from 'reactstrap';
 import { CustomerLayout } from 'components/layouts/CustomerLayout';
 import styles from 'styles/Cart.module.css'
 import { CartService } from 'services';
@@ -18,6 +18,7 @@ interface Props {
 const CartUser: React.FC<Props> = () => {
 
     const router = useRouter();
+    const [loading, setLoading] = useState(false)
     const [cartShow, setCartShow] = useState<Cart>({
         id: "",
         product: [],
@@ -34,6 +35,7 @@ const CartUser: React.FC<Props> = () => {
     }
 
     const reloadCart = async () => {
+        setLoading(true);
         const { cart } = await CartService.fetchCart();
         setCartShow({
             id: cart.id,
@@ -42,6 +44,7 @@ const CartUser: React.FC<Props> = () => {
             total: cart.total
         });
         console.log('Done');
+        setLoading(false);
     }
 
     const removeAllCart = async () => {
@@ -57,7 +60,12 @@ const CartUser: React.FC<Props> = () => {
                 <h1>Cart</h1>
             </div>
             <div className={styles.cart}>
-                <div className="cart-item-layout">
+                {loading ? (
+                    <div style={{display: "flex", justifyContent: "center", alignItems: 'center', margin: '100px'}}>
+                        <Spinner style={{width: '3rem', height: '3rem'}}/>
+                    </div>
+                ) : (
+                    <div className="cart-item-layout">
                     {cartShow.product.map((product) => (
                         <ProductCard
                             id={product.productId}
@@ -69,6 +77,8 @@ const CartUser: React.FC<Props> = () => {
                         />
                     ))}
                 </div>
+                )
+            }
             </div>
             <div className={styles.remove}>
                 <Button color="primary" onClick={removeAllCart} size="lg">Remove all</Button>

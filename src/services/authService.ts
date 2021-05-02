@@ -25,13 +25,15 @@ const login = async (email: string, password: string): Promise<UserData> => {
     try {
         let userObject = await LoginSupport(email, password);
 
+        console.log(userObject)
+
         userReturn = {
             user: {
                 email: userObject.attributes.email,
-                name: userObject.attributes.email,
+                name: userObject.attributes.name,
                 imageURL: '',
                 carts: [],
-                role: 'user'
+                role: 'user' //Fix with group
             },
             token: userObject.signInUserSession.accessToken.jwtToken, //is ID_TOKEN?
         };
