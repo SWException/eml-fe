@@ -1,7 +1,7 @@
 import { ProductsData, ProductData, InsertProduct, EditProduct } from '../types/product';
 import { sessionService } from './sessionService';
 
-type ProductPayload = { params: any };
+type ProductPayload = { params: any }; //CHE SENSO HA?????????????????????
 
 interface Response {
     status: string;
@@ -121,29 +121,26 @@ export const modifyProduct = async (id: string, product: EditProduct): Promise<R
     }
 };
 
-export const deleteProduct = async (id: string): Promise<Response> => {
-    const token = sessionService.getCookie('token')
-    try {
-        const requestOptions = {
-            method: 'DELETE',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `${token}`
-            }
-        };
-        const res = await fetch(`${process.env.AWS_ENDPOINT}/products/${id}`, requestOptions)
-        const data = await res.json();
+export const deleteProduct = async (id: string): Promise<boolean> => {
+    const token = sessionService.getCookie('token');
 
-        const responseDelete: Response = {
-            status: data.status,
-            message: data.message
-        };
+    const requestOptions = {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `${token}`
+        }
+    }
 
-        return responseDelete;
-    }
-    catch (error) {
-        throw new Error(error);
-    }
+    const res = await fetch(`${process.env.AWS_ENDPOINT}/products/${id}`, requestOptions)
+        .catch(() => { throw new Error('Error on deleting product') });
+
+    const response = await res.json();
+
+    if (response.status == 'error')
+        throw new Error(response.message);
+
+    return true;
 };
 
 export const ProductService = {

@@ -1,45 +1,49 @@
 import { sessionService } from './sessionService';
-import { Customer } from 'types/customer';
+import { Customers } from 'types/customer';
 
-interface CustomersData {
-    status: string;
-    data: Customer[];
-}
-
-const fetchAllCustomers = async (): Promise<CustomersData> => {
+const fetchAllCustomers = async (): Promise<Customers> => {
     const token = sessionService.getCookie('token');
-    try {
-        const requestOptions = {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `${token}`,
-            }
-        };
-        const res = await fetch(`${process.env.AWS_ENDPOINT}/users/customers`, requestOptions)
-        const resOBJ: CustomersData = await res.json();
-        return resOBJ;
-    } catch (error) {
-        console.log(error);
+    const requestOptions = {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `${token}`,
+        }
     }
+
+    const res = await fetch(`${process.env.AWS_ENDPOINT}/users/customers`, requestOptions)
+        .catch(() => { throw new Error('Error on editing tax') });
+
+    const customersReturned = await res.json();
+
+    if (customersReturned.status == 'error')
+        throw new Error(customersReturned.message);
+
+    const customers: Customers = customersReturned.data;
+    return customers;
 };
 
-const fetchCustomersByMail = async (mail: string): Promise<CustomersData> => {
+const fetchCustomersByMail = async (mail: string): Promise<Customers> => {
     const token = sessionService.getCookie('token');
-    try {
-        const requestOptions = {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `${token}`,
-            }
-        };
-        const res = await fetch(`${process.env.AWS_ENDPOINT}/users/customers?search=${mail}`, requestOptions)
-        const resOBJ: CustomersData = await res.json();
-        return resOBJ;
-    } catch (error) {
-        console.log(error);
+
+    const requestOptions = {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `${token}`,
+        }
     }
+
+    const res = await fetch(`${process.env.AWS_ENDPOINT}/users/customers?search=${mail}`, requestOptions)
+        .catch(() => { throw new Error('Error on editing tax') });
+
+    const customersReturned = await res.json();
+
+    if (customersReturned.status == 'error')
+        throw new Error(customersReturned.message);
+
+    const customers: Customers = customersReturned.data;
+    return customers;
 };
 
 export const CustomerService = {

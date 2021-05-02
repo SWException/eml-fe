@@ -4,29 +4,29 @@ import styles from 'styles/CustomerManagement.module.css';
 import { Button } from 'reactstrap';
 import { useRouter } from 'next/router';
 import { CustomerService, sessionService } from 'services';
-import { Customer } from 'types';
+import { Customers } from 'types';
 
 const CustomerManagement: React.FC = () => {
 
     const router = useRouter();
 
-    const [customers, setCustomers] = useState<Customer[]>();
+    const [customers, setCustomers] = useState<Customers>();
 
     useEffect(() => {
         getAllCustomer();
         const user = sessionService.getLocalStorage();
-        if(sessionService.isAuth() && user.role=='user'){
+        if (sessionService.isAuth() && user.role == 'user') {
             router.push('/');
-        } else if (!sessionService.isAuth()){
+        } else if (!sessionService.isAuth()) {
             router.push('/')
         }
     }, [])
 
     const getCustomersByMail = async (mail: string) => {
         try {
-            const { status, data } = await CustomerService.fetchCustomersByMail(mail);
-            setCustomers(data);
-            console.log(data);
+            const customers = await CustomerService.fetchCustomersByMail(mail);
+            setCustomers(customers);
+            console.log(customers);
         } catch (err) {
             console.log(err);
         }
@@ -34,9 +34,9 @@ const CustomerManagement: React.FC = () => {
 
     const getAllCustomer = async () => {
         try {
-            const { status, data } = await CustomerService.fetchAllCustomers();
-            setCustomers(data);
-            console.log(data);
+            const customers = await CustomerService.fetchAllCustomers();
+            setCustomers(customers);
+            console.log(customers);
         } catch (err) {
             console.log(err);
         }
@@ -56,14 +56,14 @@ const CustomerManagement: React.FC = () => {
             <h1>Management Customers</h1>
             <div className={styles.tab}>
                 <label><strong>Search:</strong></label>
-                <input type="text" className={styles.input} placeholder="Search client by mail..." onChange={(e) => { handleChange(e) }} />
+                <input type="text" className={styles.input} placeholder="Search client by mail..." onChange={(e: ChangeEvent<HTMLInputElement>) => { handleChange(e) }} />
             </div>
 
             {customers ? (
                 <div className={styles.tab}>
                     <table className={styles.customers}>
                         <thead>
-                            <tr>
+                            <tr> 
                                 <th>NAME</th>
                                 <th>SURNAME</th>
                                 <th>EMAIL</th>
@@ -71,7 +71,7 @@ const CustomerManagement: React.FC = () => {
                         </thead>
                         <tbody>
                             {customers?.map((customer) => (
-                                <tr key={customer.id}>
+                                <tr key={customer.username}>
                                     <td>{customer.name}</td>
                                     <td>{customer.surname}</td>
                                     <td><a href={"mailto:" + customer.email + "?subject=Emporio%20Lambda&body=This%20is%20an%20example"}>{customer.email}</a></td>

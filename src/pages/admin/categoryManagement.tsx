@@ -52,18 +52,17 @@ const CategoryManagement: React.FC = () => {
         try {
             const { status, message } = await CategoriesService.deleteCategory(id);
             if(status == 'success'){
-                window.location.reload()
                 setInfo({
                     ...info,
                     messageShow: 'Category deleted successfully'
                 })
-                displayInfo()
+                displayInfo();
             } else {
                 setInfo({
                     ...info,
                     error: "Error while deleting a category! Try later..."
                 })
-                displayErr()
+                displayErr();
             }
         } catch (err) {
             console.log(err)

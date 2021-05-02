@@ -35,6 +35,15 @@ const ProductManagement: React.FC<Props> = ({ defaultProducts, categories }) => 
         router.push('/admin/editExistingProduct?id=' + id);
     }
 
+    const removeProduct = async (id: string) => {
+        try {
+            const result: boolean = await ProductService.deleteProduct(id);
+            console.log(result);
+        } catch (err) {
+            //HANDLING ERROR
+        }
+    }
+
     const handleCategoryChange = async (e: ChangeEvent<HTMLSelectElement>): Promise<void> => {
         const value = e.target.value;
         setCurrentCategory(value);
@@ -91,7 +100,7 @@ const ProductManagement: React.FC<Props> = ({ defaultProducts, categories }) => 
                                 <td>{product.category}</td>
                                 <td>{product.tax}</td>
                                 <td><Button color="primary" size="lg" onClick={() => editProduct(product.id)}>EDIT</Button></td>
-                                <td><Button color="primary" size="lg">REMOVE</Button></td>
+                                <td><Button color="primary" size="lg" onClick={() => removeProduct(product.id)}>REMOVE</Button></td>
                             </tr>
                         ))}
                     </tbody>
@@ -103,10 +112,7 @@ const ProductManagement: React.FC<Props> = ({ defaultProducts, categories }) => 
 
 export default ProductManagement;
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
-    const id = context.query?.id as string;
-    const category = context.query?.category as string;
-
+export const getServerSideProps: GetServerSideProps = async () => {
     try {
         const defaultProducts = (await ProductService.fetchProducts()).products;
         const categories = await CategoriesService.fetchAllCategories();

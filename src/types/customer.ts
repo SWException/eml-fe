@@ -1,10 +1,8 @@
-export interface Customer {
-    id?: string;
+export type Customer = {
+    username?: string;
     name: string;
     surname: string;
     email: string;
 }
 
-export interface Customers {
-    customers: Customer[];
-}
+export type Customers = Customer[];
