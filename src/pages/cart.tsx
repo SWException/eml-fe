@@ -86,7 +86,19 @@ const CartUser: React.FC<Props> = () => {
             <div className={styles.total}>
                 <div><strong>Total: {cartShow.total}{" €"} </strong></div>
                 <div><strong>Taxes: {cartShow.tax}{" €"} </strong></div>
-                <Button color="primary" size="lg" style={{ marginTop: "10px" }} onClick={() => { onSubmit() }}>Checkout</Button>
+                {loading ? (
+                    <div style={{ margin: '100px'}}>
+                        <Spinner />
+                    </div>
+                ) : (
+                    <div>
+                        {cartShow.product.length != 0 ? (
+                            <Button color="primary" size="lg" style={{ marginTop: "10px" }} onClick={() => { onSubmit() }}>Checkout</Button>
+                        ) : (
+                            <div style={{ marginTop: "20px"}}><strong>Add something to your cart if you want to proceed to checkout</strong></div>
+                        )}
+                    </div>
+                )}
             </div>
 
         </CustomerLayout>

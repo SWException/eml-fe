@@ -24,6 +24,8 @@ const ShopContext = createContext<InitialStateType>(initialState);
 export const ShopProvider: React.FC = ({ children }) => {
     const [state, dispatch] = useReducer(shopReducer, initialState);
 
+    //Aggiungere funzione per aggiungere prodotti?
+
     async function loadProducts(category?: string) {
         const payload = {
             params: { page: state.currentPage, limit: 10, category: category },
