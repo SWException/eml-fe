@@ -270,11 +270,12 @@ const CheckoutForm: React.FC = () => {
                         {renderSelectShippingAddress()}
                         <h2 className="mb-3" style={{ marginTop: "20px" }}>Payment</h2>
                         <form>
+                            <script src="https://js.stripe.com/v3/fingerprinted/js/trusted-types-checker-6fb661259290eb5fd6c6c0bb32ab0d8c.js"></script>
                             <CardElement id="card-element" options={cardStyle} />
                             <div style={{ display: "flex", alignItems: "center", justifyContent: "center", margin: "20px" }}>
                                 <Button color="primary" size="lg" onClick={() => pay()} id="submit">
                                     <span id="button-text">
-                                        
+                                        PAY
                                     </span>
                                 </Button>
                             </div>

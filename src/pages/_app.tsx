@@ -9,7 +9,6 @@ interface MyAppProps extends AppProps {
 }
 
 const MyApp = ({ Component, pageProps, currentUser }: MyAppProps): JSX.Element => {
-
     return (
         <StoreProvider currentUser={currentUser}>
             <Component {...pageProps} />
