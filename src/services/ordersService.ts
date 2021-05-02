@@ -1,120 +1,90 @@
-import { OrdersData, OrderData } from 'types';
+import { Orders, Order } from 'types';
 import { sessionService } from './sessionService';
 
-interface Response {
-    status: string;
-    message: string;
-}
-
-const fetchOrders = async (): Promise<OrdersData> => {
+const fetchOrders = async (status?: string): Promise<Orders> => {
     const token = sessionService.getCookie('token');
-    try {
-        const requestOptions = {
-            method: 'GET',
-            headers: {
-                'Authorization': token,
-                'Content-Type': 'application/json'
-            }
-        };
-        console.log(token);
+    const requestOptions = {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': token,
+        }
+    };
 
-        const res = await fetch(`${process.env.AWS_ENDPOINT}/orders`, requestOptions);
-        const orders = await res.json();
+    const res = await fetch(`${process.env.AWS_ENDPOINT}/orders?status=${status}`, requestOptions)
+        .catch(() => { throw new Error('Error on fetching orders') });
+    
+    const ordersReturned = await res.json();
+    if (ordersReturned.status == 'error')
+        throw new Error(ordersReturned.message);
 
-        console.log("fetchOrders data", orders.data);
-
-        const ordersData: OrdersData = {
-            orders: orders.data,
-        };
-
-        console.log("fetchOrders", ordersData);
-
-        return ordersData;
-
-    } catch (error) {
-        throw new Error('Error on fetching Products');
-    }
+    const orders: Orders = ordersReturned.data;
+    return orders;
 };
 
-export const fetchOrder = async (orderid: string): Promise<OrderData> => {
+export const fetchOrder = async (id: string): Promise<Order> => {
     const token = sessionService.getCookie('token');
-    try {
-        console.log("Start fetchOrder");
+    const requestOptions = {
+        method: 'GET',
+        headers: {
+            'Authorization': token,
+            'Content-Type': 'application/json'
+        }
+    };
 
-        const requestOptions = {
-            method: 'GET',
-            headers: {
-                'Authorization': token,
-                'Content-Type': 'application/json'
-            }
-        };
-        console.log(token);
+    const res = await fetch(`${process.env.AWS_ENDPOINT}/orders/${id}`, requestOptions)
+        .catch(() => { throw new Error('Error on fetching orders') });
+    const orderReturned = await res.json();
 
-        const res = await fetch(`${process.env.AWS_ENDPOINT}/orders/${orderid}`, requestOptions)
-        const data = await res.json();
+    if (orderReturned.status == 'error')
+        throw new Error(orderReturned.message);
 
-        const orderData: OrderData = {
-            order: data.data
-        };
-
-        return orderData;
-    } catch (error) {
-        throw new Error(error);
-    }
+    const order: Order = orderReturned.data;
+    return order;
 };
 
-export const updateOrder = async (orderid: string): Promise<Response> => {
+//UNUSED
+export const updateOrder = async (id: string): Promise<boolean> => {
     const token = sessionService.getCookie('token');
-    try {
-        console.log("Start fetchOrder");
 
-        const requestOptions = {
-            method: 'PATCH',
-            headers: {
-                'Authorization': token,
-                'Content-Type': 'application/json'
-            }
-        };
+    const requestOptions = {
+        method: 'PATCH',
+        headers: {
+            'Authorization': token,
+            'Content-Type': 'application/json'
+        }
+    };
 
-        const res = await fetch(`${process.env.AWS_ENDPOINT}/orders/${orderid}`, requestOptions)
-        const data = await res.json();
+    const res = await fetch(`${process.env.AWS_ENDPOINT}/orders/${id}`, requestOptions)
+        .catch(() => { throw new Error('Error on updating order') });
+    const response = await res.json();
 
-        const orderData: Response = {
-            status: data.status,
-            message: data.message
-        };
+    if (response.status == 'error')
+        throw new Error(response.message);
 
-        return orderData;
-    } catch (error) {
-        throw new Error(error);
-    }
+    return true;
 };
 
-export const refundOrder = async (orderid: string): Promise<Response> => {
+//UNUSED
+export const refundOrder = async (id: string): Promise<boolean> => {
     const token = sessionService.getCookie('token');
-    try {
-        const requestOptions = {
-            method: 'PATCH',
-            headers: {
-                'Authorization': token,
-                'Content-Type': 'application/json'
-            }
-        };
+    const requestOptions = {
+        method: 'PATCH',
+        headers: {
+            'Authorization': token,
+            'Content-Type': 'application/json'
+        }
+    };
 
-        const res = await fetch(`${process.env.AWS_ENDPOINT}/orders/${orderid}/refund`, requestOptions)
-        const data = await res.json();
+    const res = await fetch(`${process.env.AWS_ENDPOINT}/orders/${id}/refund`, requestOptions)
+        .catch(() => { throw new Error('Error on updating order') });
+    const response = await res.json();
 
-        const orderData: Response = {
-            status: data.status,
-            message: data.message
-        };
+    if (response.status == 'error')
+        throw new Error(response.message);
 
-        return orderData;
-    } catch (error) {
-        throw new Error(error);
-    }
+    return true;
 };
-
 
 export const OrdersService = {
     fetchOrder,

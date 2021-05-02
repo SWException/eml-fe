@@ -1,5 +1,5 @@
 import { DetailOrderProductCard } from 'components/orderdetails'
-import React, { useEffect, useState } from "react";
+import React, { Dispatch, useEffect, useState } from "react";
 import { Button } from 'reactstrap';
 import { CustomerLayout } from 'components/layouts/CustomerLayout';
 import styles from "styles/Order.module.css";
@@ -8,8 +8,7 @@ import { Order, OrderProducts } from 'types';
 import { GetServerSideProps } from 'next';
 
 interface Props {
-    order: Order,
-    id: any
+    id: string
 }
 
 const OrderDetails: React.FC<Props> = ({ id }) => {
@@ -19,12 +18,12 @@ const OrderDetails: React.FC<Props> = ({ id }) => {
     const [dateShow, setDateShow] = useState('')
 
     const getDate = (timestamp): string => {
-        var date = new Date(+timestamp);
+        const date = new Date(+timestamp);
         // Hours part from the timestamp
         return (date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear() + " " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds());
     }
 
-    const [order, setOrder]: [Order, React.Dispatch<Order>] = useState({
+    const [order, setOrder]: [Order, Dispatch<Order>] = useState({
         orderid: "",
         timestamp: "",
         orderStatus: "",
@@ -48,7 +47,7 @@ const OrderDetails: React.FC<Props> = ({ id }) => {
 
     const reloadOrder = async () => {
         console.log('Start reloadOrder');
-        const { order } = await OrdersService.fetchOrder(id);
+        const order = await OrdersService.fetchOrder(id);
         setOrder(order);
         console.log(order);
         console.log('Done reloadOrder');
@@ -109,37 +108,13 @@ const OrderDetails: React.FC<Props> = ({ id }) => {
         </CustomerLayout>
     );
 };
-/*
-{products.map((product) => (
-            <DetailOrderProductCard
-              primaryPhoto={product.primaryPhoto}
-              id={product.id}
-              name={product.name}
-              price={product.price}
-              quantity={10}
-            />
-          ))} 
-          */
+
+
 export const getServerSideProps: GetServerSideProps = async (context) => {
     const id = context.query?.id as string;
-
-    try {
-        let { order } = await OrdersService.fetchOrder(id);
-        if (!order)
-            order = null;
-        console.log(order);
-        return {
-            props: { order, id },
-        };
-    } catch (error) {
-        console.error("EEEEHIIII ", error);
-        return {
-            props: {
-                id,
-                order: null,
-                error: 'Error in getting order',
-            },
-        };
-    }
+    return {
+        props: { id },
+    };
 };
+
 export default OrderDetails;

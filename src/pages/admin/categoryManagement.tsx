@@ -24,7 +24,8 @@ const CategoryManagement: React.FC = () => {
         const user = sessionService.getLocalStorage();
         if (sessionService.isAuth() && user.role == 'user') {
             router.push('/');
-        } else if (!sessionService.isAuth()) {
+        }
+        else if (!sessionService.isAuth()) {
             router.push('/')
         }
     }, [])
@@ -34,7 +35,8 @@ const CategoryManagement: React.FC = () => {
         try {
             const categories: Categories = await CategoriesService.fetchCategoriesByName(name);
             setCategories(categories);
-        } catch (err) {
+        }
+        catch (err) {
             console.log(err);
         }
     }
@@ -44,7 +46,8 @@ const CategoryManagement: React.FC = () => {
             const categories = await CategoriesService.fetchAllCategories();
             setCategories(categories);
             console.log(categories);
-        } catch (err) {
+        }
+        catch (err) {
             console.log(err);
         }
     }
@@ -59,14 +62,16 @@ const CategoryManagement: React.FC = () => {
                     messageShow: 'Category deleted successfully'
                 })
                 displayInfo();
-            } else {
+            }
+            else {
                 setInfo({
                     ...info,
                     error: "Error while deleting a category! Try later..."
                 })
                 displayErr();
             }
-        } catch (err) {
+        }
+        catch (err) {
             console.log(err)
         }
     }
@@ -75,7 +80,8 @@ const CategoryManagement: React.FC = () => {
         const value = e.target.value;
         if (value == '') {
             getAllCategories();
-        } else {
+        }
+        else {
             getCategoriesByName(value);
         }
     }

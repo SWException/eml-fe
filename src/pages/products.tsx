@@ -33,13 +33,14 @@ const ProductsPage: React.FC<Props> = ({ products }) => {
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
     const id = context?.query?.category as string;
-    const products = (await ProductService.fetchProducts({params: {category: id}})).products;
+    const products = (await ProductService.fetchProducts({category: id}));
     try {
         console.log(id);
         return {
             props: { products },
         };
-    } catch (error) {
+    }
+    catch (error) {
         return {
             props: {
                 products: null

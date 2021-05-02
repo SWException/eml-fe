@@ -1,4 +1,4 @@
-import { Products, Address } from "types";
+import { Address } from "types";
 
 export type Order = {
     userid: string;
@@ -9,6 +9,7 @@ export type Order = {
     billingAddress: Address;
     shippingAddress: Address;
 };
+
 export type OrderCart = {
     id: string;
     products: OrderProducts;
@@ -32,11 +33,3 @@ export type OrderProduct = {
 }
 export type Orders = Order[];
 export type OrderProducts = OrderProduct[];
-
-export type OrdersData = {
-    orders: Orders;
-}
-
-export type OrderData = {
-    order: Order;
-}

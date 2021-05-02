@@ -1,30 +1,43 @@
 import { Container } from 'components/ui';
 import { ProductList } from 'components/products';
-import { useRouter } from 'next/router';
-import React, { useEffect } from 'react';
-import { useShop } from 'context/shop';
+import React from 'react';
 import styles from 'styles/Home.module.css'
 import { CustomerLayout } from 'components/layouts/CustomerLayout';
+import { GetServerSideProps } from 'next';
+import { ProductService } from 'services';
+import { Products } from 'types';
 
-const Index: React.FC = () => {
-    const router = useRouter();
+interface Props {
+    products: Products;
+}
 
-    const { loadProducts, products } = useShop();
-
-    useEffect(() => {
-        products.length === 0 && loadProducts();
-    }, [])
-
+const Index: React.FC<Props> = ({products}) => {
     return (
         <CustomerLayout header categories footer>
             <div className={styles.title}>
                 <h1>BEST PRODUCTS</h1>
             </div>
             <Container className={styles.container}>
-                <ProductList products={products} />
+                <ProductList products={products}/>
             </Container>
         </CustomerLayout>
     );
 };
 
 export default Index;
+
+export const getServerSideProps: GetServerSideProps = async () => {
+    const products = await ProductService.fetchProducts();
+    try {
+        return {
+            props: { products },
+        };
+    }
+    catch (error) {
+        return {
+            props: {
+                products: null
+            },
+        };
+    }
+};

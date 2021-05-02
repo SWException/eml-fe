@@ -1,42 +1,40 @@
 import React, { useEffect, useState } from 'react';
 import styles from 'components/cart/ProductCard/ProductCard.module.css'
 import { CartService } from 'services';
+import { ProductCart } from 'types';
 interface Props {
-    id: string,
-    name: string,
-    photo: string,
-    price: number,
-    quantity: number,
+    product: ProductCart,
     loadCart: (() => void)
 }
 
-const ProductCard: React.FC<Props> = ({ id, name, photo, price, loadCart, quantity }) => {
+const ProductCard: React.FC<Props> = ({ product, loadCart }) => {
 
-    const [_quantity, setQuantity] = useState(quantity);
-    const [_subTotal, setSubTotal] = useState(price * _quantity);
+    const [quantity, setQuantity] = useState(product.quantity);
+    const [subTotal, setSubTotal] = useState(product.price * product.quantity);
 
     useEffect(() => {
-        setQuantity(_quantity);
-        setSubTotal(price * _quantity);
+        setQuantity(quantity); // è necessario?
+        setSubTotal(product.price * quantity); // è necessario? 
     }, [])
 
     const modifyQuantity = async (name: string) => {
         if (name == 'plus') {
-            setQuantity(_quantity + 1);
-        } else {
-            if (_quantity != 1)
-                setQuantity(_quantity - 1);
+            setQuantity(quantity + 1);
         }
-        const { status, message } = await CartService.updateCart(_quantity, id);
-        setSubTotal(price * _quantity);
-        if (status == "success") {
+        else {
+            if (quantity != 1)
+                setQuantity(quantity - 1);
+        }
+        const response: boolean = await CartService.updateCart(product.id, product.quantity);
+        setSubTotal(product.price * quantity);
+        if (response) {
             await loadCart();
         }
     }
 
     const deleteProduct = async () => {
-        const { status, message } = await CartService.removeProductFromCart(id);
-        if (status == "success") {
+        const response: boolean = await CartService.removeProductFromCart(product.id);
+        if (response) {
             loadCart();
         }
     }
@@ -44,22 +42,22 @@ const ProductCard: React.FC<Props> = ({ id, name, photo, price, loadCart, quanti
     return (
         <div className={styles.item}>
             <button className={styles.delete} onClick={deleteProduct}>X</button>
-            <img className={styles.img} src={photo} height="100" width="100" alt="..." />
+            <img className={styles.img} src={product.primaryPhoto} height="100" width="100" alt="..." />
             <span className={styles.information}>
-                <div><strong>ID: </strong>{id}</div>
-                <div><strong>{name.toUpperCase()}</strong></div>
+                <div><strong>ID: </strong>{product.id}</div>
+                <div><strong>{product.name.toUpperCase()}</strong></div>
             </span>
-            <span className={styles.information}><strong>PRICE: </strong>€ {price}</span>
+            <span className={styles.information}><strong>PRICE: </strong>€ {product.price}</span>
             <div className={styles.quantity}>
                 <button className={styles.plus} onClick={() => { modifyQuantity('minus') }} type="button" name="button">
                     -
                 </button>
-                <input type="text" name="name" value={_quantity} min="1"></input>
+                <input type="text" name="name" value={quantity} min="1"></input>
                 <button className={styles.minus} onClick={() => { modifyQuantity('plus') }} type="button" name="button">
                     +
                 </button>
             </div>
-            <span className={styles.information}><strong>SUBTOTAL: € {_subTotal} </strong></span>
+            <span className={styles.information}><strong>SUBTOTAL: € {subTotal} </strong></span>
         </div>
     )
 };

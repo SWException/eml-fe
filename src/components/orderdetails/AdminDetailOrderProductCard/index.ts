@@ -1,1 +1,1 @@
-export { default } from './DetailOrderProductCard';
+export { default } from './AdminDetailOrderProductCard';

@@ -26,12 +26,6 @@
                 "format": ["camelCase"]
             },
             {
-                "selector": "variable",
-                "modifiers": ["const"],
-                "format": ["UPPER_CASE"]
-                
-            },
-            {
                 "selector": "class",
                 "format": ["PascalCase"]
             }

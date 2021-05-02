@@ -19,23 +19,23 @@ export type Products = Product[];
 
 export type InsertProduct = Omit<Product, 'tax' | 'id' | 'categoryId' | 'price' | 'taxId'> & { tax: string };
 export type EditProduct = InsertProduct;
+export type ProductCart = Omit<Product, 'description' | 'secondaryPhotos' | 'categorId' | 'category' | 'netPrice' | 'taxId' | 'tax' | 'show' | 'showHome' | 'stock'> & { quantity: number }
 
-export type ProductsData = {
-    products: Products;
-    total: number;
+
+export type SearchRules = {
+    minPrice?: number;
+    maxPrice?: number;
+    category?: string;
+    sorting?: string;
+    search?: string;
 }
+
 
 export type ProductData = {
     product: Product;
 }
 
-export type ProductCart = {
-    productId: string;
-    name: string;
-    primaryPhoto: string;
-    price: number;
-    quantity: number;
-}
+
 
 export type ProductAdmin = {
     productId: string;

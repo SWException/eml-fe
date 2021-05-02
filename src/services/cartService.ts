@@ -1,164 +1,106 @@
-
 import { Cart } from 'types';
 import { sessionService } from 'services/sessionService';
 
-interface CartData {
-    cart: Cart;
-}
-
-interface AddCart {
-    status: string;
-    message: string;
-}
-
-interface RemoveCart {
-    status: string;
-    message: string;
-}
-
-
-const fetchCart = async (): Promise<CartData> => {
+const fetchCart = async (): Promise<Cart> => {
     const token = sessionService.getCookie('token');
-
-    try {
-        const requestOptions = {
-            method: 'GET',
-            headers: {
-                'Authorization': token,
-                'Content-Type': 'application/json',
-            }
-        };
-        const res = await fetch(`${process.env.AWS_ENDPOINT}/cart`, requestOptions)
-        const cartsReturned = await res.json();
-
-        console.log(cartsReturned);
-        console.log(cartsReturned.data);
-
-        const cartsData: CartData = {
-            cart: {
-                id: cartsReturned.data?.id,
-                product: (cartsReturned.data?.products) ? cartsReturned.data?.products : [],
-                tax: cartsReturned.data?.tax,
-                total: cartsReturned.data?.total
-            }
-        };
-
-        return cartsData;
-
-    } catch (error) {
-        console.log(error);
-    }
-};
-
-
-const addToCart = async (quantity: number, id: string): Promise<AddCart> => {
-    const token = sessionService.getCookie('token');
-    try {
-        const data = { quantity, id };
-        const requestOptions = {
-            method: 'POST',
-            headers: {
-                'Authorization': token,
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(data)
-        };
-        const res = await fetch(`${process.env.AWS_ENDPOINT}/cart`, requestOptions)
-        const cartsReturned = await res.json();
-
-        console.log(cartsReturned);
-
-        const addCartData: AddCart = {
-            status: cartsReturned.status,
-            message: cartsReturned.message
+    const requestOptions = {
+        method: 'GET',
+        headers: {
+            'Authorization': token,
+            'Content-Type': 'application/json',
         }
+    };
 
-        return addCartData;
-    } catch (error) {
-        console.log(error);
-    }
+    const res = await fetch(`${process.env.AWS_ENDPOINT}/cart`, requestOptions)
+        .catch(() => { throw new Error('Error on fetching all products') });
+    const cartReturned = await res.json();
+
+    if (cartReturned.status == 'error')
+        throw new Error(cartReturned.message);
+
+    const cart: Cart = cartReturned.data;
+    return cart;
 };
 
-const removeProductFromCart = async (id: string): Promise<RemoveCart> => {
+
+const addToCart = async (id: string, quantity: number): Promise<boolean> => {
     const token = sessionService.getCookie('token');
-    try {
-        const requestOptions = {
-            method: 'DELETE',
-            headers: {
-                'Authorization': token,
-                'Content-Type': 'application/json',
-            }
-        };
-        const res = await fetch(`${process.env.AWS_ENDPOINT}/cart/product/${id}`, requestOptions)
-        const cartsReturned = await res.json();
+    const requestOptions = {
+        method: 'POST',
+        headers: {
+            'Authorization': token,
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ id, quantity })
+    };
+    const res = await fetch(`${process.env.AWS_ENDPOINT}/cart`, requestOptions)
+        .catch(() => { throw new Error('Error on adding to cart') });
 
-        console.log(cartsReturned);
+    const response = await res.json();
 
-        const removeCartData: AddCart = {
-            status: cartsReturned.status,
-            message: cartsReturned.message
-        }
+    if (response.status == 'error')
+        throw new Error(response.message);
 
-        return removeCartData;
-    } catch (error) {
-        console.log(error);
-    }
+    return true;
 };
 
-const removeCart = async (): Promise<RemoveCart> => {
+const removeProductFromCart = async (id: string): Promise<boolean> => {
     const token = sessionService.getCookie('token');
-    try {
-        const requestOptions = {
-            method: 'DELETE',
-            headers: {
-                'Authorization': token,
-                'Content-Type': 'application/json',
-            }
-        };
-        const res = await fetch(`${process.env.AWS_ENDPOINT}/cart`, requestOptions)
-        const cartsReturned = await res.json();
-
-        console.log(cartsReturned);
-
-        const removeCartData: AddCart = {
-            status: cartsReturned.status,
-            message: cartsReturned.message
+    const requestOptions = {
+        method: 'DELETE',
+        headers: {
+            'Authorization': token,
+            'Content-Type': 'application/json',
         }
+    };
+    const res = await fetch(`${process.env.AWS_ENDPOINT}/cart/product/${id}`, requestOptions)
+        .catch(() => { throw new Error('Error on removing from cart') });
+    const response = await res.json();
 
-        return removeCartData;
-    } catch (error) {
-        console.log(error);
-    }
+    if (response.status == 'error')
+        throw new Error(response.message);
+
+    return true;
 };
 
-const updateCart = async (quantity: number, id: string): Promise<AddCart> => {
+const removeCart = async (): Promise<boolean> => {
     const token = sessionService.getCookie('token');
-    try {
-        const data = { quantity, id };
-        const requestOptions = {
-            method: 'PATCH',
-            headers: {
-                'Authorization': token,
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(data)
-        };
-        const res = await fetch(`${process.env.AWS_ENDPOINT}/cart/product/${id}`, requestOptions)
-        const cartsReturned = await res.json();
-
-        console.log(cartsReturned);
-
-        const addCartData: AddCart = {
-            status: cartsReturned.status,
-            message: cartsReturned.message
+    const requestOptions = {
+        method: 'DELETE',
+        headers: {
+            'Authorization': token,
+            'Content-Type': 'application/json',
         }
+    };
+    const res = await fetch(`${process.env.AWS_ENDPOINT}/cart`, requestOptions)
+        .catch(() => { throw new Error('Error on removing the cart') });
+    const response = await res.json();
 
-        return addCartData;
-    } catch (error) {
-        console.log(error);
-    }
+    if (response.status == 'error')
+        throw new Error(response.message);
+
+    return true;
 };
 
+const updateCart = async ( id: string,quantity: number): Promise<boolean> => {
+    const token = sessionService.getCookie('token');
+    const requestOptions = {
+        method: 'PATCH',
+        headers: {
+            'Authorization': token,
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ id, quantity})
+    };
+    const res = await fetch(`${process.env.AWS_ENDPOINT}/cart/product/${id}`, requestOptions)
+        .catch(() => { throw new Error('Error on removing from cart') });
+    const response = await res.json();
+        
+    if (response.status == 'error')
+        throw new Error(response.message);
+        
+    return true;
+};
 
 export const CartService = {
     fetchCart,

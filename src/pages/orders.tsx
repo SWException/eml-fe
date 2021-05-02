@@ -22,7 +22,7 @@ const OrdersList: React.FC<Props> = ({ ord }) => {
     const reloadOrders = async () => {
         console.log("Start reloadOrders");
 
-        const { orders } = await OrdersService.fetchOrders();
+        const orders = await OrdersService.fetchOrders();
         setOrder(orders);
         console.log('Done', orders);
     }
@@ -66,33 +66,3 @@ const OrdersList: React.FC<Props> = ({ ord }) => {
     );
 };
 export default OrdersList;
-
-/*
-<div className="orders-item-layout">
-                    <table className={styles.orders}>
-                        <tr>
-                            <th>ID</th>
-                            <th>DATE</th>
-                            <th>TOTAL</th>
-                            <th>ARTICLES</th>
-                            <th>STATE</th>
-                        </tr>
-                    </table>
-                    <table className={styles.orders}>
-                        {orders.map((order) => (
-                            <>
-                                <tr>
-                                    <OrderCard
-                                        id={order.id}
-                                        date={order.date}
-                                        total={order.total}
-                                        totart={order.totart}
-                                        state={order.state}
-                                    />
-                                </tr>
-                            </>
-                        ))}
-                    </table>
-                </div>
-
-                */

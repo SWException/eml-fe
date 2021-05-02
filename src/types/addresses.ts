@@ -1,5 +1,6 @@
-export interface Address {
+export type Address = {
     id?: string;
+    user: string;
     description: string;
     recipientName: string;
     recipientSurname: string;
@@ -7,9 +8,9 @@ export interface Address {
     city: string,
     code: string,
     district: string;
-    user: string;
 }
 
-export interface Addresses {
-    addresses: Address[]
-}
+export type Addresses = Address[]; 
+
+export type InsertAddress = Omit<Address, 'id' >;
+export type EditAddress = InsertAddress;

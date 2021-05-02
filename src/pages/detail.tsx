@@ -63,13 +63,11 @@ const Detail: React.FC<Props> = ({ product }) => {
     }
 
     const modifyQuantityByStep = async (increment: boolean) => {
-        const QTA = quantity;
-        if (increment) {
-            setQuantity(QTA + 1);
+        if (increment && quantity < stock) {
+            setQuantity(quantity + 1);
         }
-        else {
-            if (QTA != 1)
-                setQuantity(QTA - 1);
+        else if (!increment && quantity > 1) {
+            setQuantity(quantity - 1);
         }
     }
 
@@ -78,7 +76,8 @@ const Detail: React.FC<Props> = ({ product }) => {
         console.log(QTA);
 
         if (QTA && QTA > 0) {
-            setQuantity(QTA);
+            if(QTA <= stock)
+                setQuantity(QTA);
         }
         e.target.setAttribute("value", quantity.toString());
     }
@@ -98,8 +97,8 @@ const Detail: React.FC<Props> = ({ product }) => {
 
     const addCart = async () => {
         try {
-            const { status, message } = await CartService.addToCart(quantity, id);
-            if (status == "success") {
+            const res = await CartService.addToCart(id, quantity);
+            if (res) {
                 setInfo({
                     ...info,
                     messageShow: "Product Added to Cart"
@@ -147,8 +146,11 @@ const Detail: React.FC<Props> = ({ product }) => {
                             <button className={styles.plus} onClick={() => { modifyQuantityByStep(false) }} type="button" name="button">
                                 -
                             </button>
-                            <input type="number" name="name" value={quantity} 
-                                className={styles.input} onChange={(e) => modifyQuantity(e)} max={stock}></input>
+                            <input type="number" name="name" value={quantity}
+                                className={styles.input}
+                                onChange={(e) => modifyQuantity(e)}
+                                max={stock}>
+                            </input>
                             <button className={styles.minus} onClick={() => { modifyQuantityByStep(true) }} type="button" name="button">
                                 +
                             </button>
@@ -171,7 +173,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     const id = context.query.id as string;
 
     try {
-        const { product } = await ProductService.fetchProduct(id);
+        const product: Product = await ProductService.fetchProduct(id);
         console.log(product)
         return {
             props: { product },

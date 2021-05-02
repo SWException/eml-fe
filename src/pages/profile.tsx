@@ -5,7 +5,7 @@ import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 import { CustomerLayout } from 'components/layouts/CustomerLayout';
 import styles from 'styles/Profile.module.css';
 import { AddressesService, AuthService, sessionService } from 'services';
-import { Address, User } from 'types'
+import { Address, Addresses, User } from 'types'
 Amplify.configure(awsconfig);
 
 // Salva in automatico i cookie per ricordare se il login è stato fatto
@@ -15,7 +15,7 @@ const Profile: React.FC = () => {
 
     useEffect(() => {
         if (sessionService.isAuth()) {
-            let user: User = sessionService.getLocalStorage()
+            const user: User = sessionService.getLocalStorage()
             setEmail(user.email);
         }
         getAddresses()
@@ -55,17 +55,19 @@ const Profile: React.FC = () => {
     const changePassword = async () => {
         try {
             await AuthService.changePassword(oldPass, newPass)
-        } catch (err) {
+        }
+        catch (err) {
             console.log(err)
         }
     }
 
     const getAddresses = async () => {
         try {
-            const { addresses } = await AddressesService.fetchAddresses();
-            setAddress(addresses)
-            console.log(address);
-        } catch (err) {
+            const addresses: Addresses = await AddressesService.fetchAddresses();
+            setAddress(addresses);
+            console.log('Addresses', address);
+        }
+        catch (err) {
             console.log(err)
         }
     }
@@ -90,12 +92,13 @@ const Profile: React.FC = () => {
 
     const submitNewAddress = async () => {
         try {
-            const { status, message } = await AddressesService.createNewAddress(values);
-            console.log(status + ' ---- ' + message)
-            if (status == "success") {
+            const response: boolean = await AddressesService.createNewAddress(values);
+            console.log(response)
+            if (response) {
                 getAddresses();
             }
-        } catch (err) {
+        }
+        catch (err) {
             console.log(err);
         }
     }
@@ -103,14 +106,23 @@ const Profile: React.FC = () => {
     const deleteAddress = async () => {
         try {
             //Ovviamente mockato, capire come selezionare id da un elemento selected
-            const { status, message } = await AddressesService.deleteAddress(selectedAddress);
-            console.log(status + ' ---- ' + message)
-            if (status == "success") {
+            const response = await AddressesService.deleteAddress(selectedAddress);
+            console.log(response)
+            if (response) {
                 getAddresses();
             }
-        } catch (err) {
+        }
+        catch (err) {
             console.log(err);
         }
+    }
+
+    const renderAddress = () => {
+        if(currentAddress){
+            return(`${currentAddress?.description} - ${currentAddress?.city}, ${currentAddress?.address}, ${currentAddress?.code}, ${currentAddress?.description} 
+                - ${currentAddress?.recipientName} ${currentAddress?.recipientSurname}`);
+        }
+        return("Select an address");
     }
 
     return (
@@ -143,10 +155,10 @@ const Profile: React.FC = () => {
                 <h2>Or delete an existing one</h2>
                 <select style={{ width: "20rem" }} onChange={(e) => { addressChange(e) }}>
                     {address?.map((address) => (
-                        <option value={`${address.id}`}>{`${address.description}`}</option>
+                        <option key={address.id} value={`${address.id}`}>{`${address.description}`}</option>
                     ))}
                 </select>
-                <p>{`${currentAddress?.description} - ${currentAddress?.city}, ${currentAddress?.address}, ${currentAddress?.code}, ${currentAddress?.description} - ${currentAddress?.recipientName} ${currentAddress?.recipientSurname}`}</p>
+                <p>{renderAddress()}</p>
                 <p />
                 <Button size="lg" onClick={deleteAddress}>Delete this address</Button>
             </div>

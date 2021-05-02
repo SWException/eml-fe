@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, ChangeEvent } from 'react'
 import { useRouter } from 'next/router';
 import { AdminLayout } from 'components/layouts/AdminLayout';
 import styles from 'styles/OrdersManagement.module.css'
@@ -9,29 +9,52 @@ import { OrdersService, sessionService } from 'services';
 const OrderManagement: React.FC = () => {
     const router = useRouter();
 
+    const [currentStatus, setCurrentStatus] = useState<string>('Paid');
+
     useEffect(() => {
-        loadOrders();
+        loadOrders(currentStatus);
         const user = sessionService.getLocalStorage();
-        if(sessionService.isAuth() && user.role=='user'){
+        if (sessionService.isAuth() && user.role == 'user') {
             router.push('/');
-        } else if (!sessionService.isAuth()){
+        }
+        else if (!sessionService.isAuth()) {
             router.push('/')
         }
     }, [])
 
     const [orders, setOrder] = useState<Orders>();
 
-    const loadOrders = async () => {
-        console.log("Start loadOrders");
-
-        const { orders } = await OrdersService.fetchOrders();
-        setOrder(orders);
-        console.log('Done', orders);
+    const loadOrders = async (status: string) => {
+        await OrdersService.fetchOrders(status)
+            .then((orders: Orders) => {
+                console.log("Orders: ", orders);
+                setOrder(orders);
+            })
+            .catch((err: Error) => {
+                console.log(err.message);
+            });
     }
 
     const orderDetailsAdmin = () => {
         router.push('/admin/orderDetailsAdmin');
     }
+
+    const handleStatusChange = async (e: ChangeEvent<HTMLSelectElement>): Promise<void> => {
+        const value = e.target.value;
+        setCurrentStatus(value);
+        loadOrders(value);
+    }
+    
+
+    const renderStatusCombobox = (): any => (
+        <div className={styles.div}>
+            <label>Status:</label>
+            <select className={styles.select} onChange={(e) => handleStatusChange(e)}>
+                <option value='Paid'>Paid</option>
+                <option value='Pending'>Pending</option>
+            </select>
+        </div>
+    )
 
     return (
         <AdminLayout header>
@@ -39,6 +62,9 @@ const OrderManagement: React.FC = () => {
             <div className={styles.div}>
                 <label><strong>Search:</strong></label>
                 <input className={styles.input} type="text" placeholder="Search Order by id..." />
+            </div>
+            <div className={styles.div}>
+                {renderStatusCombobox()}
             </div>
             {orders ? (
                 <div className={styles.div}>
@@ -56,7 +82,7 @@ const OrderManagement: React.FC = () => {
                             {orders?.map((order) => ( // Sarà da sistemare i nomi dei campi di orders. Ivan prima o poi modificherà il BE così da rispettare quanto definito nelle OpenApi
                                 <tr key={order.orderid}>
                                     <td>{order.orderid}</td>
-                                    <td>{/*order.emailcustomer*/}</td>
+                                    <td>{order.userid}</td>
                                     <td>{order.orderStatus}</td>
                                     <td>{order.timestamp}</td>
                                     <td>€{order.cart.total}</td>

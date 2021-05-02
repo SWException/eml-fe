@@ -1,5 +1,5 @@
 import React from 'react';
-import { AppProps, AppContext } from 'next/app';
+import { AppProps } from 'next/app';
 import { User } from 'types';
 import 'styles/globals.css';
 import { StoreProvider } from 'context/store';
@@ -8,7 +8,7 @@ interface MyAppProps extends AppProps {
     currentUser: User | null;
 }
 
-const MyApp = ({ Component, pageProps, currentUser, router }: MyAppProps): JSX.Element => {
+const MyApp = ({ Component, pageProps, currentUser }: MyAppProps): JSX.Element => {
 
     return (
         <StoreProvider currentUser={currentUser}>
@@ -17,8 +17,8 @@ const MyApp = ({ Component, pageProps, currentUser, router }: MyAppProps): JSX.E
     );
 };
 
-MyApp.getInitialProps = async (appContext: AppContext) => {
-    let currentUser: User | null = null;
+MyApp.getInitialProps = async () => {
+    const currentUser: User | null = null;
 
     return { currentUser };
 };

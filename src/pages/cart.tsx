@@ -5,26 +5,13 @@ import { Button, Spinner } from 'reactstrap';
 import { CustomerLayout } from 'components/layouts/CustomerLayout';
 import styles from 'styles/Cart.module.css'
 import { CartService } from 'services';
-import { Cart } from 'types';
+import { Cart, ProductCart } from 'types';
 
-interface Props {
-    cart: Cart,
-}
-
-/**
- * Inserire fetch del Service per ADD e REMOVE
- */
-
-const CartUser: React.FC<Props> = () => {
+const CartUser: React.FC = () => {
 
     const router = useRouter();
     const [loading, setLoading] = useState(false)
-    const [cartShow, setCartShow] = useState<Cart>({
-        id: "",
-        product: [],
-        tax: 0,
-        total: 0
-    });
+    const [cart, setCart] = useState<Cart>();
 
     useEffect(() => {
         reloadCart();
@@ -36,20 +23,15 @@ const CartUser: React.FC<Props> = () => {
 
     const reloadCart = async () => {
         setLoading(true);
-        const { cart } = await CartService.fetchCart();
-        setCartShow({
-            id: cart.id,
-            product: cart.product,
-            tax: cart.tax,
-            total: cart.total
-        });
+        const cart = await CartService.fetchCart();
+        setCart(cart);
         console.log('Done');
         setLoading(false);
     }
 
     const removeAllCart = async () => {
-        const { status, message } = await CartService.removeCart();
-        if (status == "success") {
+        const res = await CartService.removeCart();
+        if (res) {
             reloadCart();
         }
     }
@@ -61,41 +43,42 @@ const CartUser: React.FC<Props> = () => {
             </div>
             <div className={styles.cart}>
                 {loading ? (
-                    <div style={{display: "flex", justifyContent: "center", alignItems: 'center', margin: '100px'}}>
-                        <Spinner style={{width: '3rem', height: '3rem'}}/>
+                    <div style={{ display: "flex", justifyContent: "center", alignItems: 'center', margin: '100px' }}>
+                        <Spinner style={{ width: '3rem', height: '3rem' }} />
                     </div>
                 ) : (
                     <div className="cart-item-layout">
-                    {cartShow.product.map((product) => (
-                        <ProductCard
-                            id={product.productId}
-                            name={product.name}
-                            photo={product.primaryPhoto}
-                            price={product.price}
-                            loadCart={() => { reloadCart() }}
-                            quantity={product.quantity}
-                        />
-                    ))}
-                </div>
-                )
-            }
+                        {cart ? (
+                            cart.products.map((product: ProductCart) => (
+                                <ProductCard
+                                    product={product}
+                                    loadCart={() => { reloadCart() }}
+                                />
+                            ))
+                        ) : (
+                            <div>
+                                NON C'E' NULLA NEL CARRELLAO
+                            </div>
+                        )}
+                    </div>
+                )}
             </div>
             <div className={styles.remove}>
                 <Button color="primary" onClick={removeAllCart} size="lg">Remove all</Button>
             </div>
             <div className={styles.total}>
-                <div><strong>Total: {cartShow.total}{" €"} </strong></div>
-                <div><strong>Taxes: {cartShow.tax}{" €"} </strong></div>
+                <div><strong>Total: {cart?.total}{" €"} </strong></div>
+                <div><strong>Taxes: {cart?.tax}{" €"} </strong></div>
                 {loading ? (
-                    <div style={{ margin: '100px'}}>
+                    <div style={{ margin: '100px' }}>
                         <Spinner />
                     </div>
                 ) : (
                     <div>
-                        {cartShow.product.length != 0 ? (
+                        {cart?.products.length != 0 ? (
                             <Button color="primary" size="lg" style={{ marginTop: "10px" }} onClick={() => { onSubmit() }}>Checkout</Button>
                         ) : (
-                            <div style={{ marginTop: "20px"}}><strong>Add something to your cart if you want to proceed to checkout</strong></div>
+                            <div style={{ marginTop: "20px" }}><strong>Add something to your cart if you want to proceed to checkout</strong></div>
                         )}
                     </div>
                 )}
@@ -104,15 +87,5 @@ const CartUser: React.FC<Props> = () => {
         </CustomerLayout>
     );
 };
-
-/*export async function getServerSideProps() {
-    const { cart } = await CartService.fetchCart();
-
-    return {
-        props: {
-            cart
-        }
-    };    
-}*/
 
 export default CartUser;

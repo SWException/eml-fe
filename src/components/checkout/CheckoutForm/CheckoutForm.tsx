@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import { Button, Spinner } from 'reactstrap';
-import { Address, Checkout } from 'types';
+import { Address, Addresses, Checkout } from 'types';
 import { AddressesService, CheckoutService } from 'services';
 
 const CheckoutForm: React.FC = () => {
@@ -20,6 +20,7 @@ const CheckoutForm: React.FC = () => {
         id: '',
         status: ''
     })
+
     const [address, setAddress] = useState<Address[]>([]);
     const [shippingAddress, setShippingAddress] = useState<Address>({
         id: 'a5a8e464-f5be-4869-9c3b-cabf6de3ec96',
@@ -68,8 +69,8 @@ const CheckoutForm: React.FC = () => {
 
     const createIntent = async (): Promise<string> => {
         try {
-            const shipping: string = 'a5a8e464-f5be-4869-9c3b-cabf6de3ec96';
-            const billing: string = 'a5a8e464-f5be-4869-9c3b-cabf6de3ec96';
+            const shipping = 'a5a8e464-f5be-4869-9c3b-cabf6de3ec96';
+            const billing = 'a5a8e464-f5be-4869-9c3b-cabf6de3ec96';
             const { checkout } = await CheckoutService.fetchCheckout(shippingAddress.id, billingAddress.id);
             //const secret = await stripe.PaymentIntents.retrieve(checkout.id);
             setId(checkout.id);
@@ -83,7 +84,8 @@ const CheckoutForm: React.FC = () => {
             console.log(clientSecret)
             console.log(checkout.secret)
             return checkout.secret;
-        } catch (e) {
+        }
+        catch (e) {
             console.log(e.message);
             console.log('There is a problem')
         }
@@ -121,7 +123,8 @@ const CheckoutForm: React.FC = () => {
         if (payload.error) {
             setError(`Payment failed. Refresh the page to pay again.`);
             setProcessing(false);
-        } else {
+        }
+        else {
             confirmPayment();
             setError(null);
             setProcessing(false);
@@ -132,10 +135,11 @@ const CheckoutForm: React.FC = () => {
 
     const getAddresses = async () => {
         try {
-            const { addresses } = await AddressesService.fetchAddresses();
+            const addresses: Addresses  = await AddressesService.fetchAddresses();
             setAddress(addresses);
             console.log(address);
-        } catch (err) {
+        }
+        catch (err) {
             console.log(err)
         }
     }
@@ -148,7 +152,8 @@ const CheckoutForm: React.FC = () => {
             if (status == "success") {
                 //Pagamento andato a buon fine
             }
-        } catch (err) {
+        }
+        catch (err) {
             console.log(err);
         }
     }
@@ -172,7 +177,8 @@ const CheckoutForm: React.FC = () => {
                 code: addressFound.code,
                 district: addressFound.district
             })
-        } else {
+        }
+        else {
             setShippingAddress({
                 ...billingAddress,
                 id: addressFound.id,

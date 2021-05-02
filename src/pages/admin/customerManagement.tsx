@@ -17,7 +17,8 @@ const CustomerManagement: React.FC = () => {
         const user = sessionService.getLocalStorage();
         if (sessionService.isAuth() && user.role == 'user') {
             router.push('/');
-        } else if (!sessionService.isAuth()) {
+        }
+        else if (!sessionService.isAuth()) {
             router.push('/')
         }
     }, [])
@@ -27,7 +28,8 @@ const CustomerManagement: React.FC = () => {
             const customers = await CustomerService.fetchCustomersByMail(mail);
             setCustomers(customers);
             console.log(customers);
-        } catch (err) {
+        }
+        catch (err) {
             console.log(err);
         }
     }
@@ -37,7 +39,8 @@ const CustomerManagement: React.FC = () => {
             const customers = await CustomerService.fetchAllCustomers();
             setCustomers(customers);
             console.log(customers);
-        } catch (err) {
+        }
+        catch (err) {
             console.log(err);
         }
     }
@@ -46,7 +49,8 @@ const CustomerManagement: React.FC = () => {
         const value = e.target.value;
         if (value == '') {
             getAllCustomer();
-        } else {
+        }
+        else {
             getCustomersByMail(value);
         }
     }

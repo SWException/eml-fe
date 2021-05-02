@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import { AdminLayout } from 'components/layouts/AdminLayout';
 import styles from 'styles/ProductManagement.module.css';
 import { Button } from 'reactstrap';
-import { Category, Products } from 'types';
+import { Categories, Category, Products } from 'types';
 import { GetServerSideProps } from 'next';
 import { CategoriesService, ProductService, sessionService } from 'services';
 
@@ -19,7 +19,8 @@ const ProductManagement: React.FC<Props> = ({ defaultProducts, categories }) => 
         const user = sessionService.getLocalStorage();
         if(sessionService.isAuth() && user.role=='user'){
             router.push('/');
-        } else if (!sessionService.isAuth()){
+        }
+        else if (!sessionService.isAuth()){
             router.push('/')
         }
     });
@@ -39,7 +40,8 @@ const ProductManagement: React.FC<Props> = ({ defaultProducts, categories }) => 
         try {
             const result: boolean = await ProductService.deleteProduct(id);
             console.log(result);
-        } catch (err) {
+        }
+        catch (err) {
             //HANDLING ERROR
         }
     }
@@ -47,12 +49,12 @@ const ProductManagement: React.FC<Props> = ({ defaultProducts, categories }) => 
     const handleCategoryChange = async (e: ChangeEvent<HTMLSelectElement>): Promise<void> => {
         const value = e.target.value;
         setCurrentCategory(value);
-        setProducts((await ProductService.fetchProducts({params:{category:value}})).products);
+        setProducts((await ProductService.fetchProducts({category:value})));
     }
     
     const handleSearchChange = async (e: ChangeEvent<HTMLInputElement>): Promise<void> => {
         const value = e.target.value;
-        setProducts((await ProductService.fetchProducts({params:{category:currentCategory,search:value}})).products);
+        setProducts((await ProductService.fetchProducts({category:currentCategory, search:value})));
     }
 
     const renderCategoryCombobox = (): any => (
@@ -114,14 +116,15 @@ export default ProductManagement;
 
 export const getServerSideProps: GetServerSideProps = async () => {
     try {
-        const defaultProducts = (await ProductService.fetchProducts()).products;
-        const categories = await CategoriesService.fetchAllCategories();
+        const defaultProducts: Products = await ProductService.fetchProducts();
+        const categories: Categories = await CategoriesService.fetchAllCategories();
         console.log(categories);
 
         return {
             props: { defaultProducts, categories },
         }
-    } catch (err) {
+    }
+    catch (err) {
         console.log(err);
     }
 }

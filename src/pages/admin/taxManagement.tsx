@@ -18,7 +18,8 @@ const TaxManagement: React.FC = () => {
         const user = sessionService.getLocalStorage();
         if(sessionService.isAuth() && user.role=='user'){
             router.push('/');
-        } else if (!sessionService.isAuth()){
+        }
+        else if (!sessionService.isAuth()){
             router.push('/')
         }
     }, [])
@@ -28,7 +29,8 @@ const TaxManagement: React.FC = () => {
         try {
             const taxes: Taxes = await TaxesService.fetchTaxes();
             setTaxes(taxes);
-        } catch (err) {
+        }
+        catch (err) {
             //HANDLING ERROR
             console.log(err)
         }
@@ -38,7 +40,8 @@ const TaxManagement: React.FC = () => {
         try {
             const taxes: Taxes = await TaxesService.fetchTaxesByDescription(description);
             setTaxes(taxes);
-        } catch (err) {
+        }
+        catch (err) {
             //HANDLING ERROR
             console.log(err);
         }
@@ -48,7 +51,8 @@ const TaxManagement: React.FC = () => {
         try {
             const result: boolean = await TaxesService.deleteTax(id);
             console.log(result);
-        } catch (err) {
+        }
+        catch (err) {
             //HANDLING ERROR
         }
     }
@@ -57,7 +61,8 @@ const TaxManagement: React.FC = () => {
         const value = e.target.value;
         if (value == '') {
             getAllTaxes();
-        } else {
+        }
+        else {
             getTaxesByDescription(value);
         }
     }

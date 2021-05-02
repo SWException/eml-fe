@@ -10,22 +10,12 @@ const SearchBar: React.FC = () => {
 
     const [product, setProduct] = useState('');
 
-    const researchProduct = async() => {
-        try {
-            const { products, total } = await ProductService.fetchProducts(
-                {params:
-                    {
-                        search: product
-                    }
-                });
-            if(products.length > 0){
-                router.push('/')
-                //setProducts on products on ProductContext
-            }
-        } catch(err) {
-
+    const researchProduct = async () => {
+        const products = await ProductService.fetchProducts({search: product});
+        if(products.length > 0){
+            router.push('/')
+            //setProducts on products on ProductContext
         }
-        
     }
 
     return (

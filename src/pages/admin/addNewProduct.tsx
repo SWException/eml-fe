@@ -32,7 +32,8 @@ const AddNewProduct: React.FC<Props> = ({ categories, taxes }) => {
         const user = sessionService.getLocalStorage();
         if(sessionService.isAuth() && user.role=='user'){
             router.push('/');
-        } else if (!sessionService.isAuth()){
+        }
+        else if (!sessionService.isAuth()){
             router.push('/')
         }
     });
@@ -53,21 +54,22 @@ const AddNewProduct: React.FC<Props> = ({ categories, taxes }) => {
                 stock: productStock,
             }
             console.log("Prodotto da inserire", newProduct);
-            const { status, message } = await ProductService.addProduct(newProduct);
-            console.log(status, message);
-        } catch (err) {
+            const res = await ProductService.addProduct(newProduct);
+            console.log(res);
+        }
+        catch (err) {
             console.log(err);
         }
     };
 
     const getPhotos = async (primaryPhoto: Blob, secondaryPhotos: Blob[]): Promise<{ productPrimaryPhotoBase64: string, productSecondaryPhotosBase64: string[] }> => {
         let productPrimaryPhotoBase64;
-        let productSecondaryPhotosBase64 = [];
+        const productSecondaryPhotosBase64 = [];
         if (primaryPhoto) {
             productPrimaryPhotoBase64 = await onFileUpload(primaryPhoto);
         }
         if (secondaryPhotos) {
-            for (var i = 0; i < productSecondaryPhotos.length; i++) {
+            for (let i = 0; i < productSecondaryPhotos.length; i++) {
                 productSecondaryPhotosBase64.push(await onFileUpload(secondaryPhotos[i]));
             }
         }
@@ -80,11 +82,12 @@ const AddNewProduct: React.FC<Props> = ({ categories, taxes }) => {
                 const fileReader = new FileReader();
                 fileReader.readAsDataURL(file);
                 fileReader.onload = () => {
-                    var base64 = fileReader.result as string;
+                    let base64 = fileReader.result as string;
                     base64 = base64.substring(base64.indexOf(",") + 1);
                     resolve(base64);
                 }
-            } catch (e) {
+            }
+            catch (e) {
                 console.log(e);
             }
         })
@@ -150,8 +153,8 @@ const AddNewProduct: React.FC<Props> = ({ categories, taxes }) => {
     };
 
     const secondaryPhotosHandler = (e: ChangeEvent<HTMLInputElement>): void => {
-        let files = [];
-        for (var i = 0; i < e.target.files.length; i++) {
+        const files = [];
+        for (let i = 0; i < e.target.files.length; i++) {
             files.push(e.target.files[i]);
         }
         setProductSecondaryPhotos(files);
@@ -229,14 +232,15 @@ const AddNewProduct: React.FC<Props> = ({ categories, taxes }) => {
 
 export default AddNewProduct;
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
+export const getServerSideProps: GetServerSideProps = async () => {
     try {
         const categories = await CategoriesService.fetchAllCategories();
         const taxes = await TaxesService.fetchTaxes();
         return {
             props: { categories, taxes },
         }
-    } catch (err) {
+    }
+    catch (err) {
         console.log(err);
     }
 }
