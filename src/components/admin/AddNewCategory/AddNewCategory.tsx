@@ -9,10 +9,6 @@ interface Props {
 }
 
 const AddNewCategory: React.FC<Props> = ({ error, messageIn }) => {
-    const [info, setInfo] = useState({
-        error: '',
-        messageShow: ''
-    })
 
     const [newCategory, setNewCategory] = useState("");
 
@@ -21,15 +17,12 @@ const AddNewCategory: React.FC<Props> = ({ error, messageIn }) => {
             const response: boolean = await CategoriesService.createCategories(newCategory);
             console.log(response);
             if (response) {
-                messageIn();
+                confirm("Category added successfully!");
             } else {
-                error();
+                alert("Something went wrong, try again later ..");
             }
         } catch (err) {
-            setInfo({
-                ...info,
-                error: "Error on loading category! Try later..."
-            })
+            console.log("Errore", err);
         }
     }
 

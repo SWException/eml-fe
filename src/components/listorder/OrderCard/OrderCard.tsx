@@ -32,7 +32,7 @@ const OrderCard: React.FC<Props> = ({ order }) => {
             <td>{dateShow}</td>
             <td>€ {total}</td>
             <td>{orderStatus}</td>
-            <td><Button color="primary" size="lg" onClick={orderSummary}>Order Summary</Button></td>
+            <td><Button color="primary" onClick={orderSummary}>Order Summary</Button></td>
         </>
     );
 };

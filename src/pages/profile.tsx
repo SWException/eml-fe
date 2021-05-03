@@ -1,7 +1,7 @@
 import Amplify from 'aws-amplify';
 import awsconfig from 'aws-exports';
 import React, { useEffect, useState, ChangeEvent, Dispatch } from 'react';
-import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
+import { Button, Form, FormGroup, Label, Input, Alert  } from 'reactstrap';
 import { CustomerLayout } from 'components/layouts/CustomerLayout';
 import styles from 'styles/Profile.module.css';
 import { AddressesService, sessionService } from 'services';
@@ -20,6 +20,9 @@ const Profile: React.FC = () => {
     const [addresses, setAddresses]: [Addresses, Dispatch<Addresses>] = useState<Addresses>();
     const [selectedAddress, setSelectedAddress]: [Address, Dispatch<Address>] = useState<Address>();
     const [selectedAddressId, setSelectedAddressId]: [string, Dispatch<string>] = useState<string>();
+    const [modal, setModal] = useState(false);
+
+    const toggle = () => setModal(!modal);
 
     useEffect(() => {
         if (sessionService.isAuth()) {
@@ -64,11 +67,13 @@ const Profile: React.FC = () => {
         getSelectedAddress(e.target.value);
     }
 
+    
     const submitNewAddress = async (): Promise<void> => {
         await AddressesService.createNewAddress(newAddressValues)
             .then((response: boolean) => {
                 if (response) {
                     getAddresses();
+                    alert("Address added successfully!");
                 }
                 console.log(response)
             }).catch((e) => {
@@ -83,6 +88,7 @@ const Profile: React.FC = () => {
                     getAddresses();
                     setSelectedAddress(null);
                     setSelectedAddressId(null);
+                    alert("Address deleted successfully!");
                 }
                 console.log(response);
             }
@@ -113,6 +119,7 @@ const Profile: React.FC = () => {
 
     const changePassword = async (): Promise<void> => {
         console.log(newPassword, confirmNewPassword, oldPassword);
+        
         /*try {
             await AuthService.changePassword(oldPassword, newPassword)
         }
@@ -131,12 +138,11 @@ const Profile: React.FC = () => {
             return (
                 <p>
                     { selectedAddress.description}
-                     - { selectedAddress.city},
-                    { selectedAddress.address},
-                    { selectedAddress.code},
-                    { selectedAddress.description}
-                    - { selectedAddress.recipientName}
-                    { selectedAddress.recipientSurname}
+                     - { selectedAddress.recipientName}
+                       { selectedAddress.recipientSurname}
+                     - { selectedAddress.address}, 
+                    { selectedAddress.code}, 
+                    { selectedAddress.city}, 
                 </p>
             );
         }

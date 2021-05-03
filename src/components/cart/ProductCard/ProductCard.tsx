@@ -44,10 +44,10 @@ const ProductCard: React.FC<Props> = ({ product, loadCart }) => {
             <button className={styles.delete} onClick={deleteProduct}>X</button>
             <img className={styles.img} src={product.primaryPhoto} height="100" width="100" alt="..." />
             <span className={styles.information}>
-                <div><strong>ID: </strong>{product.id}</div>
                 <div><strong>{product.name.toUpperCase()}</strong></div>
             </span>
             <span className={styles.information}><strong>PRICE: </strong>€ {product.price}</span>
+            <span className={styles.information}><strong>TAX: </strong> {product.tax}%</span>
             <div className={styles.quantity}>
                 <button className={styles.plus} onClick={() => { modifyQuantity('minus') }} type="button" name="button">
                     -

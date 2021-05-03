@@ -21,12 +21,10 @@ const OrdersList: React.FC = () => {
 
     return (
         <CustomerLayout header footer>
-            <div className={styles.div}>
                 <div>
                     <h1>List of orders</h1>
                 </div>
-                <p />
-                <div className="orders-item-layout">
+                <div className={styles.div}>
                     {orders ? (
                         <table className={styles.orders}>
                             <thead>
@@ -48,13 +46,11 @@ const OrdersList: React.FC = () => {
                             </tbody>
                         </table>
                     ) : (
-                        <div>
+                        <div className={styles.div}>
                             No orders
                         </div>
                     )}
                 </div>
-            </div>
-
         </CustomerLayout>
     );
 };

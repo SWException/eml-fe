@@ -1,6 +1,6 @@
 import { DetailOrderProductCard } from 'components/orderdetails'
 import React, { Dispatch, useEffect, useState } from "react";
-import { Button } from 'reactstrap';
+import { Button, Spinner } from 'reactstrap';
 import { CustomerLayout } from 'components/layouts/CustomerLayout';
 import styles from "styles/Order.module.css";
 import { OrdersService } from 'services';
@@ -61,8 +61,9 @@ const OrderDetails: React.FC<Props> = ({ id }) => {
                             </table>
                         </div>
                         <div className={styles.info}><strong>Total: {" € "}{order.cart.total} </strong></div>
-                        <div className={styles.info}><strong>Shipping address:</strong> {`${order.shippingAddress.description} - ${order.shippingAddress.city}, ${order.shippingAddress.address}, ${order.shippingAddress.code}, ${order.shippingAddress.district}`}</div>
-                        <div className={styles.info}><strong>Billing address: </strong> {`${order.billingAddress.description} - ${order.billingAddress.city}, ${order.billingAddress.address}, ${order.billingAddress.code}, ${order.billingAddress.district}`}</div>
+                        <div className={styles.info}><strong>Taxes: {" € "}{order.cart.tax} </strong></div>
+                        <div className={styles.info}><strong>Shipping address:</strong> {`${order.shippingAddress.address}, ${order.shippingAddress.city}, ${order.shippingAddress.code}, ${order.shippingAddress.district}`}</div>
+                        <div className={styles.info}><strong>Billing address: </strong> {`${order.billingAddress.address}, ${order.billingAddress.city}, ${order.billingAddress.code}, ${order.billingAddress.district}`}</div>
                         <div>
                             <div className={styles.button}>
                                 <p>Do you need assistance?</p>
@@ -79,7 +80,9 @@ const OrderDetails: React.FC<Props> = ({ id }) => {
                         </div>
                     </>
                 ) : (
-                    <div>LOADING SPINNER</div>
+                    <div className={styles.spinner}>
+                        <Spinner/>
+                    </div>
                 )
                 }
 

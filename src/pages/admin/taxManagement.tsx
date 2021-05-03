@@ -33,7 +33,7 @@ const TaxManagement: React.FC = () => {
             setTaxes(taxes);
         }
         catch (err) {
-            //HANDLING ERROR
+            alert("Something went wrong, try again later ..");
             console.log(err);
         }
     }
@@ -42,9 +42,10 @@ const TaxManagement: React.FC = () => {
         try {
             const result: boolean = await TaxesService.deleteTax(id);
             console.log(result);
+            confirm("Tax deleted successfully!");
         }
         catch (err) {
-            //HANDLING ERROR
+            alert("Something went wrong, try again later ..");
         }
     }
 

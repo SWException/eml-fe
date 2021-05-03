@@ -57,7 +57,7 @@ const CartUser: React.FC = () => {
                             ))
                         ) : (
                             <div>
-                                NON C'E' NULLA NEL CARRELLAO
+                                The cart is empty, add an item to continue.
                             </div>
                         )}
                     </div>

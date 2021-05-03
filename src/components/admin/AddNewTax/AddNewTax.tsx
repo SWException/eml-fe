@@ -20,6 +20,7 @@ const AddNewTax: React.FC = () => {
             const newTax: InsertTax = { value: newTaxValue, description: newTaxDescription }
             const result: boolean = await TaxesService.createTax(newTax);
             console.log(result);
+            confirm("Tax added successfully!");
         } catch (err) {
             console.log(err);
             setInfo({

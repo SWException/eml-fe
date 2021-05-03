@@ -20,9 +20,9 @@ const EditExistingCategory: React.FC<Props> = ({ category, error, messageIn }) =
             const response: boolean = await CategoriesService.modifyCategory(category.id, editCategory);
             console.log(response);
             if (response) {
-                messageIn()
+                confirm("Category edited successfully!");
             } else {
-                error()
+                alert("Something went wrong, try again later ..");
             }
         } catch (err) {
             console.log("Errore", err)

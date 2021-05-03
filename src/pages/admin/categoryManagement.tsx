@@ -11,12 +11,6 @@ const CategoryManagement: React.FC = () => {
     const router = useRouter();
 
     const [categories, setCategories]: [Categories, Dispatch<Categories>] = useState<Categories>();
-    const [info, setInfo] = useState({ //da vedere
-        error: '',
-        messageShow: ''
-    })
-
-    const { error, messageShow } = info;
 
     useEffect(() => {
         getAllCategories();
@@ -49,18 +43,11 @@ const CategoryManagement: React.FC = () => {
             const response: boolean = await CategoriesService.deleteCategory(id);
             console.log(response);
             if (response) {
-                setInfo({
-                    ...info,
-                    messageShow: 'Category deleted successfully'
-                })
-                displayInfo();
+                getAllCategories();
+                confirm("Category deleted successfully!");
             }
             else {
-                setInfo({
-                    ...info,
-                    error: "Error while deleting a category! Try later..."
-                })
-                displayErr();
+                alert("Something went wrong, try again later ..");
             }
         }
         catch (err) {
@@ -78,25 +65,13 @@ const CategoryManagement: React.FC = () => {
         }
     }
 
-    const displayErr = (): JSX.Element => {
-        return (error ? <div className="alert alert-danger">{error}</div> : <></>);
-    }
-
-    const displayInfo = ():JSX.Element  => {
-        return (messageShow ? <div className="alert alert-info">{messageShow}</div> : <></>);
-    }
-
     return (
         <AdminLayout header>
             <h1>Management Categories</h1>
             <div className={styles.tab}>
                 <AddNewCategory
                     error={() => {
-                        setInfo({
-                            ...info,
-                            error: "Error on adding new category"
-                        })
-                        displayErr();
+                        alert("Something went wrong, try again later ..");
                     }}
                     messageIn={() => { window.location.reload() }} />
             </div>
@@ -121,11 +96,7 @@ const CategoryManagement: React.FC = () => {
                                             <EditExistingCategory
                                                 category={category}
                                                 error={() => {
-                                                    setInfo({
-                                                        ...info,
-                                                        error: "Error on editing category"
-                                                    })
-                                                    displayErr();
+                                                    alert("Something went wrong, try again later ..");
                                                 }}
                                                 messageIn={() => { window.location.reload() }}
                                             /></td>
@@ -134,10 +105,6 @@ const CategoryManagement: React.FC = () => {
                                 ))}
                             </tbody>
                         </table>
-                    </div>
-                    <div style={{ marginTop: "20px", marginLeft: '20px', marginRight: '20px' }}>
-                        {displayErr()}
-                        {displayInfo()}
                     </div>
                 </div>
             ) : (

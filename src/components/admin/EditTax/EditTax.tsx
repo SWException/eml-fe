@@ -17,9 +17,10 @@ const EditExistingTax: React.FC<Props> = ({ tax }) => {
             const editTax: EditTax = { value: newTaxValue, description: newTaxDescription };
             const result: boolean = await TaxesService.modifyTax(tax.id, editTax);
             console.log(result);
+            confirm("Tax edited successfully!");
         } catch (err) {
             console.log(err);
-            //HANDLING ERRORS
+            alert("Something went wrong, try again later ..");
         }
     }
 
