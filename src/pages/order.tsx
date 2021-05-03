@@ -13,7 +13,6 @@ interface Props {
 
 const OrderDetails: React.FC<Props> = ({ id }) => {
     console.log(id);
-    //Inserire Fetch
 
     const [dateShow, setDateShow] = useState('')
 

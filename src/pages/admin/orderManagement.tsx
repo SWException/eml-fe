@@ -10,7 +10,9 @@ const OrderManagement: React.FC = () => {
     const router = useRouter();
 
     const [currentStatus, setCurrentStatus] = useState<string>('Paid');
+    const [orders, setOrders] = useState<Orders>();
 
+    
     useEffect(() => {
         loadOrders(currentStatus);
         const user = sessionService.getLocalStorage();
@@ -22,22 +24,17 @@ const OrderManagement: React.FC = () => {
         }
     }, [])
 
-    const [orders, setOrder] = useState<Orders>();
-
     const loadOrders = async (status: string) => {
         await OrdersService.fetchOrders(status)
             .then((orders: Orders) => {
                 console.log("Orders: ", orders);
-                setOrder(orders);
+                setOrders(orders);
             })
             .catch((err: Error) => {
                 console.log(err.message);
             });
     }
 
-    const orderDetailsAdmin = () => {
-        router.push('/admin/orderDetailsAdmin');
-    }
 
     const handleStatusChange = async (e: ChangeEvent<HTMLSelectElement>): Promise<void> => {
         const value = e.target.value;
@@ -56,12 +53,32 @@ const OrderManagement: React.FC = () => {
         </div>
     )
 
+    const getOrdersbyId = async (id: string) => {
+        try {
+            const orders = await OrdersService.fetchOrders(id);
+            setOrders(orders);
+            console.log(orders);
+        }
+        catch (err) {
+            console.log(err);
+        }
+    }
+    const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
+        const value = e.target.value;
+        if (value == '') {
+            loadOrders(currentStatus);
+        }else{
+            getOrdersbyId(value);
+        }
+    }
+
+
     return (
         <AdminLayout header>
             <h1>Orders Management</h1>
             <div className={styles.div}>
                 <label><strong>Search:</strong></label>
-                <input className={styles.input} type="text" placeholder="Search Order by id..." />
+                <input className={styles.input} onChange={(e: ChangeEvent<HTMLInputElement>) => { handleChange(e) }} type="text" placeholder="Search Order by id..." />
             </div>
             <div className={styles.div}>
                 {renderStatusCombobox()}
@@ -87,7 +104,7 @@ const OrderManagement: React.FC = () => {
                                     <td>{order.timestamp}</td>
                                     <td>€{order.cart.total}</td>
                                     <td><Button color="primary" size="lg">Print Shipping Note</Button></td>
-                                    <td><Button color="primary" size="lg" onClick={orderDetailsAdmin}>Order Summary</Button></td>
+                                    <td><Button color="primary" size="lg" onClick={router.push(`/detail?id=${order.orderid}`)}>Order Summary</Button></td>
                                 </tr>
                             ))}
                         </tbody>
