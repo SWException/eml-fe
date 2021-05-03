@@ -1,9 +1,6 @@
 .products {
     font-family: Arial, Helvetica, sans-serif;
     border-collapse: collapse;
-    margin-left: 1rem;
-    margin-right: 1rem;
-    margin-top: 1rem;
     text-align: center;
 }
 
@@ -29,7 +26,6 @@
 }
 
 .div {
-    margin-top: 1rem;
     margin-top:2rem;
     display: flex;
     flex-direction: row;

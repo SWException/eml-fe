@@ -1,18 +1,18 @@
-import { Product } from 'types'
-import React, { useEffect, useState } from "react";
-import { useRouter } from 'next/router';
+import React, { useEffect, useState, Dispatch } from "react";
 import { AdminLayout } from 'components/layouts/AdminLayout';
 import styles from "styles/Order.module.css";
 import { AdminDetailOrderProductCard } from 'components/orderdetails'
-import { sessionService, OrdersService } from 'services';
+import { OrdersService } from 'services';
 import { Order, OrderProducts } from 'types'
 import { GetServerSideProps } from 'next';
 
 interface Props {
-    id: string
+    id: string,
 }
 
 const OrderDetailsAdmin: React.FC<Props> = ({ id }) => {
+     console.log(id);
+
     const [dateShow, setDateShow] = useState('')
 
     const getDate = (timestamp): string => {
@@ -20,9 +20,10 @@ const OrderDetailsAdmin: React.FC<Props> = ({ id }) => {
         // Hours part from the timestamp
         return (date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear() + " " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds());
     }
-    const [order, setOrder]: [Order, React.Dispatch<Order>] = useState({
 
+    const [order, setOrder]: [Order, Dispatch<Order>] = useState({
         orderid: "",
+        userid: "",
         timestamp: "",
         orderStatus: "",
         cart: {
@@ -96,9 +97,19 @@ const OrderDetailsAdmin: React.FC<Props> = ({ id }) => {
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
     const id = context.query?.id as string;
-    return {
-        props: { id },
-    };
+    try {
+        console.log(id);
+        return {
+            props: { id },
+        };
+    }
+    catch (error) {
+        return {
+            props: {
+                id: null
+            },
+        };
+    }
 };
 
 export default OrderDetailsAdmin;
