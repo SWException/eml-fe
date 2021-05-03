@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useEffect, useState } from 'react';
+import React, { ChangeEvent, useEffect, useState, Dispatch } from 'react';
 import { useRouter } from 'next/router';
 import { AdminLayout } from 'components/layouts/AdminLayout';
 import styles from 'styles/ProductManagement.module.css';
@@ -15,28 +15,22 @@ interface Props {
 const ProductManagement: React.FC<Props> = ({ defaultProducts, categories }) => {
     const router = useRouter();
 
-    useEffect(()=>{
+    const [products, setProducts]: [Products, Dispatch<Products>] = useState<Products>(defaultProducts);
+    const [currentCategory, setCurrentCategory]: [string, Dispatch<string>] = useState<string>("");
+
+    useEffect(() => {
         const user = sessionService.getLocalStorage();
-        if(sessionService.isAuth() && user.role=='user'){
-            router.push('/');
-        }
-        else if (!sessionService.isAuth()){
-            router.push('/')
-        }
     });
 
-    const [products, setProducts] = useState<Products>(defaultProducts);
-    const [currentCategory, setCurrentCategory] = useState<string>("");
-
-    const addNewProduct = () => {
+    const addNewProduct = (): void => {
         router.push('/admin/addNewProduct');
     }
 
-    const editProduct = (id: string) => {
+    const editProduct = (id: string): void => {
         router.push('/admin/editExistingProduct?id=' + id);
     }
 
-    const removeProduct = async (id: string) => {
+    const removeProduct = async (id: string): Promise<void> => {
         try {
             const result: boolean = await ProductService.deleteProduct(id);
             console.log(result);
@@ -49,15 +43,15 @@ const ProductManagement: React.FC<Props> = ({ defaultProducts, categories }) => 
     const handleCategoryChange = async (e: ChangeEvent<HTMLSelectElement>): Promise<void> => {
         const value = e.target.value;
         setCurrentCategory(value);
-        setProducts((await ProductService.fetchProducts({category:value})));
-    }
-    
-    const handleSearchChange = async (e: ChangeEvent<HTMLInputElement>): Promise<void> => {
-        const value = e.target.value;
-        setProducts((await ProductService.fetchProducts({category:currentCategory, search:value})));
+        setProducts((await ProductService.fetchProducts({ category: value })));
     }
 
-    const renderCategoryCombobox = (): any => (
+    const handleSearchChange = async (e: ChangeEvent<HTMLInputElement>): Promise<void> => {
+        const value = e.target.value;
+        setProducts((await ProductService.fetchProducts({ category: currentCategory, search: value })));
+    }
+
+    const renderCategoryCombobox = (): JSX.Element => (
         <div className={styles.div}>
             <label>Category:</label>
             <select className={styles.select} onChange={(e) => handleCategoryChange(e)}>

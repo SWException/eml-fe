@@ -1,13 +1,15 @@
 import { Address } from "types";
 
 export type Order = {
-    userid: string;
-    timestamp: string;
-    orderid: string;
-    orderStatus: string;
-    cart: OrderCart;
     billingAddress: Address;
+    cart: OrderCart;
+    orderStatus: string;
+    orderid: string;
     shippingAddress: Address;
+    shippingFee: number;
+    timestamp: string;
+    total: number;
+    userid: string;
 };
 
 export type OrderCart = {
@@ -15,21 +17,18 @@ export type OrderCart = {
     products: OrderProducts;
     tax: number;
     total: number;
+    itemCount: number;
 }
 
 export type OrderProduct = {
-    productId: string;
+    id: string;
     name: string;
-    description: string;
     primaryPhoto: string;
-    secondaryPhotos?: string[];
-    category: string;
     price: number;
     tax: number;
-    show: boolean;
-    showHome: boolean;
-    stock: number;
+    total: number;
     quantity: number;
 }
+
 export type Orders = Order[];
 export type OrderProducts = OrderProduct[];

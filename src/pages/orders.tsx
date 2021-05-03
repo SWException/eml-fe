@@ -1,30 +1,22 @@
 import { OrderCard } from 'components/listorder';
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, Dispatch } from "react";
 import { CustomerLayout } from 'components/layouts/CustomerLayout';
 import styles from 'styles/Orders.module.css';
 import { OrdersService } from 'services';
-import { Orders } from 'types';
+import { Order, Orders } from 'types';
 
-interface Props {
-    ord: Orders;
-}
 
-const OrdersList: React.FC<Props> = ({ ord }) => {
-    console.log(ord);
-    //Inserire Fetch
-
+const OrdersList: React.FC = () => {
     useEffect(() => {
         reloadOrders();
     }, [])
 
-    const [orders, setOrder] = useState([]);
+    const [orders, setOrder]: [Orders, Dispatch<Orders>] = useState<Orders>();
 
     const reloadOrders = async () => {
-        console.log("Start reloadOrders");
-
         const orders = await OrdersService.fetchOrders();
         setOrder(orders);
-        console.log('Done', orders);
+        console.log('Orders', orders);
     }
 
     return (
@@ -35,30 +27,31 @@ const OrdersList: React.FC<Props> = ({ ord }) => {
                 </div>
                 <p />
                 <div className="orders-item-layout">
-                    <table className={styles.orders}>
-                        <tr>
-                            <th>ID</th>
-                            <th>DATE</th>
-                            <th>TOTAL</th>
-                            <th>ARTICLES</th>
-                            <th>STATE</th>
-                        </tr>
-                    </table>
-                    <table className={styles.orders}>
-                        {orders?.map((order) => (
-                            <>
+                    {orders ? (
+                        <table className={styles.orders}>
+                            <thead>
                                 <tr>
-                                    <OrderCard
-                                        id={order.orderid}
-                                        date={order.timestamp}
-                                        total={order.cart.total}
-                                        totart={order.cart.itemCount}
-                                        state={order.orderStatus}
-                                    />
+                                    <th>ID</th>
+                                    <th>DATE</th>
+                                    <th>TOTAL</th>
+                                    <th>STATE</th>
                                 </tr>
-                            </>
-                        ))}
-                    </table>
+                            </thead>
+                            <tbody>
+                                {orders.map((order: Order) => (
+                                    <tr>
+                                        <OrderCard
+                                            order={order}
+                                        />
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    ) : (
+                        <div>
+                            No orders
+                        </div>
+                    )}
                 </div>
             </div>
 

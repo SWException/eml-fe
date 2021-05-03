@@ -8,12 +8,9 @@ import { Button, Carousel, CarouselItem, CarouselControl, CarouselIndicators } f
 import { GetServerSideProps } from 'next';
 import { CartService } from 'services';
 
-interface Props {
-    product: Product;
-}
 
-const Detail: React.FC<Props> = ({ product }) => {
-
+const Detail: React.FC<Product> = (product: Product) => {
+    
     const [images, setImages] = useState<string[]>([]);
     const [activeIndex, setActiveIndex] = useState(0);
     const [animating, setAnimating] = useState(false);
@@ -25,10 +22,9 @@ const Detail: React.FC<Props> = ({ product }) => {
 
     useEffect(() => {
         addImagesToCarousel();
-        stock > 0 ? setQuantity(1) :  setQuantity(0);
+        product.stock > 0 ? setQuantity(1) :  setQuantity(0);
     }, [])
 
-    const { name, description, primaryPhoto, secondaryPhotos, price, id, stock } = product;
     const { error, messageShow } = info;
 
     const items = [
@@ -39,8 +35,8 @@ const Detail: React.FC<Props> = ({ product }) => {
 
     const addImagesToCarousel = () => {
         const arrayImg = [];
-        arrayImg.push(primaryPhoto);
-        arrayImg.push(secondaryPhotos);
+        arrayImg.push(product.primaryPhoto);
+        arrayImg.push(product.secondaryPhotos);
         setImages(arrayImg);
     }
 
@@ -63,7 +59,7 @@ const Detail: React.FC<Props> = ({ product }) => {
     }
 
     const modifyQuantityByStep = async (increment: boolean): Promise<void> => {
-        if (increment && quantity < stock) {
+        if (increment && quantity < product.stock) {
             setQuantity(quantity + 1);
         }
         else if (!increment && quantity > 1) {
@@ -76,7 +72,7 @@ const Detail: React.FC<Props> = ({ product }) => {
         console.log(QTA);
 
         if (QTA && QTA > 0) {
-            if (QTA <= stock)
+            if (QTA <= product.stock)
                 setQuantity(QTA);
         }
         e.target.setAttribute("value", quantity.toString());
@@ -97,7 +93,7 @@ const Detail: React.FC<Props> = ({ product }) => {
 
     const addCart = async () => {
         try {
-            const res = await CartService.addToCart(id, quantity);
+            const res = await CartService.addToCart(product.id, quantity);
             if (res) {
                 setInfo({
                     ...info,
@@ -138,9 +134,9 @@ const Detail: React.FC<Props> = ({ product }) => {
                     <CarouselControl direction="next" directionText="Next" onClickHandler={next} />
                 </Carousel>
                 <div className={styles.productInfo}>
-                    <div className={styles.productName}>{name}</div>
-                    <div className={styles.productPrice}>Price: € {price}</div>
-                    <div className={styles.productDesc}>{description}</div>
+                    <div className={styles.productName}>{product.name}</div>
+                    <div className={styles.productPrice}>Price: € {product.price}</div>
+                    <div className={styles.productDesc}>{product.description}</div>
                     <div className={styles.productAction}>
                         <div>
                             <button className={styles.plus} onClick={() => { modifyQuantityByStep(false) }} type="button" name="button">
@@ -149,7 +145,7 @@ const Detail: React.FC<Props> = ({ product }) => {
                             <input type="number" name="name" value={quantity}
                                 className={styles.input}
                                 onChange={(e) => modifyQuantity(e)}
-                                max={stock}>
+                                max={product.stock}>
                             </input>
                             <button className={styles.minus} onClick={() => { modifyQuantityByStep(true) }} type="button" name="button">
                                 +
@@ -175,9 +171,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     try {
         const product: Product = await ProductService.fetchProduct(id);
         console.log(product)
-        return {
-            props: { product },
-        };
+        return product;
     }
     catch (error) {
     

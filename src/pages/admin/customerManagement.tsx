@@ -1,7 +1,6 @@
-import React, { ChangeEvent, useEffect, useState } from 'react';
+import React, { ChangeEvent, useEffect, useState, Dispatch } from 'react';
 import { AdminLayout } from 'components/layouts/AdminLayout';
 import styles from 'styles/CustomerManagement.module.css';
-import { Button } from 'reactstrap';
 import { useRouter } from 'next/router';
 import { CustomerService, sessionService } from 'services';
 import { Customers } from 'types';
@@ -10,20 +9,13 @@ const CustomerManagement: React.FC = () => {
 
     const router = useRouter();
 
-    const [customers, setCustomers] = useState<Customers>();
+    const [customers, setCustomers]: [Customers, Dispatch<Customers>] = useState<Customers>();
 
     useEffect(() => {
         getAllCustomer();
-        const user = sessionService.getLocalStorage();
-        if (sessionService.isAuth() && user.role == 'user') {
-            router.push('/');
-        }
-        else if (!sessionService.isAuth()) {
-            router.push('/')
-        }
     }, [])
 
-    const getCustomersByMail = async (mail: string) => {
+    const getCustomersByMail = async (mail: string): Promise<void> => {
         try {
             const customers = await CustomerService.fetchCustomersByMail(mail);
             setCustomers(customers);
@@ -34,7 +26,7 @@ const CustomerManagement: React.FC = () => {
         }
     }
 
-    const getAllCustomer = async () => {
+    const getAllCustomer = async (): Promise<void> => {
         try {
             const customers = await CustomerService.fetchAllCustomers();
             setCustomers(customers);
@@ -67,7 +59,7 @@ const CustomerManagement: React.FC = () => {
                 <div className={styles.tab}>
                     <table className={styles.customers}>
                         <thead>
-                            <tr> 
+                            <tr>
                                 <th>NAME</th>
                                 <th>SURNAME</th>
                                 <th>EMAIL</th>

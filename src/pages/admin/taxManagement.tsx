@@ -1,4 +1,4 @@
-import React, { useState, useEffect, ChangeEvent } from 'react';
+import React, { useState, useEffect, ChangeEvent, Dispatch } from 'react';
 import { useRouter } from 'next/router';
 import styles from 'styles/TaxesManagement.module.css';
 import { Button } from 'reactstrap';
@@ -9,23 +9,14 @@ import { sessionService, TaxesService } from 'services';
 
 const TaxManagement: React.FC = () => {
 
-    const router = useRouter();
-
-    const [taxes, setTaxes] = useState<Taxes>()
+    const [taxes, setTaxes]: [Taxes, Dispatch<Taxes>] = useState<Taxes>()
 
     useEffect(() => {
-        getAllTaxes()
-        const user = sessionService.getLocalStorage();
-        if(sessionService.isAuth() && user.role=='user'){
-            router.push('/');
-        }
-        else if (!sessionService.isAuth()){
-            router.push('/')
-        }
+        getAllTaxes();
     }, [])
 
 
-    const getAllTaxes = async () => {
+    const getAllTaxes = async (): Promise<void> => {
         try {
             const taxes: Taxes = await TaxesService.fetchTaxes();
             setTaxes(taxes);
@@ -36,7 +27,7 @@ const TaxManagement: React.FC = () => {
         }
     }
 
-    const getTaxesByDescription = async (description: string) => {
+    const getTaxesByDescription = async (description: string): Promise<void> => {
         try {
             const taxes: Taxes = await TaxesService.fetchTaxesByDescription(description);
             setTaxes(taxes);
@@ -47,7 +38,7 @@ const TaxManagement: React.FC = () => {
         }
     }
 
-    const deleteTax = async (id: string) => {
+    const deleteTax = async (id: string): Promise<void> => {
         try {
             const result: boolean = await TaxesService.deleteTax(id);
             console.log(result);

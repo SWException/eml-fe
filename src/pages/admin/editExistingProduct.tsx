@@ -1,5 +1,5 @@
 import { AdminLayout } from 'components/layouts/AdminLayout';
-import React, { useState, useEffect, ChangeEvent } from 'react'
+import React, { useState, useEffect, ChangeEvent, Dispatch } from 'react'
 import styles from 'styles/AddNewProduct.module.css'
 import { Button } from 'reactstrap'
 import { useRouter } from 'next/router';
@@ -18,23 +18,23 @@ const EditExistingProduct: React.FC<Props> = ({ product, categories, taxes }) =>
 
     const router = useRouter();
 
-    const [productName, setProductName] = useState(product.name);
-    const [productDescription, setProductDescription] = useState(product.description);
-    const [productPrimaryPhoto, setProductPrimaryPhoto] = useState<any>();
-    const [productSecondaryPhotos, setProductSecondaryPhotos] = useState<any[]>([]);
-    const [productCategoryId, setProductCategoryId] = useState(product.categoryId);
-    const [productNetPrice, setProductNetPrice] = useState(product.netPrice);
-    const [productTaxId, setProductTaxId] = useState(product.taxId);
-    const [productShow, setProductShow] = useState(product.show);
-    const [productStock, setProductStock] = useState(product.stock);
-    const [productShowHome, setProductShowHome] = useState(product.showHome);
+    const [productName, setProductName]: [string, Dispatch<string>] = useState<string>(product.name);
+    const [productDescription, setProductDescription]: [string, Dispatch<string>] = useState<string>(product.description);
+    const [productPrimaryPhoto, setProductPrimaryPhoto]: [Blob, Dispatch<Blob>] = useState<Blob>();
+    const [productSecondaryPhotos, setProductSecondaryPhotos]: [Blob[], Dispatch<Blob[]>] = useState<Blob[]>();
+    const [productCategoryId, setProductCategoryId]: [string, Dispatch<string>] = useState<string>(product.categoryId);
+    const [productNetPrice, setProductNetPrice]: [number, Dispatch<number>] = useState<number>(product.netPrice);
+    const [productTaxId, setProductTaxId]: [string, Dispatch<string>] = useState<string>(product.taxId);
+    const [productShow, setProductShow]: [boolean, Dispatch<boolean>] = useState<boolean>(product.show);
+    const [productStock, setProductStock]: [number, Dispatch<number>] = useState<number>(product.stock);
+    const [productShowHome, setProductShowHome]: [boolean, Dispatch<boolean>] = useState<boolean>(product.showHome);
 
-    useEffect(()=>{
+    useEffect(() => {
         const user = sessionService.getLocalStorage();
-        if(sessionService.isAuth() && user.role=='user'){
+        if (sessionService.isAuth() && user.role == 'user') {
             router.push('/');
         }
-        else if (!sessionService.isAuth()){
+        else if (!sessionService.isAuth()) {
             router.push('/')
         }
     });
@@ -69,7 +69,7 @@ const EditExistingProduct: React.FC<Props> = ({ product, categories, taxes }) =>
             productPrimaryPhotoBase64 = await onFileUpload(primaryPhoto);
         }
         if (secondaryPhotos) {
-            for (let i = 0; i < productSecondaryPhotos.length; i++) {
+            for (let i = 0; i < secondaryPhotos.length; i++) {
                 productSecondaryPhotosBase64.push(await onFileUpload(secondaryPhotos[i]));
             }
         }
@@ -93,7 +93,7 @@ const EditExistingProduct: React.FC<Props> = ({ product, categories, taxes }) =>
         })
     };
 
-    const renderShow = (): any => (
+    const renderShow = (): JSX.Element => (
         <div className={styles.div}>
             <label>Show:</label>
             <input className={styles.inputcheck} type="radio" id="visible" name="visibility" value="visible" checked={productShow == true} onChange={() => showHandler(true)} />
@@ -103,7 +103,7 @@ const EditExistingProduct: React.FC<Props> = ({ product, categories, taxes }) =>
         </div>
     )
 
-    const renderShowHome = (): any => (
+    const renderShowHome = (): JSX.Element => (
         <div className={styles.div}>
             <label>Show in Best Product:</label>
             <input className={styles.inputcheck} type="radio" id="BPv" name="BP" value="v" checked={productShowHome == true} onChange={() => showHomeHandler(true)} />
@@ -113,7 +113,7 @@ const EditExistingProduct: React.FC<Props> = ({ product, categories, taxes }) =>
         </div>
     )
 
-    const renderCategoryCombobox = (): any => (
+    const renderCategoryCombobox = (): JSX.Element => (
         <div className={styles.div}>
             <label>Category:</label>
             <select className={styles.select} value={productCategoryId} onChange={(e) => categoryIdHandler(e)}>
@@ -124,7 +124,7 @@ const EditExistingProduct: React.FC<Props> = ({ product, categories, taxes }) =>
         </div>
     )
 
-    const renderTaxesCombobox = (): any => (
+    const renderTaxesCombobox = (): JSX.Element => (
         <div className={styles.div}>
             <label>VAT</label>
             <select className={styles.select} value={productTaxId} onChange={(e) => taxIdHandler(e)}>
@@ -248,6 +248,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     }
     catch (err) {
         console.log(err);
-        return {props: { product: null, categories: null, taxes: null }};
+        return { props: { product: null, categories: null, taxes: null } };
     }
 }

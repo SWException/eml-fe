@@ -8,11 +8,10 @@ import { Categories } from 'types';
 import { useRouter } from 'next/router';
 
 const CategoryManagement: React.FC = () => {
-
     const router = useRouter();
 
     const [categories, setCategories]: [Categories, Dispatch<Categories>] = useState<Categories>();
-    const [info, setInfo] = useState({
+    const [info, setInfo] = useState({ //da vedere
         error: '',
         messageShow: ''
     })
@@ -21,16 +20,9 @@ const CategoryManagement: React.FC = () => {
 
     useEffect(() => {
         getAllCategories();
-        const user = sessionService.getLocalStorage();
-        if (sessionService.isAuth() && user.role == 'user') {
-            router.push('/');
-        }
-        else if (!sessionService.isAuth()) {
-            router.push('/')
-        }
     }, [])
 
-    const getCategoriesByName = async (name: string) => {
+    const getCategoriesByName = async (name: string): Promise<void> => {
         console.log(name);
         try {
             const categories: Categories = await CategoriesService.fetchCategoriesByName(name);
@@ -41,7 +33,7 @@ const CategoryManagement: React.FC = () => {
         }
     }
 
-    const getAllCategories = async () => {
+    const getAllCategories = async (): Promise<void> => {
         try {
             const categories = await CategoriesService.fetchAllCategories();
             setCategories(categories);
@@ -52,7 +44,7 @@ const CategoryManagement: React.FC = () => {
         }
     }
 
-    const deleteCategory = async (id: string) => {
+    const deleteCategory = async (id: string): Promise<void> => {
         try {
             const response: boolean = await CategoriesService.deleteCategory(id);
             console.log(response);
@@ -86,11 +78,11 @@ const CategoryManagement: React.FC = () => {
         }
     }
 
-    const displayErr = () => {
+    const displayErr = (): void => {
         return (error ? <div className="alert alert-danger">{error}</div> : '');
     }
 
-    const displayInfo = () => {
+    const displayInfo = (): void => {
         return (messageShow ? <div className="alert alert-info">{messageShow}</div> : '');
     }
 
@@ -125,17 +117,18 @@ const CategoryManagement: React.FC = () => {
                                 {categories.map((category) => (
                                     <tr key={category.id}>
                                         <td>{category.name}</td>
-                                        <td><EditExistingCategory
-                                            category={category}
-                                            error={() => {
-                                                setInfo({
-                                                    ...info,
-                                                    error: "Error on editing category"
-                                                })
-                                                displayErr();
-                                            }}
-                                            messageIn={() => { window.location.reload() }}
-                                        /></td>
+                                        <td>
+                                            <EditExistingCategory
+                                                category={category}
+                                                error={() => {
+                                                    setInfo({
+                                                        ...info,
+                                                        error: "Error on editing category"
+                                                    })
+                                                    displayErr();
+                                                }}
+                                                messageIn={() => { window.location.reload() }}
+                                            /></td>
                                         <td><Button color="primary" size="lg" onClick={() => deleteCategory(category.id)}>REMOVE</Button></td>
                                     </tr>
                                 ))}

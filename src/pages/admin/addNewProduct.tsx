@@ -19,8 +19,8 @@ const AddNewProduct: React.FC<Props> = ({ categories, taxes }) => {
 
     const [productName, setProductName]: [string, Dispatch<string>] = useState<string>("");
     const [productDescription, setProductDescription]: [string, Dispatch<string>] = useState<string>("");
-    const [productPrimaryPhoto, setProductPrimaryPhoto] = useState<any>();
-    const [productSecondaryPhotos, setProductSecondaryPhotos] = useState<any>([]);
+    const [productPrimaryPhoto, setProductPrimaryPhoto]: [Blob, Dispatch<Blob>] = useState<Blob>();
+    const [productSecondaryPhotos, setProductSecondaryPhotos]: [Blob[], Dispatch<Blob[]>] = useState<Blob[]>();
     const [productCategoryId, setProductCategoryId]: [string, Dispatch<string>] = useState<string>("");
     const [productNetPrice, setProductNetPrice]: [number, Dispatch<number>] = useState<number>(0);
     const [productTaxId, setProductTaxId]: [string, Dispatch<string>] = useState<string>("");
@@ -38,7 +38,7 @@ const AddNewProduct: React.FC<Props> = ({ categories, taxes }) => {
         }
     });
 
-    const addProduct = async () => {
+    const addProduct = async (): Promise<void> => {
         const { productPrimaryPhotoBase64, productSecondaryPhotosBase64 } = await getPhotos(productPrimaryPhoto, productSecondaryPhotos);
         try {
             const newProduct: InsertProduct = {
@@ -93,7 +93,7 @@ const AddNewProduct: React.FC<Props> = ({ categories, taxes }) => {
         })
     };
 
-    const renderShow = (): any => (
+    const renderShow = (): JSX.Element => (
         <div className={styles.div}>
             <label>Show:</label>
             <input className={styles.inputcheck} type="radio" id="visible" name="visibilty" value="visible" onChange={() => showHandler(true)} />
@@ -103,7 +103,7 @@ const AddNewProduct: React.FC<Props> = ({ categories, taxes }) => {
         </div>
     );
 
-    const renderShowHome = (): any => (
+    const renderShowHome = (): JSX.Element => (
         <div className={styles.div}>
             <label>Show in Best Product:</label>
             <input className={styles.inputcheck} type="radio" id="BPv" name="BP" value="v" onChange={() => showHomeHandler(true)} />
@@ -113,7 +113,7 @@ const AddNewProduct: React.FC<Props> = ({ categories, taxes }) => {
         </div>
     );
 
-    const renderCategoryCombobox = (): any => (
+    const renderCategoryCombobox = (): JSX.Element => (
         <div className={styles.div}>
             <label>Category:</label>
             <select className={styles.select} defaultValue='#' onChange={(e) => categoryIdHandler(e)}>
@@ -125,7 +125,7 @@ const AddNewProduct: React.FC<Props> = ({ categories, taxes }) => {
         </div>
     );
 
-    const renderTaxesCombobox = (): any => (
+    const renderTaxesCombobox = (): JSX.Element => (
         <div className={styles.div}>
             <label>VAT</label>
             <select className={styles.select} defaultValue='#' onChange={(e) => taxIdHandler(e)}>
