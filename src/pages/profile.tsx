@@ -1,165 +1,187 @@
 import Amplify from 'aws-amplify';
 import awsconfig from 'aws-exports';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, ChangeEvent, Dispatch } from 'react';
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 import { CustomerLayout } from 'components/layouts/CustomerLayout';
 import styles from 'styles/Profile.module.css';
-import { AddressesService, AuthService, sessionService } from 'services';
+import { AddressesService, sessionService } from 'services';
 import { Address, Addresses, User } from 'types'
 Amplify.configure(awsconfig);
 
-// Salva in automatico i cookie per ricordare se il login è stato fatto
-
 const Profile: React.FC = () => {
-    //const { isAuthenticated, currentUser } = useAuth();
+
+    const [oldPassword, setOldPassword]: [string, Dispatch<string>] = useState<string>();
+    const [newPassword, setNewPassword]: [string, Dispatch<string>] = useState<string>();
+    const [confirmNewPassword, setConfirmNewPassword]: [string, Dispatch<string>] = useState<string>();
+    const [newEmail, setNewEmail]: [string, Dispatch<string>] = useState<string>();
+    const [confirmNewEmail, setConfirmNewEmail]: [string, Dispatch<string>] = useState<string>();
+    const [currentEmail, setCurrentEmail]: [string, Dispatch<string>] = useState<string>();
+    const [newAddressValues, setNewAddressValues]: [Address, Dispatch<Address>] = useState<Address>();
+    const [addresses, setAddresses]: [Addresses, Dispatch<Addresses>] = useState<Addresses>();
+    const [selectedAddress, setSelectedAddress]: [Address, Dispatch<Address>] = useState<Address>();
+    const [selectedAddressId, setSelectedAddressId]: [string, Dispatch<string>] = useState<string>();
 
     useEffect(() => {
         if (sessionService.isAuth()) {
             const user: User = sessionService.getLocalStorage()
-            setEmail(user.email);
+            setCurrentEmail(user.email);
         }
-        getAddresses()
+        getAddresses();
     }, [])
-    //mostrare messaggi ed errori nel successo o no del cambio di password + confirmPass
 
-    const [oldPass, setOldPass] = useState("");
-    const [newPass, setNewPass] = useState("");
-    const [email, setEmail] = useState("");
-    const [address, setAddress] = useState<Address[]>([]);
-    const [values, setValues] = useState<Address>({
-        // id: 1, 
-        description: "",
-        recipientName: "",
-        recipientSurname: "",
-        address: "",
-        city: "",
-        code: "",
-        district: "",
-        user: ""
-    });
-    const [selectedAddress, setSelected] = useState("");
-    const [currentAddress, setCurrentAddress] = useState<Address>(null);
-
-    const changeOld = (e) => {
-        setOldPass(e.target.value);
-    }
-
-    const changeNew = (e) => {
-        setNewPass(e.target.value);
-    }
-
-    const changeEmail = () => {
-        console.log("CHANGING THE MAIL");
-    }
-
-    const changePassword = async () => {
-        try {
-            await AuthService.changePassword(oldPass, newPass)
-        }
-        catch (err) {
-            console.log(err)
-        }
-    }
-
-    const getAddresses = async () => {
+    const getAddresses = async (): Promise<void> => {
         try {
             const addresses: Addresses = await AddressesService.fetchAddresses();
-            setAddress(addresses);
-            console.log('Addresses', address);
+            setAddresses(addresses);
+            console.log('Addresses', addresses);
         }
         catch (err) {
             console.log(err)
         }
     }
 
-    const handleChange = (name: string, e: React.FormEvent<HTMLInputElement>): void => {
-        setValues({
-            ...values,
-            [name]: e.currentTarget.value
-        })
-    }
-
-    const addressChange = (e: React.ChangeEvent<HTMLSelectElement>): void => {
-        setSelected(e.currentTarget.value);
-        let curAddress = null;
-        address.forEach((add) => {
-            if (add.id == e.currentTarget.value) {
-                curAddress = add;
-            }
-        })
-        setCurrentAddress(curAddress);
-    }
-
-    const submitNewAddress = async () => {
+    const getSelectedAddress = async (id: string): Promise<void> => {
         try {
-            const response: boolean = await AddressesService.createNewAddress(values);
-            console.log(response)
-            if (response) {
-                getAddresses();
-            }
+            const address: Address = await AddressesService.fetchSingleAddress(id);
+            setSelectedAddress(address);
+            console.log('Address', address);
         }
         catch (err) {
-            console.log(err);
+            console.log(err)
         }
     }
 
-    const deleteAddress = async () => {
-        try {
-            //Ovviamente mockato, capire come selezionare id da un elemento selected
-            const response = await AddressesService.deleteAddress(selectedAddress);
-            console.log(response)
-            if (response) {
-                getAddresses();
+    const changeAddressValue = (fieldName: string, e: ChangeEvent<HTMLInputElement>): void => {
+        setNewAddressValues({
+            ...newAddressValues,
+            [fieldName]: e.currentTarget.value
+        });
+    }
+
+    const changeSelectedAddress = (e: ChangeEvent<HTMLSelectElement>): void => {
+        console.log(e.target.value);
+        setSelectedAddressId(e.target.value);
+        getSelectedAddress(e.target.value);
+    }
+
+    const submitNewAddress = async (): Promise<void> => {
+        await AddressesService.createNewAddress(newAddressValues)
+            .then((response: boolean) => {
+                if (response) {
+                    getAddresses();
+                }
+                console.log(response)
+            }).catch((e) => {
+                console.log(e.message);
+            })
+    }
+
+    const deleteAddress = async (): Promise<void> => {
+        await AddressesService.deleteAddress(selectedAddressId)
+            .then((response: boolean) => {
+                if (response) {
+                    getAddresses();
+                    setSelectedAddress(null);
+                    setSelectedAddressId(null);
+                }
+                console.log(response);
             }
+            ).catch((e) => {
+                console.log(e.message);
+            })
+    }
+
+    const oldPasswordField = (e: React.ChangeEvent<HTMLInputElement>): void => {
+        setOldPassword(e.target.value);
+    }
+
+    const newPasswordField = (e: React.ChangeEvent<HTMLInputElement>): void => {
+        setNewPassword(e.target.value);
+    } 
+    
+    const confirmNewPasswordField = (e: React.ChangeEvent<HTMLInputElement>) : void=> {
+        setConfirmNewPassword(e.target.value);
+    }
+
+    const newEmailField = (e: React.ChangeEvent<HTMLInputElement>) : void=> {
+        setNewEmail(e.target.value);
+    }
+
+    const confirmNewEmailField = (e: React.ChangeEvent<HTMLInputElement>) : void=> {
+        setConfirmNewEmail(e.target.value);
+    }
+
+    const changePassword = async (): Promise<void> => {
+        console.log(newPassword, confirmNewPassword, oldPassword);
+        /*try {
+            await AuthService.changePassword(oldPassword, newPassword)
         }
         catch (err) {
-            console.log(err);
-        }
+            console.log(err)
+        }*/
     }
 
-    const renderAddress = () => {
-        if(currentAddress){
-            return(`${currentAddress?.description} - ${currentAddress?.city}, ${currentAddress?.address}, ${currentAddress?.code}, ${currentAddress?.description} 
-                - ${currentAddress?.recipientName} ${currentAddress?.recipientSurname}`);
+    const changeEmail = async () : Promise<void>=> {
+        console.log(newEmail, confirmNewEmail);
+    }
+    
+    const renderSelectedAddress = (): JSX.Element => {
+
+        if (selectedAddress) {
+            return (
+                <p>
+                    { selectedAddress.description}
+                     - { selectedAddress.city},
+                    { selectedAddress.address},
+                    { selectedAddress.code},
+                    { selectedAddress.description}
+                    - { selectedAddress.recipientName}
+                    { selectedAddress.recipientSurname}
+                </p>
+            );
         }
-        return("Select an address");
+        else {
+            return (
+                <p>Select an address</p>
+            );
+        }
     }
 
     return (
         <CustomerLayout header footer>
             <div className={styles.user}>
-                <strong>User: {email}</strong>
+                <strong>User: {currentEmail}</strong>
             </div>
             <div className={styles.div}>
                 <h1 className={styles.h1}>Here you can manage your addresses</h1>
                 <h2>Add a new one</h2>
                 <Form>
                     <Label>Name:</Label>
-                    <Input type="text" onChange={(e) => { handleChange('recipientName', e) }} placeholder="Name" />
+                    <Input type="text" onChange={(e) => { changeAddressValue('recipientName', e) }} placeholder="Name" />
                     <Label>Surname:</Label>
-                    <Input type="text" onChange={(e) => { handleChange('recipientSurname', e) }} placeholder="Surname" />
+                    <Input type="text" onChange={(e) => { changeAddressValue('recipientSurname', e) }} placeholder="Surname" />
                     <Label>Address:</Label>
-                    <Input type="text" onChange={(e) => { handleChange('address', e) }} placeholder="Address" />
+                    <Input type="text" onChange={(e) => { changeAddressValue('address', e) }} placeholder="Address" />
                     <Label>City:</Label>
-                    <Input type="text" onChange={(e) => { handleChange('city', e) }} placeholder="City" />
+                    <Input type="text" onChange={(e) => { changeAddressValue('city', e) }} placeholder="City" />
                     <Label>Province:</Label>
-                    <Input type="text" onChange={(e) => { handleChange('district', e) }} placeholder="Province (TV)" />
+                    <Input type="text" onChange={(e) => { changeAddressValue('district', e) }} placeholder="Province (TV)" />
                     <Label>CAP:</Label>
-                    <Input type="text" onChange={(e) => { handleChange('code', e) }} placeholder="CAP" />
+                    <Input type="text" onChange={(e) => { changeAddressValue('code', e) }} placeholder="CAP" />
                     <Label>Description:</Label>
-                    <Input type="text" onChange={(e) => { handleChange('description', e) }} placeholder="House Address" />
+                    <Input type="text" onChange={(e) => { changeAddressValue('description', e) }} placeholder="House Address" />
                 </Form>
                 <p />
-                <Button size="lg" onClick={submitNewAddress}>Add</Button>
+                <Button size="lg" onClick={() => { submitNewAddress() }}>Add</Button>
                 <p />
                 <h2>Or delete an existing one</h2>
-                <select style={{ width: "20rem" }} onChange={(e) => { addressChange(e) }}>
-                    {address?.map((address) => (
-                        <option key={address.id} value={`${address.id}`}>{`${address.description}`}</option>
+                <select style={{ width: "20rem" }} defaultValue="#" onChange={(e) => { changeSelectedAddress(e) }}>
+                    <option value='#'> - - - </option>
+                    {addresses?.map((address: Address) => (
+                        <option key={address.id} value={address.id}>{address.description}</option>
                     ))}
                 </select>
-                <p>{renderAddress()}</p>
-                <p />
+                {renderSelectedAddress()}
                 <Button size="lg" onClick={deleteAddress}>Delete this address</Button>
             </div>
             <div className={styles.div}>
@@ -167,18 +189,19 @@ const Profile: React.FC = () => {
                     <h1 className={styles.h1}>Here you can manage your password</h1>
                     <FormGroup>
                         <Label for="oldPassword">Old Password</Label>
-                        <Input type="password" onChange={(e) => { changeOld(e); }} name="password" id="oldPassword" placeholder="Old Password" />
+                        <Input type="password" onChange={(e: React.ChangeEvent<HTMLInputElement>) => { oldPasswordField(e); }} name="password" id="oldPassword" placeholder="Old Password" />
                     </FormGroup>
                     <FormGroup>
                         <Label for="newPassword">New Password</Label>
-                        <Input type="password" onChange={(e) => { changeNew(e); }} name="newPassword" id="newPassword" placeholder="New Password" />
+                        <Input type="password" onChange={(e: React.ChangeEvent<HTMLInputElement>) => { newPasswordField(e); }} name="newPassword" id="newPassword" placeholder="New Password" />
                     </FormGroup>
                     <FormGroup>
                         <Label for="confirmNewPassword">Confirm New Password</Label>
-                        <Input type="password" onChange={(e) => { changeNew(e); }} name="confirmNewPassword" id="confirmNewPassword" placeholder="Confirm New Password" />
+                        <Input type="password" onChange={(e: React.ChangeEvent<HTMLInputElement>) => { confirmNewPasswordField(e); }} 
+                            name="confirmNewPassword" id="confirmNewPassword" placeholder="Confirm New Password" />
                     </FormGroup>
                     <div>
-                        <Button size="lg" onClick={changePassword}>Change Password</Button>
+                        <Button size="lg" onClick={() => {changePassword()}}>Change Password</Button>
                     </div>
                 </Form>
             </div>
@@ -187,14 +210,14 @@ const Profile: React.FC = () => {
                 <Form>
                     <FormGroup>
                         <Label for="newEmail">New Email</Label>
-                        <Input type="email" onChange={(e) => { changeNew(e); }} name="newEmail" id="newEmail" placeholder="New Email" />
+                        <Input type="email" onChange={(e) => { newEmailField(e); }} name="newEmail" id="newEmail" placeholder="New Email" />
                     </FormGroup>
                     <FormGroup>
                         <Label for="confirmNewEmail">Confirm New Email</Label>
-                        <Input type="email" onChange={(e) => { changeNew(e); }} name="confirmNewEmail" id="confirmNewEmail" placeholder="Confirm New Email" />
+                        <Input type="email" onChange={(e) => { confirmNewEmailField(e); }} name="confirmNewEmail" id="confirmNewEmail" placeholder="Confirm New Email" />
                     </FormGroup>
                     <div>
-                        <Button size="lg" onClick={changeEmail}>Change Email</Button>
+                        <Button size="lg" onClick={() => {changeEmail()}}>Change Email</Button>
                     </div>
                 </Form>
             </div>

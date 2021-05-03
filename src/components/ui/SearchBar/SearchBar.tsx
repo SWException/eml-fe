@@ -1,27 +1,37 @@
-import React, { useState } from 'react';
+import { useRouter } from 'next/router';
+import React, { Dispatch, ChangeEvent, FormEvent } from 'react';
+import { useState } from 'react';
 import styles from './SearchBar.module.css';
-import { Button } from 'reactstrap';
-import { ProductService } from 'services';
-import { useRouter } from 'next/router'
+
 
 const SearchBar: React.FC = () => {
 
-    const router = useRouter()
+    const router = useRouter();
+    const [searchField, setSearchField]: [string, Dispatch<string>] = useState<string>("");
+    const [isListened, setIsListened]: [boolean, Dispatch<boolean>] = useState<boolean>(false);
+    
+    const updateSearchField = (e: ChangeEvent<HTMLInputElement>): void => {
+        setSearchField(e.target.value);
+    }
 
-    const [product, setProduct] = useState('');
-
-    const researchProduct = async () => {
-        const products = await ProductService.fetchProducts({search: product});
-        if(products.length > 0){
-            router.push('/')
-            //setProducts on products on ProductContext
+    const setListeners = (e: FormEvent<HTMLInputElement>): void => {
+        
+        if(isListened === false){
+            setIsListened(true);
+            e.target.addEventListener("keyup", function (event: any) {
+                console.log(event.target.value);
+                if (event.key === "Enter" ) {  
+                    router.push('/products?search=' + event.target.value);
+                    event.preventDefault();
+                }
+            });
         }
     }
 
     return (
         <>
             <div className={styles.div}>
-                <input className={styles.input} type="text" onChange={(e)=>{setProduct(e.target.value)}} placeholder="Search Product by name..." />
+                <input className={styles.input} type="text" onInput={(e) => {setListeners(e)}} onChange={(e) => updateSearchField(e)} placeholder="Search Product by name..." />
             </div>
         </>
     );

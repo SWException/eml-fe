@@ -78,12 +78,12 @@ const CategoryManagement: React.FC = () => {
         }
     }
 
-    const displayErr = (): void => {
-        return (error ? <div className="alert alert-danger">{error}</div> : '');
+    const displayErr = (): JSX.Element => {
+        return (error ? <div className="alert alert-danger">{error}</div> : <></>);
     }
 
-    const displayInfo = (): void => {
-        return (messageShow ? <div className="alert alert-info">{messageShow}</div> : '');
+    const displayInfo = ():JSX.Element  => {
+        return (messageShow ? <div className="alert alert-info">{messageShow}</div> : <></>);
     }
 
     return (

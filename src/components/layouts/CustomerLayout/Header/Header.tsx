@@ -20,7 +20,8 @@ const Header: React.FC = () => {
     useEffect(() => {
         if (sessionService.isAuth()) {
             setAuth(true)
-        } else {
+        }
+        else {
             setAuth(false)
         }
     })

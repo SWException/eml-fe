@@ -77,7 +77,7 @@ const AddNewProduct: React.FC<Props> = ({ categories, taxes }) => {
     }
 
     const onFileUpload = async (file: Blob): Promise<string> => {
-        return new Promise<string>((resolve, reject) => {
+        return new Promise<string>((resolve) => {
             try {
                 const fileReader = new FileReader();
                 fileReader.readAsDataURL(file);

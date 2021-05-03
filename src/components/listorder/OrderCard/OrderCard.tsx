@@ -10,7 +10,7 @@ interface Props {
 
 const OrderCard: React.FC<Props> = ({ order }) => {
     const router = useRouter();
-    const { orderid, timestamp, orderStatus, cart } = order;
+    const { orderid, timestamp, orderStatus, total } = order;
     const orderSummary = () => {
         router.push('/order?id=' + orderid);
     }
@@ -22,7 +22,7 @@ const OrderCard: React.FC<Props> = ({ order }) => {
     }, [])
 
     const getDate = (timestamp: string): string => {
-        var date = new Date(+timestamp);
+        const date = new Date(+timestamp);
         return (date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear() + " " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds()).toString()
     }
 
@@ -30,7 +30,7 @@ const OrderCard: React.FC<Props> = ({ order }) => {
         <>
             <td>{orderid}</td>
             <td>{dateShow}</td>
-            <td>€ {cart.total}</td>
+            <td>€ {total}</td>
             <td>{orderStatus}</td>
             <td><Button color="primary" size="lg" onClick={orderSummary}>Order Summary</Button></td>
         </>

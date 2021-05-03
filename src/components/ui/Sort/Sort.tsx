@@ -1,18 +1,31 @@
-import React from 'react';
+import React, { ChangeEvent } from 'react';
+import { SearchRules } from 'types';
 import styles from './Sort.module.css';
 
-const Sort: React.FC = () => {
+interface Props {
+    setFilters: ((T: SearchRules) => Promise<void>)
+}
+
+const Sort: React.FC<Props> = ({ setFilters }) => {
+
+    const updateProducts = async (e: ChangeEvent<HTMLSelectElement>): Promise<void> => {
+        const filters: SearchRules = {
+            sorting: e.target.value
+        }
+        setFilters(filters);
+    }
+
     return (
         <>
             <form className={styles.form}>
                 <div>
-                    <select>
-                        <option>
+                    <select onChange={(e: ChangeEvent<HTMLSelectElement>) => updateProducts(e)}>
+                        <option value = "asc">
                             Low to High
-          </option>
-                        <option>
+                        </option>
+                        <option value = "desc">
                             High to Low
-          </option>
+                        </option>
                     </select>
                 </div>
             </form>

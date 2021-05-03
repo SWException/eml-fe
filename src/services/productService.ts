@@ -10,19 +10,20 @@ const fetchProducts = async (params?: SearchRules): Promise<Products> => {
             'Authorization': `${token}` // Necessario se si è venditore, altrimenti ritorna solo i prodotti visibili al cliente e non quelli nascosti
         }
     };
+    
 
     const minPrice = (params?.minPrice) ? "&minPrice=" + params.minPrice : "";
     const maxPrice = (params?.maxPrice) ? "&maxPrice=" + params.maxPrice : "";
     const category = (params?.category) ? "&category=" + params.category : "";
-    const sorting = (params?.sorting) ? "&sorting=" + params.category : "";
+    const sorting = (params?.sorting) ? "&sorting=" + params.sorting : "";
     const search = (params?.search) ? "&search=" + params.search : "";
 
-
+    //console.log(`${minPrice}${maxPrice}${category}${sorting}${search}`);
     const res = await fetch(`${process.env.AWS_ENDPOINT}/products?${minPrice}${maxPrice}${category}${sorting}${search}`, requestOptions)
         .catch(() => { throw new Error('Error on fetching all products') });
 
     const productsReturned = await res.json();
-
+    console.log(productsReturned);
     if (productsReturned.status == 'error')
         throw new Error(productsReturned.message);
 

@@ -46,7 +46,6 @@ const createNewAddress = async (address: InsertAddress): Promise<boolean> => {
 
 const deleteAddress = async (id: string): Promise<boolean> => {
     const token = sessionService.getCookie('token');
-
     const requestOptions = {
         method: 'DELETE',
         headers: {

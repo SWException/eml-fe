@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import { AdminLayout } from 'components/layouts/AdminLayout';
 import styles from 'styles/ProductManagement.module.css';
 import { Button } from 'reactstrap';
-import { Categories, Category, Products } from 'types';
+import { Categories, Category, Product, Products } from 'types';
 import { GetServerSideProps } from 'next';
 import { CategoriesService, ProductService, sessionService } from 'services';
 
@@ -88,7 +88,7 @@ const ProductManagement: React.FC<Props> = ({ defaultProducts, categories }) => 
                         </tr>
                     </thead>
                     <tbody>
-                        {products?.map((product) => (
+                        {products?.map((product: Product) => (
                             <tr key={product.id}>
                                 <td>{product.id}</td>
                                 <td>{product.name}</td>

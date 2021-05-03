@@ -8,9 +8,12 @@ import { Button, Carousel, CarouselItem, CarouselControl, CarouselIndicators } f
 import { GetServerSideProps } from 'next';
 import { CartService } from 'services';
 
+interface Props {
+    product: Product;
+}
 
-const Detail: React.FC<Product> = (product: Product) => {
-    
+const Detail: React.FC<Props> = (props) => {
+
     const [images, setImages] = useState<string[]>([]);
     const [activeIndex, setActiveIndex] = useState(0);
     const [animating, setAnimating] = useState(false);
@@ -25,31 +28,29 @@ const Detail: React.FC<Product> = (product: Product) => {
         product.stock > 0 ? setQuantity(1) :  setQuantity(0);
     }, [])
 
+    const product = props.product;
     const { error, messageShow } = info;
 
-    const items = [
-        {
-            src: 'https://images-na.ssl-images-amazon.com/images/I/61GqztpFduL._AC_UX679_.jpg',
-        }
-    ];
+    let items = [];
 
     const addImagesToCarousel = () => {
-        const arrayImg = [];
-        arrayImg.push(product.primaryPhoto);
-        arrayImg.push(product.secondaryPhotos);
+        const arrayImg = [product.primaryPhoto, ...product.secondaryPhotos];
+        console.log("IMMAGINI", arrayImg);
         setImages(arrayImg);
+        items = arrayImg.map((img) => {
+            return {src: img};
+        });
     }
-
 
     const next = () => {
         if (animating) return;
-        const nextIndex = activeIndex === items.length - 1 ? 0 : activeIndex + 1;
+        const nextIndex = activeIndex === images.length - 1 ? 0 : activeIndex + 1;
         setActiveIndex(nextIndex);
     }
 
     const previous = () => {
         if (animating) return;
-        const nextIndex = activeIndex === 0 ? items.length - 1 : activeIndex - 1;
+        const nextIndex = activeIndex === 0 ? images.length - 1 : activeIndex - 1;
         setActiveIndex(nextIndex);
     }
 
@@ -78,7 +79,7 @@ const Detail: React.FC<Product> = (product: Product) => {
         e.target.setAttribute("value", quantity.toString());
     }
 
-    const slides = images.map((image, i) => {
+    const slides = images?.map((image, i) => {
         return (
             <CarouselItem
                 key={i}
@@ -123,7 +124,6 @@ const Detail: React.FC<Product> = (product: Product) => {
         return (messageShow ? <div className="alert alert-info">{messageShow}</div> : '');
     }
 
-
     return (
         <CustomerLayout header categories footer>
             <div className={styles.productContainer}>
@@ -153,7 +153,7 @@ const Detail: React.FC<Product> = (product: Product) => {
                         </div>
                     </div>
                     <div className={styles.productAction}>
-                        <Button color="primary" onClick={addCart} size="lg" marginTop="20px">Add to Cart</Button>
+                        <Button color="primary" onClick={addCart} size="lg" margin-top="20px">Add to Cart</Button>
                     </div>
                 </div>
                 <div style={{ marginTop: "20px" }}>
@@ -171,12 +171,15 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     try {
         const product: Product = await ProductService.fetchProduct(id);
         console.log(product)
-        return product;
+        return {
+            props: { product },
+        };
     }
     catch (error) {
-    
+        return {
+            props: { product: null }
+        };
     }
 };
 
 export default Detail;
-

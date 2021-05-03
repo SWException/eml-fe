@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { Navbar, Nav, NavItem, NavLink } from 'reactstrap';
+import { Navbar, Nav, NavItem } from 'reactstrap';
 import { CategoriesService } from 'services';
 import { Category } from 'types';
 import styles from './Categories.module.css';
-import { useRouter } from 'next/router';
+import Link from 'next/link';
 
 
 const CategoriesToShow: React.FC = () => {
-    const router = useRouter();
 
     const [categories, setCategories] = useState<Category[]>()
 
@@ -20,15 +19,10 @@ const CategoriesToShow: React.FC = () => {
             const categories = await CategoriesService.fetchAllCategories();
             setCategories(categories);
             console.log(categories)
-        } catch (err) {
+        }
+        catch (err) {
             console.log(err)
         }
-    }
-
-    const categoryProducts = async (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
-        console.log(e.target);
-        const T: any = e.target;
-        await router.push('/products?category=' + T.name);
     }
 
     return (
@@ -39,19 +33,13 @@ const CategoriesToShow: React.FC = () => {
                         <div className={styles.container}>
                             {categories.map((category) => (
                                 <NavItem>
-                                    <NavLink onClick={(e) => { categoryProducts(e) }} name={category.id} >{`${category.name.toUpperCase()}`}</NavLink>
+                                    <Link href={"/products?category=" + category.id} >{category.name.toUpperCase()}</Link>
                                 </NavItem>
                             ))}
                         </div>
-                    ) : (
-                        <div className={styles.container}>
-                            <NavItem>
-                                <NavLink href="/products">CATEGORY 1</NavLink>
-                            </NavItem>
-                            <NavItem>
-                                <NavLink href="/products">CATEGORY 2</NavLink>
-                            </NavItem>
-                        </div>
+                    ): ( 
+                        <>
+                        </>
                     )}
                 </Nav>
             </Navbar>
