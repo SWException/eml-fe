@@ -24,8 +24,6 @@ MyApp.getInitialProps = async () => {
 
 export default MyApp
 
-//getInitialProps
-
 /*
 Se utente è autenticato allora carico il suo Context,
 se non è autenticato allora parto tutto da 0
