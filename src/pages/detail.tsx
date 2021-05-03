@@ -25,7 +25,7 @@ const Detail: React.FC<Props> = ({ product }) => {
 
     useEffect(() => {
         addImagesToCarousel();
-        setQuantity(1);
+        stock > 0 ? setQuantity(1) :  setQuantity(0);
     }, [])
 
     const { name, description, primaryPhoto, secondaryPhotos, price, id, stock } = product;
@@ -62,7 +62,7 @@ const Detail: React.FC<Props> = ({ product }) => {
         setActiveIndex(newIndex);
     }
 
-    const modifyQuantityByStep = async (increment: boolean) => {
+    const modifyQuantityByStep = async (increment: boolean): Promise<void> => {
         if (increment && quantity < stock) {
             setQuantity(quantity + 1);
         }
@@ -71,12 +71,12 @@ const Detail: React.FC<Props> = ({ product }) => {
         }
     }
 
-    const modifyQuantity = async (e: ChangeEvent<HTMLInputElement>) => {
+    const modifyQuantity = async (e: ChangeEvent<HTMLInputElement>): Promise<void> => {
         const QTA = Math.trunc(e.target.valueAsNumber);
         console.log(QTA);
 
         if (QTA && QTA > 0) {
-            if(QTA <= stock)
+            if (QTA <= stock)
                 setQuantity(QTA);
         }
         e.target.setAttribute("value", quantity.toString());
@@ -180,13 +180,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         };
     }
     catch (error) {
-        return {
-            props: {
-                product: null,
-                relatedProducts: [],
-                error: 'Error in getting product',
-            },
-        };
+    
     }
 };
 
