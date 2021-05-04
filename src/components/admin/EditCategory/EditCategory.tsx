@@ -6,11 +6,10 @@ import { useState } from 'react';
 
 interface Props {
     category: Category;
-    error: () => void;
-    messageIn: () => void;
+    loadCategories: (() => void)
 }
 
-const EditExistingCategory: React.FC<Props> = ({ category, error, messageIn }) => {
+const EditExistingCategory: React.FC<Props> = ({ category, loadCategories }) => {
 
     const [newCategoryName, setNewCategory] = useState("");
 
@@ -20,6 +19,7 @@ const EditExistingCategory: React.FC<Props> = ({ category, error, messageIn }) =
             const response: boolean = await CategoriesService.modifyCategory(category.id, editCategory);
             console.log(response);
             if (response) {
+                await loadCategories();
                 confirm("Category edited successfully!");
             } else {
                 alert("Something went wrong, try again later ..");

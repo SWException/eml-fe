@@ -1,15 +1,13 @@
 import { Button, PopoverHeader, PopoverBody, UncontrolledPopover } from 'reactstrap';
 import { CategoriesService } from 'services';
-import React from 'next/router';
-import { ChangeEvent, useState } from 'react';
+import React, { ChangeEvent, useState } from 'react';
+import { useRouter } from 'next/router';
 
 interface Props {
-    error: () => void;
-    messageIn: () => void;
+    loadCategories: (() => void)
 }
 
-const AddNewCategory: React.FC<Props> = ({ error, messageIn }) => {
-
+const AddNewCategory: React.FC<Props> = ({ loadCategories }) => {
     const [newCategory, setNewCategory] = useState("");
 
     const createCategories = async () => {
@@ -17,7 +15,8 @@ const AddNewCategory: React.FC<Props> = ({ error, messageIn }) => {
             const response: boolean = await CategoriesService.createCategories(newCategory);
             console.log(response);
             if (response) {
-                confirm("Category added successfully!");
+                await loadCategories();
+                alert("Category added successfully!");
             } else {
                 alert("Something went wrong, try again later ..");
             }

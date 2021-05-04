@@ -5,9 +5,10 @@ import { TaxesService } from 'services';
 
 interface Props {
     tax: Tax,
+    loadTaxes: (() => void)
 }
 
-const EditExistingTax: React.FC<Props> = ({ tax }) => {
+const EditExistingTax: React.FC<Props> = ({ tax, loadTaxes }) => {
 
     const [newTaxDescription, setNewTaxDescription] = useState(tax.description);
     const [newTaxValue, setNewTaxValue] = useState(tax.value);
@@ -17,7 +18,10 @@ const EditExistingTax: React.FC<Props> = ({ tax }) => {
             const editTax: EditTax = { value: newTaxValue, description: newTaxDescription };
             const result: boolean = await TaxesService.modifyTax(tax.id, editTax);
             console.log(result);
-            confirm("Tax edited successfully!");
+            if(result){
+                await loadTaxes();
+                alert("Tax edited successfully!");
+            }
         } catch (err) {
             console.log(err);
             alert("Something went wrong, try again later ..");

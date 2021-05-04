@@ -34,9 +34,10 @@ const ProductManagement: React.FC<Props> = ({ defaultProducts, categories }) => 
         try {
             const result: boolean = await ProductService.deleteProduct(id);
             console.log(result);
+            alert("Product successfully removed!");
         }
         catch (err) {
-            //HANDLING ERROR
+            alert("Something went wrong, please try again later!")
         }
     }
 

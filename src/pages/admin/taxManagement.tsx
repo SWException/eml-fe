@@ -42,7 +42,10 @@ const TaxManagement: React.FC = () => {
         try {
             const result: boolean = await TaxesService.deleteTax(id);
             console.log(result);
-            confirm("Tax deleted successfully!");
+            if(result){
+                getAllTaxes();
+                alert("Tax deleted successfully!");
+            }
         }
         catch (err) {
             alert("Something went wrong, try again later ..");
@@ -63,7 +66,7 @@ const TaxManagement: React.FC = () => {
         <AdminLayout header>
             <h1>Management Taxes</h1>
             <div className={styles.tab}>
-                <AddNewTax />
+                <AddNewTax  loadTaxes={() => { getAllTaxes() }}/>
             </div>
             <div className={styles.tab}>
                 <label><strong>Search:</strong></label>
@@ -91,7 +94,7 @@ const TaxManagement: React.FC = () => {
                                     <td>{tax.id}</td>
                                     <td>{tax.description}</td>
                                     <td>{tax.value}</td>
-                                    <td><EditExistingTax tax={tax} /></td>
+                                    <td><EditExistingTax tax={tax} loadTaxes={() => { getAllTaxes() }}/></td>
                                     <td><Button color="primary" size="lg" onClick={() => deleteTax(tax.id)}>REMOVE</Button></td>
                                 </tr>
                             ))}

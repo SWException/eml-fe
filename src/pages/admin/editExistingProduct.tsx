@@ -56,6 +56,8 @@ const EditExistingProduct: React.FC<Props> = ({ product, categories, taxes }) =>
             }
             const res = await ProductService.modifyProduct(product.id, updatedProduct);
             console.log(res);
+            router.push('/admin/productManagement');
+            alert("Product successfully edited!");
         }
         catch (err) {
             console.log(err);

@@ -56,6 +56,8 @@ const AddNewProduct: React.FC<Props> = ({ categories, taxes }) => {
             console.log("Prodotto da inserire", newProduct);
             const res = await ProductService.addProduct(newProduct);
             console.log(res);
+            router.push('/admin/productManagement');
+            alert("Product successfully added!");
         }
         catch (err) {
             console.log(err);

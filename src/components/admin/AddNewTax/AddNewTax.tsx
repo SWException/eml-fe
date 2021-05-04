@@ -4,13 +4,11 @@ import { TaxesService } from 'services';
 import { useState } from 'react';
 import { InsertTax } from 'types';
 
+interface Props {
+    loadTaxes: (() => void)
+}
 
-const AddNewTax: React.FC = () => {
-
-    const [info, setInfo] = useState({
-        error: '',
-        messageShow: ''
-    })
+const AddNewTax: React.FC<Props> = ({loadTaxes}) => {
 
     const [newTaxDescription, setNewTaxDescription] = useState("");
     const [newTaxValue, setNewTaxValue] = useState<number>(0);
@@ -20,13 +18,13 @@ const AddNewTax: React.FC = () => {
             const newTax: InsertTax = { value: newTaxValue, description: newTaxDescription }
             const result: boolean = await TaxesService.createTax(newTax);
             console.log(result);
-            confirm("Tax added successfully!");
+            if(result){
+                await loadTaxes();
+                alert("Tax added successfully!");
+            }
         } catch (err) {
             console.log(err);
-            setInfo({
-                ...info,
-                error: "Error on loading tax! Try later..."
-            })
+            alert("Something went wrong, try again later ..");
         }
     }
 

@@ -5,10 +5,8 @@ import { Button } from 'reactstrap';
 import { AddNewCategory, EditExistingCategory } from 'components/admin/';
 import { CategoriesService, sessionService } from 'services';
 import { Categories } from 'types';
-import { useRouter } from 'next/router';
 
 const CategoryManagement: React.FC = () => {
-    const router = useRouter();
 
     const [categories, setCategories]: [Categories, Dispatch<Categories>] = useState<Categories>();
 
@@ -70,10 +68,8 @@ const CategoryManagement: React.FC = () => {
             <h1>Management Categories</h1>
             <div className={styles.tab}>
                 <AddNewCategory
-                    error={() => {
-                        alert("Something went wrong, try again later ..");
-                    }}
-                    messageIn={() => { window.location.reload() }} />
+                    loadCategories={() => { getAllCategories() }}
+                />
             </div>
             <div className={styles.tab}>
                 <label><strong>Search:</strong></label>
@@ -95,10 +91,7 @@ const CategoryManagement: React.FC = () => {
                                         <td>
                                             <EditExistingCategory
                                                 category={category}
-                                                error={() => {
-                                                    alert("Something went wrong, try again later ..");
-                                                }}
-                                                messageIn={() => { window.location.reload() }}
+                                                loadCategories={() => { getAllCategories() }}
                                             /></td>
                                         <td><Button color="primary" size="lg" onClick={() => deleteCategory(category.id)}>REMOVE</Button></td>
                                     </tr>
