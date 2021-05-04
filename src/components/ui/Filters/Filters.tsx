@@ -33,12 +33,12 @@ const Filters: React.FC<Props> = ({ setFilters }) => {
                     <div className="md-form md-outline my-0">
                         <input id="from" type="number" min="0" placeholder="€ Min" value={minPrice} onChange={(e) => setMinPrice(e.target.value)} />
                     </div>
-                    <p> - </p>
+                    <div> - </div>
                     <div className="md-form md-outline my-0">
                         <input id="to" type="number" min="0" placeholder="€ Max" value={maxPrice} onChange={(e) => setMaxPrice(e.target.value)} />
                     </div>
-                    <Button className={styles.filterButton} onClick={() => updateProducts(minPrice, maxPrice)}>FILTER</Button>
-                    <Button className={styles.filterButton} onClick={() => reset()}>RESET</Button>
+                    <Button color="primary" size="lg" className={styles.filterButton} onClick={() => updateProducts(minPrice, maxPrice)}>FILTER</Button>
+                    <Button color="primary" size="lg" className={styles.filterButton} onClick={() => reset()}>RESET</Button>
                 </div>
             </form>
         </>

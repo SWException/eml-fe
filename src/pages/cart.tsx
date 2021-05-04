@@ -38,52 +38,59 @@ const CartUser: React.FC = () => {
 
     return (
         <CustomerLayout header footer>
-            <div className={styles.title}>
-                <h1>Cart</h1>
+            <div className={styles.container}>
+                <div className={styles.title}>
+                    <h1>Cart</h1>
+                </div>
+                <div className={styles.cart}>
+                    {loading ? (
+                        <div className={styles.loadingitemlayout}>
+                            <Spinner style={{ width: '3rem', height: '3rem' }} />
+                        </div>
+                    ) : (
+                        <div className="cart-item-layout">
+                            {cart ? (
+                                cart.products.map((product: ProductCart) => (
+                                    <ProductCard
+                                        product={product}
+                                        loadCart={() => { reloadCart() }}
+                                    />
+                                ))
+                            ) : (
+                                <div/>
+                            )}
+                        </div>
+                    )}
+                </div>
+                <div>
+                    {cart?.products.length != 0 ? (
+                        <div className={styles.remove}>
+                            <Button color="primary" onClick={removeAllCart} size="lg">Remove all</Button>
+                        </div>
+                    ) : (
+                        <div className={styles.message}>
+                            The cart is empty, add an item to continue.
+                        </div>
+                    )}
+                </div>
+                <div className={styles.total}>
+                    <div><strong>Total: {cart?.total}{" €"} </strong></div>
+                    <div><strong>Taxes: {cart?.tax}{" €"} </strong></div>
+                    {loading ? (
+                        <div className={styles.loadingitemlayout}>
+                            <Spinner />
+                        </div>
+                    ) : (
+                        <div>
+                            {cart?.products.length != 0 ? (
+                                <Button color="primary" size="lg" style={{ marginTop: "10px" }} onClick={() => { onSubmit() }}>Checkout</Button>
+                            ) : (
+                                <div/>
+                            )}
+                        </div>
+                    )}
+                </div>
             </div>
-            <div className={styles.cart}>
-                {loading ? (
-                    <div style={{ display: "flex", justifyContent: "center", alignItems: 'center', margin: '100px' }}>
-                        <Spinner style={{ width: '3rem', height: '3rem' }} />
-                    </div>
-                ) : (
-                    <div className="cart-item-layout">
-                        {cart ? (
-                            cart.products.map((product: ProductCart) => (
-                                <ProductCard
-                                    product={product}
-                                    loadCart={() => { reloadCart() }}
-                                />
-                            ))
-                        ) : (
-                            <div>
-                                The cart is empty, add an item to continue.
-                            </div>
-                        )}
-                    </div>
-                )}
-            </div>
-            <div className={styles.remove}>
-                <Button color="primary" onClick={removeAllCart} size="lg">Remove all</Button>
-            </div>
-            <div className={styles.total}>
-                <div><strong>Total: {cart?.total}{" €"} </strong></div>
-                <div><strong>Taxes: {cart?.tax}{" €"} </strong></div>
-                {loading ? (
-                    <div style={{ margin: '100px' }}>
-                        <Spinner />
-                    </div>
-                ) : (
-                    <div>
-                        {cart?.products.length != 0 ? (
-                            <Button color="primary" size="lg" style={{ marginTop: "10px" }} onClick={() => { onSubmit() }}>Checkout</Button>
-                        ) : (
-                            <div style={{ marginTop: "20px" }}><strong>Add something to your cart if you want to proceed to checkout</strong></div>
-                        )}
-                    </div>
-                )}
-            </div>
-
         </CustomerLayout>
     );
 };

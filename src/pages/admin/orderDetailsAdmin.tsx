@@ -60,8 +60,9 @@ const OrderDetailsAdmin: React.FC<Props> = ({ id }) => {
                         </table>
                     </div>
                     <div className={styles.info}><strong>Total: {" € "}{order.cart.total} </strong></div>
-                    <div className={styles.info}><strong>Shipping address:</strong> {`${order.shippingAddress.city}, ${order.shippingAddress.address}, ${order.shippingAddress.code}, ${order.shippingAddress.district}`}</div>
-                    <div className={styles.info}><strong>Billing address: </strong> {`${order.billingAddress.city}, ${order.billingAddress.address}, ${order.billingAddress.code}, ${order.billingAddress.district}`}</div>
+                    <div className={styles.info}><strong>Taxes: {" € "}{order.cart.tax} </strong></div>
+                    <div className={styles.info}><strong>Shipping address:</strong> {`${order.shippingAddress.recipientName} ${order.shippingAddress.recipientSurname}, ${order.shippingAddress.city}, ${order.shippingAddress.address}, ${order.shippingAddress.code}, ${order.shippingAddress.district}`}</div>
+                    <div className={styles.info}><strong>Billing address: </strong> {`${order.billingAddress.recipientName} ${order.billingAddress.recipientSurname}, ${order.billingAddress.city}, ${order.billingAddress.address}, ${order.billingAddress.code}, ${order.billingAddress.district}`}</div>
                 </>
                 ) : (
                     <div>

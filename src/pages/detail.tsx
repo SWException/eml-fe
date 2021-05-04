@@ -127,12 +127,14 @@ const Detail: React.FC<Props> = (props) => {
     return (
         <CustomerLayout header categories footer>
             <div className={styles.productContainer}>
+                <div>
                 <Carousel className={styles.carousel} activeIndex={activeIndex} next={next} previous={previous}>
-                    <CarouselIndicators items={items} activeIndex={activeIndex} color="dark" onClickHandler={goToIndex} />
+                    <CarouselIndicators items={items} activeIndex={activeIndex} onClickHandler={goToIndex} />
                     {slides}
-                    <CarouselControl style={{ borderColor: "black" }} direction="prev" directionText="Previous" onClickHandler={previous} />
-                    <CarouselControl direction="next" directionText="Next" onClickHandler={next} />
+                    <CarouselControl className={styles.carouselcontrolprevicon} direction="prev" directionText="Previous" onClickHandler={previous} />
+                    <CarouselControl className={styles.carouselcontrolnexticon} direction="next" directionText="Next" onClickHandler={next} />
                 </Carousel>
+                </div>
                 <div className={styles.productInfo}>
                     <div className={styles.productName}>{product.name}</div>
                     <div className={styles.productPrice}>Price: € {product.price}</div>

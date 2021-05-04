@@ -19,7 +19,7 @@ const Sort: React.FC<Props> = ({ setFilters }) => {
         <>
             <form className={styles.form}>
                 <div>
-                    <select onChange={(e: ChangeEvent<HTMLSelectElement>) => updateProducts(e)}>
+                    <select className={styles.select} onChange={(e: ChangeEvent<HTMLSelectElement>) => updateProducts(e)}>
                         <option value = "asc">
                             Low to High
                         </option>

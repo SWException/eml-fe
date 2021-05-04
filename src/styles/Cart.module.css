@@ -22,9 +22,22 @@
     padding:10px;
 }
 
-.loading-item-layout{
+.loadingitemlayout{
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
+}
+
+.message{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    font-size: 2rem;
+    margin-top:3rem;
+}
+
+.container{
+    height: 100%;
 }

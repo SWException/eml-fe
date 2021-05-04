@@ -1,12 +1,14 @@
 .productContainer {
     margin-bottom: 2rem;
-    margin-left: 25px;
-    margin-top: 25px;
-    display: flex;
+    margin-left: 2rem;
+    margin-top: 2rem;
+    display: inline-flex;
 }
 
+
+
 .productInfo {
-    margin-left: 70px;
+    margin-left: 3rem;
     padding: 2rem;
 }
 
@@ -39,16 +41,28 @@
 }
 
 .carousel {
-    margin-left: 25px;
-    margin-top: 25px;
-    width: 400px;
-    height: 400px;
+    margin-left: 2rem;
+    width: 40rem;
+    height: 40rem;
     display: flex;
 }
 
 .carousel-inner>.item>img {
-    width: 130px;
-    height: 130px;
+    width: 13rem;
+    height: 13rem;
+}
+
+.carouselcontrolprevicon,
+.carouselcontrolnexticon {
+  height: 3em;
+  width: 3rem;
+  background-size: 100%, 100%;
+  border-radius: 50%;
+  border: 1px solid black;
+  background-image: none;
+  background-color: black;
+  top: 45%;
+
 }
 
 .input::-webkit-outer-spin-button, .input::-webkit-inner-spin-button, .input, .input[type=number] {
