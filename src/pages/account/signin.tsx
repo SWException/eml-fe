@@ -7,6 +7,8 @@ import { useRouter } from 'next/router';
 import { useAuth } from 'context';
 import { CustomerLayout } from 'components/layouts/CustomerLayout';
 import styles from 'styles/Account.module.css'
+import { CartNotAuth } from 'types';
+import { CartService, sessionService } from 'services';
 
 Amplify.configure(awsconfig);
 // Salva in automatico i cookie per ricordare il il login è stato fatto
@@ -41,12 +43,31 @@ const Login: React.FC = () => {
             if (user.name == 'swexception@outlook.com') {
                 router.push('/admin/dashboard');
             } else {
+                await loadTheCart();
                 router.push('/');
             }
         } catch (e) {
             setLoading(false);
             setError('Something went wrong! Retry!');
             displayErr();
+        }
+    }
+
+    const loadTheCart = async() => {
+        const cartLocal:CartNotAuth[] = JSON.parse(window.localStorage.getItem('cart'));
+        if(cartLocal && sessionService.isAuth()){
+            cartLocal.forEach(item=>{
+                console.log('here');
+                async() => {
+                    const res = await CartService.addToCart(item.id, item.quantity);
+                    if(res){
+                        console.log(item);
+                    }
+                }
+                //To be fixed!!
+            });
+            const cart = await CartService.fetchCart();
+            console.log(cart);
         }
     }
 
