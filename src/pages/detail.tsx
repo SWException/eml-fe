@@ -6,7 +6,8 @@ import { CustomerLayout } from 'components/layouts/CustomerLayout';
 import { Product } from 'types/product'
 import { Button, Carousel, CarouselItem, CarouselControl, CarouselIndicators } from 'reactstrap';
 import { GetServerSideProps } from 'next';
-import { CartService } from 'services';
+import { CartService, sessionService } from 'services';
+import { CartNotAuth } from 'types';
 
 interface Props {
     product: Product;
@@ -93,25 +94,46 @@ const Detail: React.FC<Props> = (props) => {
     });
 
     const addCart = async () => {
-        try {
-            const res = await CartService.addToCart(product.id, quantity);
-            if (res) {
+        if(sessionService.isAuth()){
+            try {
+                const res = await CartService.addToCart(product.id, quantity);
+                if (res) {
+                    setInfo({
+                        ...info,
+                        messageShow: "Product Added to Cart"
+                    })
+                }
+                else {
+                    setInfo({
+                        ...info,
+                        error: "Error on loading the product to the cart! Try again.."
+                    })
+                }
+            }
+            catch (err) {
                 setInfo({
                     ...info,
-                    messageShow: "Product Added to Cart"
+                    error: "Error on loading cart! Try later..."
                 })
             }
-            else {
-                setInfo({
-                    ...info,
-                    error: "Error on loading the product to the cart! Try again.."
-                })
+        } else {
+            let cartLocal:CartNotAuth[] = JSON.parse(window.localStorage.getItem('cart'));
+            const item:CartNotAuth = {
+                id: product.id,
+                quantity: quantity
             }
-        }
-        catch (err) {
+            if(cartLocal){
+                cartLocal.push(item);
+                window.localStorage.removeItem('cart');
+                window.localStorage.setItem('cart', JSON.stringify(cartLocal));
+            } else {
+                let cartNotAuth:CartNotAuth[] = [];
+                cartNotAuth.push(item);
+                window.localStorage.setItem('cart', JSON.stringify(cartNotAuth));
+            }
             setInfo({
                 ...info,
-                error: "Error on loading cart! Try later..."
+                messageShow: "Product Added to Local Cart! Login or Signup if you want to checkout!"
             })
         }
     }
