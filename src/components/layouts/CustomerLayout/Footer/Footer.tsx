@@ -4,7 +4,7 @@ import styles from './Footer.module.css';
 const Footer: React.FC = () => {
 
     return (
-        <div className={styles.footer} expand="md">
+        <div className={styles.footer}>
             <p style={{ marginTop: "10px" }} >NOME AZIENDA</p>
             <p>partita iva</p>
             <p>indirizzo</p>

@@ -23,7 +23,7 @@ const login = async (email: string, password: string): Promise<UserData> => {
     let token: string;
 
     try {
-        let userObject = await LoginSupport(email, password);
+        const userObject = await LoginSupport(email, password);
 
         console.log(userObject)
 
@@ -38,28 +38,30 @@ const login = async (email: string, password: string): Promise<UserData> => {
             token: userObject.signInUserSession.accessToken.jwtToken, //is ID_TOKEN?
         };
         return userReturn;
-    } catch (error) {
+    }
+    catch (error) {
         console.log(error);
     }
 };
 
 const LoginSupport = async (email: string, password: string) => {
-    let answer = Auth.signIn(email, password)
+    const answer = Auth.signIn(email, password)
         .then(userObject => {
             if (userObject.challengeName === 'NEW_PASSWORD_REQUIRED') {
-                var newPassword = password + "new";
+                const newPassword = password + "new";
                 const { requiredAttributes } = userObject.challengeParam;
                 Auth.completeNewPassword(
                     userObject,
                     newPassword
                 )
-                .then(userObject => {
-                    return userObject;
-                })
-                .catch(e => {
-                    console.log(e);
-                });
-            } else {
+                    .then(userObject => {
+                        return userObject;
+                    })
+                    .catch(e => {
+                        console.log(e);
+                    });
+            }
+            else {
                 return userObject;
             }
         });
@@ -81,7 +83,8 @@ const signUp = async (email: string, password: string, name: string, family_name
         console.log("Registrazione effettuata");
         console.log(user);
         confirm = true;
-    } catch (error) {
+    }
+    catch (error) {
         console.log(error)
         confirm = false;
     }
@@ -97,7 +100,8 @@ const confirmCode = async (email: string, code: string): Promise<NewUser> => {
     try {
         await Auth.confirmSignUp(email, code);
         console.log("Codice confermato");
-    } catch (error) {
+    }
+    catch (error) {
         console.log('error confirming sign up', error);
     }
     //Rimandare a Login (da Context?)
@@ -117,7 +121,8 @@ export const changePassword = async (oldPass: string, newPass: string): Promise<
           token: data.data.token,
         };*/
         return;
-    } catch (error) {
+    }
+    catch (error) {
         console.log(error)
     }
 };
@@ -131,7 +136,7 @@ Auth.currentAuthenticatedUser()
 
 
 const forgotPassword = async (email: string): Promise<NewPassword> => {
-    let answer = Auth.forgotPassword(email)
+    const answer = Auth.forgotPassword(email)
         .then(data => {
             console.log("invio codice " + data)
         })
@@ -141,7 +146,7 @@ const forgotPassword = async (email: string): Promise<NewPassword> => {
 }
 
 const isNewPassword = async (email: string, code: string, password: string): Promise<NewPassword> => {
-    let answer = Auth.forgotPasswordSubmit(email, code, password)
+    const answer = Auth.forgotPasswordSubmit(email, code, password)
         .then(data => console.log("recuperato " + data))
         .catch(err => console.log(err));
 
