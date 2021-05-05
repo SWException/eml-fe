@@ -17,8 +17,13 @@
         "space-before-function-paren": ["error", "always"], //space between function name and parenthesis
         "complexity": ["error", 10], //cyclomatic complexity
         "max-len": ["error", { "code": 200 }], //max line length //DOVREBBE ESSERE DI 100 IN REALTÀ
-        "@typescript-eslint/explicit-function-return-type": "on",
-
+        "@typescript-eslint/explicit-function-return-type": ["error"],
+        //"@typescript-esplint/no-unsafe-any": ["error"],
+        "@typescript-eslint/no-parameter-properties": ["error"],
+            //"@typescript-eslint/explicit-module-boundary-types": ["error"],
+        //"@typescript-eslint/no-unused-variable": ["error"],
+        "no-unused-vars": "error",
+        "no-multiple-empty-lines": ["warn", {"max": 3}],
          //naming conventions
         "@typescript-eslint/naming-convention": [
             "error",

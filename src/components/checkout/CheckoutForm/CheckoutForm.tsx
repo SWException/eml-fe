@@ -13,12 +13,13 @@ const CheckoutForm: React.FC = () => {
     const [newBillingAddress, setNewBillingAddress]: [InsertAddress, Dispatch<InsertAddress>] = useState<InsertAddress>();
     const [newShippingAddress, setNewShippingAddress]: [InsertAddress, Dispatch<InsertAddress>] = useState<InsertAddress>();
 
-    const [idSelectedShippingAddress, setIdSelectedShippingAddress]: [string, Dispatch<string>] = useState<string>();
-    const [idSelectedBillingAddress, setIdSelectedBillingAddress]: [string, Dispatch<string>] = useState<string>();
+    const [idSelectedShippingAddress, setIdSelectedShippingAddress]: [string, Dispatch<string>] = useState<string>('#');
+    const [idSelectedBillingAddress, setIdSelectedBillingAddress]: [string, Dispatch<string>] = useState<string>('#');
+
+    const [textSelectedShippingAddress, setTextSelectedShippingAddress]: [string, Dispatch<string>] = useState<string>("Select an address");
+    const [textSelectedBillingAddress, setTextSelectedBillingAddress]: [string, Dispatch<string>] = useState<string>("Select an address");
 
     const [addresses, setAddresses]: [Addresses, Dispatch<Addresses>] = useState<Addresses>();
-
-    const [defaultValue, setDefaultValue]: [string, Dispatch<string>] = useState<string>();
 
     useEffect(() => {
         getAddresses();
@@ -78,12 +79,19 @@ const CheckoutForm: React.FC = () => {
             })
     }
 
-    const handleChangeShippingAddress = (e: ChangeEvent<HTMLSelectElement>): void => {
-        setIdSelectedShippingAddress(e.target.value);
+    const getTextAddress = async (id: string): Promise<string> => {
+        const address = await AddressesService.fetchSingleAddress(id);
+        return `${address.recipientName} ${address.recipientSurname} - ${address.city}, ${address.address} (${address.district}) ${address.code}`;
     }
 
-    const handleChangeBillingAddress = (e: ChangeEvent<HTMLSelectElement>): void => {
+    const handleChangeShippingAddress = async (e: ChangeEvent<HTMLSelectElement>): Promise<void> => {
+        setIdSelectedShippingAddress(e.target.value);
+        setTextSelectedShippingAddress(await getTextAddress(e.target.value));
+    }
+
+    const handleChangeBillingAddress = async (e: ChangeEvent<HTMLSelectElement>): Promise<void> => {
         setIdSelectedBillingAddress(e.target.value);
+        setTextSelectedBillingAddress(await getTextAddress(e.target.value));
     }
 
     const handleBillingAddressFieldChanges = (field: string, e: ChangeEvent<HTMLInputElement>): void => {
@@ -93,26 +101,44 @@ const CheckoutForm: React.FC = () => {
         });
     }
 
-    const handleShippingAddressFieldChanges = (field: string, e: ChangeEvent<HTMLInputElement>) => {
+    const handleShippingAddressFieldChanges = (field: string, e: ChangeEvent<HTMLInputElement>): void => {
         setNewShippingAddress({
             ...newShippingAddress,
             [field]: e.target.value,
         });
     }
 
-    const submitNewAddress = async (address: InsertAddress): Promise<void> => {
+    const submitNewBillingAddress = async (address: InsertAddress): Promise<void> => {
         await AddressesService.createNewAddress(address)
-            .then((newAddressId: string) => {
+            .then(async (newAddressId: string) => {
                 if (newAddressId) {
-                    getAddresses();
+                    await getAddresses();
                     alert("Address added successfully!");
+                    console.log(newAddressId);
+                    setIdSelectedBillingAddress(newAddressId);
+                    setTextSelectedBillingAddress(await getTextAddress(newAddressId));
                 }
-                console.log(newAddressId);
-                setDefaultValue(newAddressId);
             }).catch((e) => {
                 console.log(e.message);
             })
     }
+
+    const submitNewShippingAddress = async (address: InsertAddress): Promise<void> => {
+        await AddressesService.createNewAddress(address)
+            .then(async (newAddressId: string) => {
+                if (newAddressId) {
+                    await getAddresses();
+                    alert("Address added successfully!");
+                    console.log(newAddressId);
+                    setIdSelectedShippingAddress(newAddressId);
+                    setTextSelectedShippingAddress(await getTextAddress(newAddressId));
+                }
+            }).catch((e) => {
+                console.log(e.message);
+            })
+    }
+
+    
 
     const renderBillingAddress = (): JSX.Element => (
         <>
@@ -122,48 +148,48 @@ const CheckoutForm: React.FC = () => {
                     <div className="col-md-6 mb-3">
                         <label>First name</label>
                         <input type="text" className="form-control" onChange={
-                            (e: React.ChangeEvent<HTMLInputElement>) => { handleBillingAddressFieldChanges('recipientName', e) }
+                            (e: React.ChangeEvent<HTMLInputElement>): void => { handleBillingAddressFieldChanges('recipientName', e) }
                         } id="billingRecipientName" placeholder="ex. Mario" />
                     </div>
                     <div className="col-md-6 mb-3">
                         <label>Last name</label>
                         <input type="text" className="form-control" onChange={
-                            (e: React.ChangeEvent<HTMLInputElement>) => { handleBillingAddressFieldChanges('recipientSurname', e) }
+                            (e: React.ChangeEvent<HTMLInputElement>): void => { handleBillingAddressFieldChanges('recipientSurname', e) }
                         } id="billingRecipientSurname" placeholder="ex. Rossi" />
                     </div>
                 </div>
                 <div className="mb-3">
                     <label >Address</label>
                     <input type="text" className="form-control" onChange={
-                        (e: React.ChangeEvent<HTMLInputElement>) => { handleBillingAddressFieldChanges('address', e) }
+                        (e: React.ChangeEvent<HTMLInputElement>): void => { handleBillingAddressFieldChanges('address', e) }
                     } id="billingAddress" placeholder="ex. Viale della Repubblica" />
                 </div>
                 <div className="row">
                     <div className="col-md-5 mb-3">
                         <label >Country</label>
                         <input type="text" className="form-control" onChange={
-                            (e: React.ChangeEvent<HTMLInputElement>) => { handleBillingAddressFieldChanges('city', e) }
+                            (e: React.ChangeEvent<HTMLInputElement>): void => { handleBillingAddressFieldChanges('city', e) }
                         } id="billingCity" placeholder="ex. Padova" />
                     </div>
                     <div className="col-md-4 mb-3">
                         <label >State</label>
                         <input type="text" className="form-control" onChange={
-                            (e: React.ChangeEvent<HTMLInputElement>) => { handleBillingAddressFieldChanges('district', e) }
+                            (e: React.ChangeEvent<HTMLInputElement>): void => { handleBillingAddressFieldChanges('district', e) }
                         } id="billingDistrict" placeholder="ex. Italy" />
                     </div>
                     <div className="col-md-3 mb-3">
                         <label>Zip</label>
                         <input type="text" className="form-control" onChange={
-                            (e: React.ChangeEvent<HTMLInputElement>) => { handleBillingAddressFieldChanges('code', e) }
+                            (e: React.ChangeEvent<HTMLInputElement>): void => { handleBillingAddressFieldChanges('code', e) }
                         } id="billingCode" placeholder="ex. 31100" />
                     </div>
                     <div className="col-md-3 mb-3">
                         <label>Description</label>
                         <input type="text" className="form-control" onChange={
-                            (e: React.ChangeEvent<HTMLInputElement>) => { handleBillingAddressFieldChanges('description', e) }
+                            (e: React.ChangeEvent<HTMLInputElement>): void => { handleBillingAddressFieldChanges('description', e) }
                         } id="billingDescription" placeholder="ex. Casa Mia" />
                     </div>
-                    <Button size="lg" onClick={() => { submitNewAddress(newBillingAddress) }}>Add</Button>
+                    <Button size="lg" onClick={(): void => { submitNewBillingAddress(newBillingAddress) }}>Add</Button>
                 </div>
             </form>
         </>
@@ -177,87 +203,88 @@ const CheckoutForm: React.FC = () => {
                     <div className="col-md-6 mb-3">
                         <label>First name</label>
                         <input type="text" className="form-control" onChange={
-                            (e: React.ChangeEvent<HTMLInputElement>) => { handleShippingAddressFieldChanges('recipientName', e) }
+                            (e: React.ChangeEvent<HTMLInputElement>): void => { handleShippingAddressFieldChanges('recipientName', e) }
                         } id="shippingRecipientName" placeholder="ex. Mario" />
                     </div>
                     <div className="col-md-6 mb-3">
                         <label>Last name</label>
                         <input type="text" className="form-control" onChange={
-                            (e: React.ChangeEvent<HTMLInputElement>) => { handleShippingAddressFieldChanges('recipientSurname', e) }
+                            (e: React.ChangeEvent<HTMLInputElement>): void => { handleShippingAddressFieldChanges('recipientSurname', e) }
                         } id="shippingRecipientSurname" placeholder="ex. Rossi" />
                     </div>
                 </div>
                 <div className="mb-3">
                     <label >Address</label>
                     <input type="text" className="form-control" onChange={
-                        (e: React.ChangeEvent<HTMLInputElement>) => { handleShippingAddressFieldChanges('address', e) }
+                        (e: React.ChangeEvent<HTMLInputElement>): void => { handleShippingAddressFieldChanges('address', e) }
                     } id="shippingAddress" placeholder="ex. Viale della Repubblica" />
                 </div>
                 <div className="row">
                     <div className="col-md-5 mb-3">
                         <label >Country</label>
                         <input type="text" className="form-control" onChange={
-                            (e: React.ChangeEvent<HTMLInputElement>) => { handleShippingAddressFieldChanges('city', e) }
+                            (e: React.ChangeEvent<HTMLInputElement>): void => { handleShippingAddressFieldChanges('city', e) }
                         } id="shippingCity" placeholder="ex. Padova" />
                     </div>
                     <div className="col-md-4 mb-3">
                         <label >State</label>
                         <input type="text" className="form-control" onChange={
-                            (e: React.ChangeEvent<HTMLInputElement>) => { handleShippingAddressFieldChanges('district', e) }
+                            (e: React.ChangeEvent<HTMLInputElement>): void => { handleShippingAddressFieldChanges('district', e) }
                         } id="shippingDistrict" placeholder="ex. Italy" />
                     </div>
                     <div className="col-md-3 mb-3">
                         <label>Zip</label>
                         <input type="text" className="form-control" onChange={
-                            (e: React.ChangeEvent<HTMLInputElement>) => { handleShippingAddressFieldChanges('code', e) }
+                            (e: React.ChangeEvent<HTMLInputElement>): void => { handleShippingAddressFieldChanges('code', e) }
                         } id="shippingCode" placeholder="ex. 31100" />
                     </div>
                     <div className="col-md-3 mb-3">
                         <label>Description</label>
                         <input type="text" className="form-control" onChange={
-                            (e: React.ChangeEvent<HTMLInputElement>) => { handleBillingAddressFieldChanges('description', e) }
+                            (e: React.ChangeEvent<HTMLInputElement>): void => { handleShippingAddressFieldChanges('description', e) }
                         } id="shippingDescription" placeholder="ex. Casa Mia" />
                     </div>
-                    <Button size="lg" onClick={() => { submitNewAddress(newShippingAddress) }}>Add</Button>
+                    <Button size="lg" onClick={(): void => { submitNewShippingAddress(newShippingAddress) }}>Add</Button>
                 </div>
             </form>
         </>
     )
 
-    const renderSelectBillingAddress = () => (
+    const renderSelectBillingAddress = (): JSX.Element => (
         <div className="row">
             <div className="col-md-5 mb-3" style={{ marginTop: "20px" }}>
                 <label >Choose a saved address:</label>
-                <select className="custom-select d-block w-100" defaultValue={defaultValue} id="saveaddress" onChange={
-                    (e: ChangeEvent<HTMLSelectElement>) => { handleChangeBillingAddress(e) }
+                <select className="custom-select d-block w-100" value={idSelectedBillingAddress} id="saveBillingAddress" onChange={
+                    (e: ChangeEvent<HTMLSelectElement>): void => { handleChangeBillingAddress(e) }
                 }>
                     <option value="#" disabled> - - - </option>
                     {addresses?.map((address) => (
                         <option value={`${address.id}`}>{`${address.description}`}</option>
                     ))}
                 </select>
+                <p>{ textSelectedBillingAddress }</p>
                 <div className="invalid-feedback"> Please select a valid address. </div>
             </div>
         </div>
     )
 
-    const renderSelectShippingAddress = () => (
+    const renderSelectShippingAddress = (): JSX.Element => (
         <div className="row">
             <div className="col-md-5 mb-3" style={{ marginTop: "20px" }}>
                 <label >Choose a saved address:</label>
-                <select className="custom-select d-block w-100" defaultValue="#" id="saveaddress" onChange={
-                    (e: ChangeEvent<HTMLSelectElement>) => { handleChangeShippingAddress(e) }
+                <select className="custom-select d-block w-100" value={idSelectedShippingAddress} id="saveShippingAddress" onChange={
+                    (e: ChangeEvent<HTMLSelectElement>): void => { handleChangeShippingAddress(e) }
                 }>
-                    <option value="#" disabled> - - -</option>
+                    <option value="#" disabled> - - - </option>
                     {addresses?.map((address) => (
                         <option value={`${address.id}`}>{`${address.description}`}</option>
                     ))}
                 </select>
+                <p>{ textSelectedShippingAddress }</p>
                 <div className="invalid-feedback"> Please select a valid address. </div>
             </div>
         </div>
     )
-
 
     return (
         <div className="container">
@@ -274,13 +301,12 @@ const CheckoutForm: React.FC = () => {
                     <form>
                         <CardElement id="card-element" options={cardStyle} />
                         <div style={{ display: "flex", alignItems: "center", justifyContent: "center", margin: "20px" }}>
-                            <Button color="primary" size="lg" onClick={() => pay()} id="submit">
+                            <Button color="primary" size="lg" onClick={(): Promise<void> => pay()} id="submit">
                                 <span id="button-text">
                                     PAY
-                                    </span>
+                                </span>
                             </Button>
                         </div>
-
                     </form>
                 </div>
             </div>

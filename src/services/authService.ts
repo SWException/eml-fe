@@ -19,8 +19,8 @@ interface NewPassword {
 const login = async (email: string, password: string): Promise<UserData> => {
 
     let userReturn: UserData;
-    let userWithFields: User;
-    let token: string;
+    //let userWithFields: User;
+    //let token: string;
 
     try {
         const userObject = await LoginSupport(email, password);
@@ -44,12 +44,12 @@ const login = async (email: string, password: string): Promise<UserData> => {
     }
 };
 
-const LoginSupport = async (email: string, password: string) => {
+const LoginSupport = async (email: string, password: string): Promise<any>  => {
     const answer = Auth.signIn(email, password)
         .then(userObject => {
             if (userObject.challengeName === 'NEW_PASSWORD_REQUIRED') {
                 const newPassword = password + "new";
-                const { requiredAttributes } = userObject.challengeParam;
+                // const { requiredAttributes } = userObject.challengeParam;
                 Auth.completeNewPassword(
                     userObject,
                     newPassword
@@ -136,7 +136,7 @@ Auth.currentAuthenticatedUser()
 
 
 const forgotPassword = async (email: string): Promise<NewPassword> => {
-    const answer = Auth.forgotPassword(email)
+    Auth.forgotPassword(email)
         .then(data => {
             console.log("invio codice " + data)
         })
@@ -146,7 +146,7 @@ const forgotPassword = async (email: string): Promise<NewPassword> => {
 }
 
 const isNewPassword = async (email: string, code: string, password: string): Promise<NewPassword> => {
-    const answer = Auth.forgotPasswordSubmit(email, code, password)
+    Auth.forgotPasswordSubmit(email, code, password)
         .then(data => console.log("recuperato " + data))
         .catch(err => console.log(err));
 

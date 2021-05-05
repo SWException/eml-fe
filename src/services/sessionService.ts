@@ -1,7 +1,7 @@
 import cookie from 'js-cookie';
 import { User } from 'types';
 
-const setCookie = (key: string, value) => {
+const setCookie = (key: string, value): void => {
     if (process.browser) {
         cookie.set(key, value, {
             expires: 1
@@ -9,7 +9,7 @@ const setCookie = (key: string, value) => {
     }
 };
 
-const removeCookie = (key: string) => {
+const removeCookie = (key: string): void => {
     if (process.browser) {
         cookie.remove(key, {
             expires: 1
@@ -17,13 +17,13 @@ const removeCookie = (key: string) => {
     }
 };
 // get cookie
-const getCookie = (key: string) => {
+const getCookie = (key: string): string => {
     if (process.browser) {
         return cookie.get(key);
     }
 };
 // localstorage
-const setLocalStorage = (key: string, value) => {
+const setLocalStorage = (key: string, value): void => {
     if (process.browser) {
         localStorage.setItem(key, JSON.stringify(value));
     }
@@ -35,26 +35,27 @@ const getLocalStorage = (): User => {
     }
 };
 
-const removeLocalStorage = (key: string) => {
+const removeLocalStorage = (key: string): void => {
     if (process.browser) {
         localStorage.removeItem(key);
     }
 };
 // authenticate user by pass data to cookie and localstorage
-const authenticate = (data, next) => {
+const authenticate = (data, next): void => {
     console.log('Hey')
     setCookie('token', data.token);
     setLocalStorage('user', data.user);
     next();
 };
 
-const isAuth = () => {
+const isAuth = (): boolean => {
     if (process.browser) {
         const cookieChecked = getCookie('token');
         if (cookieChecked) {
             if (localStorage.getItem('user')) {
                 return JSON.parse(localStorage.getItem('user'));
-            } else {
+            }
+            else {
                 return false;
             }
         }
