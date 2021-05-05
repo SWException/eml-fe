@@ -122,7 +122,7 @@ const SignUp: React.FC = () => {
                         </FormGroup>
                         <FormGroup>
                             <Label for="codiceExample" className="">Recovery Code</Label>
-                            <Input type="text" name="codice" onChange={(e) => { setCode(e.target.value) }} id="exampleEmail" placeholder="1234" />
+                            <Input type="text" name="codice" onChange={(e) => { setCode(e.target.value) }} id="exampleCode" placeholder="1234" />
                         </FormGroup>
                         <div>
                             <Button size="lg" onClick={confirmSignUp} color="primary">Confirm registration</Button>
