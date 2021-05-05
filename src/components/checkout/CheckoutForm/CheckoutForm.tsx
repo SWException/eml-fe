@@ -174,7 +174,7 @@ const CheckoutForm: React.FC = () => {
                             ...shippingAddress,
                             recipientName: e.target.value
                         })
-                    }} placeholder="" value={shippingAddress?.code} />
+                    }} placeholder="" value={shippingAddress?.recipientName} />
                     <div className="invalid-feedback"> Valid first name is required. </div>
                 </div>
                 <div className="col-md-6 mb-3">
@@ -184,7 +184,7 @@ const CheckoutForm: React.FC = () => {
                             ...shippingAddress,
                             recipientSurname: e.target.value
                         })
-                    }} placeholder="" value={shippingAddress?.code} />
+                    }} placeholder="" value={shippingAddress?.recipientSurname} />
                     <div className="invalid-feedback"> Valid last name is required. </div>
                 </div>
 
@@ -196,7 +196,7 @@ const CheckoutForm: React.FC = () => {
                         ...shippingAddress,
                         address: e.target.value
                     })
-                }} id="address" value={shippingAddress?.code} placeholder="1234 Main St" />
+                }} id="address" value={shippingAddress?.address} placeholder="1234 Main St" />
                 <div className="invalid-feedback"> Please enter your shipping address. </div>
             </div>
             <div className="row">
@@ -207,7 +207,7 @@ const CheckoutForm: React.FC = () => {
                             ...shippingAddress,
                             city: e.target.value
                         })
-                    }} id="country" value={shippingAddress?.code} placeholder="ex.Padova" />
+                    }} id="country" value={shippingAddress?.city} placeholder="ex.Padova" />
                     <div className="invalid-feedback"> Please select a valid country. </div>
                 </div>
                 <div className="col-md-4 mb-3">
@@ -217,7 +217,7 @@ const CheckoutForm: React.FC = () => {
                             ...shippingAddress,
                             district: e.target.value
                         })
-                    }} id="state" value={shippingAddress?.code} placeholder="ex.Italy" />
+                    }} id="state" value={shippingAddress?.district} placeholder="ex.Italy" />
                     <div className="invalid-feedback"> Please provide a valid state. </div>
                 </div>
                 <div className="col-md-3 mb-3">
