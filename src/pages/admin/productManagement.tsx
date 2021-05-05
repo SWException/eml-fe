@@ -35,6 +35,7 @@ const ProductManagement: React.FC<Props> = ({ defaultProducts, categories }) => 
             const result: boolean = await ProductService.deleteProduct(id);
             console.log(result);
             alert("Product successfully removed!");
+            window.location.reload();
         }
         catch (err) {
             alert("Something went wrong, please try again later!")
@@ -50,6 +51,12 @@ const ProductManagement: React.FC<Props> = ({ defaultProducts, categories }) => 
     const handleSearchChange = async (e: ChangeEvent<HTMLInputElement>): Promise<void> => {
         const value = e.target.value;
         setProducts((await ProductService.fetchProducts({ category: currentCategory, search: value })));
+    }
+
+    const clearId = (id:string):string => {
+        const idCut:string = id.slice(0, 4) + '...' + id.slice(32, 36);
+        console.log(idCut)
+        return idCut;
     }
 
     const renderCategoryCombobox = (): JSX.Element => (
@@ -91,7 +98,7 @@ const ProductManagement: React.FC<Props> = ({ defaultProducts, categories }) => 
                     <tbody>
                         {products?.map((product: Product) => (
                             <tr key={product.id}>
-                                <td>{product.id}</td>
+                                <td>{clearId(product.id)}</td>
                                 <td>{product.name}</td>
                                 <td>€ {product.price}</td>
                                 <td>{product.category}</td>

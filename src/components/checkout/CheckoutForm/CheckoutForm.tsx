@@ -77,10 +77,20 @@ const CheckoutForm: React.FC = () => {
 
     const handleChangeShippingAddress = (e: ChangeEvent<HTMLSelectElement>) => {
         setIdSelectedShippingAddress(e.target.value);
+        addresses.map(address=>{
+            if(address.id == idSelectedShippingAddress){
+                setShippingAddress(address);
+            }
+        })
     }
 
     const handleChangeBillingAddress = (e: ChangeEvent<HTMLSelectElement>) => {
         setIdSelectedBillingAddress(e.target.value);
+        addresses.map(address=>{
+            if(address.id == idSelectedBillingAddress){
+                setBillingAddress(address);
+            }
+        })
     }
 
     const renderBillingAddress = () => (
@@ -93,6 +103,7 @@ const CheckoutForm: React.FC = () => {
                             ...billingAddress,
                             recipientName: e.target.value
                         })
+                        console.log(billingAddress)
                     }} id="firstName" placeholder="" value={billingAddress?.recipientName} />
                     <div className="invalid-feedback">{`${billingAddress?.recipientName}`}</div>
                 </div>

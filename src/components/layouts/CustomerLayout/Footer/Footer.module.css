@@ -4,4 +4,5 @@
     background-color: var(--color-night);
     color: var(--color-light);
     width: 100%;
+    bottom: 0;
 }

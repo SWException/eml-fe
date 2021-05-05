@@ -41,3 +41,11 @@
     vertical-align: middle;
     margin-left: 1rem;
 }
+
+.errorShow {
+    width: 100%;
+    background-color: #F39A9A;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border-radius: 5%;
+}

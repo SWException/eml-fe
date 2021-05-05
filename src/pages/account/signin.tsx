@@ -35,7 +35,7 @@ const Login: React.FC = () => {
     const signIn = async () => {
         setLoading(true);
         try {
-            login(email, password)
+            await login(email, password)
             let user = JSON.parse(window.localStorage.getItem('user'))
             console.log(user)
             if (user.name == 'swexception@outlook.com') {

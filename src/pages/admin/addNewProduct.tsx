@@ -17,6 +17,7 @@ const AddNewProduct: React.FC<Props> = ({ categories, taxes }) => {
 
     const router = useRouter();
 
+    const [error, setError]: [string, Dispatch<string>] = useState('');
     const [productName, setProductName]: [string, Dispatch<string>] = useState<string>("");
     const [productDescription, setProductDescription]: [string, Dispatch<string>] = useState<string>("");
     const [productPrimaryPhoto, setProductPrimaryPhoto]: [Blob, Dispatch<Blob>] = useState<Blob>();
@@ -139,6 +140,10 @@ const AddNewProduct: React.FC<Props> = ({ categories, taxes }) => {
         </div>
     );
 
+    const displayError = () => {
+        return <div className={styles.errorShow}>{error}</div>
+    }
+
     const nameHandler = (e: ChangeEvent<HTMLInputElement>): void => {
         const name = e.target.value;
         setProductName(name);
@@ -156,10 +161,17 @@ const AddNewProduct: React.FC<Props> = ({ categories, taxes }) => {
 
     const secondaryPhotosHandler = (e: ChangeEvent<HTMLInputElement>): void => {
         const files = [];
-        for (let i = 0; i < e.target.files.length; i++) {
-            files.push(e.target.files[i]);
+        if(e.target.files.length > 4){
+            setError('Max 4 pics supported!')
+            displayError();
+            console.log(productSecondaryPhotos)
+        } else {
+            setError('');
+            for (let i = 0; i < e.target.files.length; i++) {
+                files.push(e.target.files[i]);
+            }
+            setProductSecondaryPhotos(files);
         }
-        setProductSecondaryPhotos(files);
     };
 
     const categoryIdHandler = (e: ChangeEvent<HTMLSelectElement>): void => {
@@ -226,6 +238,9 @@ const AddNewProduct: React.FC<Props> = ({ categories, taxes }) => {
                 {renderShowHome()}
                 <div className={styles.div}>
                     <Button color="primary" size="lg" type="button" onClick={() => addProduct()}>SAVE</Button>
+                </div>
+                <div>
+                    {displayError()}
                 </div>
             </form>
         </AdminLayout>
