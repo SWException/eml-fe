@@ -40,25 +40,27 @@ const ProductCard: React.FC<Props> = ({ product, loadCart }) => {
     }
 
     return (
-        <div className={styles.item}>
-            <button className={styles.delete} onClick={deleteProduct}>X</button>
-            <img className={styles.img} src={product.primaryPhoto} height="100" width="100" alt="..." />
-            <span className={styles.information}>
-                <div><strong>{product.name.toUpperCase()}</strong></div>
-            </span>
-            <span className={styles.information}><strong>PRICE: </strong>€ {product.price}</span>
-            <span className={styles.information}><strong>TAX: </strong> {product.tax}%</span>
-            <div className={styles.quantity}>
-                <button className={styles.plus} onClick={() => { modifyQuantity('minus') }} type="button" name="button">
-                    -
-                </button>
-                <input type="text" name="name" value={quantity} min="1"></input>
-                <button className={styles.minus} onClick={() => { modifyQuantity('plus') }} type="button" name="button">
-                    +
-                </button>
-            </div>
-            <span className={styles.information}><strong>SUBTOTAL: € {subTotal} </strong></span>
-        </div>
+        <>
+            <td width="10rem"><button className={styles.delete} onClick={deleteProduct}>X</button></td>
+            <td>
+                <img className={styles.img} src={product.primaryPhoto} height="100" width="100" alt="..." />
+            </td>
+            <td>{product.name.toUpperCase()}</td>
+            <td>€ {product.price}</td>
+            <td>{product.tax}%</td>
+            <td>
+                <div className={styles.quantity}>
+                    <button className={styles.plus} onClick={() => { modifyQuantity('minus') }} type="button" name="button">
+                        -
+                    </button>
+                    <input type="text" name="name" value={quantity} min="1"></input>
+                    <button className={styles.minus} onClick={() => { modifyQuantity('plus') }} type="button" name="button">
+                        +
+                    </button>
+                </div>
+            </td>
+            <td>€ {subTotal}</td>
+        </>
     )
 };
 

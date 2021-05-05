@@ -48,17 +48,34 @@ const CartUser: React.FC = () => {
                             <Spinner style={{ width: '3rem', height: '3rem' }} />
                         </div>
                     ) : (
-                        <div className="cart-item-layout">
-                            {cart ? (
-                                cart.products.map((product: ProductCart) => (
-                                    <ProductCard
-                                        product={product}
-                                        loadCart={() => { reloadCart() }}
-                                    />
-                                ))
-                            ) : (
-                                <div/>
-                            )}
+                        <div className={styles.tab}>
+                            <table className={styles.table}>
+                                <thead>
+                                    <tr>
+                                        <th ></th>
+                                        <th></th>
+                                        <th><strong>NAME</strong></th>
+                                        <th><strong>PRICE</strong></th>
+                                        <th><strong>TAX</strong></th>
+                                        <th><strong>QUANTITY</strong></th>
+                                        <th><strong>SUBTOTAL</strong></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                        {cart ? (
+                                            cart.products.map((product: ProductCart) => (
+                                                <tr>
+                                                <ProductCard
+                                                    product={product}
+                                                    loadCart={() => { reloadCart() }}
+                                                />
+                                                </tr>
+                                                ))
+                                            ) : (
+                                                <div/>
+                                        )}
+                                </tbody>
+                            </table>
                         </div>
                     )}
                 </div>

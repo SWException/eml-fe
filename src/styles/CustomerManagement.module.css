@@ -20,7 +20,7 @@
     background-color: #ddd;
 }
 
-.customers  th {
+.customers th {
     padding: 5px;
     text-align: center;
     background-color: var(--color-light);
