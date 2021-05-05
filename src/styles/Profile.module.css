@@ -2,10 +2,7 @@
     background-color: var(--color-gray-light);
     border-radius: 5px;
     border: ridge var(--color-gray-dark);
-    justify-content: center;
-    align-items: center;
-    padding: 4rem;
-    margin: 3rem;
+    padding: 3rem;
 }
 
 .h1 {
@@ -22,8 +19,6 @@
     padding: 4px 20px 4px 20px;
 }
 
-.linkcontainer{
-}
 
 .link{
     text-decoration: underline;
@@ -67,10 +62,20 @@
 }
 
 .container{
-    display:inline-flex;
-    margin-left: 2rem;
-    margin-right: 3rem;
-    margin-top: 3rem;
-    align-content: right;
+    display: flex;
+    flex-direction: row;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+}
 
+.container td{
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+}
+
+.cardtitle{
+    border: 2px solid var(--color-gray-dark);
+    font-weight: bold;
 }
