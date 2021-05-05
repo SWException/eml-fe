@@ -23,7 +23,7 @@ const fetchAddresses = async (): Promise<Addresses> => {
     return addresses;
 };
 
-const createNewAddress = async (address: InsertAddress): Promise<boolean> => {
+const createNewAddress = async (address: InsertAddress): Promise<string> => {
     const token = sessionService.getCookie('token');
     const requestOptions = {
         method: 'POST',
@@ -31,7 +31,7 @@ const createNewAddress = async (address: InsertAddress): Promise<boolean> => {
             'Content-Type': 'application/json',
             "Authorization": `${token}`
         },
-        body: JSON.stringify(address)
+        body: JSON.stringify(address),
     };
 
     const res = await fetch(`${process.env.AWS_ENDPOINT}/addresses`, requestOptions)
@@ -41,7 +41,7 @@ const createNewAddress = async (address: InsertAddress): Promise<boolean> => {
     if (response.status == 'error')
         throw new Error(response.message);
 
-    return true;
+    return response.data.id;
 };
 
 const deleteAddress = async (id: string): Promise<boolean> => {
