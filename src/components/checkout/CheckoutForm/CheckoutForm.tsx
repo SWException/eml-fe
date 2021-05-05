@@ -2,7 +2,7 @@ import React, { useState, useEffect, Dispatch, ChangeEvent } from "react";
 import { useRouter } from 'next/router';
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import { Button } from 'reactstrap';
-import { Address, Addresses, PaymentIntent } from 'types';
+import { InsertAddress, Addresses, PaymentIntent } from 'types';
 import { AddressesService, CheckoutService } from 'services';
 
 const CheckoutForm: React.FC = () => {
@@ -10,18 +10,21 @@ const CheckoutForm: React.FC = () => {
     const stripe = useStripe();
     const elements = useElements();
 
-    const [newShippingAddress, setNewShippingAddress]: [Address, Dispatch<Address>] = useState<Address>();
-    const [newBillingAddress, setNewBillingAddress]: [Address, Dispatch<Address>] = useState<Address>();
+    const [newBillingAddress, setNewBillingAddress]: [InsertAddress, Dispatch<InsertAddress>] = useState<InsertAddress>();
+    const [newShippingAddress, setNewShippingAddress]: [InsertAddress, Dispatch<InsertAddress>] = useState<InsertAddress>();
 
     const [idSelectedShippingAddress, setIdSelectedShippingAddress]: [string, Dispatch<string>] = useState<string>();
     const [idSelectedBillingAddress, setIdSelectedBillingAddress]: [string, Dispatch<string>] = useState<string>();
 
     const [addresses, setAddresses]: [Addresses, Dispatch<Addresses>] = useState<Addresses>();
+
+    const [defaultValue, setDefaultValue]: [string, Dispatch<string>] = useState<string>();
+
     useEffect(() => {
         getAddresses();
     }, [])
 
-    const getAddresses = async () => {
+    const getAddresses = async (): Promise<void> => {
         try {
             const addresses: Addresses = await AddressesService.fetchAddresses();
             setAddresses(addresses);
@@ -75,15 +78,15 @@ const CheckoutForm: React.FC = () => {
             })
     }
 
-    const handleChangeShippingAddress = (e: ChangeEvent<HTMLSelectElement>) => {
+    const handleChangeShippingAddress = (e: ChangeEvent<HTMLSelectElement>): void => {
         setIdSelectedShippingAddress(e.target.value);
     }
 
-    const handleChangeBillingAddress = (e: ChangeEvent<HTMLSelectElement>) => {
+    const handleChangeBillingAddress = (e: ChangeEvent<HTMLSelectElement>): void => {
         setIdSelectedBillingAddress(e.target.value);
     }
 
-    const handleBillingAddressFieldChanges = (field: string, e: ChangeEvent<HTMLInputElement>) => {
+    const handleBillingAddressFieldChanges = (field: string, e: ChangeEvent<HTMLInputElement>): void => {
         setNewBillingAddress({
             ...newBillingAddress,
             [field]: e.target.value,
@@ -97,124 +100,127 @@ const CheckoutForm: React.FC = () => {
         });
     }
 
+    const submitNewAddress = async (address: InsertAddress): Promise<void> => {
+        await AddressesService.createNewAddress(address)
+            .then((newAddressId: string) => {
+                if (newAddressId) {
+                    getAddresses();
+                    alert("Address added successfully!");
+                }
+                console.log(newAddressId);
+                setDefaultValue(newAddressId);
+            }).catch((e) => {
+                console.log(e.message);
+            })
+    }
 
-    const renderBillingAddress = () => (
+    const renderBillingAddress = (): JSX.Element => (
         <>
-            <div className="row">
-                <div className="col-md-6 mb-3">
-                    <label>First name</label>
+            <h2 className="mb-3">Billing address</h2>
+            <form className="needs-validation">
+                <div className="row">
+                    <div className="col-md-6 mb-3">
+                        <label>First name</label>
+                        <input type="text" className="form-control" onChange={
+                            (e: React.ChangeEvent<HTMLInputElement>) => { handleBillingAddressFieldChanges('recipientName', e) }
+                        } id="billingRecipientName" placeholder="ex. Mario" />
+                    </div>
+                    <div className="col-md-6 mb-3">
+                        <label>Last name</label>
+                        <input type="text" className="form-control" onChange={
+                            (e: React.ChangeEvent<HTMLInputElement>) => { handleBillingAddressFieldChanges('recipientSurname', e) }
+                        } id="billingRecipientSurname" placeholder="ex. Rossi" />
+                    </div>
+                </div>
+                <div className="mb-3">
+                    <label >Address</label>
                     <input type="text" className="form-control" onChange={
-                        (e: React.ChangeEvent<HTMLInputElement>) => { handleBillingAddressFieldChanges('recipientName', e) }
-                    } id="firstName" placeholder="" />
+                        (e: React.ChangeEvent<HTMLInputElement>) => { handleBillingAddressFieldChanges('address', e) }
+                    } id="billingAddress" placeholder="ex. Viale della Repubblica" />
                 </div>
-                <div className="col-md-6 mb-3">
-                    <label>Last name</label>
-                    <input type="text" className="form-control" onChange={
-                        (e: React.ChangeEvent<HTMLInputElement>) => { handleBillingAddressFieldChanges('recipientSurname', e) }
-                    } id="lastName" placeholder="" />
+                <div className="row">
+                    <div className="col-md-5 mb-3">
+                        <label >Country</label>
+                        <input type="text" className="form-control" onChange={
+                            (e: React.ChangeEvent<HTMLInputElement>) => { handleBillingAddressFieldChanges('city', e) }
+                        } id="billingCity" placeholder="ex. Padova" />
+                    </div>
+                    <div className="col-md-4 mb-3">
+                        <label >State</label>
+                        <input type="text" className="form-control" onChange={
+                            (e: React.ChangeEvent<HTMLInputElement>) => { handleBillingAddressFieldChanges('district', e) }
+                        } id="billingDistrict" placeholder="ex. Italy" />
+                    </div>
+                    <div className="col-md-3 mb-3">
+                        <label>Zip</label>
+                        <input type="text" className="form-control" onChange={
+                            (e: React.ChangeEvent<HTMLInputElement>) => { handleBillingAddressFieldChanges('code', e) }
+                        } id="billingCode" placeholder="ex. 31100" />
+                    </div>
+                    <div className="col-md-3 mb-3">
+                        <label>Description</label>
+                        <input type="text" className="form-control" onChange={
+                            (e: React.ChangeEvent<HTMLInputElement>) => { handleBillingAddressFieldChanges('description', e) }
+                        } id="billingDescription" placeholder="ex. Casa Mia" />
+                    </div>
+                    <Button size="lg" onClick={() => { submitNewAddress(newBillingAddress) }}>Add</Button>
                 </div>
-            </div>
-            <div className="mb-3">
-                <label >Address</label>
-                <input type="text" className="form-control" onChange={
-                    (e: React.ChangeEvent<HTMLInputElement>) => { handleBillingAddressFieldChanges('address', e) }
-                } id="address" placeholder="1234 Main St" />
-            </div>
-            <div className="row">
-                <div className="col-md-5 mb-3">
-                    <label >Country</label>
-                    <input type="text" className="form-control" onChange={
-                        (e: React.ChangeEvent<HTMLInputElement>) => { handleBillingAddressFieldChanges('city', e) }
-                    } id="country" placeholder="ex.Padova" />
-                </div>
-                <div className="col-md-4 mb-3">
-                    <label >State</label>
-                    <input type="text" className="form-control" onChange={
-                        (e: React.ChangeEvent<HTMLInputElement>) => { handleBillingAddressFieldChanges('district', e) }
-                    } id="state" placeholder="ex.Italy" />
-                </div>
-                <div className="col-md-3 mb-3">
-                    <label>Zip</label>
-                    <input type="text" className="form-control" onChange={(e) => {
-                        setNewBillingAddress({
-                            ...newBillingAddress,
-                            code: e.target.value
-                        })
-                    }} id="zip" value={newBillingAddress?.code} placeholder="" />
-                    <div className="invalid-feedback">{newBillingAddress?.code}</div>
-                </div>
-            </div>
+            </form>
         </>
     )
 
-    const renderShippingAddress = () => (
+    const renderShippingAddress = (): JSX.Element => (
         <>
-            <h2 className="mb-3" style={{ marginTop: "20px" }}>Shipping address</h2>
-            <div className="row">
-                <div className="col-md-6 mb-3">
-                    <label>First name</label>
-                    <input type="text" className="form-control" id="firstName" onChange={(e) => {
-                        setNewShippingAddress({
-                            ...newShippingAddress,
-                            recipientName: e.target.value
-                        })
-                    }} placeholder="" value={newShippingAddress?.recipientName} />
-                    <div className="invalid-feedback"> Valid first name is required. </div>
+            <h2 className="mb-3">Shipping address</h2>
+            <form className="needs-validation">
+                <div className="row">
+                    <div className="col-md-6 mb-3">
+                        <label>First name</label>
+                        <input type="text" className="form-control" onChange={
+                            (e: React.ChangeEvent<HTMLInputElement>) => { handleShippingAddressFieldChanges('recipientName', e) }
+                        } id="shippingRecipientName" placeholder="ex. Mario" />
+                    </div>
+                    <div className="col-md-6 mb-3">
+                        <label>Last name</label>
+                        <input type="text" className="form-control" onChange={
+                            (e: React.ChangeEvent<HTMLInputElement>) => { handleShippingAddressFieldChanges('recipientSurname', e) }
+                        } id="shippingRecipientSurname" placeholder="ex. Rossi" />
+                    </div>
                 </div>
-                <div className="col-md-6 mb-3">
-                    <label >Last name</label>
-                    <input type="text" className="form-control" id="lastName" onChange={(e) => {
-                        setNewShippingAddress({
-                            ...newShippingAddress,
-                            recipientSurname: e.target.value
-                        })
-                    }} placeholder="" value={newShippingAddress?.recipientSurname} />
-                    <div className="invalid-feedback"> Valid last name is required. </div>
+                <div className="mb-3">
+                    <label >Address</label>
+                    <input type="text" className="form-control" onChange={
+                        (e: React.ChangeEvent<HTMLInputElement>) => { handleShippingAddressFieldChanges('address', e) }
+                    } id="shippingAddress" placeholder="ex. Viale della Repubblica" />
                 </div>
-
-            </div>
-            <div className="mb-3">
-                <label>Address</label>
-                <input type="text" className="form-control" onChange={(e) => {
-                    setNewShippingAddress({
-                        ...newShippingAddress,
-                        address: e.target.value
-                    })
-                }} id="address" value={newShippingAddress?.address} placeholder="1234 Main St" />
-                <div className="invalid-feedback"> Please enter your shipping address. </div>
-            </div>
-            <div className="row">
-                <div className="col-md-5 mb-3">
-                    <label >Country</label>
-                    <input type="text" className="form-control" onChange={(e) => {
-                        setNewShippingAddress({
-                            ...newShippingAddress,
-                            city: e.target.value
-                        })
-                    }} id="country" value={newShippingAddress?.city} placeholder="ex.Padova" />
-                    <div className="invalid-feedback"> Please select a valid country. </div>
+                <div className="row">
+                    <div className="col-md-5 mb-3">
+                        <label >Country</label>
+                        <input type="text" className="form-control" onChange={
+                            (e: React.ChangeEvent<HTMLInputElement>) => { handleShippingAddressFieldChanges('city', e) }
+                        } id="shippingCity" placeholder="ex. Padova" />
+                    </div>
+                    <div className="col-md-4 mb-3">
+                        <label >State</label>
+                        <input type="text" className="form-control" onChange={
+                            (e: React.ChangeEvent<HTMLInputElement>) => { handleShippingAddressFieldChanges('district', e) }
+                        } id="shippingDistrict" placeholder="ex. Italy" />
+                    </div>
+                    <div className="col-md-3 mb-3">
+                        <label>Zip</label>
+                        <input type="text" className="form-control" onChange={
+                            (e: React.ChangeEvent<HTMLInputElement>) => { handleShippingAddressFieldChanges('code', e) }
+                        } id="shippingCode" placeholder="ex. 31100" />
+                    </div>
+                    <div className="col-md-3 mb-3">
+                        <label>Description</label>
+                        <input type="text" className="form-control" onChange={
+                            (e: React.ChangeEvent<HTMLInputElement>) => { handleBillingAddressFieldChanges('description', e) }
+                        } id="shippingDescription" placeholder="ex. Casa Mia" />
+                    </div>
+                    <Button size="lg" onClick={() => { submitNewAddress(newShippingAddress) }}>Add</Button>
                 </div>
-                <div className="col-md-4 mb-3">
-                    <label >State</label>
-                    <input type="text" className="form-control" onChange={(e) => {
-                        setNewShippingAddress({
-                            ...newShippingAddress,
-                            district: e.target.value
-                        })
-                    }} id="state" value={newShippingAddress?.district} placeholder="ex.Italy" />
-                    <div className="invalid-feedback"> Please provide a valid state. </div>
-                </div>
-                <div className="col-md-3 mb-3">
-                    <label >Zip</label>
-                    <input type="text" className="form-control" onChange={(e) => {
-                        setNewShippingAddress({
-                            ...newShippingAddress,
-                            code: e.target.value
-                        })
-                    }} id="zip" value={newShippingAddress?.code} placeholder="" />
-                    <div className="invalid-feedback"> Zip code required. </div>
-                </div>
-            </div>
+            </form>
         </>
     )
 
@@ -222,7 +228,9 @@ const CheckoutForm: React.FC = () => {
         <div className="row">
             <div className="col-md-5 mb-3" style={{ marginTop: "20px" }}>
                 <label >Choose a saved address:</label>
-                <select className="custom-select d-block w-100" defaultValue="#" id="saveaddress" onChange={(e: ChangeEvent<HTMLSelectElement>) => { handleChangeBillingAddress(e) }}>
+                <select className="custom-select d-block w-100" defaultValue={defaultValue} id="saveaddress" onChange={
+                    (e: ChangeEvent<HTMLSelectElement>) => { handleChangeBillingAddress(e) }
+                }>
                     <option value="#" disabled> - - - </option>
                     {addresses?.map((address) => (
                         <option value={`${address.id}`}>{`${address.description}`}</option>
@@ -237,7 +245,9 @@ const CheckoutForm: React.FC = () => {
         <div className="row">
             <div className="col-md-5 mb-3" style={{ marginTop: "20px" }}>
                 <label >Choose a saved address:</label>
-                <select className="custom-select d-block w-100" defaultValue="#" id="saveaddress" onChange={(e: ChangeEvent<HTMLSelectElement>) => { handleChangeShippingAddress(e) }}>
+                <select className="custom-select d-block w-100" defaultValue="#" id="saveaddress" onChange={
+                    (e: ChangeEvent<HTMLSelectElement>) => { handleChangeShippingAddress(e) }
+                }>
                     <option value="#" disabled> - - -</option>
                     {addresses?.map((address) => (
                         <option value={`${address.id}`}>{`${address.description}`}</option>
@@ -256,29 +266,25 @@ const CheckoutForm: React.FC = () => {
             </div>
             <div className="row">
                 <div className="col-md-8 order-md-1">
-
-                    <h2 className="mb-3">Billing address</h2>
-                    <form className="needs-validation">
-                        {renderBillingAddress()}
-                        {renderSelectBillingAddress()}
-                        {renderShippingAddress()}
-                        {renderSelectShippingAddress()}
-                        <h2 className="mb-3" style={{ marginTop: "20px" }}>Payment</h2>
-                        <form>
-                            <CardElement id="card-element" options={cardStyle} />
-                            <div style={{ display: "flex", alignItems: "center", justifyContent: "center", margin: "20px" }}>
-                                <Button color="primary" size="lg" onClick={() => pay()} id="submit">
-                                    <span id="button-text">
-                                        PAY
+                    {renderBillingAddress()}
+                    {renderSelectBillingAddress()}
+                    {renderShippingAddress()}
+                    {renderSelectShippingAddress()}
+                    <h2 className="mb-3" style={{ marginTop: "20px" }}>Payment</h2>
+                    <form>
+                        <CardElement id="card-element" options={cardStyle} />
+                        <div style={{ display: "flex", alignItems: "center", justifyContent: "center", margin: "20px" }}>
+                            <Button color="primary" size="lg" onClick={() => pay()} id="submit">
+                                <span id="button-text">
+                                    PAY
                                     </span>
-                                </Button>
-                            </div>
+                            </Button>
+                        </div>
 
-                        </form>
                     </form>
                 </div>
             </div>
-        </div>
+        </div >
     );
 };
 

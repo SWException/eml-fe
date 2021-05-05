@@ -6,3 +6,8 @@ export type Cart = {
     tax: number;
     total: number;
 }
+
+export type CartNotAuth = {
+    id: string;
+    quantity: number;
+}
