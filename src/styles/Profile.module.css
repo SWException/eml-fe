@@ -2,6 +2,8 @@
     background-color: var(--color-gray-light);
     border-radius: 5px;
     border: ridge var(--color-gray-dark);
+    justify-content: center;
+    align-items: center;
     padding: 4rem;
     margin: 3rem;
 }
@@ -20,6 +22,39 @@
     padding: 4px 20px 4px 20px;
 }
 
+.linkcontainer{
+}
+
+.link{
+    text-decoration: underline;
+    font-size: 1.5rem;
+    color: var(--color-dark);
+    background-color: Transparent;
+    background-repeat:no-repeat;
+    border: none;
+    cursor:pointer;
+    overflow: hidden; 
+    font-weight: bold;
+    margin-left: 3rem;
+    margin-top: 3rem;
+}
+
+.link:hover{
+    color: var(--color-dark);
+    background-color: Transparent;
+    text-decoration: underline;
+    background-repeat:no-repeat;
+    border: none;
+}
+
+.link:active{
+    color: var(--color-dark);
+    background-color: Transparent;
+    text-decoration: underline;
+    background-repeat:no-repeat;
+    border: none;
+}
+
 .user {
     margin-top: 2rem;
     text-align: center;
@@ -29,4 +64,13 @@
 .danger {
     text-align: center;
     justify-content: center;
+}
+
+.container{
+    display:inline-flex;
+    margin-left: 2rem;
+    margin-right: 3rem;
+    margin-top: 3rem;
+    align-content: right;
+
 }
