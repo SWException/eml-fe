@@ -4,7 +4,7 @@ import { Button, Spinner } from 'reactstrap';
 import { CustomerLayout } from 'components/layouts/CustomerLayout';
 import styles from "styles/Order.module.css";
 import { OrdersService } from 'services';
-import { Order, OrderProduct, OrderProducts, Product } from 'types';
+import { Order, OrderProduct } from 'types';
 import { GetServerSideProps } from 'next';
 
 interface Props {

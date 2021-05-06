@@ -21,7 +21,7 @@ const SearchBar: React.FC = () => {
             e.target.addEventListener("keyup", function (event: any) {
                 console.log(event.target.value);
                 if (event.key === "Enter" ) {  
-                    router.push('/products?search=' + event.target.value);
+                    router.push('/search?search=' + event.target.value);
                     event.preventDefault();
                 }
             });

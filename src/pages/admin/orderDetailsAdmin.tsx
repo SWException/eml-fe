@@ -77,19 +77,11 @@ const OrderDetailsAdmin: React.FC<Props> = ({ id }) => {
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
     const id = context.query?.id as string;
-    try {
-        console.log(id);
-        return {
-            props: { id },
-        };
-    }
-    catch (error) {
-        return {
-            props: {
-                id: null
-            },
-        };
-    }
+    
+    return {
+        props: { id },
+    };
+    
 };
 
 export default OrderDetailsAdmin;

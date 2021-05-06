@@ -5,16 +5,17 @@ import { Button } from 'reactstrap'
 import { useRouter } from 'next/router';
 import { Category, Product, Tax, EditProduct } from 'types';
 import { CategoriesService, ProductService, sessionService } from 'services';
-import { GetServerSideProps } from 'next';
+import { GetStaticPaths, GetStaticProps } from 'next';
 import { TaxesService } from 'services/taxesService';
 
 interface Props {
     product: Product,
     categories: Category[],
     taxes: Tax[],
+    id: string
 }
 
-const EditExistingProduct: React.FC<Props> = ({ product, categories, taxes }) => {
+const EditExistingProduct: React.FC<Props> = ({ product, categories, taxes, id }) => {
 
     const router = useRouter();
 
@@ -30,6 +31,9 @@ const EditExistingProduct: React.FC<Props> = ({ product, categories, taxes }) =>
     const [productShowHome, setProductShowHome]: [boolean, Dispatch<boolean>] = useState<boolean>(product.showHome);
 
     useEffect(() => {
+        if(product==null || product.name == null){
+            setProductDetailsIfNotPublic();
+        }
         const user = sessionService.getLocalStorage();
         if (sessionService.isAuth() && user.role == 'user') {
             router.push('/');
@@ -38,6 +42,21 @@ const EditExistingProduct: React.FC<Props> = ({ product, categories, taxes }) =>
             router.push('/')
         }
     });
+
+    const setProductDetailsIfNotPublic = async (): Promise<void> => {
+        const currentProduct: Product = await ProductService.fetchProduct(id).catch(() => {
+            router.push('/admin/productManagement');
+            return null;
+        });
+        setProductName(currentProduct?.name);
+        setProductDescription(currentProduct?.description);
+        setProductCategoryId(currentProduct?.categoryId);
+        setProductNetPrice(currentProduct?.netPrice);
+        setProductTaxId(currentProduct?.taxId);
+        setProductShow(currentProduct?.show);
+        setProductStock(currentProduct?.stock);
+        setProductShowHome(currentProduct?.showHome);
+    }
 
     const updateProduct = async (): Promise<void> => {
         const { productPrimaryPhotoBase64, productSecondaryPhotosBase64 } = await getPhotos(productPrimaryPhoto, productSecondaryPhotos);
@@ -79,7 +98,7 @@ const EditExistingProduct: React.FC<Props> = ({ product, categories, taxes }) =>
     }
 
     const onFileUpload = async (file: Blob): Promise<string> => {
-        return new Promise<string>((resolve, reject) => {
+        return new Promise<string>((resolve) => {
             try {
                 const fileReader = new FileReader();
                 fileReader.readAsDataURL(file);
@@ -136,7 +155,6 @@ const EditExistingProduct: React.FC<Props> = ({ product, categories, taxes }) =>
             </select>
         </div>
     )
-
 
     const nameHandler = (e: ChangeEvent<HTMLInputElement>): void => {
         const name = e.target.value;
@@ -237,19 +255,44 @@ const EditExistingProduct: React.FC<Props> = ({ product, categories, taxes }) =>
 
 export default EditExistingProduct;
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
-    const id = context.query?.id as string;
-
-    try {
-        const product = await ProductService.fetchProduct(id); // DA SISTEMARE
-        const categories = await CategoriesService.fetchAllCategories();
-        const taxes = await TaxesService.fetchTaxes();
-        return {
-            props: { product, categories, taxes },
-        }
+export const getStaticPaths: GetStaticPaths = async () => {
+    const paths = [];
+    const categories = await CategoriesService.fetchAllCategories();
+    for(let i = 0; i < categories.length; i++){
+        const category = categories[i];
+        const productsCategoryList = await ProductService.fetchProducts({category: category.id});
+        productsCategoryList.forEach(product => {
+            paths.push({params: { id: product.id }});
+        });
     }
-    catch (err) {
-        console.log(err);
-        return { props: { product: null, categories: null, taxes: null } };
+    return {paths, fallback: 'blocking'};
+}
+
+export const getStaticProps: GetStaticProps = async ({params}) => {
+    const id = params?.id as string;
+
+    const product = await ProductService.fetchProduct(id).catch((): Product => {
+        return {
+            id: null,
+            name: null,
+            description: null,
+            primaryPhoto: null,
+            secondaryPhotos: null,
+            categoryId: null,
+            category: null,
+            price: null,
+            netPrice: null,
+            taxId: null,
+            tax: null,
+            show: null,
+            showHome: null,
+            stock: null,
+        }
+    }); // DA SISTEMARE
+    const categories = await CategoriesService.fetchAllCategories().catch(() => null);
+    const taxes = await TaxesService.fetchTaxes().catch(() => null);
+    return {
+        props: { product, categories, taxes, id },
+        revalidate: 30
     }
 }

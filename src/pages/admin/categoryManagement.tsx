@@ -3,16 +3,21 @@ import { AdminLayout } from 'components/layouts/AdminLayout';
 import styles from 'styles/CategoryManagement.module.css';
 import { Button } from 'reactstrap';
 import { AddNewCategory, EditExistingCategory } from 'components/admin/';
-import { CategoriesService, sessionService } from 'services';
+import { CategoriesService } from 'services';
 import { Categories } from 'types';
+import { GetStaticProps } from 'next';
 
-const CategoryManagement: React.FC = () => {
+type Props = {
+    initialCategories: Categories
+}
 
-    const [categories, setCategories]: [Categories, Dispatch<Categories>] = useState<Categories>();
+const CategoryManagement: React.FC<Props> = ({initialCategories}) => {
+
+    const [categories, setCategories]: [Categories, Dispatch<Categories>] = useState<Categories>(initialCategories);
 
     useEffect(() => {
-        getAllCategories();
-    }, [])
+        setCategories(initialCategories);
+    }, [initialCategories])
 
     const getCategoriesByName = async (name: string): Promise<void> => {
         console.log(name);
@@ -111,3 +116,12 @@ const CategoryManagement: React.FC = () => {
 };
 
 export default CategoryManagement;
+
+export const getStaticProps: GetStaticProps = async () => {
+    
+    const initialCategories = await CategoriesService.fetchAllCategories().catch(() => null);
+    return {
+        props: { initialCategories },
+        revalidate: 30
+    }
+}

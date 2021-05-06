@@ -4,7 +4,7 @@ import styles from 'styles/AddNewProduct.module.css'
 import { Button } from 'reactstrap'
 import { Category, InsertProduct, Tax } from 'types';
 import { CategoriesService, ProductService, sessionService } from 'services';
-import { GetServerSideProps } from 'next';
+import { GetStaticProps } from 'next';
 import { TaxesService } from 'services';
 import { useRouter } from 'next/router'
 
@@ -165,7 +165,8 @@ const AddNewProduct: React.FC<Props> = ({ categories, taxes }) => {
             setError('Max 4 pics supported!')
             displayError();
             console.log(productSecondaryPhotos)
-        } else {
+        }
+        else {
             setError('');
             for (let i = 0; i < e.target.files.length; i++) {
                 files.push(e.target.files[i]);
@@ -249,15 +250,11 @@ const AddNewProduct: React.FC<Props> = ({ categories, taxes }) => {
 
 export default AddNewProduct;
 
-export const getServerSideProps: GetServerSideProps = async () => {
-    try {
-        const categories = await CategoriesService.fetchAllCategories();
-        const taxes = await TaxesService.fetchTaxes();
-        return {
-            props: { categories, taxes },
-        }
-    }
-    catch (err) {
-        console.log(err);
+export const getStaticProps: GetStaticProps = async () => {
+    const categories = await CategoriesService.fetchAllCategories().catch(() => null);
+    const taxes = await TaxesService.fetchTaxes().catch(() => null);
+    return {
+        props: { categories, taxes },
+        revalidate: 30
     }
 }

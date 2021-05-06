@@ -4,7 +4,7 @@ import { AdminLayout } from 'components/layouts/AdminLayout';
 import styles from 'styles/ProductManagement.module.css';
 import { Button } from 'reactstrap';
 import { Categories, Category, Product, Products } from 'types';
-import { GetServerSideProps } from 'next';
+import { GetStaticProps } from 'next';
 import { CategoriesService, ProductService, sessionService } from 'services';
 
 interface Props {
@@ -20,14 +20,20 @@ const ProductManagement: React.FC<Props> = ({ defaultProducts, categories }) => 
 
     useEffect(() => {
         const user = sessionService.getLocalStorage();
-    });
+        updateProducts();
+    }, []);
+
+    const updateProducts = async (): Promise<void> => {
+        const newProducts = await ProductService.fetchProducts({category: currentCategory});
+        setProducts(newProducts);
+    }
 
     const addNewProduct = (): void => {
         router.push('/admin/addNewProduct');
     }
 
     const editProduct = (id: string): void => {
-        router.push('/admin/editExistingProduct?id=' + id);
+        router.push('/admin/productManagement/' + id);
     }
 
     const removeProduct = async (id: string): Promise<void> => {
@@ -116,17 +122,13 @@ const ProductManagement: React.FC<Props> = ({ defaultProducts, categories }) => 
 
 export default ProductManagement;
 
-export const getServerSideProps: GetServerSideProps = async () => {
-    try {
-        const defaultProducts: Products = await ProductService.fetchProducts();
-        const categories: Categories = await CategoriesService.fetchAllCategories();
-        console.log(categories);
+export const getStaticProps: GetStaticProps = async () => {
+    const defaultProducts: Products = await ProductService.fetchProducts().catch(() => null);
+    const categories: Categories = await CategoriesService.fetchAllCategories().catch(() => null);
+    console.log(categories);
 
-        return {
-            props: { defaultProducts, categories },
-        }
-    }
-    catch (err) {
-        console.log(err);
+    return {
+        props: { defaultProducts, categories },
+        revalidate: 30
     }
 }

@@ -9,18 +9,19 @@ import { Products, SearchRules } from 'types';
 
 interface Props {
     initialProducts: Products;
-    categoryId: string;
+    search: string
 }
 
-const ProductsPage: React.FC<Props> = ({ initialProducts, categoryId }) => {
+const ProductsPage: React.FC<Props> = ({ initialProducts, search }) => {
 
-    const [searchRules]: [SearchRules, Dispatch<SearchRules>] = useState<SearchRules>({category: categoryId});
+    const [searchRules]: [SearchRules, Dispatch<SearchRules>] = useState<SearchRules>({search});
     const [products, setProducts]: [Products, Dispatch<Products>] = useState<Products>(initialProducts);
 
     useEffect(() => {
         setProducts(initialProducts);
-        searchRules.category = categoryId;
-    }, [initialProducts, categoryId])
+        searchRules.search = search;
+        updateProducts();
+    }, [initialProducts, search])
 
 
     const setFilters = async (filters: SearchRules) => {
@@ -58,19 +59,16 @@ const ProductsPage: React.FC<Props> = ({ initialProducts, categoryId }) => {
 };
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-    const id = context?.query?.category as string;
-    const search = context?.query?.search as string;
-    const initialProducts = (await ProductService.fetchProducts({category: id, search: search}));
+    const search: string = context?.query?.search as string;
     try {
-        console.log(id);
         return {
-            props: { initialProducts, categoryId: id?id:"" },
+            props: { search },
         };
     }
     catch (error) {
         return {
             props: {
-                initialProducts: null
+                search: null
             },
         };
     }

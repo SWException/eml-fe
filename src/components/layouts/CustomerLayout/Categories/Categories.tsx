@@ -33,7 +33,7 @@ const CategoriesToShow: React.FC = () => {
                         <div className={styles.container}>
                             {categories.map((category) => (
                                 <NavItem>
-                                    <Link href={"/products?category=" + category.id} >{category.name.toUpperCase()}</Link>
+                                    <Link href={"/products/category/" + category.id} >{category.name.toUpperCase()}</Link>
                                 </NavItem>
                             ))}
                         </div>

@@ -17,7 +17,7 @@
         "space-before-function-paren": ["error", "always"], //space between function name and parenthesis
         "complexity": ["error", 10], //cyclomatic complexity
         "max-len": ["error", { "code": 200 }], //max line length //DOVREBBE ESSERE DI 100 IN REALTÀ
-        "@typescript-eslint/explicit-function-return-type": ["error"],
+        "@typescript-eslint/explicit-function-return-type": ["warn"],
         //"@typescript-esplint/no-unsafe-any": ["error"],
         "@typescript-eslint/no-parameter-properties": ["error"],
             //"@typescript-eslint/explicit-module-boundary-types": ["error"],

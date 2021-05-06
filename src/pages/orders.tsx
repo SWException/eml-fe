@@ -21,36 +21,36 @@ const OrdersList: React.FC = () => {
 
     return (
         <CustomerLayout header footer>
-                <div>
-                    <h1>List of orders</h1>
-                </div>
-                <div className={styles.div}>
-                    {orders ? (
-                        <table className={styles.orders}>
-                            <thead>
+            <div>
+                <h1>List of orders</h1>
+            </div>
+            <div className={styles.div}>
+                {orders ? (
+                    <table className={styles.orders}>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>DATE</th>
+                                <th>TOTAL</th>
+                                <th>STATE</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {orders.map((order: Order) => (
                                 <tr>
-                                    <th>ID</th>
-                                    <th>DATE</th>
-                                    <th>TOTAL</th>
-                                    <th>STATE</th>
+                                    <OrderCard
+                                        order={order}
+                                    />
                                 </tr>
-                            </thead>
-                            <tbody>
-                                {orders.map((order: Order) => (
-                                    <tr>
-                                        <OrderCard
-                                            order={order}
-                                        />
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
-                    ) : (
-                        <div className={styles.div}>
+                            ))}
+                        </tbody>
+                    </table>
+                ) : (
+                    <div className={styles.div}>
                             No orders
-                        </div>
-                    )}
-                </div>
+                    </div>
+                )}
+            </div>
         </CustomerLayout>
     );
 };

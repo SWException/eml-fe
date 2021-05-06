@@ -1,20 +1,23 @@
 import React, { useState, useEffect, ChangeEvent, Dispatch } from 'react';
-import { useRouter } from 'next/router';
 import styles from 'styles/TaxesManagement.module.css';
 import { Button } from 'reactstrap';
 import { AdminLayout } from 'components/layouts/AdminLayout';
 import { AddNewTax, EditExistingTax } from 'components/admin';
 import { Taxes } from 'types';
-import { sessionService, TaxesService } from 'services';
+import {  TaxesService } from 'services';
+import { GetStaticProps } from 'next';
 
-const TaxManagement: React.FC = () => {
+type Props = {
+    initialTaxes: Taxes
+}
 
-    const [taxes, setTaxes]: [Taxes, Dispatch<Taxes>] = useState<Taxes>()
+const TaxManagement: React.FC<Props> = ({ initialTaxes }) => {
+
+    const [taxes, setTaxes]: [Taxes, Dispatch<Taxes>] = useState<Taxes>(initialTaxes)
 
     useEffect(() => {
-        getAllTaxes();
-    }, [])
-
+        setTaxes(initialTaxes);
+    }, [initialTaxes])
 
     const getAllTaxes = async (): Promise<void> => {
         try {
@@ -66,11 +69,11 @@ const TaxManagement: React.FC = () => {
         <AdminLayout header>
             <h1>Management Taxes</h1>
             <div className={styles.tab}>
-                <AddNewTax  loadTaxes={() => { getAllTaxes() }}/>
+                <AddNewTax  loadTaxes={(): void => { getAllTaxes() }}/>
             </div>
             <div className={styles.tab}>
                 <label><strong>Search:</strong></label>
-                <input className={styles.input} type="text" placeholder="Search tax by name..." onChange={(e) => { handleChange(e) }} />
+                <input className={styles.input} type="text" placeholder="Search tax by name..." onChange={(e): void => { handleChange(e) }} />
             </div>
             {taxes ? (
                 <div className={styles.tab}>
@@ -94,8 +97,8 @@ const TaxManagement: React.FC = () => {
                                     <td>{tax.id}</td>
                                     <td>{tax.description}</td>
                                     <td>{tax.value}</td>
-                                    <td><EditExistingTax tax={tax} loadTaxes={() => { getAllTaxes() }}/></td>
-                                    <td><Button color="primary" size="lg" onClick={() => deleteTax(tax.id)}>REMOVE</Button></td>
+                                    <td><EditExistingTax tax={tax} loadTaxes={(): void => { getAllTaxes() }}/></td>
+                                    <td><Button color="primary" size="lg" onClick={(): void => {deleteTax(tax.id)}}>REMOVE</Button></td>
                                 </tr>
                             ))}
                         </tbody>
@@ -111,3 +114,12 @@ const TaxManagement: React.FC = () => {
 };
 
 export default TaxManagement;
+
+export const getStaticProps: GetStaticProps = async () => {
+    const initialTaxes: Taxes = await TaxesService.fetchTaxes().catch(() => null);
+
+    return {
+        props: { initialTaxes },
+        revalidate: 30
+    }
+}

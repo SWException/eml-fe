@@ -284,9 +284,9 @@ const Profile: React.FC = () => {
                                         <CardText><div className={styles.user}>
                                             <strong>Email: </strong>{currentEmail}
                                         </div>
-                                            <div className={styles.user}>
-                                                <strong>Name: </strong>{userName}
-                                            </div>
+                                        <div className={styles.user}>
+                                            <strong>Name: </strong>{userName}
+                                        </div>
                                         </CardText>
                                     </CardBody>
                                 </Card>
