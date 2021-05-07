@@ -22,7 +22,7 @@
 }
 
 .productPrice {
-    color: var(--color-primary);
+    color: var(--color-dark);
     font-size: 1.8rem;
     font-weight: 600;
 }

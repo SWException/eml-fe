@@ -13,9 +13,11 @@
 }
 
 .minus {
-    margin-bottom: 3px;
+   border:none;
+   background-color: transparent;
 }
 
 .plus {
-    margin-top: 2px;
+    border:none;
+    background-color: transparent;
 }

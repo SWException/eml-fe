@@ -1,21 +1,21 @@
 .profile {
     font-weight: 800;
-    background-color: var(--color-night);
-    color: var(--color-light);
+    background-color: transparent;
+    color: var(--color-dark);
     border: transparent;
 }
 
 .profile:hover {
     color: var(--color-dark);
-    background-color: var(--color-gray);
+    background-color: var(--color-light);
 }
 
 .profile:active {
     color: var(--color-dark);
-    background-color: var(--color-gray);
+    background-color: var(--color-light);
 }
 
 .dropmenu {
-    background-color: var(--color-night);
-    border-color: var(--color-light);
+    background-color: var(--color-light);
+    border-color: var(--color-dark);
 }

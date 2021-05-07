@@ -1,56 +1,22 @@
-.item {
-    padding: 1rem;
-    display: flex;
-    margin-left: 2rem;
-    margin-right: 2rem;
-    border-top: 1px solid #E1E8EE;
-    border-bottom: 1px solid #E1E8EE;
-    justify-content: center;
-    align-items: center;
-}
 
-.image {
-    padding: 30px;
-}
-
-.information {
-    width: 20rem;
-    text-align: center;
-}
-
-.information span {
-    font-size: 14px;
-    color: #43484D;
-    font-weight: 400;
-}
-
-.quantity {
-    width: 15rem;
-}
-
-.quantity input {
+.quantityinput {
     -webkit-appearance: none;
     border: none;
     text-align: center;
     width: 5rem;
-    font-size: 16px;
+    font-size: 1rem;
     color: #43484D;
+    padding:0;
 }
 
 .minus {
-    margin-bottom: 3px;
-    width: 2rem;
-    height: 2.5rem;
     padding: 0;
-    border-radius: 100%;
+    border:none;
 }
 
 .plus {
-    margin-top: 2px;
-    width: 2rem;
-    height: 2.5rem;
     padding: 0;
-    border-radius: 100%;
+    border:none;
 }
 
 .delete {
@@ -60,3 +26,177 @@
     padding: 0;
     border-radius: 100%;
 }
+
+.singleproductbox{
+    font-family: sans-serif;
+    -webkit-text-size-adjust: 100%;
+    -webkit-box-direction: normal;
+    box-sizing: inherit;
+    position: relative;
+    padding: 2rem 0px;
+    padding-top: 0;
+    border-bottom: 1px solid lightslategrey;
+}
+        
+    
+.singleproduct{
+    font-family: sans-serif;
+    -webkit-text-size-adjust: 100%;
+    -webkit-box-direction: normal;
+    box-sizing: inherit;
+    display: grid;
+    grid-auto-flow: column;
+    grid-template-columns: 125px 1fr;
+    grid-gap: 15px;
+    -webkit-font-smoothing: antialiased;
+}
+            
+    
+.imagebox{
+    color: inherit;
+    font-family: Arial, "Arial Unicode MS", Helvetica, "DejaVu Sans", "Lucida Sans Unicode", sans-serif;
+    -webkit-tap-highlight-color: transparent;
+    position: relative;
+    overflow: hidden;
+    padding-top: 100%;
+}
+    
+.image{
+    -webkit-text-size-adjust: 100%;
+    -webkit-box-direction: normal;
+    -webkit-font-smoothing: antialiased;
+    color: inherit;
+    font-family: Arial, "Arial Unicode MS", Helvetica, "DejaVu Sans", "Lucida Sans Unicode", sans-serif;
+    -webkit-tap-highlight-color: transparent;
+    box-sizing: inherit;
+    border: 0;
+    position: absolute;
+    width: 125;
+    height: 125;
+    top: 0;
+    left: 0;
+    z-index: 0;
+}
+            
+    
+.allinfobox{
+    font-family: sans-serif;
+    -webkit-text-size-adjust: 100%;
+    -webkit-box-direction: normal;
+    -webkit-font-smoothing: antialiased;
+    box-sizing: inherit;
+    position: relative;
+    min-width: 0;
+    display: grid;
+    grid-auto-flow: row;
+}
+            
+.upinfo{
+    font-family: sans-serif;
+    -webkit-text-size-adjust: 100%;
+    -webkit-box-direction: normal;
+    -webkit-font-smoothing: antialiased;
+    box-sizing: inherit;
+    overflow: hidden;
+    display: grid;
+    grid-auto-flow: column;
+    grid-gap: 15px;    
+}
+    
+.productdetails{
+    font-family: sans-serif;
+    -webkit-text-size-adjust: 100%;
+    -webkit-box-direction: normal;
+    -webkit-font-smoothing: antialiased;
+    box-sizing: inherit;
+    min-width: 0;
+    padding-right: 15px;
+    margin-bottom: 0;
+}
+            
+.quantitybox{
+    font-family: sans-serif;
+    -webkit-text-size-adjust: 100%;
+    -webkit-box-direction: normal;
+    -webkit-font-smoothing: antialiased;
+    text-align: right;
+    box-sizing: inherit;
+    display: inline-block; 
+}
+    
+.downdetail{
+    font-family: sans-serif;
+    -webkit-text-size-adjust: 100%;
+    -webkit-box-direction: normal;
+    -webkit-font-smoothing: antialiased;
+    box-sizing: inherit;
+    margin-bottom: -10px;
+    display: grid;
+    grid-auto-flow: column;
+    grid-template-areas: "a b";
+}
+            
+    
+.subtotal{
+    font-family: sans-serif;
+    -webkit-text-size-adjust: 100%;
+    -webkit-box-direction: normal;
+    -webkit-font-smoothing: antialiased;
+    box-sizing: inherit;
+    grid-area: b;
+    align-self: end;
+    text-align: right;
+    padding-bottom: 14px;
+    align-content: bottom;
+    margin-top: 2rem;
+}
+    
+    
+.removebox{
+    font-family: sans-serif;
+    -webkit-text-size-adjust: 100%;
+    -webkit-box-direction: normal;
+    -webkit-font-smoothing: antialiased;
+    box-sizing: inherit;
+    grid-area: a;
+    align-self: end;
+}
+            
+    
+.removebutton{
+    -webkit-text-size-adjust: 100%;
+    -webkit-box-direction: normal;
+    -webkit-font-smoothing: antialiased;
+    font: inherit;
+    margin: 0;
+    -webkit-appearance: button;
+    box-sizing: border-box;
+    min-height: 40px;
+    outline: 0;
+    font-family: Arial, "Arial Unicode MS", Helvetica, "DejaVu Sans", "Lucida Sans Unicode", sans-serif;
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+    line-height: 18px;
+    overflow: hidden;
+    text-align: center;
+    text-decoration: none;
+    text-transform: uppercase;
+    vertical-align: middle;
+    background-color: transparent;
+    cursor: pointer;
+    touch-action: manipulation;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    padding: 8px 14px;
+    border: 2px solid #ff6900;
+    color: #ff6900;
+    width: auto;
+    display: inline-flex;
+    transition: color 0.3s ease 0s;
+    margin-left: -15px;
+    position: relative;
+    top: 0;
+    right: 0;
+    border-color: transparent;
+    }

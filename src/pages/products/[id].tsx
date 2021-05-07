@@ -172,7 +172,7 @@ const Detail: React.FC<Props> = (props) => {
                     <div className={styles.productAction}>
                         <div>
                             <button className={styles.plus} onClick={() => { modifyQuantityByStep(false) }} type="button" name="button">
-                                -
+                                <img src="meno.png" style={{width:25, height: 25}}/>
                             </button>
                             <input type="number" name="name" value={quantity}
                                 className={styles.input}
@@ -180,7 +180,7 @@ const Detail: React.FC<Props> = (props) => {
                                 max={product.stock}>
                             </input>
                             <button className={styles.minus} onClick={() => { modifyQuantityByStep(true) }} type="button" name="button">
-                                +
+                                <img src="plus.png" style={{width:25, height: 25}}/>
                             </button>
                         </div>
                     </div>

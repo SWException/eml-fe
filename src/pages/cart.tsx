@@ -55,85 +55,69 @@ const CartUser: React.FC = () => {
 
     return (
         <CustomerLayout header footer>
-            <div className={styles.container}>
-                <div className={styles.title}>
-                    <h1>Cart</h1>
-                </div>
-                {sessionService.isAuth() ? (
-                    <div>
-                        <div className={styles.cart}>
+                    {sessionService.isAuth() ? (
+                        <div>
                             {loading ? (
                                 <div className={styles.loadingitemlayout}>
                                     <Spinner style={{ width: '3rem', height: '3rem' }} />
                                 </div>
                             ) : (
-                                <div className={styles.tab}>
-                                    <table className={styles.table}>
-                                        <thead>
-                                            <tr>
-                                                <th ></th>
-                                                <th></th>
-                                                <th><strong>NAME</strong></th>
-                                                <th><strong>PRICE</strong></th>
-                                                <th><strong>TAX</strong></th>
-                                                <th><strong>QUANTITY</strong></th>
-                                                <th><strong>SUBTOTAL</strong></th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
+                                <div className={styles.gridcontainer}>
+                                    <div className={styles.products}>
+                                        <div className={styles.titlebox}>
+                                            <div className={styles.title}>
+                                                <h2>Cart</h2>
+                                            </div>
+                                        </div>
+                                        <div>
                                             {cart ? (
                                                 cart.products.map((product: ProductCart) => (
-                                                    <tr>
-                                                        <ProductCard
-                                                            product={product}
-                                                            loadCart={() => { reloadCart() }}
-                                                        />
-                                                    </tr>
+                                                    <ProductCard
+                                                        product={product}
+                                                        loadCart={() => { reloadCart() }}
+                                                    />
                                                 ))
                                             ) : (
                                                 <div/>
                                             )}
-                                        </tbody>
-                                    </table>
-                                </div>
-                            )}
+                                            <div>
+                                                <Button color="primary" onClick={removeAllCart} size="lg">Remove all</Button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className={styles.total}>
+                                        <table className={styles.table}>
+                                            <th>
+                                            <span class="text-muted">Total</span>
+                                            </th>
+                                            <th/>
+                                            <tr>
+                                                <td>
+                                                    <span>Total</span>
+                                                </td>
+                                                <td className={styles.strong}>
+                                                    <strong>{" €"}{cart?.total}{"€"}</strong> 
+                                                </td>  
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                <span>Taxes</span>
+                                                </td>
+                                                <td className={styles.strong}>
+                                                    <strong className={styles.strong}>{"€"}{cart?.tax}</strong>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <Button color="primary" size="lg" style={{marginTop:"2rem"}}onClick={() => { onSubmit() }}>Checkout</Button>
+                                            </tr>
+                                        </table>
+                                     </div>
+                                </div>    
+                                )}
                         </div>
-                        <div>
-                            {cart?.products.length != 0 ? (
-                                <div className={styles.remove}>
-                                    <Button color="primary" onClick={removeAllCart} size="lg">Remove all</Button>
-                                </div>
-                            ) : (
-                                <div className={styles.message}>
-                                The cart is empty, add an item to continue.
-                                </div>
-                            )}
-                        </div>
-                        <div className={styles.total}>
-                            <div><strong>Total: {cart?.total}{" €"} </strong></div>
-                            <div><strong>Taxes: {cart?.tax}{" €"} </strong></div>
-                            {loading ? (
-                                <div className={styles.loadingitemlayout}>
-                                    <Spinner />
-                                </div>
-                            ) : (
-                                <div>
-                                    {cart?.products.length != 0 ? (
-                                        <Button color="primary" size="lg" style={{ marginTop: "10px" }} onClick={() => { onSubmit() }}>Checkout</Button>
-                                    ) : (
-                                        <div/>
-                                    )}
-                                </div>
-                            )}
-                        </div>
-                    </div>
-                ) : (
-                    <div>
-                        {displayMessage()}
-                    </div>
-                )}
-                
-            </div>
+                    ):(
+                        <div/>
+                    )}
         </CustomerLayout>
     );
 };

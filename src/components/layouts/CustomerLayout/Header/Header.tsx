@@ -58,7 +58,7 @@ const Header: React.FC = () => {
                             <NavItem>
                                 <NavLink className="navbar" href="/cart">
                                     <a>
-                                        <img src="/iconcart2.png" width={40} height={40} />
+                                        <img src="/iconcart.png" width={40} height={40} />
                                     </a>
                                 </NavLink>
                             </NavItem>

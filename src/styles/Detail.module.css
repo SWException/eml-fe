@@ -27,7 +27,7 @@
     margin-top: 2rem;
     font-size: 2rem;
     font-weight: 600;
-    color: var(--color-primary);
+    color: var(--color-dark);
 }
 
 .productDesc {
@@ -72,9 +72,11 @@
 }
 
 .minus {
-    margin-bottom: 3px;
+    border:none;
+    background-color: transparent;
 }
 
 .plus {
-    margin-top: 2px;
+    border:none;
+    background-color: transparent;
 }

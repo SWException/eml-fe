@@ -40,27 +40,49 @@ const ProductCard: React.FC<Props> = ({ product, loadCart }) => {
     }
 
     return (
-        <>
-            <td width="10rem"><button className={styles.delete} onClick={deleteProduct}>X</button></td>
-            <td>
-                <img className={styles.img} src={product.primaryPhoto} height="100" width="100" alt="..." />
-            </td>
-            <td>{product.name.toUpperCase()}</td>
-            <td>€ {product.price}</td>
-            <td>{product.tax}%</td>
-            <td>
-                <div className={styles.quantity}>
-                    <button className={styles.plus} onClick={() => { modifyQuantity('minus') }} type="button" name="button">
-                        -
-                    </button>
-                    <input type="text" name="name" value={quantity} min="1"></input>
-                    <button className={styles.minus} onClick={() => { modifyQuantity('plus') }} type="button" name="button">
-                        +
-                    </button>
+                <div className={styles.singleproductbox}>
+                    <div className={styles.singleproduct}>
+                        <div className={styles.imagebox}>
+                            <div className={styles.image}>
+                                <img src={product.primaryPhoto} height="125" width="125" alt="..." />
+                            </div>
+                        </div>
+                        <div className={styles.allinfobox}>
+                            <div className={styles.upinfo}>
+                                <div className={styles.productdetails}>
+                                    <div>
+                                        <span>{product.name.toUpperCase()}</span>
+                                    </div>
+                                    <div>
+                                        <span>€ {product.price}</span>
+                                    </div>
+                                    <div>
+                                     <span>Tax: {product.tax}%</span>
+                                    </div>
+                                    <div> 
+                                        <button onClick={deleteProduct} className={styles.removebutton}>
+                                            <img src="remove.png" style={{width:25, height: 25}}/>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div className={styles.quantitybox}>
+                                    <div>
+                                    <button className={styles.plus} onClick={() => { modifyQuantity('minus') }} type="button" name="button">
+                                        <img src="meno.png" style={{width:25, height: 25}}/>
+                                    </button>
+                                    <input className={styles.quantityinput} type="text" name="name" value={quantity} min="1"></input>
+                                    <button className={styles.minus} onClick={() => { modifyQuantity('plus') }} type="button" name="button">
+                                        <img src="plus.png" style={{width:25, height: 25}}/>
+                                    </button>
+                                    </div>
+                                    <div className={styles.subtotal}>
+                                    <span><strong>€ {subTotal}</strong></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>    
                 </div>
-            </td>
-            <td>€ {subTotal}</td>
-        </>
     )
 };
 
