@@ -161,8 +161,14 @@ const Detail: React.FC<Props> = (props) => {
                     <Carousel className={styles.carousel} activeIndex={activeIndex} next={next} previous={previous}>
                         <CarouselIndicators items={items} activeIndex={activeIndex} onClickHandler={goToIndex} />
                         {slides}
-                        <CarouselControl className={styles.carouselcontrolprevicon} direction="prev" directionText="Previous" onClickHandler={previous} />
-                        <CarouselControl className={styles.carouselcontrolnexticon} direction="next" directionText="Next" onClickHandler={next} />
+                        {slides?.length >1 ?(
+                            <>
+                                <CarouselControl className={styles.carouselcontrolprevicon} direction="prev" directionText="Previous" onClickHandler={previous} />
+                                <CarouselControl className={styles.carouselcontrolnexticon} direction="next" directionText="Next" onClickHandler={next} />  
+                            </>
+                        ):(
+                            <div/>
+                        )}
                     </Carousel>
                 </div>
                 <div className={styles.productInfo}>
