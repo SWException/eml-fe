@@ -280,13 +280,19 @@ const Profile: React.FC = () => {
                             <div className={styles.container}>
                                 <Card>
                                     <CardBody>
-                                        <CardTitle className={styles.cardtitle}>Your Profile:</CardTitle>
-                                        <CardText><div className={styles.user}>
-                                            <strong>Email: </strong>{currentEmail}
-                                        </div>
-                                        <div className={styles.user}>
-                                            <strong>Name: </strong>{userName}
-                                        </div>
+                                        <CardTitle className={styles.cardtitle}>
+                                            <div>
+                                                <img src="profile.png" style={{width:25, height: 25, marginRight: 5}}/>
+                                            Your Profile:
+                                            </div>
+                                        </CardTitle>
+                                        <CardText>
+                                            <div className={styles.user}>
+                                                <strong>Email: </strong>{currentEmail}
+                                            </div>
+                                            <div className={styles.user}>
+                                                <strong>Name: </strong>{userName}
+                                            </div>
                                         </CardText>
                                     </CardBody>
                                 </Card>

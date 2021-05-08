@@ -35,7 +35,7 @@
     position: relative;
     padding: 2rem 0px;
     padding-top: 0;
-    border-bottom: 1px solid lightslategrey;
+    border-bottom: 1px lightslategrey;
 }
         
     
@@ -189,14 +189,19 @@
     user-select: none;
     -webkit-tap-highlight-color: transparent;
     padding: 8px 14px;
-    border: 2px solid #ff6900;
-    color: #ff6900;
     width: auto;
     display: inline-flex;
-    transition: color 0.3s ease 0s;
     margin-left: -15px;
     position: relative;
     top: 0;
     right: 0;
-    border-color: transparent;
+    border: none;
+    }
+
+    .removebutton :hover{
+        border:none;
+    }
+
+    .removebutton :active{
+        border:none;
     }

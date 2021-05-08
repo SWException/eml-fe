@@ -1,6 +1,6 @@
 import React from 'next/router';
 import { ChangeEvent, useEffect, useState } from 'react';
-import styles from 'styles/Detail.module.css';
+
 import { ProductService } from 'services/productService';
 import { CustomerLayout } from 'components/layouts/CustomerLayout';
 import { Product } from 'types/product'

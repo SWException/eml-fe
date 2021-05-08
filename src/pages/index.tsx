@@ -7,6 +7,7 @@ import { GetStaticProps } from 'next';
 import { ProductService } from 'services';
 import { Products } from 'types';
 
+
 interface Props {
     products: Products;
 }
@@ -14,10 +15,10 @@ interface Props {
 const Index: React.FC<Props> = ({products}) => {
     return (
         <CustomerLayout header categories footer>
-            <div className={styles.title}>
-                <h1>BEST PRODUCTS</h1>
-            </div>
             <Container className={styles.container}>
+                <div className={styles.title}>
+                    <h1>BEST PRODUCTS</h1>
+                </div>
                 <ProductList products={products}/>
             </Container>
         </CustomerLayout>

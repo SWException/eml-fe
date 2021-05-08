@@ -4,10 +4,17 @@
 }
 
 .total{
-    margin-left:2rem;
-    align-content: right;
-    justify-content: right;
-    float: right;
+    display: flex;
+    flex-direction: row;
+    margin-left: 4rem;
+}
+.cardtitle{
+    border: 2px solid var(--color-gray-dark);
+    font-weight: bold;
+    text-align: center;
+}
+.user {
+    margin-top: 2rem;
 }
 
 .products{
@@ -23,6 +30,7 @@
 
 .strong{
     text-align: right;
+    margin-left: 3rem;
 }
     
 .allcontainer{
@@ -56,13 +64,33 @@
     font-family: Arial, "Arial Unicode MS", Helvetica, "DejaVu Sans", "Lucida Sans Unicode", sans-serif;
     color: #1A1A1A;
     text-transform: none;
-    font-weight: bold;
-    font-size: 21px;
+    font-weight: 800;
+    font-size: 1rem;
     line-height: 24px;
     letter-spacing: 0.5px;
     margin: 0;    
 }
     
+.loadingitemlayout{
+    display:flex;
+    justify-content: center;
+    align-content: center;
+    text-align: center;
+}
+
+.cartempty{
+    justify-content: center;
+    align-content: center;
+    text-align: center;
+    margin-top: 2rem;
+    height: auto;    
+}
+
+.check{
+    margin-top: 1rem;
+    justify-content: center;
+    align-content: center;
+}
 
 
 

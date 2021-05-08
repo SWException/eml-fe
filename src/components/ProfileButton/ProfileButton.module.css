@@ -7,7 +7,7 @@
 
 .profile:hover {
     color: var(--color-dark);
-    background-color: var(--color-light);
+    background-color: transparent;
 }
 
 .profile:active {
