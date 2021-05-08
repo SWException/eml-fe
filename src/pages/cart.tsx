@@ -96,6 +96,7 @@ const CartUser: React.FC = () => {
                                                 <CardBody>
                                                     <CardTitle className={styles.cardtitle}>Total Cart</CardTitle>
                                                     <CardText>
+                                                        <div className={styles.user}>
                                                             <span>Total</span>   
                                                             <strong  className={styles.strong}>{" €"}{cart?.total}</strong> 
                                                         </div>
