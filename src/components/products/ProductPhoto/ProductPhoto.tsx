@@ -4,7 +4,7 @@ import styles from './ProductPhoto.module.css';
 
 
 const ProductPhoto: React.FC = () => {
-    let settings = {
+    const settings = {
         dots: true,
         infinite: true,
         slidesToShow: 1,

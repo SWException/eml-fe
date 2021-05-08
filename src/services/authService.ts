@@ -134,7 +134,6 @@ Auth.currentAuthenticatedUser()
     .catch(err => { console.log(err) });
 
 
-
 const forgotPassword = async (email: string): Promise<NewPassword> => {
     Auth.forgotPassword(email)
         .then(data => {

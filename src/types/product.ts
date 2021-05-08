@@ -36,7 +36,6 @@ export type ProductData = {
 }
 
 
-
 export type ProductAdmin = {
     productId: string;
     name: string;

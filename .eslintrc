@@ -23,7 +23,7 @@
             //"@typescript-eslint/explicit-module-boundary-types": ["error"],
         //"@typescript-eslint/no-unused-variable": ["error"],
         "no-unused-vars": "error",
-        "no-multiple-empty-lines": ["warn", {"max": 3}],
+        "no-multiple-empty-lines": ["warn", {"max": 2}],
          //naming conventions
         "@typescript-eslint/naming-convention": [
             "error",

@@ -261,7 +261,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
     for(let i = 0; i < categories.length; i++){
         const category = categories[i];
         const productsCategoryList = await ProductService.fetchProducts({category: category.id});
-        productsCategoryList.forEach(product => {
+        productsCategoryList?.forEach(product => {
             paths.push({params: { id: product.id }});
         });
     }

@@ -7,7 +7,6 @@ import { GetStaticProps } from 'next';
 import { ProductService } from 'services';
 import { Products } from 'types';
 
-
 interface Props {
     products: Products;
 }

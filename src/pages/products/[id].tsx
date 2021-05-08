@@ -213,26 +213,17 @@ export const getStaticPaths: GetStaticPaths = async () => {
             paths.push({params: { id: product.id }});
         });
     }
-    return {paths, fallback: 'blocking',};
+    return {paths, fallback: 'blocking'};
 }
 
 export const getStaticProps: GetStaticProps = async ({params}) => {
     const id = params.id as string;
-
-    try {
-        const product: Product = await ProductService.fetchProduct(id);
-        console.log(product)
-        return {
-            props: { product },
-            revalidate: 30,
-        };
-    }
-    catch (error) {
-        return {
-            props: { product: null },
-            revalidate: 30,
-        };
-    }
+    const product: Product = await ProductService.fetchProduct(id).catch(() => null);
+    console.log(product)
+    return {
+        props: { product },
+        revalidate: 30,
+    };
 };
 
 export default Detail;

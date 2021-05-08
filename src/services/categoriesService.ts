@@ -63,7 +63,6 @@ const createCategories = async (name: string): Promise<boolean> => {
 };
 
 
-
 const modifyCategory = async (id: string, category: EditCategory): Promise<boolean> => {
     const token = sessionService.getCookie('token');
     const requestOptions = {

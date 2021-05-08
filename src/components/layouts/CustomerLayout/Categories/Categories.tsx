@@ -11,10 +11,10 @@ const CategoriesToShow: React.FC = () => {
     const [categories, setCategories] = useState<Category[]>()
 
     useEffect(() => {
-        getAllCategories()
+        getAllCategories();
     }, [])
 
-    const getAllCategories = async () => {
+    const getAllCategories = async (): Promise<void> => {
         try {
             const categories = await CategoriesService.fetchAllCategories();
             setCategories(categories);

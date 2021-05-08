@@ -59,73 +59,73 @@ const CartUser: React.FC = () => {
 
     return (
         <CustomerLayout header footer>
-                    {sessionService.isAuth()? (
+            {sessionService.isAuth()? (
+                <div>
+                    {loading ? (
+                        <div className={styles.loadingitemlayout}>
+                            <Spinner style={{ width: '3rem', height: '3rem' }} />
+                        </div>
+                    ) : (
                         <div>
-                            {loading ? (
-                                <div className={styles.loadingitemlayout}>
-                                    <Spinner style={{ width: '3rem', height: '3rem' }} />
-                                </div>
-                            ) : (
-                                <div>
-                                    {cart?.products.length != 0 ? (
-                                        <div className={styles.gridcontainer}>
-                                        <div className={styles.products}>
-                                            <div className={styles.titlebox}>
-                                                <div className={styles.title}>
-                                                    <h2>Cart</h2>
-                                                </div>
-                                            </div>
-                                            <div>
-                                                {cart ? (
-                                                    cart.products.map((product: ProductCart) => (
-                                                        <ProductCard
-                                                            product={product}
-                                                            loadCart={() => { reloadCart() }}
-                                                        />
-                                                    ))
-                                                ) : (
-                                                    <div/>
-                                                )}
-                                                <div>
-                                                    <Button color="primary" onClick={removeAllCart} size="lg">Remove all</Button>
-                                                </div>
+                            {cart?.products.length != 0 ? (
+                                <div className={styles.gridcontainer}>
+                                    <div className={styles.products}>
+                                        <div className={styles.titlebox}>
+                                            <div className={styles.title}>
+                                                <h2>Cart</h2>
                                             </div>
                                         </div>
-                                        <div className={styles.total}>
-                                            <Card width="20rem">
-                                                <CardBody>
-                                                    <CardTitle className={styles.cardtitle}>Total Cart</CardTitle>
-                                                    <CardText>
-                                                        <div className={styles.user}>
-                                                            <span>Total</span>   
-                                                            <strong  className={styles.strong}>{" €"}{cart?.total}</strong> 
-                                                        </div>
-                                                        <div className={styles.user}>
-                                                            <span>Taxes</span>
-                                                            <strong className={styles.strong}>{"€"}{cart?.tax}</strong>
-                                                        </div>
-                                                        <div>
-                                                            <Button color="primary" size="lg" className={styles.check} onClick={() => { onSubmit() }}>Checkout</Button>
-                                                        </div>    
-                                                    </CardText>
-                                                </CardBody>
-                                            </Card>
-                                         </div>
-                                    </div>
-                                    ):(
                                         <div>
-                                        {displayMessage()}
+                                            {cart ? (
+                                                cart.products.map((product: ProductCart) => (
+                                                    <ProductCard
+                                                        product={product}
+                                                        loadCart={() => { reloadCart() }}
+                                                    />
+                                                ))
+                                            ) : (
+                                                <div/>
+                                            )}
+                                            <div>
+                                                <Button color="primary" onClick={removeAllCart} size="lg">Remove all</Button>
+                                            </div>
                                         </div>
-                                    )}
+                                    </div>
+                                    <div className={styles.total}>
+                                        <Card width="20rem">
+                                            <CardBody>
+                                                <CardTitle className={styles.cardtitle}>Total Cart</CardTitle>
+                                                <CardText>
+                                                    <div className={styles.user}>
+                                                        <span>Total</span>   
+                                                        <strong  className={styles.strong}>{" €"}{cart?.total}</strong> 
+                                                    </div>
+                                                    <div className={styles.user}>
+                                                        <span>Taxes</span>
+                                                        <strong className={styles.strong}>{"€"}{cart?.tax}</strong>
+                                                    </div>
+                                                    <div>
+                                                        <Button color="primary" size="lg" className={styles.check} onClick={() => { onSubmit() }}>Checkout</Button>
+                                                    </div>    
+                                                </CardText>
+                                            </CardBody>
+                                        </Card>
+                                    </div>
                                 </div>
+                            ):(
+                                <div>
+                                    {displayMessage()}
+                                </div>
+                            )}
+                        </div>
                                     
-                                )}
-                        </div>
-                    ):(
-                        <div>
-                            {displayMessage()}
-                        </div>
                     )}
+                </div>
+            ):(
+                <div>
+                    {displayMessage()}
+                </div>
+            )}
         </CustomerLayout>
     );
 };
