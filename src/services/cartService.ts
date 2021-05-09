@@ -1,8 +1,8 @@
 import { Cart } from 'types';
-import { sessionService } from 'services/sessionService';
+import { AuthService } from 'services';
 
 const fetchCart = async (): Promise<Cart> => {
-    const token = sessionService.getCookie('token');
+    const token = await AuthService.getTokenJwt();
     const requestOptions = {
         method: 'GET',
         headers: {
@@ -22,9 +22,8 @@ const fetchCart = async (): Promise<Cart> => {
     return cart;
 };
 
-
 const addToCart = async (id: string, quantity: number): Promise<boolean> => {
-    const token = sessionService.getCookie('token');
+    const token = await AuthService.getTokenJwt();
     const requestOptions = {
         method: 'POST',
         headers: {
@@ -45,7 +44,7 @@ const addToCart = async (id: string, quantity: number): Promise<boolean> => {
 };
 
 const removeProductFromCart = async (id: string): Promise<boolean> => {
-    const token = sessionService.getCookie('token');
+    const token = await AuthService.getTokenJwt();
     const requestOptions = {
         method: 'DELETE',
         headers: {
@@ -64,7 +63,7 @@ const removeProductFromCart = async (id: string): Promise<boolean> => {
 };
 
 const removeCart = async (): Promise<boolean> => {
-    const token = sessionService.getCookie('token');
+    const token = await AuthService.getTokenJwt();
     const requestOptions = {
         method: 'DELETE',
         headers: {
@@ -83,14 +82,14 @@ const removeCart = async (): Promise<boolean> => {
 };
 
 const updateCart = async ( id: string,quantity: number): Promise<boolean> => {
-    const token = sessionService.getCookie('token');
+    const token = await AuthService.getTokenJwt();
     const requestOptions = {
         method: 'PATCH',
         headers: {
             'Authorization': token,
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ id, quantity})
+        body: JSON.stringify({ id, quantity })
     };
     const res = await fetch(`${process.env.AWS_ENDPOINT}/cart/product/${id}`, requestOptions)
         .catch(() => { throw new Error('Error on removing from cart') });

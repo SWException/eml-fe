@@ -1,8 +1,8 @@
 import { PaymentIntent } from 'types';
-import { sessionService } from './sessionService';
+import { AuthService } from 'services';
 
 const fetchCheckout = async (shippingAddress: string, billingAddress: string): Promise<PaymentIntent> => {
-    const token = sessionService.getCookie('token');
+    const token = await AuthService.getTokenJwt();
     const requestOptions = {
         method: 'POST',
         headers: {
@@ -24,7 +24,7 @@ const fetchCheckout = async (shippingAddress: string, billingAddress: string): P
 };
 
 const confirmCheckout = async (id: string): Promise<boolean> => {
-    const token = sessionService.getCookie('token');
+    const token = await AuthService.getTokenJwt();
 
     const requestOptions = {
         method: 'PATCH',
@@ -44,7 +44,7 @@ const confirmCheckout = async (id: string): Promise<boolean> => {
 };
 
 const deleteCheckout = async (id: string): Promise<boolean> => {
-    const token = sessionService.getCookie('token');
+    const token = await AuthService.getTokenJwt();
     const requestOptions = {
         method: 'DELETE',
         headers: {

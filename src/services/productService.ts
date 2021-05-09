@@ -1,8 +1,8 @@
 import { InsertProduct, EditProduct, SearchRules, Products, Product } from 'types';
-import { sessionService } from './sessionService';
+import { AuthService } from 'services';
 
 const fetchProducts = async (params?: SearchRules): Promise<Products> => {
-    const token = sessionService.getCookie('token');
+    const token = await AuthService.getTokenJwt();
     const requestOptions = {
         method: 'GET',
         headers: {
@@ -32,7 +32,7 @@ const fetchProducts = async (params?: SearchRules): Promise<Products> => {
 };
 
 const addProduct = async (product: InsertProduct): Promise<boolean> => {
-    const token = sessionService.getCookie('token')
+    const token = await AuthService.getTokenJwt();
     const requestOptions = {
         method: 'POST',
         headers: {
@@ -53,7 +53,7 @@ const addProduct = async (product: InsertProduct): Promise<boolean> => {
 };
 
 export const fetchProduct = async (id: string): Promise<Product> => {
-    const token = sessionService.getCookie('token');
+    const token = await AuthService.getTokenJwt();
     const requestOptions = {
         method: 'GET',
         headers: {
@@ -74,7 +74,7 @@ export const fetchProduct = async (id: string): Promise<Product> => {
 };
 
 export const modifyProduct = async (id: string, product: EditProduct): Promise<boolean> => {
-    const token = sessionService.getCookie('token');
+    const token = await AuthService.getTokenJwt();
     const requestOptions = {
         method: 'PATCH',
         headers: {
@@ -96,7 +96,7 @@ export const modifyProduct = async (id: string, product: EditProduct): Promise<b
 };
 
 export const deleteProduct = async (id: string): Promise<boolean> => {
-    const token = sessionService.getCookie('token');
+    const token = await AuthService.getTokenJwt();
 
     const requestOptions = {
         method: 'DELETE',

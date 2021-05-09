@@ -1,5 +1,5 @@
 import { EditTax, InsertTax, Taxes } from 'types';
-import { sessionService } from './sessionService';
+import { AuthService } from 'services';
 
 const fetchTaxes = async (): Promise<Taxes> => {
     const requestOptions = {
@@ -43,7 +43,7 @@ const fetchTaxesByDescription = async (description: string): Promise<Taxes> => {
 
 
 const createTax = async (tax: InsertTax): Promise<boolean> => {
-    const token = sessionService.getCookie('token');
+    const token = await AuthService.getTokenJwt();
     const requestOptions = {
         method: 'POST',
         headers: {
@@ -65,7 +65,7 @@ const createTax = async (tax: InsertTax): Promise<boolean> => {
 };
 
 const deleteTax = async (id: string): Promise<boolean> => {
-    const token = sessionService.getCookie('token');
+    const token = await AuthService.getTokenJwt();
     const requestOptions = {
         method: 'DELETE',
         headers: {
@@ -86,7 +86,7 @@ const deleteTax = async (id: string): Promise<boolean> => {
 };
 
 const modifyTax = async (id: string, tax: EditTax): Promise<boolean> => {
-    const token = sessionService.getCookie('token');
+    const token = await AuthService.getTokenJwt();
     const requestOptions = {
         method: 'PATCH',
         headers: {

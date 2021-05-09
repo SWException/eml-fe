@@ -7,7 +7,7 @@ import {
 } from 'reactstrap';
 import { CustomerLayout } from 'components/layouts/CustomerLayout';
 import styles from 'styles/Profile.module.css';
-import { AddressesService, sessionService } from 'services';
+import { AddressesService, AuthService, sessionService } from 'services';
 import { Address, Addresses, User } from 'types'
 Amplify.configure(awsconfig);
 
@@ -131,20 +131,31 @@ const Profile: React.FC = () => {
     const changePassword = async (): Promise<void> => {
         console.log(newPassword, confirmNewPassword, oldPassword);
 
-        /*try {
-            await AuthService.changePassword(oldPassword, newPassword)
+        try {
+            if(newPassword == confirmNewPassword)
+                await AuthService.changePassword(oldPassword, newPassword);
+            else
+                console.error("Passwords don't match");
         }
         catch (err) {
             console.log(err)
-        }*/
+        }
     }
 
     const changeEmail = async (): Promise<void> => {
         console.log(newEmail, confirmNewEmail);
+        try {
+            if(newEmail == confirmNewEmail)
+                await AuthService.changeEmail(newEmail);
+            else
+                console.error("Emails don't match");
+        }
+        catch (err) {
+            console.log(err)
+        }
     }
 
     const renderSelectedAddress = (): JSX.Element => {
-
         if (selectedAddress) {
             return (
                 <p>

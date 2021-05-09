@@ -1,5 +1,5 @@
 import { Categories, EditCategory } from 'types';
-import { sessionService } from './sessionService';
+import { AuthService } from 'services';
 
 const fetchAllCategories = async (): Promise<Categories> => {
     const requestOptions = {
@@ -42,7 +42,7 @@ const fetchCategoriesByName = async (name: string): Promise<Categories> => {
 };
 
 const createCategories = async (name: string): Promise<boolean> => {
-    const token = sessionService.getCookie('token');
+    const token = await AuthService.getTokenJwt();
     const requestOptions = {
         method: 'POST',
         headers: {
@@ -64,7 +64,7 @@ const createCategories = async (name: string): Promise<boolean> => {
 
 
 const modifyCategory = async (id: string, category: EditCategory): Promise<boolean> => {
-    const token = sessionService.getCookie('token');
+    const token = await AuthService.getTokenJwt();
     const requestOptions = {
         method: 'PATCH',
         headers: {
@@ -85,7 +85,7 @@ const modifyCategory = async (id: string, category: EditCategory): Promise<boole
 }
 
 const deleteCategory = async (id: string): Promise<boolean> => {
-    const token = sessionService.getCookie('token')
+    const token = await AuthService.getTokenJwt();
     const requestOptions = {
         method: 'DELETE',
         headers: {

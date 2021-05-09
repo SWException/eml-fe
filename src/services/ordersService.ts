@@ -1,8 +1,8 @@
 import { Orders, Order } from 'types';
-import { sessionService } from './sessionService';
+import { AuthService } from 'services';
 
 const fetchOrders = async (status?: string): Promise<Orders> => {
-    const token = sessionService.getCookie('token');
+    const token = await AuthService.getTokenJwt();
     const requestOptions = {
         method: 'GET',
         headers: {
@@ -23,7 +23,7 @@ const fetchOrders = async (status?: string): Promise<Orders> => {
 };
 
 export const fetchOrder = async (id: string): Promise<Order> => {
-    const token = sessionService.getCookie('token');
+    const token = await AuthService.getTokenJwt();
     const requestOptions = {
         method: 'GET',
         headers: {
@@ -45,7 +45,7 @@ export const fetchOrder = async (id: string): Promise<Order> => {
 
 //UNUSED
 export const updateOrder = async (id: string): Promise<boolean> => {
-    const token = sessionService.getCookie('token');
+    const token = await AuthService.getTokenJwt();
 
     const requestOptions = {
         method: 'PATCH',
@@ -67,7 +67,7 @@ export const updateOrder = async (id: string): Promise<boolean> => {
 
 //UNUSED
 export const refundOrder = async (id: string): Promise<boolean> => {
-    const token = sessionService.getCookie('token');
+    const token = await AuthService.getTokenJwt();
     const requestOptions = {
         method: 'PATCH',
         headers: {

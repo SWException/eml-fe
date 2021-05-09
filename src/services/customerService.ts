@@ -1,8 +1,8 @@
-import { sessionService } from './sessionService';
+import { AuthService } from 'services';
 import { Customers } from 'types/customer';
 
 const fetchAllCustomers = async (): Promise<Customers> => {
-    const token = sessionService.getCookie('token');
+    const token = await AuthService.getTokenJwt();
     const requestOptions = {
         method: 'GET',
         headers: {
@@ -24,7 +24,7 @@ const fetchAllCustomers = async (): Promise<Customers> => {
 };
 
 const fetchCustomersByMail = async (mail: string): Promise<Customers> => {
-    const token = sessionService.getCookie('token');
+    const token = await AuthService.getTokenJwt();
 
     const requestOptions = {
         method: 'GET',

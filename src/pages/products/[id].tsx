@@ -25,7 +25,7 @@ const Detail: React.FC<Props> = (props) => {
 
     useEffect(() => {
         addImagesToCarousel();
-        product.stock > 0 ? setQuantity(1) :  setQuantity(0);
+        product?.stock > 0 ? setQuantity(1) :  setQuantity(0);
     }, [])
 
     const product = props.product;
@@ -172,9 +172,9 @@ const Detail: React.FC<Props> = (props) => {
                     </Carousel>
                 </div>
                 <div className={styles.productInfo}>
-                    <div className={styles.productName}>{product.name}</div>
-                    <div className={styles.productPrice}>Price: € {product.price}</div>
-                    <div className={styles.productDesc}>{product.description}</div>
+                    <div className={styles.productName}>{product?.name}</div>
+                    <div className={styles.productPrice}>Price: € {product?.price}</div>
+                    <div className={styles.productDesc}>{product?.description}</div>
                     <div className={styles.productAction}>
                         <div>
                             <button className={styles.plus} onClick={() => { modifyQuantityByStep(false) }} type="button" name="button">
@@ -183,7 +183,7 @@ const Detail: React.FC<Props> = (props) => {
                             <input type="number" name="name" value={quantity}
                                 className={styles.input}
                                 onChange={(e) => modifyQuantity(e)}
-                                max={product.stock}>
+                                max={product?.stock}>
                             </input>
                             <button className={styles.minus} onClick={() => { modifyQuantityByStep(true) }} type="button" name="button">
                                 <img src="plus.png" style={{width:25, height: 25}}/>
@@ -209,8 +209,8 @@ export const getStaticPaths: GetStaticPaths = async () => {
     for(let i = 0; i < categories.length; i++){
         const category = categories[i];
         const productsCategoryList = await ProductService.fetchProducts({category: category.id});
-        productsCategoryList.forEach(product => {
-            paths.push({params: { id: product.id }});
+        productsCategoryList?.forEach(product => {
+            paths.push({params: { id: product?.id }});
         });
     }
     return {paths, fallback: 'blocking'};

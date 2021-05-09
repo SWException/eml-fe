@@ -46,9 +46,9 @@ const SignUp: React.FC = () => {
         }
     }
 
-    async function signUp() {
-        if (!password || !email || !name || !family) {
-            alert('Email, Password, Name and Surname are required fields');
+    async function signUp () {
+        if (!password || !email || !name || !family || (password !== confirm_password) || (email !== confirm_email)) {
+            alert('Check your data and remember that Email, Password, Name and Surname are required fields.');
         }
         else {
             setLoading(true);
@@ -59,12 +59,14 @@ const SignUp: React.FC = () => {
                     setError('');
                     displayInfo();
                     setIsCode(true);
-                } else {
-                    setError('Password did not conform with policy: Password not long enough')
+                }
+                else {
+                    setError('Error in signUp. Check the fields and retry.')
                     setMessage('');
                     displayErr();
                 }
-            } catch (e) {
+            }
+            catch (e) {
                 console.log(e)
                 setError('Something went wrong! Retry!')
                 setMessage('');
@@ -74,13 +76,14 @@ const SignUp: React.FC = () => {
         setLoading(false)
     }
 
-    async function confirmSignUp() {
+    async function confirmSignUp () {
         try {
             setLoading(true);
             await AuthService.confirmCode(emailRec, code);
             setLoading(false);
             router.push('/');
-        } catch (error) {
+        }
+        catch (error) {
             console.log('error confirming sign up', error);
             setError('Confirmation error! Wrong code, try again or click "Resend Code"');
             setMessage('');
@@ -88,14 +91,15 @@ const SignUp: React.FC = () => {
         }
     }
 
-    async function resendConfirmationCode() {
+    async function resendConfirmationCode (): Promise<void> {
         try {
             await Auth.resendSignUp(emailRec);
             console.log('code resent successfully');
             setMessage('Code returned successfully. Enter and confirm your registration!');
             setError('');
             displayInfo();
-        } catch (error) {
+        }
+        catch (error) {
             console.log('error resending code: ', error);
             setError('Connection error, try again!');
             setMessage('');

@@ -1,8 +1,8 @@
 import { Address, Addresses, EditAddress, InsertAddress } from 'types'
-import { sessionService } from './sessionService';
+import { AuthService } from 'services';
 
 const fetchAddresses = async (): Promise<Addresses> => {
-    const token = sessionService.getCookie('token');
+    const token = await AuthService.getTokenJwt();
 
     const requestOptions = {
         method: 'GET',
@@ -24,7 +24,7 @@ const fetchAddresses = async (): Promise<Addresses> => {
 };
 
 const createNewAddress = async (address: InsertAddress): Promise<string> => {
-    const token = sessionService.getCookie('token');
+    const token = await AuthService.getTokenJwt();
     const requestOptions = {
         method: 'POST',
         headers: {
@@ -45,7 +45,7 @@ const createNewAddress = async (address: InsertAddress): Promise<string> => {
 };
 
 const deleteAddress = async (id: string): Promise<boolean> => {
-    const token = sessionService.getCookie('token');
+    const token = await AuthService.getTokenJwt();
     const requestOptions = {
         method: 'DELETE',
         headers: {
@@ -66,7 +66,7 @@ const deleteAddress = async (id: string): Promise<boolean> => {
 
 //UNUSED
 const fetchSingleAddress = async (id: string): Promise<Address> => {
-    const token = sessionService.getCookie('token');
+    const token = await AuthService.getTokenJwt();
     const requestOptions = {
         method: 'GET',
         headers: {
@@ -88,7 +88,7 @@ const fetchSingleAddress = async (id: string): Promise<Address> => {
 
 //UNUSED
 const updateAddress = async (id: string, address: EditAddress): Promise<boolean> => {
-    const token = sessionService.getCookie('token');
+    const token = await AuthService.getTokenJwt();
     const requestOptions = {
         method: 'PATCH',
         headers: {

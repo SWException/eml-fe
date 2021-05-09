@@ -1,6 +1,9 @@
 import { User } from 'types/user';
 import awsconfig from 'aws-exports';
 import Amplify, { Auth } from 'aws-amplify';
+import { CognitoUser, CognitoUserSession } from 'amazon-cognito-identity-js';
+import cookie from 'js-cookie';
+
 Amplify.configure(awsconfig);
 
 interface UserData {
@@ -108,25 +111,6 @@ const confirmCode = async (email: string, code: string): Promise<NewUser> => {
     return;
 }
 
-export const changePassword = async (oldPass: string, newPass: string): Promise<UserData> => {
-    try {
-        Auth.currentAuthenticatedUser()
-            .then(user => {
-                console.log(user);
-                return Auth.changePassword(user, oldPass, newPass);
-            })
-            .then(data => console.log('success' + data))
-        /*const userData: UserData = {
-          user: data.data.user,
-          token: data.data.token,
-        };*/
-        return;
-    }
-    catch (error) {
-        console.log(error)
-    }
-};
-
 Auth.currentAuthenticatedUser()
     .then(user => {
         console.log('User authenticated is ' + user);
@@ -151,6 +135,7 @@ const isNewPassword = async (email: string, code: string, password: string): Pro
 
     return;
 }
+
 /*
 export const updateProfile = async (
   userId: string,
@@ -172,13 +157,56 @@ export const updateProfile = async (
   }
 };*/
 
+
+const getTokenJwt = async (): Promise<string> => {
+    const userSession: CognitoUserSession = await Auth.currentSession().catch(() => null);
+    const token = userSession?.getAccessToken().getJwtToken();
+    if (process.browser && token) {
+        cookie.set("token", token, {
+            expires: 1
+        });
+    }
+    else {
+        cookie.remove("token", {
+            expires: 1
+        });
+    }
+    refreshToken();
+    return token;
+}
+
+export const refreshToken = async (): Promise<void> => {
+    const user: CognitoUser = await Auth.currentAuthenticatedUser().catch(() => null);
+    
+    user?.refreshSession(user.getSignInUserSession().getRefreshToken(), async (err, res) => {
+        if(res)
+            console.log("Token aggiornato");
+    });
+}
+
+const changePassword = async (oldPassword: string, newPassword: string): Promise<boolean> => {
+    return await Auth.currentAuthenticatedUser() // prendo l'attuale utente autenticato
+        .then((user) => Auth.changePassword(user, oldPassword, newPassword)) // provo a cambiare la password
+        .then(() => true) // password cambiata
+        .catch((err) => { console.error(err.message); return false}); 
+};
+
+const changeEmail = async (newEmail: string): Promise<void> => {
+    const user = await Auth.currentAuthenticatedUser();
+    await Auth.updateUserAttributes(user, {
+        'email': newEmail
+    });
+    refreshToken();
+}
+
 export const AuthService = {
     //getMe,
+    getTokenJwt,
     login,
     signUp,
     confirmCode,
     changePassword,
     forgotPassword,
-    isNewPassword
-    //updateProfile,
+    isNewPassword,
+    changeEmail,
 };
