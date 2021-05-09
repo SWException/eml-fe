@@ -6,3 +6,5 @@ public/
 .serverless/
 .next/
 .serverless_nextjs
+*.config.*
+*.setup.*

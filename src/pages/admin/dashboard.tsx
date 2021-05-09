@@ -23,7 +23,6 @@ const Dashboard: React.FC = () => {
         router.push('/admin/customerManagement');
     }
 
-
     return (
         <AdminLayout header>
             <table className={styles.table}>
