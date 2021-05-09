@@ -6,6 +6,17 @@ import cookie from 'js-cookie';
 
 Amplify.configure(awsconfig);
 
+// Aggiorno la sessione e rinnovo il token ogni volta che carico questo file
+Auth.currentAuthenticatedUser()
+    .then((user: CognitoUser)=>{
+        user.refreshSession(user.getSignInUserSession().getRefreshToken(), () => {
+            console.log("Session updated");
+        });
+    })
+    .catch(() => {
+        console.log("User not authenticated");
+    })
+
 interface UserData {
     user: User;
     token: string;
@@ -34,6 +45,7 @@ const login = async (email: string, password: string): Promise<UserData> => {
             user: {
                 email: userObject.attributes.email,
                 name: userObject.attributes.name,
+                surname: userObject.attributes.family_name,
                 imageURL: '',
                 carts: [],
                 role: 'admin' //Fix with group
@@ -99,7 +111,7 @@ const signUp = async (email: string, password: string, name: string, family_name
 };
 
 const confirmCode = async (email: string, code: string): Promise<NewUser> => {
-    //Sistemare codice
+    // Sistemare codice
     try {
         await Auth.confirmSignUp(email, code);
         console.log("Codice confermato");
@@ -107,16 +119,9 @@ const confirmCode = async (email: string, code: string): Promise<NewUser> => {
     catch (error) {
         console.log('error confirming sign up', error);
     }
-    //Rimandare a Login (da Context?)
+    // Rimandare a Login (da Context?)
     return;
 }
-
-Auth.currentAuthenticatedUser()
-    .then(user => {
-        console.log('User authenticated is ' + user);
-    })
-    .catch(err => { console.log(err) });
-
 
 const forgotPassword = async (email: string): Promise<NewPassword> => {
     Auth.forgotPassword(email)
@@ -132,31 +137,8 @@ const isNewPassword = async (email: string, code: string, password: string): Pro
     Auth.forgotPasswordSubmit(email, code, password)
         .then(data => console.log("recuperato " + data))
         .catch(err => console.log(err));
-
     return;
 }
-
-/*
-export const updateProfile = async (
-  userId: string,
-  userFields: UserFields
-): Promise<{ user: User }> => {
-  try {
-    const url = `/users/${userId}`;
-    const { data } = await apiClient.patch(url, userFields, {
-      params: { id: userId },
-    });
-
-    const userData: { user: User } = {
-      user: data.data.user,
-    };
-
-    return userData;
-  } catch (error) {
-    throw new Error(catchError(error));
-  }
-};*/
-
 
 const getTokenJwt = async (): Promise<string> => {
     const userSession: CognitoUserSession = await Auth.currentSession().catch(() => null);
@@ -171,11 +153,10 @@ const getTokenJwt = async (): Promise<string> => {
             expires: 1
         });
     }
-    refreshToken();
     return token;
 }
 
-export const refreshToken = async (): Promise<void> => {
+const refreshToken = async (): Promise<void> => {
     const user: CognitoUser = await Auth.currentAuthenticatedUser().catch(() => null);
     
     user?.refreshSession(user.getSignInUserSession().getRefreshToken(), async (err, res) => {
@@ -192,16 +173,153 @@ const changePassword = async (oldPassword: string, newPassword: string): Promise
 };
 
 const changeEmail = async (newEmail: string): Promise<void> => {
-    const user = await Auth.currentAuthenticatedUser();
+    const user: CognitoUser = await Auth.currentAuthenticatedUser();
     await Auth.updateUserAttributes(user, {
         'email': newEmail
     });
-    refreshToken();
+    sendEmailVerificationCode();
+}
+
+const sendEmailVerificationCode = async (): Promise<void> => {
+    try {
+        await Auth.verifyCurrentUserAttribute("email");
+        console.log('code resent successfully');
+    }
+    catch (err) {
+        console.log('error resending code: ', err);
+    }
+}
+
+const verifyEmail = async (code: string): Promise<NewUser> => {
+    // Sistemare codice
+    try {
+        await Auth.verifyCurrentUserAttributeSubmit("email", code);
+        console.log("Codice confermato");
+    }
+    catch (error) {
+        console.log('error confirming sign up', error);
+    }
+    // Rimandare a Login (da Context?)
+    return;
+}
+
+const changeAccountAttributes = async (name: string, surname: string): Promise<void> => {
+    const user: CognitoUser = await Auth.currentAuthenticatedUser();
+    await Auth.updateUserAttributes(user, {
+        'name': name,
+        'family_name': surname,
+    });
+}
+
+const getCurrentUserData = async (): Promise<User> => {
+    const group = await Auth.currentSession().then(session => {
+        console.log(session.getAccessToken().decodePayload());
+        return session.getAccessToken().decodePayload()["cognito:groups"][0];
+    });
+    return await Auth.currentUserInfo()
+        .then(async (data) => {
+            return {
+                username: data.username,
+                email: data.attributes.email,
+                name: data.attributes.name,
+                surname: data.attributes.family_name,
+                email_verified: data.attributes.email_verified,
+                role: group
+            }
+        })
+        .catch(() => null);
+}
+
+const isAuthenticated = async (): Promise<boolean> => {
+    return await Auth.currentAuthenticatedUser()
+        .then((user: CognitoUser) => {
+            return user.getSignInUserSession().isValid();
+        })
+        .catch(() => false);
+}
+
+const getDevicesList = (callback: (devices: any) => void): void => {
+    Auth.currentAuthenticatedUser()
+        .then((user: CognitoUser) => {
+            user.listDevices(
+                60, 
+                null, 
+                {
+                    onSuccess: (res: any) => {
+                        res=res.Devices;
+                        console.log(res);
+                        
+                        const devices = [];
+                        
+                        res?.forEach((device) => {
+                            const d = {
+                                key: device?.DeviceKey,
+                                create: device?.DeviceCreateDate,
+                                lastAuthenticatedDate: device?.DeviceLastAuthenticatedDate,
+                                lastModifiedDate: device?.DeviceLastModifiedDate,
+                            };
+                            device.DeviceAttributes?.forEach(element => {
+                                switch(element.Name){
+                                case "device_status":
+                                    d["status"]=element.Value;
+                                    break;
+                                case "device_name":
+                                    d["name"]=element.Value;
+                                    break;
+                                case "last_ip_used":
+                                    d["lastIp"]=element.Value;
+                                    break;
+                                default:
+                                    d[element.Name]=element.Value;
+                                }
+                            });
+                            devices.push(d);
+                        });
+                        callback(devices);
+                        console.log(devices);
+                    }, 
+                    onFailure: (e) => {
+                        console.log(e)
+                    }
+                }
+            );
+        });
+}
+
+const forgetSpecificDevice = (key: string, callback: () => void): void => {
+    Auth.currentAuthenticatedUser()
+        .then((user: CognitoUser) => {
+            user.forgetSpecificDevice(
+                key,
+                {
+                    onSuccess: (res) => {console.log(res); callback();},
+                    onFailure: (e) => {console.log(e)}
+                });
+        });
+}
+
+const forgetAllDevices = (callback: () => void): void => {
+    getDevicesList((devices)=>{
+        devices.forEach(device => {
+            forgetSpecificDevice(device.key, callback);
+        });
+    });
+}
+
+const logoutFromAllDevices = (callback: () => void): void =>{
+    Auth.currentAuthenticatedUser()
+        .then((user: CognitoUser) => {
+            user.globalSignOut(
+                {
+                    onSuccess: (res) => {console.log(res); callback();},
+                    onFailure: (e) => {console.log(e)}
+                });
+        });
 }
 
 export const AuthService = {
-    //getMe,
     getTokenJwt,
+    refreshToken,
     login,
     signUp,
     confirmCode,
@@ -209,4 +327,13 @@ export const AuthService = {
     forgotPassword,
     isNewPassword,
     changeEmail,
+    getCurrentUserData,
+    isAuthenticated,
+    getDevicesList,
+    forgetSpecificDevice,
+    logoutFromAllDevices,
+    forgetAllDevices,
+    changeAccountAttributes,
+    sendEmailVerificationCode,
+    verifyEmail
 };

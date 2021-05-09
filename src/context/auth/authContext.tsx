@@ -5,20 +5,11 @@ import { authReducer, LOGOUT_USER, SET_CURRENT_USER } from 'context/auth';
 import { Auth } from 'aws-amplify';
 import { AuthService, sessionService } from 'services';
 
-interface UserDetails {
-    email: string;
-    password: string;
-    name: string;
-}
-
 interface UserData {
     user: User;
     token: string;
 }
 
-interface AdminData {
-    admin: boolean
-}
 
 /*
 TODO: 

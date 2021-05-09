@@ -1,5 +1,3 @@
-import Amplify from 'aws-amplify';
-import awsconfig from 'aws-exports';
 import React, { useEffect, useState, ChangeEvent, Dispatch } from 'react';
 import {
     Button, Form, FormGroup, Label, Input, Card, CardText, CardBody,
@@ -7,19 +5,28 @@ import {
 } from 'reactstrap';
 import { CustomerLayout } from 'components/layouts/CustomerLayout';
 import styles from 'styles/Profile.module.css';
-import { AddressesService, AuthService, sessionService } from 'services';
+import { AddressesService, AuthService } from 'services';
 import { Address, Addresses, User } from 'types'
-Amplify.configure(awsconfig);
+import { useRouter } from 'next/router';
 
 const Profile: React.FC = () => {
+    const router = useRouter();
 
     const [oldPassword, setOldPassword]: [string, Dispatch<string>] = useState<string>();
     const [newPassword, setNewPassword]: [string, Dispatch<string>] = useState<string>();
+    const [newName, setNewName]: [string, Dispatch<string>] = useState<string>();
+    const [newSurname, setNewSurname]: [string, Dispatch<string>] = useState<string>();
     const [confirmNewPassword, setConfirmNewPassword]: [string, Dispatch<string>] = useState<string>();
     const [newEmail, setNewEmail]: [string, Dispatch<string>] = useState<string>();
     const [confirmNewEmail, setConfirmNewEmail]: [string, Dispatch<string>] = useState<string>();
-    const [currentEmail, setCurrentEmail]: [string, Dispatch<string>] = useState<string>();
+    const [emailVerificationCode, setEmailVerificationCode]: [string, Dispatch<string>] = useState<string>();
+    const [userEmail, setUserEmail]: [string, Dispatch<string>] = useState<string>();
+    const [userEmailVerified, setUserEmailVerified]: [boolean, Dispatch<boolean>] = useState<boolean>();
     const [userName, setUserName]: [string, Dispatch<string>] = useState<string>();
+    const [userSurname, setUserSurname]: [string, Dispatch<string>] = useState<string>();
+    const [userUsername, setUserUsername]: [string, Dispatch<string>] = useState<string>();
+    const [userRole, setUserRole]: [string, Dispatch<string>] = useState<string>();
+    const [userDevices, setUserDevices]: [Array<any>, Dispatch<Array<any>>] = useState<Array<any>>();
     const [newAddressValues, setNewAddressValues]: [Address, Dispatch<Address>] = useState<Address>();
     const [addresses, setAddresses]: [Addresses, Dispatch<Addresses>] = useState<Addresses>();
     const [selectedAddress, setSelectedAddress]: [Address, Dispatch<Address>] = useState<Address>();
@@ -27,21 +34,35 @@ const Profile: React.FC = () => {
     const [isOpenAddress, setIsOpenAddress] = useState(false);
     const [isOpenPassword, setIsOpenPassword] = useState(false);
     const [isOpenEmail, setIsOpenEmail] = useState(false);
+    const [isOpenDevices, setIsOpenDevices] = useState(false);
     const [isOpenDelete, setIsOpenDelete] = useState(false);
+    const [isOpenProfileInfo, setIsOpenProfileInfo] = useState(false);
 
     const toggleAddress = () => setIsOpenAddress(!isOpenAddress);
     const togglePassword = () => setIsOpenPassword(!isOpenPassword);
     const toggleEmail = () => setIsOpenEmail(!isOpenEmail);
+    const toggleProfileInfo = () => setIsOpenProfileInfo(!isOpenProfileInfo);
+    const toggleDevices = () => setIsOpenDevices(!isOpenDevices);
     const toggleDelete = () => setIsOpenDelete(!isOpenDelete);
 
     useEffect(() => {
-        if (sessionService.isAuth()) {
-            const user: User = sessionService.getLocalStorage()
-            setCurrentEmail(user.email);
-            setUserName(user.name);
-        }
+        setUserData();
         getAddresses();
-    }, [])
+    }, []);
+
+    const setUserData = async (): Promise<void> => {
+        const IS_AUTH = await AuthService.isAuthenticated();
+        if (IS_AUTH) {
+            const user: User = await AuthService.getCurrentUserData()
+            setUserEmail(user.email);
+            setUserName(user.name);
+            setUserSurname(user.surname);
+            setUserEmailVerified(user.email_verified);
+            setUserUsername(user.username);
+            setUserRole(user.role);
+            AuthService.getDevicesList(setUserDevices);
+        }
+    }
 
     const getAddresses = async (): Promise<void> => {
         try {
@@ -77,7 +98,6 @@ const Profile: React.FC = () => {
         setSelectedAddressId(e.target.value);
         getSelectedAddress(e.target.value);
     }
-
 
     const submitNewAddress = async (): Promise<void> => {
         await AddressesService.createNewAddress(newAddressValues)
@@ -128,6 +148,18 @@ const Profile: React.FC = () => {
         setConfirmNewEmail(e.target.value);
     }
 
+    const emailVerificationCodeField = (e: React.ChangeEvent<HTMLInputElement>): void => {
+        setEmailVerificationCode(e.target.value);
+    }
+
+    const newNameField = (e: React.ChangeEvent<HTMLInputElement>): void => {
+        setNewName(e.target.value);
+    }
+
+    const newSurnameField = (e: React.ChangeEvent<HTMLInputElement>): void => {
+        setNewSurname(e.target.value);
+    }
+
     const changePassword = async (): Promise<void> => {
         console.log(newPassword, confirmNewPassword, oldPassword);
 
@@ -145,14 +177,42 @@ const Profile: React.FC = () => {
     const changeEmail = async (): Promise<void> => {
         console.log(newEmail, confirmNewEmail);
         try {
-            if(newEmail == confirmNewEmail)
+            if(newEmail == confirmNewEmail){
                 await AuthService.changeEmail(newEmail);
+                await setUserData();
+            }
             else
                 console.error("Emails don't match");
         }
         catch (err) {
             console.log(err)
         }
+    }
+
+    const changeProfileInfo = async (): Promise<void> => {
+        console.log(newName, newSurname);
+        try {
+            await AuthService.changeAccountAttributes(newName, newSurname);
+            await setUserData();
+        }
+        catch (err) {
+            console.log(err)
+        }
+    }
+
+    const verifyEmail = async (): Promise<void> => {
+        console.log(emailVerificationCode);
+        try {
+            await AuthService.verifyEmail(emailVerificationCode);
+            await setUserData();
+        }
+        catch (err) {
+            console.log(err)
+        }
+    }
+
+    const deleteDevice = (deviceKey: string): void =>{
+        AuthService.forgetSpecificDevice(deviceKey, () => AuthService.getDevicesList(setUserDevices));
     }
 
     const renderSelectedAddress = (): JSX.Element => {
@@ -174,6 +234,7 @@ const Profile: React.FC = () => {
             );
         }
     }
+
 
     return (
         <CustomerLayout header footer>
@@ -267,7 +328,80 @@ const Profile: React.FC = () => {
                                                     <div>
                                                         <Button size="lg" onClick={() => { changeEmail() }}>Change Email</Button>
                                                     </div>
+                                                    {
+                                                        !userEmailVerified? (
+                                                            <>
+                                                                <FormGroup>
+                                                                    <Label for="emailVerificationCode">Verify {userEmail}</Label>
+                                                                    <Input type="text" onChange={(e) => { emailVerificationCodeField(e); }} name="emailVerificationCode" id="emailVerificationCode" placeholder="Insert code" />
+                                                                </FormGroup>
+                                                                <div>
+                                                                    <Button size="lg" onClick={() => { AuthService.sendEmailVerificationCode() }}>Resend code</Button>
+                                                                </div>
+                                                                <div>
+                                                                    <Button size="lg" onClick={() => { verifyEmail() }}>Verify Email</Button>
+                                                                </div>
+                                                            </>
+                                                        ): (<></>)
+                                                    }
+                                                    
                                                 </Form>
+                                            </div>
+                                        </Collapse>
+                                    </div>
+                                    <div>
+                                        <div>
+                                            <Button className={styles.link} onClick={toggleProfileInfo}> » Here you can manage your personal info</Button>
+                                        </div>
+                                        <Collapse isOpen={isOpenProfileInfo}>
+                                            <div className={styles.div}>
+                                                <Form>
+                                                    <FormGroup>
+                                                        <Label for="newName">New Name</Label>
+                                                        <Input type="email" onChange={(e) => { newNameField(e); }} name="newName" id="newName" placeholder={newName} value={newName} />
+                                                    </FormGroup>
+                                                    <FormGroup>
+                                                        <Label for="newSurname">New Surname</Label>
+                                                        <Input type="email" onChange={(e) => { newSurnameField(e); }} name="newSurname" id="newSurname" placeholder={newSurname} value={newSurname} />
+                                                    </FormGroup>
+                                                    <div>
+                                                        <Button size="lg" onClick={() => { changeProfileInfo() }}>Save</Button>
+                                                    </div>
+                                                </Form>
+                                            </div>
+                                        </Collapse>
+                                    </div>
+                                    <div>
+                                        <div>
+                                            <Button className={styles.link} onClick={toggleDevices}> » Here you can manage your devices access</Button>
+                                        </div>
+                                        <Collapse isOpen={isOpenDevices}>
+                                            <div className={styles.div}>
+                                                <table>
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Last Ip</th>
+                                                            <th>Create</th>
+                                                            <th>Last Authenticated</th>
+                                                            <th>Last Modified</th>
+                                                            <th>Forget</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        {userDevices?.map((device)=> (
+                                                            <tr title={"Status: " + device.status + " | Name: " + device.name + " | Key: " + device.key}>
+                                                                <td>{device.lastIp}</td>
+                                                                <td>{new Date(device.create * 1000).toLocaleString()}</td>
+                                                                <td>{new Date(device.lastAuthenticatedDate * 1000).toLocaleString()}</td>
+                                                                <td>{new Date(device.lastModifiedDate * 1000).toLocaleString()}</td>
+                                                                <td><Button onClick={() => deleteDevice(device.key)}> Delete </Button></td>
+                                                            </tr>
+                                                        ))} 
+                                                    </tbody>
+                                                </table>
+                                                <Button onClick={() => AuthService.logoutFromAllDevices(() => router.push("/account/signin"))}> Logout from all devices </Button>
+                                                <br />
+                                                <Button onClick={() => AuthService.forgetAllDevices(() => AuthService.getDevicesList(setUserDevices))}> Forget all devices </Button>
                                             </div>
                                         </Collapse>
                                     </div>
@@ -293,16 +427,28 @@ const Profile: React.FC = () => {
                                     <CardBody>
                                         <CardTitle className={styles.cardtitle}>
                                             <div>
-                                                <img src="profile.png" style={{width:25, height: 25, marginRight: 5}}/>
+                                                <img src="/profile.png" style={{width:25, height: 25, marginRight: 5}}/>
                                             Your Profile:
                                             </div>
                                         </CardTitle>
                                         <CardText>
                                             <div className={styles.user}>
-                                                <strong>Email: </strong>{currentEmail}
+                                                <strong>Email: </strong>{userEmail}
+                                            </div>
+                                            <div className={styles.user}>
+                                                <strong>Email verified: </strong>{(userEmailVerified)? "true" : "false"}
                                             </div>
                                             <div className={styles.user}>
                                                 <strong>Name: </strong>{userName}
+                                            </div>
+                                            <div className={styles.user}>
+                                                <strong>Surname: </strong>{userSurname}
+                                            </div>
+                                            <div className={styles.user}>
+                                                <strong>User id: </strong>{userUsername}
+                                            </div>
+                                            <div className={styles.user}>
+                                                <strong>Role: </strong>{userRole}
                                             </div>
                                         </CardText>
                                     </CardBody>
