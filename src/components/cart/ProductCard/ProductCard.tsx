@@ -11,29 +11,29 @@ interface Props {
 const ProductCard: React.FC<Props> = ({ product, loadCart, id_cart }) => {
 
     const [quantity, setQuantity] = useState(product.quantity);
-    const [subTotal, setSubTotal] = useState(product.price * product.quantity);
 
     useEffect(() => {
         setQuantity(quantity); // è necessario?
-        setSubTotal(product.price * quantity); // è necessario? 
     }, [])
 
-    const modifyQuantity = async (name: string) => {
+    const modifyQuantity = async (name: string): Promise<void> => {
+        let QTA = quantity;
         if (name == 'plus') {
-            setQuantity(quantity + 1);
+            QTA ++;
         }
         else {
-            if (quantity != 1)
-                setQuantity(quantity - 1);
+            if (quantity > 1)
+                QTA --;
         }
-        const response: boolean = await CartService.updateCart(product.id, product.quantity, id_cart);
-        setSubTotal(product.price * quantity);
-        if (response) {
-            await loadCart();
+        if(QTA != quantity){
+            const response: boolean = await CartService.updateCart(product.id, QTA, id_cart);
+            if (response) {
+                await loadCart();
+            }
         }
     }
 
-    const deleteProduct = async () => {
+    const deleteProduct = async (): Promise<void>  => {
         const response: boolean = await CartService.removeProductFromCart(product.id, id_cart);
         if (response) {
             loadCart();
@@ -77,7 +77,7 @@ const ProductCard: React.FC<Props> = ({ product, loadCart, id_cart }) => {
                                 </button>
                             </div>
                             <div className={styles.subtotal}>
-                                <span><strong>€ {subTotal}</strong></span>
+                                <span><strong>€ {product.total}</strong></span>
                             </div>
                         </div>
                     </div>

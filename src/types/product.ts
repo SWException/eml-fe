@@ -19,7 +19,7 @@ export type Products = Product[];
 
 export type InsertProduct = Omit<Product, 'tax' | 'id' | 'categoryId' | 'price' | 'taxId'> & { tax: string };
 export type EditProduct = InsertProduct;
-export type ProductCart = Omit<Product, 'description' | 'secondaryPhotos' | 'categorId' | 'category' | 'netPrice' | 'taxId' | 'show' | 'showHome' | 'stock'> & { quantity: number }
+export type ProductCart = Omit<Product, 'description' | 'secondaryPhotos' | 'categorId' | 'category' | 'netPrice' | 'taxId' | 'show' | 'showHome' | 'stock'> & { quantity: number, total: number }
 
 
 export type SearchRules = {
