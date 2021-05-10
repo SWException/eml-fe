@@ -7,7 +7,7 @@ import { Product } from 'types/product'
 import { Button, Carousel, CarouselItem, CarouselControl, CarouselIndicators } from 'reactstrap';
 import { GetStaticPaths, GetStaticProps } from 'next';
 import { CartService, CategoriesService, sessionService } from 'services';
-import { CartNotAuth, Cart } from 'types';
+import { Cart } from 'types';
 
 interface Props {
     product: Product;
@@ -25,7 +25,7 @@ const Detail: React.FC<Props> = (props) => {
 
     useEffect(() => {
         addImagesToCarousel();
-        product?.stock > 0 ? setQuantity(1) :  setQuantity(0);
+        product?.stock > 0 ? setQuantity(1) : setQuantity(0);
     }, [])
 
     const product = props.product;
@@ -33,11 +33,11 @@ const Detail: React.FC<Props> = (props) => {
 
     let items = [];
 
-    const addImagesToCarousel = () => {
+    const addImagesToCarousel = (): void => {
         const arrayImg = [];
-        if(product.primaryPhoto)
+        if (product.primaryPhoto)
             arrayImg.push(product.primaryPhoto);
-        if(product.secondaryPhotos?.length > 0){
+        if (product.secondaryPhotos?.length > 0) {
             product.secondaryPhotos.forEach((img) => {
                 arrayImg.push(img);
             })
@@ -45,23 +45,23 @@ const Detail: React.FC<Props> = (props) => {
         console.log("IMMAGINI", arrayImg);
         setImages(arrayImg);
         items = arrayImg.map((img) => {
-            return {src: img};
+            return { src: img };
         });
     }
 
-    const next = () => {
+    const next = (): void => {
         if (animating) return;
         const nextIndex = activeIndex === images.length - 1 ? 0 : activeIndex + 1;
         setActiveIndex(nextIndex);
     }
 
-    const previous = () => {
+    const previous = (): void => {
         if (animating) return;
         const nextIndex = activeIndex === 0 ? images.length - 1 : activeIndex - 1;
         setActiveIndex(nextIndex);
     }
 
-    const goToIndex = (newIndex) => {
+    const goToIndex = (newIndex): void => {
         if (animating) return;
         setActiveIndex(newIndex);
     }
@@ -90,8 +90,8 @@ const Detail: React.FC<Props> = (props) => {
         return (
             <CarouselItem
                 key={i}
-                onExiting={() => setAnimating(true)}
-                onExited={() => setAnimating(false)}
+                onExiting={(): void => setAnimating(true)}
+                onExited={(): void => setAnimating(false)}
                 height="400" width="400"
             >
                 <img src={image} height="400" width="400" alt={'Product Image'} />
@@ -99,8 +99,8 @@ const Detail: React.FC<Props> = (props) => {
         );
     });
 
-    const addCart = async () => {
-        if(sessionService.isAuth()){
+    const addCart = async (): Promise<void> => {
+        if (sessionService.isAuth()) {
             try {
                 const res = await CartService.addToCart(product.id, quantity);
                 if (res) {
@@ -124,23 +124,25 @@ const Detail: React.FC<Props> = (props) => {
             }
         }
         else {
-            let res:boolean;
-            const id_cart:string = window.localStorage.getItem('id_cart')
-            if(id_cart){
+            let res: boolean;
+            const id_cart: string = window.localStorage.getItem('id_cart')
+            if (id_cart) {
                 res = await CartService.addToCart(product.id, quantity, id_cart);
-            } else {
-                const cart:Cart = await CartService.fetchCart();
+            }
+            else {
+                const cart: Cart = await CartService.fetchCart();
                 console.log(cart);
                 window.localStorage.setItem('id_cart', cart.id);
                 res = await CartService.addToCart(product.id, quantity, cart.id);
             }
-            
-            if(res){
+
+            if (res) {
                 setInfo({
                     ...info,
                     messageShow: "Product Added to Local Cart! Login or Signup if you want to checkout!"
                 })
-            } else {
+            }
+            else {
                 setInfo({
                     ...info,
                     error: "Error on loading cart! Try later..."
@@ -149,12 +151,12 @@ const Detail: React.FC<Props> = (props) => {
         }
     }
 
-    const displayErr = () => {
-        return (error ? <div className="alert alert-danger">{error}</div> : '');
+    const displayErr = (): JSX.Element => {
+        return (error ? <div className="alert alert-danger">{error}</div> : <></>);
     }
 
-    const displayInfo = () => {
-        return (messageShow ? <div className="alert alert-info">{messageShow}</div> : '');
+    const displayInfo = (): JSX.Element => {
+        return (messageShow ? <div className="alert alert-info">{messageShow}</div> : <></>);
     }
 
     return (
@@ -164,13 +166,13 @@ const Detail: React.FC<Props> = (props) => {
                     <Carousel className={styles.carousel} activeIndex={activeIndex} next={next} previous={previous}>
                         <CarouselIndicators items={items} activeIndex={activeIndex} onClickHandler={goToIndex} />
                         {slides}
-                        {slides?.length >1 ?(
+                        {slides?.length > 1 ? (
                             <>
                                 <CarouselControl className={styles.carouselcontrolprevicon} direction="prev" directionText="Previous" onClickHandler={previous} />
-                                <CarouselControl className={styles.carouselcontrolnexticon} direction="next" directionText="Next" onClickHandler={next} />  
+                                <CarouselControl className={styles.carouselcontrolnexticon} direction="next" directionText="Next" onClickHandler={next} />
                             </>
-                        ):(
-                            <div/>
+                        ) : (
+                            <div />
                         )}
                     </Carousel>
                 </div>
@@ -180,16 +182,16 @@ const Detail: React.FC<Props> = (props) => {
                     <div className={styles.productDesc}>{product?.description}</div>
                     <div className={styles.productAction}>
                         <div>
-                            <button className={styles.plus} onClick={() => { modifyQuantityByStep(false) }} type="button" name="button">
-                                <img src="meno.png" style={{width:25, height: 25}}/>
+                            <button className={styles.plus} onClick={(): void => { modifyQuantityByStep(false) }} type="button" name="button">
+                                <img src="meno.png" style={{ width: 25, height: 25 }} />
                             </button>
                             <input type="number" name="name" value={quantity}
                                 className={styles.input}
-                                onChange={(e) => modifyQuantity(e)}
+                                onChange={(e: ChangeEvent<HTMLInputElement>): Promise<void> => modifyQuantity(e)}
                                 max={product?.stock}>
                             </input>
-                            <button className={styles.minus} onClick={() => { modifyQuantityByStep(true) }} type="button" name="button">
-                                <img src="plus.png" style={{width:25, height: 25}}/>
+                            <button className={styles.minus} onClick={(): void => { modifyQuantityByStep(true) }} type="button" name="button">
+                                <img src="plus.png" style={{ width: 25, height: 25 }} />
                             </button>
                         </div>
                     </div>
@@ -209,18 +211,18 @@ const Detail: React.FC<Props> = (props) => {
 export const getStaticPaths: GetStaticPaths = async () => {
     const paths = [];
     const categories = await CategoriesService.fetchAllCategories();
-    for(let i = 0; i < categories.length; i++){
+    for (let i = 0; i < categories.length; i++) {
         const category = categories[i];
-        const productsCategoryList = await ProductService.fetchProducts({category: category.id});
+        const productsCategoryList = await ProductService.fetchProducts({ category: category.id });
         productsCategoryList?.forEach(product => {
-            paths.push({params: { id: product?.id }});
+            paths.push({ params: { id: product?.id } });
         });
     }
-    return {paths, fallback: 'blocking'};
+    return { paths, fallback: 'blocking' };
 }
 
-export const getStaticProps: GetStaticProps = async ({params}) => {
-    const id = params.id as string;
+export const getStaticProps: GetStaticProps = async ({ params }) => {
+    const id = params?.id as string;
     const product: Product = await ProductService.fetchProduct(id).catch(() => null);
     console.log(product)
     return {

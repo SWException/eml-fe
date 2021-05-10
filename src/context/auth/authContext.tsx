@@ -5,7 +5,7 @@ import { authReducer, LOGOUT_USER, SET_CURRENT_USER } from 'context/auth';
 import { Auth } from 'aws-amplify';
 import { AuthService, sessionService } from 'services';
 
-interface UserData {
+export interface UserData {
     user: User;
     token: string;
 }
@@ -31,8 +31,8 @@ const initialState = {
     isAuthenticated: false,
     currentUser: null,
     error: null,
-    logout: () => null,
-    login: () => null,
+    logout: (): void => null,
+    login: (): void => null,
     //updateUser: () => null,
 };
 
@@ -52,7 +52,7 @@ export const AuthProvider: React.FC<Props> = ({ children, currentUser }) => {
     const [state, dispatch] = useReducer(authReducer, initialState);
     // const { ref } = useRouter().query;
 
-    const login = async (email: string, password: string, adminRedirect?: boolean): Promise<void> => {
+    const login = async (email: string, password: string): Promise<void> => {
         const { user, token } = await AuthService.login(email, password);
         console.log(user);
         console.log(token);
@@ -66,13 +66,14 @@ export const AuthProvider: React.FC<Props> = ({ children, currentUser }) => {
         dispatch({ type: SET_CURRENT_USER, payload: user });
     };
 
-    const logout = async () => {
+    const logout = async (): Promise<void> => {
         try {
             await Auth.signOut();
             sessionService.removeCookie('token')
             sessionService.removeLocalStorage('user')
             console.log("Logout successfull");
-        } catch (error) {
+        }
+        catch (error) {
             console.log('error signing out: ', error);
         }
         dispatch({ type: LOGOUT_USER });

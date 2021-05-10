@@ -8,8 +8,9 @@ import styles from 'styles/Profile.module.css';
 import { AddressesService, AuthService, sessionService } from 'services';
 import { Address, Addresses, User } from 'types'
 import { useRouter } from 'next/router';
+import { GetServerSideProps } from 'next';
 
-const Profile: React.FC = (prop) => {
+const Profile: React.FC = () => {
     const router = useRouter();
 
     const [oldPassword, setOldPassword]: [string, Dispatch<string>] = useState<string>();
@@ -467,22 +468,24 @@ const Profile: React.FC = (prop) => {
 
 export default Profile;
 
-export const getServerSideProps = async function ({ req, res }) {
+export const getServerSideProps: GetServerSideProps = function (): any {
     // Get the user's session based on the request
-    const user = await sessionService.isAuth();
-    const userProfile:User = await sessionService.getLocalStorage();
+    const user = sessionService.isAuth();
+    const userProfile: User = sessionService.getLocalStorage();
   
-    if (!user && userProfile.role=='user') {
-      return {
-        redirect: {
-          destination: '/account/signin',
-          permanent: false,
-        },
-      }
+    if (!user && userProfile?.role=='user') {
+        return {
+            redirect: {
+                destination: '/account/signin',
+                permanent: false,
+            },
+        }
     }
   
     return {
-      props: { user },
+        props: {
+            
+        }
     }
 }
 
