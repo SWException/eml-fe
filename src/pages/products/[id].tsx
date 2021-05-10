@@ -178,26 +178,34 @@ const Detail: React.FC<Props> = (props) => {
                 </div>
                 <div className={styles.productInfo}>
                     <div className={styles.productName}>{product?.name}</div>
-                    <div className={styles.productPrice}>Price: € {product?.price}</div>
-                    <div className={styles.productDesc}>{product?.description}</div>
-                    <div className={styles.productAction}>
-                        <div>
-                            <button className={styles.plus} onClick={(): void => { modifyQuantityByStep(false) }} type="button" name="button">
-                                <img src="meno.png" style={{ width: 25, height: 25 }} />
-                            </button>
-                            <input type="number" name="name" value={quantity}
-                                className={styles.input}
-                                onChange={(e: ChangeEvent<HTMLInputElement>): Promise<void> => modifyQuantity(e)}
-                                max={product?.stock}>
-                            </input>
-                            <button className={styles.minus} onClick={(): void => { modifyQuantityByStep(true) }} type="button" name="button">
-                                <img src="plus.png" style={{ width: 25, height: 25 }} />
-                            </button>
+                    <div className={styles.productPrice}>€ {product?.price}</div>
+                    <div className={styles.productDesc}>Tax: {product?.tax}%</div>
+                    <div className={styles.productDesc}>{product?.description}</div> 
+                        {product.stock !>0 ?(
+                            <div>
+                            <div className={styles.productAction}>
+                            <div>
+                                <button className={styles.plus} onClick={(): void => { modifyQuantityByStep(false) }} type="button" name="button">
+                                    <img src="meno.png" style={{ width: 25, height: 25 }} />
+                                </button>
+                                <input type="number" name="name" value={quantity}
+                                    className={styles.input}
+                                    onChange={(e: ChangeEvent<HTMLInputElement>): Promise<void> => modifyQuantity(e)}
+                                    max={product?.stock}>
+                                </input>
+                                <button className={styles.minus} onClick={(): void => { modifyQuantityByStep(true) }} type="button" name="button">
+                                    <img src="plus.png" style={{ width: 25, height: 25 }} />
+                                </button>
+                            </div>
+                        </div>
+                        <div className={styles.productAction}>
+                            <Button color="primary" onClick={addCart} size="lg" margin-top="20px">Add to Cart</Button>
                         </div>
                     </div>
-                    <div className={styles.productAction}>
-                        <Button color="primary" onClick={addCart} size="lg" margin-top="20px">Add to Cart</Button>
-                    </div>
+                        ):(
+                            <div className={styles.productavailable}>Product not available</div> 
+                        )}
+                        
                 </div>
                 <div style={{ marginTop: "20px" }}>
                     {displayErr()}
