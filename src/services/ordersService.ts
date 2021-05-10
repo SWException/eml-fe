@@ -1,7 +1,7 @@
 import { Orders, Order } from 'types';
 import { AuthService } from 'services';
 
-const fetchOrders = async (status?: string): Promise<Orders> => {
+const fetchOrders = async (status?: string, searchId?: string): Promise<Orders> => {
     const token = await AuthService.getTokenJwt();
     const requestOptions = {
         method: 'GET',
@@ -10,8 +10,8 @@ const fetchOrders = async (status?: string): Promise<Orders> => {
             'Authorization': token,
         }
     };
-
-    const res = await fetch(`${process.env.AWS_ENDPOINT}/orders?status=${status}`, requestOptions)
+    searchId = (searchId)? `&search=${searchId}` : "";
+    const res = await fetch(`${process.env.AWS_ENDPOINT}/orders?status=${status}${searchId}`, requestOptions)
         .catch(() => { throw new Error('Error on fetching orders') });
     
     const ordersReturned = await res.json();

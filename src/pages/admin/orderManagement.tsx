@@ -53,7 +53,7 @@ const OrderManagement: React.FC = () => {
 
     const getOrdersbyId = async (id: string): Promise<void> => {
         try {
-            const orders = await OrdersService.fetchOrders(id);
+            const orders = await OrdersService.fetchOrders(currentStatus, id);
             setOrders(orders);
             console.log(orders);
         }
@@ -65,7 +65,8 @@ const OrderManagement: React.FC = () => {
         const value = e.target.value;
         if (value == '') {
             loadOrders(currentStatus);
-        } else {
+        }
+        else {
             getOrdersbyId(value);
         }
     }
