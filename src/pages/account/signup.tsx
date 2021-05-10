@@ -22,7 +22,6 @@ const SignUp: React.FC = () => {
 
     //Lavorare su state configurato meglio stile Reducer
     const [email, setEmail] = useState('');
-    const [emailRec, setEmailRec] = useState('');
     const [password, setPass] = useState('');
     const [code, setCode] = useState('');
     const [loading, setLoading] = useState(false);
@@ -79,9 +78,9 @@ const SignUp: React.FC = () => {
     async function confirmSignUp () {
         try {
             setLoading(true);
-            await AuthService.confirmCode(emailRec, code);
+            await AuthService.confirmCode(email, code);
             setLoading(false);
-            router.push('/');
+            router.push('/account/signin');
         }
         catch (error) {
             console.log('error confirming sign up', error);
@@ -93,7 +92,7 @@ const SignUp: React.FC = () => {
 
     async function resendConfirmationCode (): Promise<void> {
         try {
-            await Auth.resendSignUp(emailRec);
+            await Auth.resendSignUp(email);
             console.log('code resent successfully');
             setMessage('Code returned successfully. Enter and confirm your registration!');
             setError('');
@@ -122,11 +121,11 @@ const SignUp: React.FC = () => {
                     <Form>
                         <FormGroup>
                             <Label for="exampleEmail" className="">Email</Label>
-                            <Input type="email" name="email" onChange={(e) => { setEmailRec(e.target.value) }} id="exampleEmail" placeholder="something@idk.cool" />
+                            <Input required type="email" name="email" onChange={(e) => { setEmail(e.target.value) }} id="exampleEmail" placeholder="something@idk.cool" value={email}/>
                         </FormGroup>
                         <FormGroup>
-                            <Label for="codiceExample" className="">Recovery Code</Label>
-                            <Input type="text" name="codice" onChange={(e) => { setCode(e.target.value) }} id="exampleCode" placeholder="1234" />
+                            <Label for="exampleCode" className="">Code</Label>
+                            <Input required type="text" name="codice" onChange={(e) => { setCode(e.target.value) }} id="exampleCode" placeholder="1234" />
                         </FormGroup>
                         <div>
                             <Button size="lg" onClick={confirmSignUp} color="primary">Confirm registration</Button>
@@ -145,27 +144,27 @@ const SignUp: React.FC = () => {
                         <h1 style={{ marginTop: "5px" }}>Create account</h1>
                         <Form>
                             <FormGroup>
-                                <Label for="exampleEmail" className="">Email</Label>
+                                <Label for="email" className="">Email</Label>
                                 <Input type="email" name="email" onChange={(e) => { setEmail(e.target.value) }} id="email" placeholder="something@idk.cool" required />
                             </FormGroup>
                             <FormGroup>
-                                <Label for="exampleEmail" className="">Repeat Email</Label>
+                                <Label for="confirm_email" className="">Repeat Email</Label>
                                 <Input type="email" name="confirm_email" onChange={(e) => { setConfirmEmail(e.target.value) }} onBlur={onVerifyEmail} id="confirm_email" placeholder="something@idk.cool" required />
                             </FormGroup>
                             <FormGroup >
-                                <Label for="examplePassword" className="">Password</Label>
+                                <Label for="password" className="">Password</Label>
                                 <Input type="password" name="password" onChange={(e) => { setPass(e.target.value) }} id="password" placeholder="sUpErStrong1!" required />
                             </FormGroup>
                             <FormGroup >
-                                <Label for="examplePassword" className="">Repeat Password</Label>
+                                <Label for="confirm_password" className="">Repeat Password</Label>
                                 <Input type="password" name="confirm_password" onChange={(e) => setConfirmPassword(e.target.value)} onBlur={onVerifyPassword} id="confirm_password" placeholder="sUpErStrong1!" required />
                             </FormGroup>
                             <FormGroup>
-                                <Label for="examplePassword" className="">Name</Label>
+                                <Label for="name" className="">Name</Label>
                                 <Input name="name" onChange={(e) => { setPrimaryName(e.target.value) }} id="name" placeholder="Mario" required />
                             </FormGroup>
                             <FormGroup>
-                                <Label for="examplePassword" className="">Surname</Label>
+                                <Label for="surname" className="">Surname</Label>
                                 <Input name="surname" onChange={(e) => { setFamilyName(e.target.value) }} id="surname" placeholder="Rossi" required />
                             </FormGroup>
                             <div>
@@ -179,6 +178,7 @@ const SignUp: React.FC = () => {
                                     </div>
                                 )}
                             </div>
+                            <a href="#" onClick={() => setIsCode(true)}>Do you have to confirm your account? Click here!</a>
                         </Form>
                         <div style={{ marginTop: "20px" }}>
                             {displayErr()}

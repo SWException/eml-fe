@@ -15,14 +15,14 @@ const Logout: React.FC = () => {
 
     useEffect(() => {
         signOut();
-        let err = window.localStorage.getItem('err');
+        const err = window.localStorage.getItem('err');
         if (err) {
             // setMessage(err);
             window.localStorage.removeItem('err');
         }
     }, [])
 
-    async function signOut() {
+    async function signOut () {
         console.log("HOHOHO");
         try {
             await Auth.signOut();
@@ -33,7 +33,8 @@ const Logout: React.FC = () => {
             window.location.reload();
             setError('');
             redirectToHomePage();
-        } catch (error) {
+        }
+        catch (error) {
             console.log('error signing out: ', error);
             setError('Errore durante il logout, riprovare');
             // setMessage('');

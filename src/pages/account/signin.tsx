@@ -20,7 +20,7 @@ const Login: React.FC = () => {
     const { login } = useAuth();
 
     useEffect(() => {
-        let mex = window.localStorage.getItem('mex');
+        const mex = window.localStorage.getItem('mex');
         if (mex) {
             setMessage(mex);
             window.localStorage.removeItem('mex');
@@ -38,27 +38,29 @@ const Login: React.FC = () => {
         setLoading(true);
         try {
             await login(email, password)
-            let user = JSON.parse(window.localStorage.getItem('user'))
+            const user = JSON.parse(window.localStorage.getItem('user'))
             console.log(user)
             if (user.name == 'swexception@outlook.com') {
                 router.push('/admin/dashboard');
-            } else {
+            }
+            else {
                 await loadTheCart();
                 router.push('/');
             }
-        } catch (e) {
+        }
+        catch (e) {
             setLoading(false);
             setError('Something went wrong! Retry!');
             displayErr();
         }
     }
 
-    const loadTheCart = async() => {
+    const loadTheCart = async () => {
         const cartLocal:CartNotAuth[] = JSON.parse(window.localStorage.getItem('cart'));
         if(cartLocal && sessionService.isAuth()){
             cartLocal.forEach(item=>{
                 console.log('here');
-                async() => {
+                async () => {
                     const res = await CartService.addToCart(item.id, item.quantity);
                     if(res){
                         console.log(item);
