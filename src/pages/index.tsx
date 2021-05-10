@@ -14,6 +14,7 @@ interface Props {
 const Index: React.FC<Props> = ({products}) => {
     return (
         <CustomerLayout header categories footer>
+            
             <Container className={styles.container}>
                 <div className={styles.title}>
                     <h1>BEST PRODUCTS</h1>

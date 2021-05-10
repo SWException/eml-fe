@@ -2,6 +2,10 @@ import Link from 'next/link';
 import { Product, Products } from 'types';
 import React from 'react';
 import styles from './ProductList.module.css';
+import {
+    Card, CardImg, CardBody,
+    CardTitle, CardSubtitle
+  } from 'reactstrap';
 
 interface Props {
     products: Products;
@@ -9,22 +13,23 @@ interface Props {
 
 const ProductList: React.FC<Props> = ({ products }) => {
     return (
-        <>
+        <>  
             <div className={styles.productGrid}>
                 {products?.map((product: Product) => (
                     <Link href={`/products/${product.id}`} key={product.id}>
                         <a>
                             <div>
                                 <div className={styles.productImgWrapper}>
-                                    <img
+                                    <Card className={styles.card}>
+                                        <CardImg top width="100%" 
                                         src={product.primaryPhoto}
                                         alt="Picture of the author"
-                                        style={{ width: "20rem", height: "20rem" }}
-                                    />
-                                </div>
-                                <div className={styles.productInfo}>
-                                    <div className={styles.productPrice}>€{product.price}</div>
-                                    <div className={styles.productName}>{product.name}</div>
+                                        style={{ width:"25rem", height: "25rem", objectFit: "contain", backgroundColor: "white"}} />
+                                        <CardBody>
+                                        <CardTitle>€{product.price}</CardTitle>
+                                        <CardSubtitle tag="h" className="mb-2 text-muted">{product.name}</CardSubtitle>
+                                        </CardBody>
+                                    </Card>
                                 </div>
                             </div>
                         </a>
