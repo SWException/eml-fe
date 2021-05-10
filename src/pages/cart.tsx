@@ -5,28 +5,29 @@ import { Button, Spinner, Card, CardText, CardBody, CardTitle} from 'reactstrap'
 import { CustomerLayout } from 'components/layouts/CustomerLayout';
 import styles from 'styles/Cart.module.css'
 import { CartService, sessionService } from 'services';
-import { Cart, CartNotAuth, ProductCart } from 'types';
+import { Cart, ProductCart } from 'types';
 
 const CartUser: React.FC = () => {
 
     const router = useRouter();
     const [loading, setLoading] = useState(false)
     const [cart, setCart] = useState<Cart>();
-    const [messageShow, setMessageShow] = useState('');
+    const [idCart, setIdCart] = useState<string>();
 
     useEffect(() => {
         if(sessionService.isAuth()){
             reloadCart();
         }
         else {
-            const cart:CartNotAuth[] = JSON.parse(window.localStorage.getItem('cart'));
-            if(cart){
-                setMessageShow('Signin or Signup if you want to load your local cart!')
+            const id_cart: string = window.localStorage.getItem('id_cart');
+            if(id_cart){
+                setIdCart(id_cart)
+                console.log("Carrello guest ", id_cart);
+                reloadCart(id_cart);
             }
             else {
-                setMessageShow('The cart is empty! Add some products or Signin')
+                displayMessage();
             }
-            displayMessage();
         }
     }, [])
 
@@ -34,16 +35,22 @@ const CartUser: React.FC = () => {
         router.push('/payment/checkout');
     }
 
-    const reloadCart = async () => {
+    const reloadCart = async (id_cart?: string) => {
+        if(!id_cart && idCart){
+            id_cart = idCart;
+        }
         setLoading(true);
-        const cart = await CartService.fetchCart();
+        const cart = await CartService.fetchCart(id_cart);
         setCart(cart);
+        console.log(cart);
+        
         console.log('Done');
         setLoading(false);
     }
 
     const removeAllCart = async () => {
-        const res = await CartService.removeCart();
+        window.localStorage.removeItem("id_cart")
+        const res = await CartService.removeCart(idCart);
         if (res) {
             reloadCart();
         }
@@ -59,72 +66,69 @@ const CartUser: React.FC = () => {
 
     return (
         <CustomerLayout header footer>
-            {sessionService.isAuth()? (
+            {loading ? (
+                <div className={styles.loadingitemlayout}>
+                    <Spinner style={{ width: '3rem', height: '3rem' }} />
+                </div>
+            ) : (
                 <div>
-                    {loading ? (
-                        <div className={styles.loadingitemlayout}>
-                            <Spinner style={{ width: '3rem', height: '3rem' }} />
-                        </div>
-                    ) : (
-                        <div>
-                            {cart?.products.length != 0 ? (
-                                <div className={styles.gridcontainer}>
-                                    <div className={styles.products}>
-                                        <div className={styles.titlebox}>
-                                            <div className={styles.title}>
-                                                <h2>Cart</h2>
-                                            </div>
-                                        </div>
-                                        <div>
-                                            {cart ? (
-                                                cart.products.map((product: ProductCart) => (
-                                                    <ProductCard
-                                                        product={product}
-                                                        loadCart={() => { reloadCart() }}
-                                                    />
-                                                ))
-                                            ) : (
-                                                <div/>
-                                            )}
-                                            <div>
-                                                <Button color="primary" onClick={removeAllCart} size="lg">Remove all</Button>
-                                            </div>
-                                        </div>
+                    {cart?.products.length != 0 ? (
+                        <div className={styles.gridcontainer}>
+                            <div className={styles.products}>
+                                <div className={styles.titlebox}>
+                                    <div className={styles.title}>
+                                        <h2>Cart</h2>
                                     </div>
-                                    <div className={styles.total}>
-                                        <Card width="20rem">
-                                            <CardBody>
-                                                <CardTitle className={styles.cardtitle}>Total Cart</CardTitle>
-                                                <CardText>
-                                                    <div className={styles.user}>
-                                                        <span>Total</span>   
-                                                        <strong  className={styles.strong}>{" €"}{cart?.total}</strong> 
-                                                    </div>
-                                                    <div className={styles.user}>
-                                                        <span>Taxes</span>
-                                                        <strong className={styles.strong}>{"€"}{cart?.tax}</strong>
-                                                    </div>
+                                </div>
+                                <div>
+                                    {cart ? (
+                                        cart.products.map((product: ProductCart) => (
+                                            <ProductCard
+                                                id_cart = {idCart}
+                                                product = {product}
+                                                loadCart = {() => { reloadCart() }}
+                                            />
+                                        ))
+                                    ) : (
+                                        <div/>
+                                    )}
+                                    <div>
+                                        <Button color="primary" onClick={removeAllCart} size="lg">Remove all</Button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className={styles.total}>
+                                <Card width="20rem">
+                                    <CardBody>
+                                        <CardTitle className={styles.cardtitle}>Total Cart</CardTitle>
+                                        <CardText>
+                                            <div className={styles.user}>
+                                                <span>Total</span>   
+                                                <strong  className={styles.strong}>{" €"}{cart?.total}</strong> 
+                                            </div>
+                                            <div className={styles.user}>
+                                                <span>Taxes</span>
+                                                <strong className={styles.strong}>{"€"}{cart?.tax}</strong>
+                                            </div>
+                                            {
+                                                sessionService.isAuth()?(
                                                     <div>
                                                         <Button color="primary" size="lg" className={styles.check} onClick={() => { onSubmit() }}>Checkout</Button>
-                                                    </div>    
-                                                </CardText>
-                                            </CardBody>
-                                        </Card>
-                                    </div>
-                                </div>
-                            ):(
-                                <div>
-                                    {displayMessage()}
-                                </div>
-                            )}
+                                                    </div>
+                                                ):(<div><br /><p>Signin for the checkout</p></div>)
+                                            }
+                                        </CardText>
+                                    </CardBody>
+                                </Card>
+                            </div>
                         </div>
-                                    
+                    ):(
+                        <div>
+                            {displayMessage()}
+                        </div>
                     )}
                 </div>
-            ):(
-                <div>
-                    {displayMessage()}
-                </div>
+                                    
             )}
         </CustomerLayout>
     );

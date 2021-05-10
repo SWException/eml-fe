@@ -59,7 +59,7 @@ const login = async (email: string, password: string): Promise<UserData> => {
     }
 };
 
-const LoginSupport = async (email: string, password: string): Promise<any>  => {
+const LoginSupport = async (email: string, password: string): Promise<{signInUserSession, attributes}> => {
     const answer = Auth.signIn(email, password)
         .then(userObject => {
             if (userObject.challengeName === 'NEW_PASSWORD_REQUIRED') {
@@ -238,14 +238,14 @@ const isAuthenticated = async (): Promise<boolean> => {
         .catch(() => false);
 }
 
-const getDevicesList = (callback: (devices: any) => void): void => {
+const getDevicesList = (callback: (devices) => void): void => {
     Auth.currentAuthenticatedUser()
         .then((user: CognitoUser) => {
             user.listDevices(
                 60, 
                 null, 
                 {
-                    onSuccess: (res: any) => {
+                    onSuccess: (res) => {
                         res=res.Devices;
                         console.log(res);
                         

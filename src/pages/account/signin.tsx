@@ -7,8 +7,7 @@ import { useRouter } from 'next/router';
 import { useAuth } from 'context';
 import { CustomerLayout } from 'components/layouts/CustomerLayout';
 import styles from 'styles/Account.module.css'
-import { CartNotAuth } from 'types';
-import { AuthService, CartService, sessionService } from 'services';
+import { AuthService, CartService } from 'services';
 
 Amplify.configure(awsconfig);
 // Salva in automatico i cookie per ricordare il il login è stato fatto
@@ -57,11 +56,15 @@ const Login: React.FC = () => {
     }
 
     const loadTheCart = async () => {
-        const id_cart:string = JSON.parse(window.localStorage.getItem('id_cart'));
-        const res = await CartService.authenticateCart(id_cart);
+        console.log("loadTheCart");
+        const id_cart: string = window.localStorage.getItem('id_cart');
+        console.log(id_cart);
+        
+        const res = await CartService.authenticateCart(id_cart).catch(()=>false);
         if(!res){
             throw new Error('Issue on loading the Cart')
-        } else {
+        }
+        else {
             window.localStorage.removeItem('id_cart');
         }
     }

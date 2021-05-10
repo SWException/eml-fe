@@ -1,3 +1,4 @@
+import { UserData } from 'context';
 import cookie from 'js-cookie';
 import { User } from 'types';
 
@@ -41,7 +42,7 @@ const removeLocalStorage = (key: string): void => {
     }
 };
 // authenticate user by pass data to cookie and localstorage
-const authenticate = (data, next): void => {
+const authenticate = (data: UserData, next: () => void): void => {
     console.log('Hey')
     setCookie('token', data.token);
     setLocalStorage('user', data.user);
