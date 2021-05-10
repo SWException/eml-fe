@@ -5,7 +5,7 @@ import styles from 'styles/Dashboard.module.css';
 import Image from 'next/image';
 import { sessionService } from 'services';
 
-const Dashboard: React.FC = (prop) => {
+const Dashboard: React.FC = () => {
     const router = useRouter();
 
     const redirectProductManagement = (): void => {
@@ -87,20 +87,22 @@ const Dashboard: React.FC = (prop) => {
 
 export default Dashboard;
 
-export const getServerSideProps = async function ({ req, res }) {
+export const getServerSideProps = function () {
     // Get the user's session based on the request
-    const user = await sessionService.isAuth();
-  
+    const user = sessionService.isAuth();
+    
     if (!user) {
-      return {
-        redirect: {
-          destination: '/',
-          permanent: false,
-        },
-      }
+        return {
+            redirect: {
+                destination: '/',
+                permanent: false,
+            },
+        }
     }
   
     return {
-      props: { user },
+        props: {
+
+        }
     }
 }

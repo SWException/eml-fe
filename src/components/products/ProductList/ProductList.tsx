@@ -5,7 +5,7 @@ import styles from './ProductList.module.css';
 import {
     Card, CardImg, CardBody,
     CardTitle, CardSubtitle
-  } from 'reactstrap';
+} from 'reactstrap';
 
 interface Props {
     products: Products;
@@ -22,12 +22,12 @@ const ProductList: React.FC<Props> = ({ products }) => {
                                 <div className={styles.productImgWrapper}>
                                     <Card className={styles.card}>
                                         <CardImg top width="100%" 
-                                        src={product.primaryPhoto}
-                                        alt="Picture of the author"
-                                        style={{ width:"25rem", height: "25rem", objectFit: "contain", backgroundColor: "white"}} />
+                                            src={product.primaryPhoto}
+                                            alt={product.name + " image"}
+                                            style={{ width:"25rem", height: "25rem", objectFit: "contain", backgroundColor: "white"}} />
                                         <CardBody>
-                                        <CardTitle>€{product.price}</CardTitle>
-                                        <CardSubtitle tag="h" className="mb-2 text-muted">{product.name}</CardSubtitle>
+                                            <CardTitle>€{product.price}</CardTitle>
+                                            <CardSubtitle className="mb-2 text-muted">{product.name}</CardSubtitle>
                                         </CardBody>
                                     </Card>
                                 </div>

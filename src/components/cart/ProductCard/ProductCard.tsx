@@ -44,9 +44,11 @@ const ProductCard: React.FC<Props> = ({ product, loadCart, id_cart }) => {
         <div className={styles.singleproductbox}>
             <div className={styles.singleproduct}>
                 <div className={styles.imagebox}>
-                    <div className={styles.image}>
-                        <img src={product.primaryPhoto} height="125" width="125" alt="..." />
-                    </div>
+                    <a href={"/products/" + product.id}>
+                        <div className={styles.image}>
+                            <img src={product.primaryPhoto} height="125" width="125" alt={product.name + " image"} />
+                        </div>
+                    </a>
                 </div>
                 <div className={styles.allinfobox}>
                     <div className={styles.upinfo}>

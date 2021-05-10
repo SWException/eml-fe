@@ -484,7 +484,7 @@ export const getServerSideProps: GetServerSideProps = function (): any {
   
     return {
         props: {
-            
+
         }
     }
 }
