@@ -101,8 +101,7 @@ const OrderManagement: React.FC = () => {
                                     <td>{order.userid}</td>
                                     <td>{order.orderStatus}</td>
                                     <td>{getDate(order.timestamp)}</td>
-                                    <td>€{order.cart.total}</td>
-                                    <td><Button color="primary" size="lg">Print Shipping Note</Button></td>
+                                    <td>€ {order.cart.total}</td>
                                     <td><Button color="primary" size="lg" onClick={() => { router.push(`/admin/orderDetailsAdmin?id=${order.orderid}`) }}>Order Summary</Button></td>
                                 </tr>
                             ))}
