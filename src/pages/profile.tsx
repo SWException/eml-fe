@@ -5,11 +5,11 @@ import {
 } from 'reactstrap';
 import { CustomerLayout } from 'components/layouts/CustomerLayout';
 import styles from 'styles/Profile.module.css';
-import { AddressesService, AuthService } from 'services';
+import { AddressesService, AuthService, sessionService } from 'services';
 import { Address, Addresses, User } from 'types'
 import { useRouter } from 'next/router';
 
-const Profile: React.FC = () => {
+const Profile: React.FC = (prop) => {
     const router = useRouter();
 
     const [oldPassword, setOldPassword]: [string, Dispatch<string>] = useState<string>();
@@ -466,4 +466,23 @@ const Profile: React.FC = () => {
 }
 
 export default Profile;
+
+export const getServerSideProps = async function ({ req, res }) {
+    // Get the user's session based on the request
+    const user = await sessionService.isAuth();
+    const userProfile:User = await sessionService.getLocalStorage();
+  
+    if (!user && userProfile.role=='user') {
+      return {
+        redirect: {
+          destination: '/account/signin',
+          permanent: false,
+        },
+      }
+    }
+  
+    return {
+      props: { user },
+    }
+}
 

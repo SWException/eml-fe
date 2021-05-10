@@ -7,7 +7,7 @@ import { Product } from 'types/product'
 import { Button, Carousel, CarouselItem, CarouselControl, CarouselIndicators } from 'reactstrap';
 import { GetStaticPaths, GetStaticProps } from 'next';
 import { CartService, CategoriesService, sessionService } from 'services';
-import { CartNotAuth } from 'types';
+import { CartNotAuth, Cart } from 'types';
 
 interface Props {
     product: Product;
@@ -124,25 +124,28 @@ const Detail: React.FC<Props> = (props) => {
             }
         }
         else {
-            const cartLocal:CartNotAuth[] = JSON.parse(window.localStorage.getItem('cart'));
-            const item:CartNotAuth = {
-                id: product.id,
-                quantity: quantity
+            let res:boolean;
+            const id_cart:string = window.localStorage.getItem('id_cart')
+            if(id_cart){
+                res = await CartService.addToCart(product.id, quantity, id_cart);
+            } else {
+                const cart:Cart = await CartService.fetchCart();
+                console.log(cart);
+                window.localStorage.setItem('id_cart', cart.id);
+                res = await CartService.addToCart(product.id, quantity, cart.id);
             }
-            if(cartLocal){
-                cartLocal.push(item);
-                window.localStorage.removeItem('cart');
-                window.localStorage.setItem('cart', JSON.stringify(cartLocal));
+            
+            if(res){
+                setInfo({
+                    ...info,
+                    messageShow: "Product Added to Local Cart! Login or Signup if you want to checkout!"
+                })
+            } else {
+                setInfo({
+                    ...info,
+                    error: "Error on loading cart! Try later..."
+                })
             }
-            else {
-                const cartNotAuth:CartNotAuth[] = [];
-                cartNotAuth.push(item);
-                window.localStorage.setItem('cart', JSON.stringify(cartNotAuth));
-            }
-            setInfo({
-                ...info,
-                messageShow: "Product Added to Local Cart! Login or Signup if you want to checkout!"
-            })
         }
     }
 

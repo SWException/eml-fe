@@ -3,8 +3,9 @@ import { useRouter } from 'next/router';
 import { AdminLayout } from 'components/layouts/AdminLayout';
 import styles from 'styles/Dashboard.module.css';
 import Image from 'next/image';
+import { sessionService } from 'services';
 
-const Dashboard: React.FC = () => {
+const Dashboard: React.FC = (prop) => {
     const router = useRouter();
 
     const redirectProductManagement = (): void => {
@@ -85,3 +86,21 @@ const Dashboard: React.FC = () => {
 };
 
 export default Dashboard;
+
+export const getServerSideProps = async function ({ req, res }) {
+    // Get the user's session based on the request
+    const user = await sessionService.isAuth();
+  
+    if (!user) {
+      return {
+        redirect: {
+          destination: '/',
+          permanent: false,
+        },
+      }
+    }
+  
+    return {
+      props: { user },
+    }
+}

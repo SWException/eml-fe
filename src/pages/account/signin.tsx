@@ -57,20 +57,12 @@ const Login: React.FC = () => {
     }
 
     const loadTheCart = async () => {
-        const cartLocal:CartNotAuth[] = JSON.parse(window.localStorage.getItem('cart'));
-        if(cartLocal && sessionService.isAuth()){
-            cartLocal.forEach(item=>{
-                console.log('here');
-                async () => {
-                    const res = await CartService.addToCart(item.id, item.quantity);
-                    if(res){
-                        console.log(item);
-                    }
-                }
-                //To be fixed!!
-            });
-            const cart = await CartService.fetchCart();
-            console.log(cart);
+        const id_cart:string = JSON.parse(window.localStorage.getItem('id_cart'));
+        const res = await CartService.authenticateCart(id_cart);
+        if(!res){
+            throw new Error('Issue on loading the Cart')
+        } else {
+            window.localStorage.removeItem('id_cart');
         }
     }
 

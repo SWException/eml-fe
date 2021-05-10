@@ -2,11 +2,11 @@ import { OrderCard } from 'components/listorder';
 import React, { useEffect, useState, Dispatch } from "react";
 import { CustomerLayout } from 'components/layouts/CustomerLayout';
 import styles from 'styles/Orders.module.css';
-import { OrdersService } from 'services';
+import { OrdersService, sessionService } from 'services';
 import { Order, Orders } from 'types';
 
 
-const OrdersList: React.FC = () => {
+const OrdersList: React.FC = (prop) => {
     useEffect(() => {
         reloadOrders();
     }, [])
@@ -55,3 +55,21 @@ const OrdersList: React.FC = () => {
     );
 };
 export default OrdersList;
+
+export const getServerSideProps = async function ({ req, res }) {
+    // Get the user's session based on the request
+    const user = await sessionService.isAuth();
+  
+    if (!user) {
+      return {
+        redirect: {
+          destination: '/account/signin',
+          permanent: false,
+        },
+      }
+    }
+  
+    return {
+      props: { user },
+    }
+}
