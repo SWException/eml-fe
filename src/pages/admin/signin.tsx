@@ -1,14 +1,16 @@
 import Amplify, { Auth } from 'aws-amplify';
 import awsconfig from 'aws-exports';
 import { AdminLayout } from 'components/layouts/AdminLayout';
+import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react'
 import { Spinner, Button, Form, FormGroup, Label, Input } from 'reactstrap';
 Amplify.configure(awsconfig);
 
 const AdminLogin: React.FC = () => {
+    const router = useRouter();
 
     useEffect(() => {
-        let mex = window.localStorage.getItem('mex');
+        const mex = window.localStorage.getItem('mex');
         if (mex) {
             setMessage(mex);
             window.localStorage.removeItem('mex');
@@ -16,7 +18,6 @@ const AdminLogin: React.FC = () => {
     }, [])
 
     const [email, setEmail] = useState('');
-    const [remember, setRemember] = useState(false);
     const [password, setPassword] = useState('');
     const [message, setMessage] = useState('');
     const [error, setError] = useState('');
@@ -25,8 +26,8 @@ const AdminLogin: React.FC = () => {
     const getJwt = () => {
         Auth.currentSession()
             .then(res => {
-                let accessToken = res.getAccessToken()
-                let jwt = accessToken.getJwtToken()
+                const accessToken = res.getAccessToken()
+                const jwt = accessToken.getJwtToken()
                 window.localStorage.setItem('jwt', jwt);
                 console.log(`myJwt: ${jwt}`)
             })
@@ -38,7 +39,7 @@ const AdminLogin: React.FC = () => {
         Auth.signIn(email, password)
             .then(user => {
                 if (user.challengeName === 'NEW_PASSWORD_REQUIRED') { // Non dovrebbe essere necessario credo se la password non ha scadenza. Da capire meglio
-                    var newPassword = password + "new";
+                    const newPassword = password + "new";
                     const { requiredAttributes } = user.challengeParam; // the array of required attributes, e.g ['email', 'phone_number']
                     Auth.completeNewPassword(
                         user,               // the Cognito User Object
@@ -57,9 +58,9 @@ const AdminLogin: React.FC = () => {
                 setLoading(false);
                 getJwt();
                 window.localStorage.setItem('mex', `Benvenuto ${email}, trova il prodotto adatto a te!`);
-                window.location.reload();
                 setError('');
                 displayInfo();
+                router.push("/admin/dashboard");
             })
             .catch(error => {
                 console.log('error signing in', error);

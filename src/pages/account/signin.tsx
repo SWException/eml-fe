@@ -8,7 +8,7 @@ import { useAuth } from 'context';
 import { CustomerLayout } from 'components/layouts/CustomerLayout';
 import styles from 'styles/Account.module.css'
 import { CartNotAuth } from 'types';
-import { CartService, sessionService } from 'services';
+import { AuthService, CartService, sessionService } from 'services';
 
 Amplify.configure(awsconfig);
 // Salva in automatico i cookie per ricordare il il login è stato fatto
@@ -40,7 +40,8 @@ const Login: React.FC = () => {
             await login(email, password)
             const user = JSON.parse(window.localStorage.getItem('user'))
             console.log(user)
-            if (user.name == 'swexception@outlook.com') {
+            const {role} = await AuthService.getCurrentUserData();
+            if (role === "Admin") {
                 router.push('/admin/dashboard');
             }
             else {

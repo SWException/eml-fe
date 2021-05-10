@@ -22,6 +22,9 @@ const Dashboard: React.FC = () => {
     const redirectCustomerManagement = (): void => {
         router.push('/admin/customerManagement');
     }
+    const redirectProfile = (): void => {
+        router.push('/profile');
+    }
 
     return (
         <AdminLayout header>
@@ -65,6 +68,13 @@ const Dashboard: React.FC = () => {
                                 <Image src="/customers.png" width={40} height={40} />
                                 <p><b>Manage customers</b></p>
                                 <p>Here you can see all customers and contact them</p>
+                            </button>
+                        </th>
+                        <th className={styles.th}>
+                            <button className={styles.div} onClick={() => {redirectProfile()}}>
+                                <Image src="/profile.png" width={40} height={40} />
+                                <p><b>Profile</b></p>
+                                <p>Here you can see your profile</p>
                             </button>
                         </th>
                     </tr>

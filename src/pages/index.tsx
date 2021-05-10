@@ -27,19 +27,10 @@ const Index: React.FC<Props> = ({products}) => {
 export default Index;
 
 export const getStaticProps: GetStaticProps = async () => {
-    const products = await ProductService.fetchProducts();
-    try {
-        return {
-            props: { products },
-            revalidate: 30,
-        };
-    }
-    catch (error) {
-        return {
-            props: {
-                products: null,
-                revalidate: 30,
-            },
-        };
-    }
+    const products = await ProductService.fetchProducts().catch(() => null);
+    return {
+        props: { products },
+        revalidate: 30,
+    };
+    
 };

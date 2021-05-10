@@ -245,44 +245,47 @@ const Profile: React.FC = () => {
                         <td>
                             <div>
                                 <div>
-                                    <div>
+                                    {userRole !== "Admin"? (
                                         <div>
-                                            <Button className={styles.link} onClick={toggleAddress}> » Here you can manage your address</Button>
-                                        </div>
-                                        <Collapse isOpen={isOpenAddress}>
-                                            <div className={styles.div}>
-                                                <h2>Add a new one</h2>
-                                                <Form>
-                                                    <Label>Name:</Label>
-                                                    <Input type="text" onChange={(e) => { changeAddressValue('recipientName', e) }} placeholder="Name" />
-                                                    <Label>Surname:</Label>
-                                                    <Input type="text" onChange={(e) => { changeAddressValue('recipientSurname', e) }} placeholder="Surname" />
-                                                    <Label>Address:</Label>
-                                                    <Input type="text" onChange={(e) => { changeAddressValue('address', e) }} placeholder="Address" />
-                                                    <Label>City:</Label>
-                                                    <Input type="text" onChange={(e) => { changeAddressValue('city', e) }} placeholder="City" />
-                                                    <Label>Province:</Label>
-                                                    <Input type="text" onChange={(e) => { changeAddressValue('district', e) }} placeholder="Province (TV)" />
-                                                    <Label>CAP:</Label>
-                                                    <Input type="text" onChange={(e) => { changeAddressValue('code', e) }} placeholder="CAP" />
-                                                    <Label>Description:</Label>
-                                                    <Input type="text" onChange={(e) => { changeAddressValue('description', e) }} placeholder="House Address" />
-                                                </Form>
-                                                <br />
-                                                <Button size="lg" onClick={() => { submitNewAddress() }}>Add</Button>
-                                                <br />
-                                                <h2>Or delete an existing one</h2>
-                                                <select style={{ width: "20rem" }} defaultValue="#" onChange={(e) => { changeSelectedAddress(e) }}>
-                                                    <option value='#'> - - - </option>
-                                                    {addresses?.map((address: Address) => (
-                                                        <option key={address.id} value={address.id}>{address.description}</option>
-                                                    ))}
-                                                </select>
-                                                {renderSelectedAddress()}
-                                                <Button size="lg" onClick={deleteAddress}>Delete this address</Button>
+                                            <div>
+                                                <Button className={styles.link} onClick={toggleAddress}> » Here you can manage your address</Button>
                                             </div>
-                                        </Collapse>
-                                    </div>
+                                            <Collapse isOpen={isOpenAddress}>
+                                                <div className={styles.div}>
+                                                    <h2>Add a new one</h2>
+                                                    <Form>
+                                                        <Label>Name:</Label>
+                                                        <Input type="text" onChange={(e) => { changeAddressValue('recipientName', e) }} placeholder="Name" />
+                                                        <Label>Surname:</Label>
+                                                        <Input type="text" onChange={(e) => { changeAddressValue('recipientSurname', e) }} placeholder="Surname" />
+                                                        <Label>Address:</Label>
+                                                        <Input type="text" onChange={(e) => { changeAddressValue('address', e) }} placeholder="Address" />
+                                                        <Label>City:</Label>
+                                                        <Input type="text" onChange={(e) => { changeAddressValue('city', e) }} placeholder="City" />
+                                                        <Label>Province:</Label>
+                                                        <Input type="text" onChange={(e) => { changeAddressValue('district', e) }} placeholder="Province (TV)" />
+                                                        <Label>CAP:</Label>
+                                                        <Input type="text" onChange={(e) => { changeAddressValue('code', e) }} placeholder="CAP" />
+                                                        <Label>Description:</Label>
+                                                        <Input type="text" onChange={(e) => { changeAddressValue('description', e) }} placeholder="House Address" />
+                                                    </Form>
+                                                    <br />
+                                                    <Button size="lg" onClick={() => { submitNewAddress() }}>Add</Button>
+                                                    <br />
+                                                    <h2>Or delete an existing one</h2>
+                                                    <select style={{ width: "20rem" }} defaultValue="#" onChange={(e) => { changeSelectedAddress(e) }}>
+                                                        <option value='#'> - - - </option>
+                                                        {addresses?.map((address: Address) => (
+                                                            <option key={address.id} value={address.id}>{address.description}</option>
+                                                        ))}
+                                                    </select>
+                                                    {renderSelectedAddress()}
+                                                    <Button size="lg" onClick={deleteAddress}>Delete this address</Button>
+                                                </div>
+                                            </Collapse>
+                                        </div>
+                                    ):<></>
+                                    }
                                     <div>
                                         <div>
                                             <Button className={styles.link} onClick={togglePassword}> » Here you can manage your password</Button>
