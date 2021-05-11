@@ -1,10 +1,38 @@
-.div {
-    border-radius: 10px;
-    border: ridge var(--color-gray-dark);
-    padding: 20px;
-    margin-left: 30%;
-    margin-right: 30%;
-    margin-top: 2rem;
+
+@media screen and (min-width:760px){
+    .div {
+        border-radius: 10px;
+        border: ridge var(--color-gray-dark);
+        padding: 20px;
+        margin-left: 30%;
+        margin-right: 30%;
+        margin-top: 2rem;
+    }
+}
+
+@media screen and (max-width:760px){
+    .div {
+        border-radius: 10px;
+        border: ridge var(--color-gray-dark);
+        padding: 20px;
+        margin-left: 5%;
+        margin-right: 5%;
+        margin-top: 2rem;
+    }
+}
+
+.recoverButton{
+    border: transparent;
+    background-color: transparent;
+}
+
+.recoverButton :hover{
+    border: transparent;
+    background-color: transparent;
+}
+
+.recoverButton :active{
+    border: transparent;
 }
 
 .p {

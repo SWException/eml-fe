@@ -109,7 +109,7 @@ const Login: React.FC = () => {
                                     </div>
                                     <div>
                                         <p className={styles.p}>Forgot your password?</p>
-                                        <Button onClick={() => { setRemember(true) }} color="primary" size="lg">Recover</Button>
+                                        <button className={styles.recoverButton} onClick={() => { setRemember(true) }}>Recover</button>
                                     </div>
                                 </div>
                             )}
