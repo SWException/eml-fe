@@ -1,9 +1,23 @@
-.productContainer {
-    margin-bottom: 2rem;
-    margin-left: 2rem;
-    margin-top: 2rem;
-    display: inline-flex;
+@media screen and (max-width:760px){
+    .productContainer {
+        margin-bottom: 2rem;
+        margin-left: 2rem;
+        margin-top: 2rem;
+        display: block;
+    }
+    }
+
+
+@media screen and (min-width:760px){
+    .productContainer {
+        margin-bottom: 2rem;
+        margin-left: 2rem;
+        margin-top: 2rem;
+        display: inline-flex;
+    }
+    
 }
+
 
 
 .productInfo {

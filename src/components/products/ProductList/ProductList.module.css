@@ -4,14 +4,14 @@
 }
 
 @media screen and (min-width:760px){
-.productGrid {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    grid-gap: 2rem;
-    margin: 10rem 10rem 10rem 10rem;
-    font-size: 1.7rem;
-    color: var(--color-dark);
-}
+    .productGrid {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        grid-gap: 2rem;
+        margin: 10rem 10rem 10rem 10rem;
+        font-size: 1.7rem;
+        color: var(--color-dark);
+    }
 }
 
 @media screen and (max-width:760px){
