@@ -17,7 +17,7 @@ const Sort: React.FC<Props> = ({ setFilters }) => {
 
     return (
         <>
-            <form className={styles.form}>
+          <form className={styles.form}>
                 <div>
                     <select className={styles.select} onChange={(e: ChangeEvent<HTMLSelectElement>) => updateProducts(e)}>
                         <option value = "asc">
