@@ -3,13 +3,36 @@
     background-color: #dddddd;
 }
 
+@media screen and (min-width:760px){
 .productGrid {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
     grid-gap: 2rem;
-    margin: 6rem 6rem 6rem 6rem;
+    margin: 10rem 10rem 10rem 10rem;
     font-size: 1.7rem;
     color: var(--color-dark);
+}
+}
+
+@media screen and (max-width:760px){
+    .productGrid {
+        display: grid;
+        grid-template-columns: 1fr;
+        justify-content: center;
+        align-items: center;
+        align-content: center;
+        grid-gap: 2rem;
+        margin: 6rem 6rem 6rem 6rem;
+        font-size: 1.7rem;
+        color: var(--color-dark);
+    }
+}
+
+
+.card{
+    box-shadow: 10px 10px 5px #dedede;
+    justify-content: center;
+    align-items: center;
 }
 
 .productInfo {
@@ -25,9 +48,4 @@
     color: var(--color-dark);
     font-size: 1.8rem;
     font-weight: 600;
-}
-
-.card{
-    box-shadow: 10px 10px 5px #dedede;
-    justify-content: center;
 }

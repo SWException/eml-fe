@@ -2,10 +2,7 @@ import Link from 'next/link';
 import { Product, Products } from 'types';
 import React from 'react';
 import styles from './ProductList.module.css';
-import {
-    Card, CardImg, CardBody,
-    CardTitle, CardSubtitle
-} from 'reactstrap';
+import { Card, CardImg, CardBody, CardTitle, CardSubtitle} from 'reactstrap';
 
 interface Props {
     products: Products;
