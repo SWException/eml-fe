@@ -241,10 +241,37 @@ const Profile: React.FC = () => {
         <CustomerLayout header footer>
             <div>
                 <h1>Profile</h1>
-                <table className={styles.container}>
-                    <tr>
-                        <td>
-                            <div>
+                        <div className={styles.gridcontainer}>
+                        <div className={styles.gridItemProfile}>
+                                <Card>
+                                    <CardBody>
+                                        <CardTitle className={styles.cardtitle}>
+                                            <div>
+                                                <img src="/profile.png" style={{width:25, height: 25, marginRight: 5}}/>
+                                            Your Profile:
+                                            </div>
+                                        </CardTitle>
+                                        <CardText>
+                                            <div className={styles.user}>
+                                                <strong>Email: </strong>{userEmail}
+                                            </div>
+                                            <div className={styles.user}>
+                                                <strong>Email verified: </strong>{(userEmailVerified)? "true" : "false"}
+                                            </div>
+                                            <div className={styles.user}>
+                                                <strong>Name: </strong>{userName}
+                                            </div>
+                                            <div className={styles.user}>
+                                                <strong>Surname: </strong>{userSurname}
+                                            </div>
+                                            <div className={styles.user}>
+                                                <strong>User id: </strong>{userUsername}
+                                            </div>
+                                        </CardText>
+                                    </CardBody>
+                                </Card>
+                            </div>
+                            <div className={styles.gridItem}>
                                 <div>
                                     {userRole !== "Admin"? (
                                         <div>
@@ -380,7 +407,7 @@ const Profile: React.FC = () => {
                                             <Button className={styles.link} onClick={toggleDevices}> » Here you can manage your devices access</Button>
                                         </div>
                                         <Collapse isOpen={isOpenDevices}>
-                                            <div className={styles.div}>
+                                            <div className={styles.divtable}>
                                                 <table>
                                                     <thead>
                                                         <tr>
@@ -403,9 +430,9 @@ const Profile: React.FC = () => {
                                                         ))} 
                                                     </tbody>
                                                 </table>
-                                                <Button onClick={() => AuthService.logoutFromAllDevices(() => router.push("/account/signin"))}> Logout from all devices </Button>
+                                                <Button style={{marginTop:"1rem"}} onClick={() => AuthService.logoutFromAllDevices(() => router.push("/account/signin"))}> Logout from all devices </Button>
                                                 <br />
-                                                <Button onClick={() => AuthService.forgetAllDevices(() => AuthService.getDevicesList(setUserDevices))}> Forget all devices </Button>
+                                                <Button style={{marginTop:"1rem"}} onClick={() => AuthService.forgetAllDevices(() => AuthService.getDevicesList(setUserDevices))}> Forget all devices </Button>
                                             </div>
                                         </Collapse>
                                     </div>
@@ -424,43 +451,7 @@ const Profile: React.FC = () => {
                                     </div>
                                 </div>
                             </div>
-                        </td>
-                        <td>
-                            <div className={styles.container}>
-                                <Card>
-                                    <CardBody>
-                                        <CardTitle className={styles.cardtitle}>
-                                            <div>
-                                                <img src="/profile.png" style={{width:25, height: 25, marginRight: 5}}/>
-                                            Your Profile:
-                                            </div>
-                                        </CardTitle>
-                                        <CardText>
-                                            <div className={styles.user}>
-                                                <strong>Email: </strong>{userEmail}
-                                            </div>
-                                            <div className={styles.user}>
-                                                <strong>Email verified: </strong>{(userEmailVerified)? "true" : "false"}
-                                            </div>
-                                            <div className={styles.user}>
-                                                <strong>Name: </strong>{userName}
-                                            </div>
-                                            <div className={styles.user}>
-                                                <strong>Surname: </strong>{userSurname}
-                                            </div>
-                                            <div className={styles.user}>
-                                                <strong>User id: </strong>{userUsername}
-                                            </div>
-                                            <div className={styles.user}>
-                                                <strong>Role: </strong>{userRole}
-                                            </div>
-                                        </CardText>
-                                    </CardBody>
-                                </Card>
-                            </div>
-                        </td>
-                    </tr>
-                </table>
+                        </div>
             </div>
         </CustomerLayout>
     );
