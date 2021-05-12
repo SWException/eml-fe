@@ -146,13 +146,13 @@ const CheckoutForm: React.FC = () => {
             <form className="needs-validation">
                 <div className="row">
                     <div className="col-md-6 mb-3">
-                        <label>First name</label>
+                        <label>Recipient first name</label>
                         <input type="text" className="form-control" onChange={
                             (e: React.ChangeEvent<HTMLInputElement>): void => { handleBillingAddressFieldChanges('recipientName', e) }
                         } id="billingRecipientName" placeholder="ex. Mario" />
                     </div>
                     <div className="col-md-6 mb-3">
-                        <label>Last name</label>
+                        <label>Recipient last name</label>
                         <input type="text" className="form-control" onChange={
                             (e: React.ChangeEvent<HTMLInputElement>): void => { handleBillingAddressFieldChanges('recipientSurname', e) }
                         } id="billingRecipientSurname" placeholder="ex. Rossi" />
@@ -166,25 +166,25 @@ const CheckoutForm: React.FC = () => {
                 </div>
                 <div className="row">
                     <div className="col-md-5 mb-3">
-                        <label >Country</label>
+                        <label >City</label>
                         <input type="text" className="form-control" onChange={
                             (e: React.ChangeEvent<HTMLInputElement>): void => { handleBillingAddressFieldChanges('city', e) }
                         } id="billingCity" placeholder="ex. Padova" />
                     </div>
                     <div className="col-md-4 mb-3">
-                        <label >State</label>
+                        <label >District</label>
                         <input type="text" className="form-control" onChange={
                             (e: React.ChangeEvent<HTMLInputElement>): void => { handleBillingAddressFieldChanges('district', e) }
                         } id="billingDistrict" placeholder="ex. Italy" />
                     </div>
                     <div className="col-md-3 mb-3">
-                        <label>Zip</label>
+                        <label>ZIP code</label>
                         <input type="text" className="form-control" onChange={
                             (e: React.ChangeEvent<HTMLInputElement>): void => { handleBillingAddressFieldChanges('code', e) }
                         } id="billingCode" placeholder="ex. 31100" />
                     </div>
                     <div className="col-md-3 mb-3">
-                        <label>Description</label>
+                        <label>Address description</label>
                         <input type="text" className="form-control" onChange={
                             (e: React.ChangeEvent<HTMLInputElement>): void => { handleBillingAddressFieldChanges('description', e) }
                         } id="billingDescription" placeholder="ex. Casa Mia" />
@@ -201,13 +201,13 @@ const CheckoutForm: React.FC = () => {
             <form className="needs-validation">
                 <div className="row">
                     <div className="col-md-6 mb-3">
-                        <label>First name</label>
+                        <label>Recipient first name</label>
                         <input type="text" className="form-control" onChange={
                             (e: React.ChangeEvent<HTMLInputElement>): void => { handleShippingAddressFieldChanges('recipientName', e) }
                         } id="shippingRecipientName" placeholder="ex. Mario" />
                     </div>
                     <div className="col-md-6 mb-3">
-                        <label>Last name</label>
+                        <label>Recipient last name</label>
                         <input type="text" className="form-control" onChange={
                             (e: React.ChangeEvent<HTMLInputElement>): void => { handleShippingAddressFieldChanges('recipientSurname', e) }
                         } id="shippingRecipientSurname" placeholder="ex. Rossi" />
@@ -221,25 +221,25 @@ const CheckoutForm: React.FC = () => {
                 </div>
                 <div className="row">
                     <div className="col-md-5 mb-3">
-                        <label >Country</label>
+                        <label >City</label>
                         <input type="text" className="form-control" onChange={
                             (e: React.ChangeEvent<HTMLInputElement>): void => { handleShippingAddressFieldChanges('city', e) }
                         } id="shippingCity" placeholder="ex. Padova" />
                     </div>
                     <div className="col-md-4 mb-3">
-                        <label >State</label>
+                        <label >District</label>
                         <input type="text" className="form-control" onChange={
                             (e: React.ChangeEvent<HTMLInputElement>): void => { handleShippingAddressFieldChanges('district', e) }
                         } id="shippingDistrict" placeholder="ex. Italy" />
                     </div>
                     <div className="col-md-3 mb-3">
-                        <label>Zip</label>
+                        <label>ZIP code</label>
                         <input type="text" className="form-control" onChange={
                             (e: React.ChangeEvent<HTMLInputElement>): void => { handleShippingAddressFieldChanges('code', e) }
                         } id="shippingCode" placeholder="ex. 31100" />
                     </div>
                     <div className="col-md-3 mb-3">
-                        <label>Description</label>
+                        <label>Address description</label>
                         <input type="text" className="form-control" onChange={
                             (e: React.ChangeEvent<HTMLInputElement>): void => { handleShippingAddressFieldChanges('description', e) }
                         } id="shippingDescription" placeholder="ex. Casa Mia" />

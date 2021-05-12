@@ -6,7 +6,7 @@ export type User = {
     email_verified?: boolean,
     imageURL: string;
     carts: string[];
-    role: 'user' | 'admin' | string;
+    role?: 'user' | 'admin' | string;
 };
 
 export type UserFields = {

@@ -2,22 +2,28 @@ import React, { useState } from 'react';
 import styles from './Filters.module.css';
 import { SearchRules } from 'types';
 import { Button } from 'reactstrap';
+import { useEffect } from 'react';
 
 interface Props {
-    setFilters: ((T: SearchRules) => Promise<void>)
+    setFilters: (() => Promise<void>);
+    searchRules: SearchRules;
 }
 
-const Filters: React.FC<Props> = ({ setFilters }) => {
+const Filters: React.FC<Props> = ({ setFilters, searchRules }) => {
+
+    useEffect(() => {
+        setMaxPrice("");
+        setMinPrice("");
+    }, [searchRules.category])
 
     const [minPrice, setMinPrice] = useState<string>();
     const [maxPrice, setMaxPrice] = useState<string>();
 
     const updateProducts = (minPrice: string, maxPrice: string): void => {
-        const filters: SearchRules = {
-            minPrice: parseFloat(minPrice),
-            maxPrice: parseFloat(maxPrice)
-        }
-        setFilters(filters);
+        searchRules.minPrice = parseFloat(minPrice);
+        searchRules.maxPrice = parseFloat(maxPrice);
+
+        setFilters();
     }
 
     const reset = (): void => {
@@ -36,8 +42,8 @@ const Filters: React.FC<Props> = ({ setFilters }) => {
                         <input id="to" type="number" min="0" placeholder="€ Max" value={maxPrice} onChange={(e) => setMaxPrice(e.target.value)} />
                     </div>
                     <div>
-                    <Button color="primary" size="lg" className={styles.filterButton} onClick={() => updateProducts(minPrice, maxPrice)}>FILTER</Button>
-                    <Button color="primary" size="lg" className={styles.filterButton} onClick={() => reset()}>RESET</Button>
+                        <Button color="primary" size="lg" className={styles.filterButton} onClick={() => updateProducts(minPrice, maxPrice)}>FILTER</Button>
+                        <Button color="primary" size="lg" className={styles.filterButton} onClick={() => reset()}>RESET PRICE FILTER</Button>
                     </div>
                 </div>
             </form>

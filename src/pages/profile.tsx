@@ -39,12 +39,43 @@ const Profile: React.FC = () => {
     const [isOpenDelete, setIsOpenDelete] = useState(false);
     const [isOpenProfileInfo, setIsOpenProfileInfo] = useState(false);
 
-    const toggleAddress = () => setIsOpenAddress(!isOpenAddress);
-    const togglePassword = () => setIsOpenPassword(!isOpenPassword);
-    const toggleEmail = () => setIsOpenEmail(!isOpenEmail);
-    const toggleProfileInfo = () => setIsOpenProfileInfo(!isOpenProfileInfo);
-    const toggleDevices = () => setIsOpenDevices(!isOpenDevices);
-    const toggleDelete = () => setIsOpenDelete(!isOpenDelete);
+    const toggleAddress = () => toggle("address");
+    const togglePassword = () => toggle("password");
+    const toggleEmail = () => toggle("email");
+    const toggleProfileInfo = () => toggle("info");
+    const toggleDevices = () => toggle("devices");
+    const toggleDelete = () => toggle("delete");
+
+    const toggle = (toggle: string): void => {
+        setIsOpenAddress(false);
+        setIsOpenPassword(false);
+        setIsOpenEmail(false);
+        setIsOpenProfileInfo(false);
+        setIsOpenDevices(false);
+        setIsOpenDelete(false);
+        switch (toggle){
+        case "address":
+            setIsOpenAddress(!isOpenAddress);
+            break;
+        case "password":
+            setIsOpenPassword(!isOpenPassword);
+            break;
+        case "email":
+            setIsOpenEmail(!isOpenEmail);
+            break;
+        case "info":
+            setIsOpenProfileInfo(!isOpenProfileInfo);
+            break;
+        case "devices":
+            setIsOpenDevices(!isOpenDevices);
+            break;
+        case "delete":
+            setIsOpenDelete(!isOpenDelete);
+            break;
+        default:
+            break;
+        }
+    }
 
     useEffect(() => {
         setUserData();
@@ -103,6 +134,30 @@ const Profile: React.FC = () => {
     }
 
     const submitNewAddress = async (): Promise<void> => {
+        if(!newAddressValues.recipientName){
+            alert("Recipient name can not be empty");
+            return;
+        }
+        if(!newAddressValues.recipientSurname){
+            alert("Recipient surname can not be empty");
+            return;
+        }
+        if(!newAddressValues.address){
+            alert("Address can not be empty");
+            return;
+        }
+        if(!newAddressValues.city){
+            alert("City can not be empty");
+            return;
+        }
+        if(!newAddressValues.district){
+            alert("District can not be empty");
+            return;
+        }
+        if(!newAddressValues.description){
+            alert("Description can not be empty");
+            return;
+        }
         await AddressesService.createNewAddress(newAddressValues)
             .then((newAddressId: string) => {
                 if (newAddressId) {
@@ -222,12 +277,13 @@ const Profile: React.FC = () => {
         if (selectedAddress) {
             return (
                 <p>
-                    { selectedAddress.description}
-                     - { selectedAddress.recipientName}
-                    { selectedAddress.recipientSurname}
-                     - { selectedAddress.address},
-                    { selectedAddress.code},
-                    { selectedAddress.city},
+                    {selectedAddress.description + " "}
+                     - {selectedAddress.recipientName + " "}
+                    {selectedAddress.recipientSurname + " "}
+                     - {selectedAddress.address},
+                    {" " + selectedAddress.code},
+                    {" " + selectedAddress.city}
+                    {" " + selectedAddress.district},
                 </p>
             );
         }
@@ -291,19 +347,19 @@ const Profile: React.FC = () => {
                                         <div className={styles.div}>
                                             <h2>Add a new one</h2>
                                             <Form>
-                                                <Label>Name:</Label>
+                                                <Label>Recipient name:</Label>
                                                 <Input type="text" onChange={(e) => { changeAddressValue('recipientName', e) }} placeholder="Name" />
-                                                <Label>Surname:</Label>
+                                                <Label>Recipient surname:</Label>
                                                 <Input type="text" onChange={(e) => { changeAddressValue('recipientSurname', e) }} placeholder="Surname" />
                                                 <Label>Address:</Label>
                                                 <Input type="text" onChange={(e) => { changeAddressValue('address', e) }} placeholder="Address" />
                                                 <Label>City:</Label>
                                                 <Input type="text" onChange={(e) => { changeAddressValue('city', e) }} placeholder="City" />
-                                                <Label>Province:</Label>
+                                                <Label>District:</Label>
                                                 <Input type="text" onChange={(e) => { changeAddressValue('district', e) }} placeholder="Province (TV)" />
-                                                <Label>CAP:</Label>
+                                                <Label>ZIP code:</Label>
                                                 <Input type="text" onChange={(e) => { changeAddressValue('code', e) }} placeholder="CAP" />
-                                                <Label>Description:</Label>
+                                                <Label>Address description:</Label>
                                                 <Input type="text" onChange={(e) => { changeAddressValue('description', e) }} placeholder="House Address" />
                                             </Form>
                                             <br />

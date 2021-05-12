@@ -14,21 +14,16 @@ interface Props {
 
 const ProductsPage: React.FC<Props> = ({ initialProducts, categoryId }) => {
 
-    const [searchRules]: [SearchRules, Dispatch<SearchRules>] = useState<SearchRules>({category: categoryId});
+    const [searchRules, setSearchRules]: [SearchRules, Dispatch<SearchRules>] = useState<SearchRules>({category: categoryId});
     const [products, setProducts]: [Products, Dispatch<Products>] = useState<Products>(initialProducts);
 
     useEffect(() => {
         setProducts(initialProducts);
-        searchRules.category = categoryId;
+        setSearchRules({category: categoryId});
     }, [initialProducts, categoryId])
 
 
-    const setFilters = async (filters: SearchRules) => {
-        searchRules.maxPrice = (filters.maxPrice)? filters.maxPrice : searchRules.maxPrice;
-        searchRules.minPrice = (filters.minPrice && filters.minPrice >= 0)? filters.minPrice : searchRules.minPrice;
-        searchRules.sorting = (filters.sorting)? filters.sorting : searchRules.sorting;
-        console.log("NEW FILTERS", filters);
-        console.log("NEW RULES", searchRules);
+    const setFilters = async (): Promise<void> => {
         await updateProducts();
     }
 
@@ -43,10 +38,10 @@ const ProductsPage: React.FC<Props> = ({ initialProducts, categoryId }) => {
             <div>
                 <div className={styles.filter}>
                     <div> 
-                        Price:<Filters setFilters={setFilters} /> 
+                        Price:<Filters setFilters={setFilters} searchRules={searchRules} /> 
                     </div>
                     <div className={styles.sortbox}> 
-                        Price sorting:<Sort setFilters={setFilters} />
+                        Price sorting:<Sort setFilters={setFilters} searchRules={searchRules} />
                     </div>
                 </div>
                 <div>
