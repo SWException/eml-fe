@@ -9,7 +9,6 @@ Amplify.configure(awsconfig);
 const Logout: React.FC = () => {
 
     // const [message, setMessage] = useState('');
-    const [error, setError] = useState('');
 
     const router = useRouter();
 
@@ -29,31 +28,16 @@ const Logout: React.FC = () => {
             console.log("Logout");
             window.localStorage.removeItem('jwt');
             window.localStorage.clear();
-            window.localStorage.setItem('err', 'Sei uscito da questo sito!');
-            window.location.reload();
-            setError('');
-            redirectToHomePage();
+            router.push('/');
         }
         catch (error) {
             console.log('error signing out: ', error);
-            setError('Errore durante il logout, riprovare');
-            // setMessage('');
-            displayErr();
+            router.push('/account/signin');
         }
-    }
-
-    const displayErr = () => {
-        return (error ? <div className="alert alert-danger">{error}</div> : '');
-    }
-
-
-    const redirectToHomePage = () => {
-        router.push('/');
     }
 
     return (
         <>
-            <p>test</p>
         </>
     );
 

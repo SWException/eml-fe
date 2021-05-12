@@ -238,6 +238,13 @@ const isAuthenticated = async (): Promise<boolean> => {
         .catch(() => false);
 }
 
+const deleteAccount = async (callback: (err?, result?) => void): Promise<void> => {
+    return await Auth.currentAuthenticatedUser()
+        .then((user: CognitoUser) => {
+            user.deleteUser(callback);
+        });
+}
+
 const getDevicesList = (callback: (devices) => void): void => {
     Auth.currentAuthenticatedUser()
         .then((user: CognitoUser) => {
@@ -335,5 +342,6 @@ export const AuthService = {
     forgetAllDevices,
     changeAccountAttributes,
     sendEmailVerificationCode,
-    verifyEmail
+    verifyEmail,
+    deleteAccount
 };

@@ -135,7 +135,10 @@ const updateCart = async ( id: string, quantity: number, id_cart?: string): Prom
     return true;
 };
 
-const authenticateCart = async (id_cart:string): Promise<boolean> => {
+const authenticateCart = async (id_cart: string): Promise<boolean> => {
+    if(!id_cart){
+        return true;
+    }
     const token = await AuthService.getTokenJwt();
     const requestOptions = {
         method: 'PATCH',

@@ -13,7 +13,8 @@ const LogoutButton: React.FC = () => {
         try {
             await logout();
             router.push('/')
-        } catch (error) {
+        }
+        catch (error) {
             console.log('error signing out: ', error);
         }
     }

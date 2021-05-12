@@ -58,6 +58,8 @@ const Profile: React.FC = () => {
             setUserEmail(user.email);
             setUserName(user.name);
             setUserSurname(user.surname);
+            setNewName(user.name);
+            setNewSurname(user.surname);
             setUserEmailVerified(user.email_verified);
             setUserUsername(user.username);
             setUserRole(user.role);
@@ -236,222 +238,229 @@ const Profile: React.FC = () => {
         }
     }
 
-
+    const deleteAccount = (): void =>{
+        AuthService.deleteAccount((err, result) => {
+            console.log(err, result);
+            if (result)
+                router.push("/account/signout");
+        })
+            .catch(() => null);
+    }
     return (
         <CustomerLayout header footer>
             <div>
                 <h1>Profile</h1>
-                        <div className={styles.gridcontainer}>
-                        <div className={styles.gridItemProfile}>
-                                <Card>
-                                    <CardBody>
-                                        <CardTitle className={styles.cardtitle}>
-                                            <div>
-                                                <img src="/profile.png" style={{width:25, height: 25, marginRight: 5}}/>
+                <div className={styles.gridcontainer}>
+                    <div className={styles.gridItemProfile}>
+                        <Card>
+                            <CardBody>
+                                <CardTitle className={styles.cardtitle}>
+                                    <div>
+                                        <img src="/profile.png" style={{width:25, height: 25, marginRight: 5}}/>
                                             Your Profile:
-                                            </div>
-                                        </CardTitle>
-                                        <CardText>
-                                            <div className={styles.user}>
-                                                <strong>Email: </strong>{userEmail}
-                                            </div>
-                                            <div className={styles.user}>
-                                                <strong>Email verified: </strong>{(userEmailVerified)? "true" : "false"}
-                                            </div>
-                                            <div className={styles.user}>
-                                                <strong>Name: </strong>{userName}
-                                            </div>
-                                            <div className={styles.user}>
-                                                <strong>Surname: </strong>{userSurname}
-                                            </div>
-                                            <div className={styles.user}>
-                                                <strong>User id: </strong>{userUsername}
-                                            </div>
-                                        </CardText>
-                                    </CardBody>
-                                </Card>
-                            </div>
-                            <div className={styles.gridItem}>
+                                    </div>
+                                </CardTitle>
+                                <CardText>
+                                    <div className={styles.user}>
+                                        <strong>Email: </strong>{userEmail}
+                                    </div>
+                                    <div className={styles.user}>
+                                        <strong>Email verified: </strong>{(userEmailVerified)? "true" : "false"}
+                                    </div>
+                                    <div className={styles.user}>
+                                        <strong>Name: </strong>{userName}
+                                    </div>
+                                    <div className={styles.user}>
+                                        <strong>Surname: </strong>{userSurname}
+                                    </div>
+                                    <div className={styles.user}>
+                                        <strong>User id: </strong>{userUsername}
+                                    </div>
+                                </CardText>
+                            </CardBody>
+                        </Card>
+                    </div>
+                    <div className={styles.gridItem}>
+                        <div>
+                            {userRole !== "Admin"? (
                                 <div>
-                                    {userRole !== "Admin"? (
-                                        <div>
-                                            <div>
-                                                <Button className={styles.link} onClick={toggleAddress}> » Here you can manage your address</Button>
-                                            </div>
-                                            <Collapse isOpen={isOpenAddress}>
-                                                <div className={styles.div}>
-                                                    <h2>Add a new one</h2>
-                                                    <Form>
-                                                        <Label>Name:</Label>
-                                                        <Input type="text" onChange={(e) => { changeAddressValue('recipientName', e) }} placeholder="Name" />
-                                                        <Label>Surname:</Label>
-                                                        <Input type="text" onChange={(e) => { changeAddressValue('recipientSurname', e) }} placeholder="Surname" />
-                                                        <Label>Address:</Label>
-                                                        <Input type="text" onChange={(e) => { changeAddressValue('address', e) }} placeholder="Address" />
-                                                        <Label>City:</Label>
-                                                        <Input type="text" onChange={(e) => { changeAddressValue('city', e) }} placeholder="City" />
-                                                        <Label>Province:</Label>
-                                                        <Input type="text" onChange={(e) => { changeAddressValue('district', e) }} placeholder="Province (TV)" />
-                                                        <Label>CAP:</Label>
-                                                        <Input type="text" onChange={(e) => { changeAddressValue('code', e) }} placeholder="CAP" />
-                                                        <Label>Description:</Label>
-                                                        <Input type="text" onChange={(e) => { changeAddressValue('description', e) }} placeholder="House Address" />
-                                                    </Form>
-                                                    <br />
-                                                    <Button size="lg" onClick={() => { submitNewAddress() }}>Add</Button>
-                                                    <br />
-                                                    <h2>Or delete an existing one</h2>
-                                                    <select style={{ width: "20rem" }} defaultValue="#" onChange={(e) => { changeSelectedAddress(e) }}>
-                                                        <option value='#'> - - - </option>
-                                                        {addresses?.map((address: Address) => (
-                                                            <option key={address.id} value={address.id}>{address.description}</option>
-                                                        ))}
-                                                    </select>
-                                                    {renderSelectedAddress()}
-                                                    <Button size="lg" onClick={deleteAddress}>Delete this address</Button>
-                                                </div>
-                                            </Collapse>
-                                        </div>
-                                    ):<></>
-                                    }
                                     <div>
-                                        <div>
-                                            <Button className={styles.link} onClick={togglePassword}> » Here you can manage your password</Button>
-                                        </div>
-                                        <Collapse isOpen={isOpenPassword}>
-                                            <div className={styles.div}>
-                                                <Form>
-                                                    <FormGroup>
-                                                        <Label for="oldPassword">Old Password</Label>
-                                                        <Input type="password" onChange={(e: React.ChangeEvent<HTMLInputElement>) => { oldPasswordField(e); }} name="password" id="oldPassword" placeholder="Old Password" />
-                                                    </FormGroup>
-                                                    <FormGroup>
-                                                        <Label for="newPassword">New Password</Label>
-                                                        <Input type="password" onChange={(e: React.ChangeEvent<HTMLInputElement>) => { newPasswordField(e); }} name="newPassword" id="newPassword" placeholder="New Password" />
-                                                    </FormGroup>
-                                                    <FormGroup>
-                                                        <Label for="confirmNewPassword">Confirm New Password</Label>
-                                                        <Input type="password" onChange={(e: React.ChangeEvent<HTMLInputElement>) => { confirmNewPasswordField(e); }}
-                                                            name="confirmNewPassword" id="confirmNewPassword" placeholder="Confirm New Password" />
-                                                    </FormGroup>
-                                                    <div>
-                                                        <Button size="lg" onClick={() => { changePassword() }}>Change Password</Button>
-                                                    </div>
-                                                </Form>
-                                            </div>
-                                        </Collapse>
+                                        <Button className={styles.link} onClick={toggleAddress}> » Here you can manage your address</Button>
                                     </div>
-                                    <div>
-                                        <div>
-                                            <Button className={styles.link} onClick={toggleEmail}> » Here you can manage your email</Button>
+                                    <Collapse isOpen={isOpenAddress}>
+                                        <div className={styles.div}>
+                                            <h2>Add a new one</h2>
+                                            <Form>
+                                                <Label>Name:</Label>
+                                                <Input type="text" onChange={(e) => { changeAddressValue('recipientName', e) }} placeholder="Name" />
+                                                <Label>Surname:</Label>
+                                                <Input type="text" onChange={(e) => { changeAddressValue('recipientSurname', e) }} placeholder="Surname" />
+                                                <Label>Address:</Label>
+                                                <Input type="text" onChange={(e) => { changeAddressValue('address', e) }} placeholder="Address" />
+                                                <Label>City:</Label>
+                                                <Input type="text" onChange={(e) => { changeAddressValue('city', e) }} placeholder="City" />
+                                                <Label>Province:</Label>
+                                                <Input type="text" onChange={(e) => { changeAddressValue('district', e) }} placeholder="Province (TV)" />
+                                                <Label>CAP:</Label>
+                                                <Input type="text" onChange={(e) => { changeAddressValue('code', e) }} placeholder="CAP" />
+                                                <Label>Description:</Label>
+                                                <Input type="text" onChange={(e) => { changeAddressValue('description', e) }} placeholder="House Address" />
+                                            </Form>
+                                            <br />
+                                            <Button size="lg" onClick={() => { submitNewAddress() }}>Add</Button>
+                                            <br />
+                                            <h2>Or delete an existing one</h2>
+                                            <select style={{ width: "20rem" }} defaultValue="#" onChange={(e) => { changeSelectedAddress(e) }}>
+                                                <option value='#'> - - - </option>
+                                                {addresses?.map((address: Address) => (
+                                                    <option key={address.id} value={address.id}>{address.description}</option>
+                                                ))}
+                                            </select>
+                                            {renderSelectedAddress()}
+                                            <Button size="lg" onClick={deleteAddress}>Delete this address</Button>
                                         </div>
-                                        <Collapse isOpen={isOpenEmail}>
-                                            <div className={styles.div}>
-                                                <Form>
-                                                    <FormGroup>
-                                                        <Label for="newEmail">New Email</Label>
-                                                        <Input type="email" onChange={(e) => { newEmailField(e); }} name="newEmail" id="newEmail" placeholder="New Email" />
-                                                    </FormGroup>
-                                                    <FormGroup>
-                                                        <Label for="confirmNewEmail">Confirm New Email</Label>
-                                                        <Input type="email" onChange={(e) => { confirmNewEmailField(e); }} name="confirmNewEmail" id="confirmNewEmail" placeholder="Confirm New Email" />
-                                                    </FormGroup>
-                                                    <div>
-                                                        <Button size="lg" onClick={() => { changeEmail() }}>Change Email</Button>
-                                                    </div>
-                                                    {
-                                                        !userEmailVerified? (
-                                                            <>
-                                                                <FormGroup>
-                                                                    <Label for="emailVerificationCode">Verify {userEmail}</Label>
-                                                                    <Input type="text" onChange={(e) => { emailVerificationCodeField(e); }} name="emailVerificationCode" id="emailVerificationCode" placeholder="Insert code" />
-                                                                </FormGroup>
-                                                                <div>
-                                                                    <Button size="lg" onClick={() => { AuthService.sendEmailVerificationCode() }}>Resend code</Button>
-                                                                </div>
-                                                                <div>
-                                                                    <Button size="lg" onClick={() => { verifyEmail() }}>Verify Email</Button>
-                                                                </div>
-                                                            </>
-                                                        ): (<></>)
-                                                    }
-                                                    
-                                                </Form>
-                                            </div>
-                                        </Collapse>
-                                    </div>
-                                    <div>
-                                        <div>
-                                            <Button className={styles.link} onClick={toggleProfileInfo}> » Here you can manage your personal info</Button>
-                                        </div>
-                                        <Collapse isOpen={isOpenProfileInfo}>
-                                            <div className={styles.div}>
-                                                <Form>
-                                                    <FormGroup>
-                                                        <Label for="newName">New Name</Label>
-                                                        <Input type="email" onChange={(e) => { newNameField(e); }} name="newName" id="newName" placeholder={newName} value={newName} />
-                                                    </FormGroup>
-                                                    <FormGroup>
-                                                        <Label for="newSurname">New Surname</Label>
-                                                        <Input type="email" onChange={(e) => { newSurnameField(e); }} name="newSurname" id="newSurname" placeholder={newSurname} value={newSurname} />
-                                                    </FormGroup>
-                                                    <div>
-                                                        <Button size="lg" onClick={() => { changeProfileInfo() }}>Save</Button>
-                                                    </div>
-                                                </Form>
-                                            </div>
-                                        </Collapse>
-                                    </div>
-                                    <div>
-                                        <div>
-                                            <Button className={styles.link} onClick={toggleDevices}> » Here you can manage your devices access</Button>
-                                        </div>
-                                        <Collapse isOpen={isOpenDevices}>
-                                            <div className={styles.divtable}>
-                                                <table>
-                                                    <thead>
-                                                        <tr>
-                                                            <th>Last Ip</th>
-                                                            <th>Create</th>
-                                                            <th>Last Authenticated</th>
-                                                            <th>Last Modified</th>
-                                                            <th>Forget</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        {userDevices?.map((device)=> (
-                                                            <tr title={"Status: " + device.status + " | Name: " + device.name + " | Key: " + device.key}>
-                                                                <td>{device.lastIp}</td>
-                                                                <td>{new Date(device.create * 1000).toLocaleString()}</td>
-                                                                <td>{new Date(device.lastAuthenticatedDate * 1000).toLocaleString()}</td>
-                                                                <td>{new Date(device.lastModifiedDate * 1000).toLocaleString()}</td>
-                                                                <td><Button onClick={() => deleteDevice(device.key)}> Delete </Button></td>
-                                                            </tr>
-                                                        ))} 
-                                                    </tbody>
-                                                </table>
-                                                <Button style={{marginTop:"1rem"}} onClick={() => AuthService.logoutFromAllDevices(() => router.push("/account/signin"))}> Logout from all devices </Button>
-                                                <br />
-                                                <Button style={{marginTop:"1rem"}} onClick={() => AuthService.forgetAllDevices(() => AuthService.getDevicesList(setUserDevices))}> Forget all devices </Button>
-                                            </div>
-                                        </Collapse>
-                                    </div>
-                                    <div>
-                                        <div>
-                                            <Button className={styles.link} onClick={toggleDelete}> » Here you can request the deletion of the account</Button>
-                                        </div>
-                                        <Collapse isOpen={isOpenDelete}>
-                                            <div className={styles.div}>
-                                                <div className={styles.danger}>
-                                                    <h1>DANGER ZONE!</h1>
-                                                    <Button size="lg">Request account deletion</Button>
-                                                </div>
-                                            </div>
-                                        </Collapse>
-                                    </div>
+                                    </Collapse>
                                 </div>
+                            ):<></>
+                            }
+                            <div>
+                                <div>
+                                    <Button className={styles.link} onClick={togglePassword}> » Here you can manage your password</Button>
+                                </div>
+                                <Collapse isOpen={isOpenPassword}>
+                                    <div className={styles.div}>
+                                        <Form>
+                                            <FormGroup>
+                                                <Label for="oldPassword">Old Password</Label>
+                                                <Input type="password" onChange={(e: React.ChangeEvent<HTMLInputElement>) => { oldPasswordField(e); }} name="password" id="oldPassword" placeholder="Old Password" />
+                                            </FormGroup>
+                                            <FormGroup>
+                                                <Label for="newPassword">New Password</Label>
+                                                <Input type="password" onChange={(e: React.ChangeEvent<HTMLInputElement>) => { newPasswordField(e); }} name="newPassword" id="newPassword" placeholder="New Password" />
+                                            </FormGroup>
+                                            <FormGroup>
+                                                <Label for="confirmNewPassword">Confirm New Password</Label>
+                                                <Input type="password" onChange={(e: React.ChangeEvent<HTMLInputElement>) => { confirmNewPasswordField(e); }}
+                                                    name="confirmNewPassword" id="confirmNewPassword" placeholder="Confirm New Password" />
+                                            </FormGroup>
+                                            <div>
+                                                <Button size="lg" onClick={() => { changePassword() }}>Change Password</Button>
+                                            </div>
+                                        </Form>
+                                    </div>
+                                </Collapse>
+                            </div>
+                            <div>
+                                <div>
+                                    <Button className={styles.link} onClick={toggleEmail}> » Here you can manage your email</Button>
+                                </div>
+                                <Collapse isOpen={isOpenEmail}>
+                                    <div className={styles.div}>
+                                        <Form>
+                                            <FormGroup>
+                                                <Label for="newEmail">New Email</Label>
+                                                <Input type="email" onChange={(e) => { newEmailField(e); }} name="newEmail" id="newEmail" placeholder="New Email" />
+                                            </FormGroup>
+                                            <FormGroup>
+                                                <Label for="confirmNewEmail">Confirm New Email</Label>
+                                                <Input type="email" onChange={(e) => { confirmNewEmailField(e); }} name="confirmNewEmail" id="confirmNewEmail" placeholder="Confirm New Email" />
+                                            </FormGroup>
+                                            <div>
+                                                <Button size="lg" onClick={() => { changeEmail() }}>Change Email</Button>
+                                            </div>
+                                            {
+                                                !userEmailVerified? (
+                                                    <>
+                                                        <FormGroup>
+                                                            <Label for="emailVerificationCode">Verify {userEmail}</Label>
+                                                            <Input type="text" onChange={(e) => { emailVerificationCodeField(e); }} name="emailVerificationCode" id="emailVerificationCode" placeholder="Insert code" />
+                                                        </FormGroup>
+                                                        <div>
+                                                            <Button size="lg" onClick={() => { AuthService.sendEmailVerificationCode() }}>Resend code</Button>
+                                                        </div>
+                                                        <div>
+                                                            <Button size="lg" onClick={() => { verifyEmail() }}>Verify Email</Button>
+                                                        </div>
+                                                    </>
+                                                ): (<></>)
+                                            }
+                                                    
+                                        </Form>
+                                    </div>
+                                </Collapse>
+                            </div>
+                            <div>
+                                <div>
+                                    <Button className={styles.link} onClick={toggleProfileInfo}> » Here you can manage your personal info</Button>
+                                </div>
+                                <Collapse isOpen={isOpenProfileInfo}>
+                                    <div className={styles.div}>
+                                        <Form>
+                                            <FormGroup>
+                                                <Label for="newName">New Name</Label>
+                                                <Input type="email" onChange={(e) => { newNameField(e); }} name="newName" id="newName" placeholder={newName} value={newName} />
+                                            </FormGroup>
+                                            <FormGroup>
+                                                <Label for="newSurname">New Surname</Label>
+                                                <Input type="email" onChange={(e) => { newSurnameField(e); }} name="newSurname" id="newSurname" placeholder={newSurname} value={newSurname} />
+                                            </FormGroup>
+                                            <div>
+                                                <Button size="lg" onClick={() => { changeProfileInfo() }}>Save</Button>
+                                            </div>
+                                        </Form>
+                                    </div>
+                                </Collapse>
+                            </div>
+                            <div>
+                                <div>
+                                    <Button className={styles.link} onClick={toggleDevices}> » Here you can manage your devices access</Button>
+                                </div>
+                                <Collapse isOpen={isOpenDevices}>
+                                    <div className={styles.divtable}>
+                                        <table>
+                                            <thead>
+                                                <tr>
+                                                    <th>Last Ip</th>
+                                                    <th>Create</th>
+                                                    <th>Last Authenticated</th>
+                                                    <th>Last Modified</th>
+                                                    <th>Forget</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {userDevices?.map((device)=> (
+                                                    <tr title={"Status: " + device.status + " | Name: " + device.name + " | Key: " + device.key}>
+                                                        <td>{device.lastIp}</td>
+                                                        <td>{new Date(device.create * 1000).toLocaleString()}</td>
+                                                        <td>{new Date(device.lastAuthenticatedDate * 1000).toLocaleString()}</td>
+                                                        <td>{new Date(device.lastModifiedDate * 1000).toLocaleString()}</td>
+                                                        <td><Button onClick={() => deleteDevice(device.key)}> Delete </Button></td>
+                                                    </tr>
+                                                ))} 
+                                            </tbody>
+                                        </table>
+                                        <Button style={{marginTop:"1rem"}} onClick={() => AuthService.logoutFromAllDevices(() => router.push("/account/signin"))}> Logout from all devices </Button>
+                                        <br />
+                                        <Button style={{marginTop:"1rem"}} onClick={() => AuthService.forgetAllDevices(() => AuthService.getDevicesList(setUserDevices))}> Forget all devices </Button>
+                                    </div>
+                                </Collapse>
+                            </div>
+                            <div>
+                                <div>
+                                    <Button className={styles.link} onClick={toggleDelete}> » Here you can request the deletion of the account</Button>
+                                </div>
+                                <Collapse isOpen={isOpenDelete}>
+                                    <div className={styles.div}>
+                                        <div className={styles.danger}>
+                                            <h1>DANGER ZONE!</h1>
+                                            <Button size="lg" onClick={deleteAccount} >Request account deletion</Button>
+                                        </div>
+                                    </div>
+                                </Collapse>
                             </div>
                         </div>
+                    </div>
+                </div>
             </div>
         </CustomerLayout>
     );
