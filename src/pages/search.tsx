@@ -24,12 +24,7 @@ const ProductsPage: React.FC<Props> = ({ initialProducts, search }) => {
     }, [initialProducts, search])
 
 
-    const setFilters = async (filters: SearchRules) => {
-        searchRules.maxPrice = (filters.maxPrice)? filters.maxPrice : searchRules.maxPrice;
-        searchRules.minPrice = (filters.minPrice)? filters.minPrice : searchRules.minPrice;
-        searchRules.sorting = (filters.sorting)? filters.sorting : searchRules.sorting;
-        console.log("NEW FILTERS", filters);
-        console.log("NEW RULES", searchRules);
+    const setFilters = async () => {
         await updateProducts();
     }
 
@@ -42,8 +37,8 @@ const ProductsPage: React.FC<Props> = ({ initialProducts, search }) => {
     return (
         <CustomerLayout header categories footer>
             <div>
-                <div className={styles.filter}> Price:<Filters setFilters={setFilters} /> </div>
-                <div className={styles.filter}> Price sorting:<Sort setFilters={setFilters} /></div>
+                <div className={styles.filter}> Price:<Filters setFilters={setFilters} searchRules={searchRules} /> </div>
+                <div className={styles.filter}> Price sorting:<Sort setFilters={setFilters} searchRules={searchRules} /></div>
                 <div>
                     {products?.length > 0 ? (
                         <ProductList products={products} />
