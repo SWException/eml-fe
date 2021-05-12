@@ -15,7 +15,7 @@ Auth.currentAuthenticatedUser()
     })
     .catch(() => {
         console.log("User not authenticated");
-    })
+    });
 
 interface UserData {
     user: User;

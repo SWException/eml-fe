@@ -3,18 +3,18 @@ import React, { useEffect, useState, Dispatch } from "react";
 import { CustomerLayout } from 'components/layouts/CustomerLayout';
 import styles from 'styles/Orders.module.css';
 import { OrdersService, sessionService } from 'services';
-import { Order, Orders, User } from 'types';
+import { Order, Orders } from 'types';
 import { useRouter } from 'next/router';
 
-
-const OrdersList: React.FC = (prop) => {
+const OrdersList: React.FC = () => {
     const router = useRouter();
 
     useEffect(() => {
-        let user = sessionService.isAuth();
+        const user = sessionService.isAuth();
         if(!user){
             router.push('/');
-        } else {
+        }
+        else {
             reloadOrders();
         }
     }, [])

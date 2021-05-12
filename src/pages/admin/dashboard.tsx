@@ -10,8 +10,8 @@ const Dashboard: React.FC = () => {
     const router = useRouter();
 
     useEffect(()=>{
-        let userProfile:User = sessionService.getLocalStorage();
-        if(userProfile.role!='Admin'){
+        const userProfile: User = sessionService.getLocalStorage();
+        if(userProfile?.role != 'Admin'){
             router.push('/');
         }
     })
