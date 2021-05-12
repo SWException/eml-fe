@@ -5,6 +5,7 @@ import { AdminDetailOrderProductCard } from 'components/orderdetails'
 import { OrdersService } from 'services';
 import { Order, OrderProduct } from 'types'
 import { GetServerSideProps } from 'next';
+import { Button } from "reactstrap";
 
 interface Props {
     id: string,
@@ -30,6 +31,30 @@ const OrderDetailsAdmin: React.FC<Props> = ({ id }) => {
         console.log(order);
     }
 
+    const changeStatus = async (newStatus: string): Promise<void> => {
+        await OrdersService.updateOrder(order.orderid, newStatus);
+        await reloadOrder();
+    }
+
+    const refundOrder = async () => {
+        await OrdersService.refundOrder(order.orderid);
+        await reloadOrder();
+    }
+
+    const renderChangeStatus = (): JSX.Element => {
+        switch (order.orderStatus) {
+        case "Paid":
+            return (<><Button color="primary" size="lg" onClick={() => { changeStatus("Shipped"); }}>Ship</Button> <Button color="primary" size="lg" onClick={() => { refundOrder(); }}>Refund</Button></>);
+        case "Shipped":
+            return (<><Button color="primary" size="lg" onClick={() => { changeStatus("Delivered"); }}>Deliver</Button> <Button color="primary" size="lg" onClick={() => { refundOrder(); }}>Refund</Button></>);
+        case "Delivered":
+            return (<Button color="primary" size="lg" onClick={() => { refundOrder(); }}>Refund</Button>);
+        case "Refund": 
+        default:
+            return (<div></div>);
+        }
+    }
+
     return (
         <AdminLayout header>
             <div>
@@ -42,6 +67,9 @@ const OrderDetailsAdmin: React.FC<Props> = ({ id }) => {
                         <div className={styles.div}><strong>Order ID:</strong>  {order.orderid}</div>
                         <div className={styles.div}><strong>Date:</strong>  {getDate(order.timestamp)}</div>
                         <div style={{ padding: 10 }}><strong>State:</strong>  {order.orderStatus}</div>
+                    </div>
+                    <div className={styles.info}>
+                        {renderChangeStatus()}
                     </div>
                     <div className={styles.info}><strong>Customer: <a href={"mailto:" + order.customer?.email}>{order.customer?.email}</a> - {order.customer?.name} {order.customer?.surname}</strong></div>
                     <div className={styles.itemlayout}>

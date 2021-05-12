@@ -46,7 +46,9 @@ const OrderManagement: React.FC = () => {
             <label>Status:</label>
             <select className={styles.select} onChange={(e) => handleStatusChange(e)}>
                 <option value='Paid'>Paid</option>
-                <option value='Pending'>Pending</option>
+                <option value='Shipped'>Shipped</option>
+                <option value='Delivered'>Delivered</option>
+                <option value='Refunded'>Refunded</option>
             </select>
         </div>
     )
@@ -61,6 +63,7 @@ const OrderManagement: React.FC = () => {
             console.log(err);
         }
     }
+
     const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
         const value = e.target.value;
         if (value == '') {
@@ -98,7 +101,7 @@ const OrderManagement: React.FC = () => {
                             {orders.map((order: Order) => ( // Sarà da sistemare i nomi dei campi di orders. Ivan prima o poi modificherà il BE così da rispettare quanto definito nelle OpenApi
                                 <tr key={order.orderid}>
                                     <td>{order.orderid}</td>
-                                    <td>{order.customer.email}</td>
+                                    <td title={order.customer.name + " " + order.customer.surname + " - " + order.customer.username}>{order.customer.email}</td>
                                     <td>{order.orderStatus}</td>
                                     <td>{getDate(order.timestamp)}</td>
                                     <td>€ {order.cart.total}</td>

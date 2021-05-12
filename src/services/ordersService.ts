@@ -43,8 +43,8 @@ export const fetchOrder = async (id: string): Promise<Order> => {
     return order;
 };
 
-//UNUSED
-export const updateOrder = async (id: string): Promise<boolean> => {
+
+export const updateOrder = async (id: string, newStatus: string): Promise<boolean> => {
     const token = await AuthService.getTokenJwt();
 
     const requestOptions = {
@@ -52,7 +52,10 @@ export const updateOrder = async (id: string): Promise<boolean> => {
         headers: {
             'Authorization': token,
             'Content-Type': 'application/json'
-        }
+        },
+        body: JSON.stringify({
+            status: newStatus
+        })
     };
 
     const res = await fetch(`${process.env.AWS_ENDPOINT}/orders/${id}`, requestOptions)
@@ -65,7 +68,7 @@ export const updateOrder = async (id: string): Promise<boolean> => {
     return true;
 };
 
-//UNUSED
+
 export const refundOrder = async (id: string): Promise<boolean> => {
     const token = await AuthService.getTokenJwt();
     const requestOptions = {
