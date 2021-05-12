@@ -5,7 +5,7 @@ import { AdminDetailOrderProductCard } from 'components/orderdetails'
 import { OrdersService } from 'services';
 import { Order, OrderProduct } from 'types'
 import { GetServerSideProps } from 'next';
-import { Button } from "reactstrap";
+import { Button, Spinner } from "reactstrap";
 
 interface Props {
     id: string,
@@ -66,17 +66,16 @@ const OrderDetailsAdmin: React.FC<Props> = ({ id }) => {
                         <div className={styles.div}><strong>User ID:</strong> {order.userid}</div>
                         <div className={styles.div}><strong>Order ID:</strong>  {order.orderid}</div>
                         <div className={styles.div}><strong>Date:</strong>  {getDate(order.timestamp)}</div>
-                        <div style={{ padding: 10 }}><strong>State:</strong>  {order.orderStatus}</div>
+                        <div className={styles.status}><strong>State:</strong>  {order.orderStatus}</div>
                     </div>
                     <div className={styles.info}>
-                        {renderChangeStatus()}
+                        Change order status: {renderChangeStatus()}
                     </div>
                     <div className={styles.info}><strong>Customer: <a href={"mailto:" + order.customer?.email}>{order.customer?.email}</a> - {order.customer?.name} {order.customer?.surname}</strong></div>
                     <div className={styles.itemlayout}>
                         <h2>Products</h2>
-                        <table>
+                        <div>
                             {order.cart.products?.map((product: OrderProduct) => (
-                                <tr>
                                     <AdminDetailOrderProductCard
                                         primaryPhoto={product.primaryPhoto}
                                         id={product.id}
@@ -86,9 +85,8 @@ const OrderDetailsAdmin: React.FC<Props> = ({ id }) => {
                                         quantity={product.quantity}
                                         total={product.total}
                                     />
-                                </tr>
                             ))}
-                        </table>
+                        </div>
                     </div>
                     <div className={styles.info}><strong>Total whitout shipping: {" € "}{order.cart.total} </strong></div>
                     <div className={styles.info}><strong>Taxes: {" € "}{order.cart.tax} </strong></div>
@@ -98,8 +96,8 @@ const OrderDetailsAdmin: React.FC<Props> = ({ id }) => {
                     <div className={styles.info}><strong>Billing address: </strong> {order.billingAddress.recipientName} {order.billingAddress.recipientSurname} - <a href={"https://maps.google.com/?q=" + order.billingAddress.address + " " + order.billingAddress.city + " " + order.billingAddress.district + " " + order.billingAddress.code }>{order.billingAddress.city}, {order.billingAddress.address}, {order.billingAddress.code}, {order.billingAddress.district}</a></div>
                 </>
                 ) : (
-                    <div>
-                        LOADING SPINNER FIGHISSIMO!
+                    <div className={styles.spinner}>
+                        <Spinner/>
                     </div>
                 )
                 }

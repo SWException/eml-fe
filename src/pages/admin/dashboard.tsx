@@ -37,58 +37,50 @@ const Dashboard: React.FC = () => {
 
     return (
         <AdminLayout header>
-            <table className={styles.table}>
-                <tbody>
-                    <tr className={styles.tr}>
-                        <th className={styles.th}>
+                    <div className={styles.gridcontainer}>
+                        <div className={styles.griditem}>
                             <button className={styles.div} onClick={() => {redirectProductManagement()}}>
                                 <Image src="/product.png" width={40} height={40} />
                                 <p><b>Manage product</b></p>
                                 <p>Here you can add, edit and remove a product</p>
                             </button>
-                        </th>
-                        <th className={styles.th}>
+                        </div>
+                        <div className={styles.griditem}>
                             <button className={styles.div} onClick={() => {redirectOrdersManagement()}}>
                                 <Image src="/orders.png" width={40} height={40} />
                                 <p><b>Manage orders</b></p>
                                 <p>Here you can see all clients's orders and manage them.</p>
                             </button>
-                        </th>
-                    </tr>
-                    <tr className={styles.tr}>
-                        <th className={styles.th}>
+                        </div>
+                        <div className={styles.griditem}>
                             <button className={styles.div} onClick={() => {redirectCategoryManagement()}}>
                                 <Image src="/category.png" width={40} height={40} />
                                 <p><b>Manage categories</b></p>
                                 <p>Here you can add, edit and remove a category</p>
                             </button>
-                        </th>
-                        <th className={styles.th}>
+                        </div>
+                        <div className={styles.griditem}>
                             <button className={styles.div} onClick={() => {redirectTaxManagement()}}>
                                 <Image src="/tax.png" width={40} height={40} />
                                 <p><b>Manage taxes</b></p>
                                 <p>Here you can add, edit and remove a taxes</p>
                             </button>
-                        </th>
-                    </tr>
-                    <tr className={styles.tr}>
-                        <th className={styles.th}>
+                        </div>
+                        <div className={styles.griditem}>
                             <button className={styles.div} onClick={() => {redirectCustomerManagement()}}>
                                 <Image src="/customers.png" width={40} height={40} />
                                 <p><b>Manage customers</b></p>
                                 <p>Here you can see all customers and contact them</p>
                             </button>
-                        </th>
-                        <th className={styles.th}>
+                        </div>
+                        < div className={styles.griditem}>
                             <button className={styles.div} onClick={() => {redirectProfile()}}>
                                 <Image src="/profile.png" width={40} height={40} />
                                 <p><b>Profile</b></p>
                                 <p>Here you can see your profile</p>
                             </button>
-                        </th>
-                    </tr>
-                </tbody>
-            </table>
+                        </div>
+                    </div>
         </AdminLayout>
     );
 };

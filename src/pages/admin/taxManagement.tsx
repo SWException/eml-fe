@@ -98,7 +98,7 @@ const TaxManagement: React.FC<Props> = ({ initialTaxes }) => {
                                     <td>{tax.description}</td>
                                     <td>{tax.value}</td>
                                     <td><EditExistingTax tax={tax} loadTaxes={(): void => { getAllTaxes() }}/></td>
-                                    <td><Button color="primary" size="lg" onClick={(): void => {deleteTax(tax.id)}}>REMOVE</Button></td>
+                                    <td><Button color="primary" size="lg" onClick={(): void => {deleteTax(tax.id)}}>X</Button></td>
                                 </tr>
                             ))}
                         </tbody>
