@@ -71,15 +71,13 @@ const CartUser: React.FC = () => {
                     <Spinner style={{ width: '3rem', height: '3rem' }} />
                 </div>
             ) : (
-                <div>
+                <>
                     {cart?.products?.length > 0 ? (
-                        <div>
-                            <div className={styles.gridcontainer}>
-                                <div className={styles.products}>
-                                    <div className={styles.titlebox}>
-                                        <div className={styles.title}>
-                                            <h2>Cart</h2>
-                                        </div>
+                        <div className={styles.gridcontainer}>
+                            <div className={styles.griditemproducts}>
+                                <div className={styles.titlebox}>
+                                    <div className={styles.title}>
+                                        <h2>Cart</h2>
                                     </div>
                                 </div>
                                 <div>
@@ -131,14 +129,13 @@ const CartUser: React.FC = () => {
                                     </CardBody>
                                 </Card>
                             </div>
-                        </div>
+                        </div> 
                     ):(
                         <div>
                             {displayMessage()}
                         </div>
                     )}
-                </div>
-                                    
+                </>               
             )}
         </CustomerLayout>
     );
