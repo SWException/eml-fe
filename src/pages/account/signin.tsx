@@ -39,7 +39,7 @@ const Login: React.FC = () => {
             await login(email, password)
             const user = JSON.parse(window.localStorage.getItem('user'))
             console.log(user)
-            const {role} = await AuthService.getCurrentUserData();
+            const { role } = await AuthService.getCurrentUserData().catch(()=> ({role: ""}));
             if (role === "Admin") {
                 router.push('/admin/dashboard');
             }
