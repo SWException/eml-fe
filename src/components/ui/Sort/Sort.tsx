@@ -13,7 +13,7 @@ const Sort: React.FC<Props> = ({ setFilters, searchRules }) => {
     const [currentValue, setCurrentValue] = useState<string>();
     useEffect(() => {
         setCurrentValue("");
-    }, [searchRules.category])
+    }, [searchRules.category, searchRules.search])
 
     const updateProducts = async (e: ChangeEvent<HTMLSelectElement>): Promise<void> => {
         searchRules.sorting = e.target.value;

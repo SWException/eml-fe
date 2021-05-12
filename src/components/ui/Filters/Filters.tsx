@@ -14,7 +14,7 @@ const Filters: React.FC<Props> = ({ setFilters, searchRules }) => {
     useEffect(() => {
         setMaxPrice("");
         setMinPrice("");
-    }, [searchRules.category])
+    }, [searchRules.category, searchRules.search])
 
     const [minPrice, setMinPrice] = useState<string>();
     const [maxPrice, setMaxPrice] = useState<string>();
