@@ -1,4 +1,4 @@
-import { Address } from "types";
+import { Address, Customer } from "types";
 
 export type Order = {
     billingAddress: Address;
@@ -10,6 +10,7 @@ export type Order = {
     timestamp: string;
     total: number;
     userid: string;
+    customer?: Customer
 };
 
 export type OrderCart = {

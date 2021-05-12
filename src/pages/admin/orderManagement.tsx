@@ -88,7 +88,7 @@ const OrderManagement: React.FC = () => {
                         <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>CUSTOMER ID</th>
+                                <th>CUSTOMER EMAIL</th>
                                 <th>STATUS</th>
                                 <th>DATE</th>
                                 <th>TOTAL</th>
@@ -98,7 +98,7 @@ const OrderManagement: React.FC = () => {
                             {orders.map((order: Order) => ( // Sarà da sistemare i nomi dei campi di orders. Ivan prima o poi modificherà il BE così da rispettare quanto definito nelle OpenApi
                                 <tr key={order.orderid}>
                                     <td>{order.orderid}</td>
-                                    <td>{order.userid}</td>
+                                    <td>{order.customer.email}</td>
                                     <td>{order.orderStatus}</td>
                                     <td>{getDate(order.timestamp)}</td>
                                     <td>€ {order.cart.total}</td>

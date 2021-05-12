@@ -2,8 +2,8 @@ import React, { useEffect, useState, Dispatch } from "react";
 import { AdminLayout } from 'components/layouts/AdminLayout';
 import styles from "styles/Order.module.css";
 import { AdminDetailOrderProductCard } from 'components/orderdetails'
-import { CustomerService, OrdersService } from 'services';
-import { Customer, Order, OrderProduct } from 'types'
+import { OrdersService } from 'services';
+import { Order, OrderProduct } from 'types'
 import { GetServerSideProps } from 'next';
 
 interface Props {
@@ -12,7 +12,6 @@ interface Props {
 
 const OrderDetailsAdmin: React.FC<Props> = ({ id }) => {
     const [order, setOrder]: [Order, Dispatch<Order>] = useState<Order>();
-    const [customer, setCustomer]: [Customer, Dispatch<Customer>] = useState<Customer>();
 
     useEffect(() => {
         reloadOrder()
@@ -29,9 +28,6 @@ const OrderDetailsAdmin: React.FC<Props> = ({ id }) => {
         const order = await OrdersService.fetchOrder(id);
         setOrder(order);
         console.log(order);
-        const customer = await CustomerService.fetchCustomer(order.userid);
-        setCustomer(customer);
-        console.log(customer);
     }
 
     return (
@@ -47,7 +43,7 @@ const OrderDetailsAdmin: React.FC<Props> = ({ id }) => {
                         <div className={styles.div}><strong>Date:</strong>  {getDate(order.timestamp)}</div>
                         <div style={{ padding: 10 }}><strong>State:</strong>  {order.orderStatus}</div>
                     </div>
-                    <div className={styles.info}><strong>Customer: <a href={"mailto:" + customer?.email}>{customer?.email}</a> - {customer?.name} {customer?.surname} </strong></div>
+                    <div className={styles.info}><strong>Customer: <a href={"mailto:" + order.customer?.email}>{order.customer?.email}</a> - {order.customer?.name} {order.customer?.surname}</strong></div>
                     <div className={styles.itemlayout}>
                         <h2>Products</h2>
                         <table>
