@@ -98,7 +98,7 @@ const CategoryManagement: React.FC<Props> = ({initialCategories}) => {
                                                 category={category}
                                                 loadCategories={() => { getAllCategories() }}
                                             /></td>
-                                        <td><Button color="primary" size="lg" onClick={() => deleteCategory(category.id)}>X</Button></td>
+                                        <td><Button color="primary" size="lg" onClick={() => deleteCategory(category.id)}>REMOVE</Button></td>
                                     </tr>
                                 ))}
                             </tbody>

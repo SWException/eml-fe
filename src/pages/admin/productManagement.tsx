@@ -110,7 +110,7 @@ const ProductManagement: React.FC<Props> = ({ defaultProducts, categories }) => 
                                 <td>{product.category}</td>
                                 <td>{product.tax}</td>
                                 <td><Button color="primary" size="lg" onClick={() => editProduct(product.id)}>EDIT</Button></td>
-                                <td><Button color="primary" size="lg" onClick={() => removeProduct(product.id)}>X</Button></td>
+                                <td><Button color="primary" size="lg" onClick={() => removeProduct(product.id)}>REMOVE</Button></td>
                             </tr>
                         ))}
                     </tbody>

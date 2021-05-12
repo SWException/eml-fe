@@ -13,7 +13,7 @@ const ProductCard: React.FC<Props> = ({ product, loadCart, id_cart }) => {
     const [quantity, setQuantity] = useState(product.quantity);
 
     useEffect(() => {
-        setQuantity(quantity);
+        setQuantity(quantity); // è necessario?
     }, [])
 
     const modifyQuantity = async (name: string): Promise<void> => {
@@ -63,7 +63,9 @@ const ProductCard: React.FC<Props> = ({ product, loadCart, id_cart }) => {
                                 <span>Tax: {product.tax}%</span>
                             </div>
                             <div> 
-                                <button class="btn"><i class="fa fa-trash"></i></button>
+                                <button onClick={deleteProduct} className={styles.removebutton}>
+                                    <img src="remove.png" style={{width:25, height: 25}}/>
+                                </button>
                             </div>
                         </div>
                         <div className={styles.quantitybox}>
