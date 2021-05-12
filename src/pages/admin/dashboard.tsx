@@ -1,12 +1,20 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { AdminLayout } from 'components/layouts/AdminLayout';
 import styles from 'styles/Dashboard.module.css';
 import Image from 'next/image';
 import { sessionService } from 'services';
+import { User } from 'types';
 
 const Dashboard: React.FC = () => {
     const router = useRouter();
+
+    useEffect(()=>{
+        let userProfile:User = sessionService.getLocalStorage();
+        if(userProfile.role!='Admin'){
+            router.push('/');
+        }
+    })
 
     const redirectProductManagement = (): void => {
         router.push('/admin/productManagement');
@@ -86,23 +94,3 @@ const Dashboard: React.FC = () => {
 };
 
 export default Dashboard;
-
-export const getServerSideProps = function () {
-    // Get the user's session based on the request
-    const user = sessionService.isAuth();
-    
-    if (!user) {
-        return {
-            redirect: {
-                destination: '/',
-                permanent: false,
-            },
-        }
-    }
-  
-    return {
-        props: {
-
-        }
-    }
-}

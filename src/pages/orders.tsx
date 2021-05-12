@@ -3,12 +3,20 @@ import React, { useEffect, useState, Dispatch } from "react";
 import { CustomerLayout } from 'components/layouts/CustomerLayout';
 import styles from 'styles/Orders.module.css';
 import { OrdersService, sessionService } from 'services';
-import { Order, Orders } from 'types';
+import { Order, Orders, User } from 'types';
+import { useRouter } from 'next/router';
 
 
 const OrdersList: React.FC = (prop) => {
+    const router = useRouter();
+
     useEffect(() => {
-        reloadOrders();
+        let user = sessionService.isAuth();
+        if(!user){
+            router.push('/');
+        } else {
+            reloadOrders();
+        }
     }, [])
 
     const [orders, setOrder]: [Orders, Dispatch<Orders>] = useState<Orders>();
@@ -55,21 +63,3 @@ const OrdersList: React.FC = (prop) => {
     );
 };
 export default OrdersList;
-
-export const getServerSideProps = async function ({ req, res }) {
-    // Get the user's session based on the request
-    const user = await sessionService.isAuth();
-  
-    if (!user) {
-      return {
-        redirect: {
-          destination: '/account/signin',
-          permanent: false,
-        },
-      }
-    }
-  
-    return {
-      props: { user },
-    }
-}
