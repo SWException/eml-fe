@@ -71,63 +71,74 @@ const CartUser: React.FC = () => {
                     <Spinner style={{ width: '3rem', height: '3rem' }} />
                 </div>
             ) : (
-                <div className={styles.gridcontainer}>
-                    <div className={styles.griditemproducts}>
-                            <div className={styles.titlebox}>
-                                 <div className={styles.title}>
-                                    <h2>Cart</h2>
+                <div>
+                    {cart?.products?.length > 0 ? (
+                        <div>
+                            <div className={styles.gridcontainer}>
+                                <div className={styles.products}>
+                                    <div className={styles.titlebox}>
+                                        <div className={styles.title}>
+                                            <h2>Cart</h2>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div>
+                                    {cart ? (
+                                        cart.products.map((product: ProductCart) => (
+                                            <ProductCard
+                                                id_cart = {idCart}
+                                                product = {product}
+                                                loadCart = {() => { reloadCart() }}
+                                            />
+                                        ))
+                                    ) : (
+                                        <div>
+                                            {displayMessage()}
+                                        </div>
+                                    )}
+                                    {cart?.products.length >0 ? (
+                                        <div>
+                                            <Button color="primary" onClick={removeAllCart} size="lg">Remove all</Button>
+                                        </div>
+                                    ):(
+                                        <div>
+                                            {displayMessage()}
+                                        </div>
+                                    )}
                                 </div>
                             </div>
-                            <div>
-                            {cart ? (
-                                cart.products.map((product: ProductCart) => (
-                                    <ProductCard
-                                        id_cart = {idCart}
-                                        product = {product}
-                                        loadCart = {() => { reloadCart() }}
-                                    />
-                            ))
-                            ) : (
-                                <div>
-                                    {displayMessage()}
-                                </div>
-                            )}
-                            {cart?.products.length >0 ? (
-                                <div>
-                                    <Button color="primary" onClick={removeAllCart} size="lg">Remove all</Button>
-                                </div>
-                            ):(
-                                <div>
-                                    {displayMessage()}
-                                </div>
-                            )}
-                            </div>
-                    </div>
-                    <div className={styles.griditemtotal}>
-                        <Card width="20rem">
-                            <CardBody>
-                                <CardTitle className={styles.cardtitle}>Total Cart</CardTitle>
-                                    <CardText>
-                                    <div className={styles.user}>
-                                            <span>Total</span>   
-                                            <strong  className={styles.strong}>{" €"}{cart?.total}</strong> 
-                                    </div>
-                                    <div className={styles.user}>
-                                            <span>Taxes</span>
-                                            <strong className={styles.strong}>{"€"}{cart?.tax}</strong>
-                                    </div>
-                                    {
-                                        sessionService.isAuth() ?(
-                                            <div>
-                                                <Button color="primary" size="lg" className={styles.check} onClick={() => { onSubmit() }}>Checkout</Button>
+                            <div className={styles.griditemtotal}>
+                                <Card width="20rem">
+                                    <CardBody>
+                                        <CardTitle className={styles.cardtitle}>Total Cart</CardTitle>
+                                        <CardText>
+                                            <div className={styles.user}>
+                                                <span>Total</span>   
+                                                <strong  className={styles.strong}>{" €"}{cart?.total}</strong> 
                                             </div>
-                                        ):(<div><br /><p>Signin for the checkout</p></div>)
-                                    }
-                                </CardText>
-                            </CardBody>
-                        </Card>
-                    </div>
-                </div>                 
+                                            <div className={styles.user}>
+                                                <span>Taxes</span>
+                                                <strong className={styles.strong}>{"€"}{cart?.tax}</strong>
+                                            </div>
+                                            {
+                                                sessionService.isAuth() ?(
+                                                    <div>
+                                                        <Button color="primary" size="lg" className={styles.check} onClick={() => { onSubmit() }}>Checkout</Button>
+                                                    </div>
+                                                ):(<div><br /><p>Signin for the checkout</p></div>)
+                                            }
+                                        </CardText>
+                                    </CardBody>
+                                </Card>
+                            </div>
+                        </div>
+                    ):(
+                        <div>
+                            {displayMessage()}
+                        </div>
+                    )}
+                </div>
+                                    
             )}
         </CustomerLayout>
     );
