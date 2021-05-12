@@ -88,7 +88,7 @@ const OrderManagement: React.FC = () => {
                         <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>CUSTOMER EMAIL</th>
+                                <th>CUSTOMER ID</th>
                                 <th>STATUS</th>
                                 <th>DATE</th>
                                 <th>TOTAL</th>

@@ -55,15 +55,19 @@ const OrderDetails: React.FC<Props> = ({ id }) => {
                                             name={product.name}
                                             price={product.price}
                                             quantity={product.quantity}
+                                            total={product.total}
+                                            tax={product.tax}
                                         />
                                     </tr>
                                 ))}
                             </table>
                         </div>
-                        <div className={styles.info}><strong>Total: {" € "}{order.cart.total} </strong></div>
+                        <div className={styles.info}><strong>Total whitout shipping: {" € "}{order.cart.total} </strong></div>
                         <div className={styles.info}><strong>Taxes: {" € "}{order.cart.tax} </strong></div>
-                        <div className={styles.info}><strong>Shipping address:</strong> {`${order.shippingAddress.address}, ${order.shippingAddress.city}, ${order.shippingAddress.code}, ${order.shippingAddress.district}`}</div>
-                        <div className={styles.info}><strong>Billing address: </strong> {`${order.billingAddress.address}, ${order.billingAddress.city}, ${order.billingAddress.code}, ${order.billingAddress.district}`}</div>
+                        <div className={styles.info}><strong>Shipping: {" € "}{order.shippingFee} </strong></div>
+                        <div className={styles.info}><strong>Total: {" € "}{order.total} </strong></div>
+                        <div className={styles.info}><strong>Shipping address:</strong> {order.shippingAddress.recipientName} {order.shippingAddress.recipientSurname} - <a href={"https://maps.google.com/?q=" + order.shippingAddress.address + " " + order.shippingAddress.city + " " + order.shippingAddress.district + " " + order.shippingAddress.code }>{order.shippingAddress.city}, {order.shippingAddress.address}, {order.shippingAddress.code}, {order.shippingAddress.district}</a></div>
+                        <div className={styles.info}><strong>Billing address: </strong> {order.billingAddress.recipientName} {order.billingAddress.recipientSurname} - <a href={"https://maps.google.com/?q=" + order.billingAddress.address + " " + order.billingAddress.city + " " + order.billingAddress.district + " " + order.billingAddress.code }>{order.billingAddress.city}, {order.billingAddress.address}, {order.billingAddress.code}, {order.billingAddress.district}</a></div>
                         <div>
                             <div className={styles.button}>
                                 <p>Do you need assistance?</p>
