@@ -1,0 +1,20 @@
+.navbar {
+    background-image: radial-gradient(center, circle farthest-corner, #FFFFFF 0%, #AACFEF 100%);
+    color: var(--color-dark)
+}
+
+.siteTitle {
+    font-size: 3rem;
+    font-weight: 800;
+}
+
+.navbar a {
+    font-weight: 800;
+    color: var(--color-dark);
+}
+
+.navtoggler {
+    float: right;
+    border-color: var(--color-light);
+    font-size: 2rem;
+}

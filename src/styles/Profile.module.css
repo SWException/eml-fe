@@ -1,0 +1,118 @@
+@media screen and (min-width:760px){
+    .gridcontainer {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-gap: 2rem;
+        margin: 2rem 2rem 2rem 2rem;
+        font-size: 1.7rem;
+        color: var(--color-dark);
+    }
+    .gridItem{
+        justify-content: center;
+        align-items: center;
+    }
+
+}
+
+@media screen and (max-width:760px){
+    .gridcontainer {
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-gap: 2rem;
+        margin: 4rem 4rem 4rem 4rem;
+        font-size: 1.7rem;
+        color: var(--color-dark);
+    }
+}
+
+.gridItemProfile{
+    display: flex;
+    flex-direction: row;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+}
+
+.div {
+    background-color: var(--color-gray-light);
+    border-radius: 5px;
+    border: ridge var(--color-gray-dark);
+    padding: 3rem;
+}
+
+.divtable {
+    background-color: var(--color-gray-light);
+    border-radius: 5px;
+    border: ridge var(--color-gray-dark);
+    padding: 1.5rem;
+    font-size: 1rem;
+    text-align: center;
+}
+
+.h1 {
+    text-align: center;
+}
+
+.p {
+    font: bold;
+}
+
+.button {
+    border-radius: 4px;
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    padding: 4px 20px 4px 20px;
+}
+
+
+.link{
+    text-decoration: underline;
+    font-size: 1.5rem;
+    color: var(--color-dark);
+    background-color: Transparent;
+    background-repeat:no-repeat;
+    border: none;
+    cursor:pointer;
+    overflow: hidden; 
+    font-weight: bold;
+    margin-left: 3rem;
+    margin-top: 3rem;
+}
+
+.link:hover{
+    color: var(--color-dark);
+    background-color: Transparent;
+    text-decoration: underline;
+    background-repeat:no-repeat;
+    border: none;
+}
+
+.link:active{
+    color: var(--color-dark);
+    background-color: Transparent;
+    text-decoration: underline;
+    background-repeat:no-repeat;
+    border: none;
+}
+
+.user {
+    margin-top: 2rem;
+    text-align: center;
+    justify-content: center;
+}
+
+.danger {
+    text-align: center;
+    justify-content: center;
+}
+
+
+.container td{
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+}
+
+.cardtitle{
+    border: 2px solid var(--color-gray-dark);
+    font-weight: bold;
+}

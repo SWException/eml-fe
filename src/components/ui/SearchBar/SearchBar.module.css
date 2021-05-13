@@ -1,0 +1,16 @@
+ .input[type=text] {
+     width: 40rem;
+     font-size: 1.5rem;
+     border-color: none;
+     background-color: var(--color-light);
+     background-position: 5px 5px;
+     background-repeat: no-repeat;
+     padding: 0.4rem 1rem 0.4rem 1rem;
+     margin-top: 1rem;
+     border-radius:25px;
+ }
+
+ .div {
+     width: auto;
+     margin-left: 20%;
+ }

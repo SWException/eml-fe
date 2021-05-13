@@ -1,0 +1,11 @@
+node_modules
+Dockerfile
+Dockerfile.prod
+docker-compose.yaml
+LICENSE
+.travis.yaml
+.gitattributes
+.gitignore
+README.md
+serverless.yml
+.git

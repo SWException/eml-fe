@@ -1,0 +1,21 @@
+.profile {
+    font-weight: 800;
+    background-color: transparent;
+    color: var(--color-dark);
+    border: transparent;
+}
+
+.profile:hover {
+    color: var(--color-dark);
+    background-color: transparent;
+}
+
+.profile:active {
+    color: var(--color-dark);
+    background-color: var(--color-light);
+}
+
+.dropmenu {
+    background-color: var(--color-light);
+    border-color: var(--color-dark);
+}

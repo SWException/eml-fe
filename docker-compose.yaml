@@ -1,0 +1,33 @@
+version: "3.8"
+services:
+  EML-FE-DEV:
+    container_name: "eml-fe-dev"
+    image: "eml-fe-dev:latest"
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    command: npm run dev
+    env_file:
+      - .env
+    ports:
+      - "3000:3000"
+    volumes:
+      #Permette il live update, da omettere nel deploy
+      - ./src:/app/src
+  EML-FE:
+    container_name: "eml-fe"
+    image: "eml-fe:latest"
+    build:
+      context: ./
+      dockerfile: Dockerfile.prod
+    command: "npm start"
+    env_file:
+      - .env
+    ports:
+      - "5000:3000"
+
+#docker-compose -p EML-FE-DEV up -d --build EML-FE-DEV
+#docker-compose -p EML-FE-DEV down -v
+
+#docker-compose -p EML-FE up -d --build EML-FE
+#docker-compose -p EML-FE down -v

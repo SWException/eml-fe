@@ -1,0 +1,37 @@
+language: node_js
+node_js:
+  - 12
+  
+#Permette a travis di cachare tra una build e l'altra per essere più veloce
+#cache:
+  #directories:
+    #- $HOME/.cache/yarn
+    ##- node_modules
+    #- .next/cache
+#script:
+  #- npm test
+  #- npm run build
+
+
+deploy_service_job: &DEPLOY_SERVICE_JOB
+  cache:
+    directories:
+      - node_modules
+      - $HOME/.cache/yarn
+      - .next/cache
+      - .serverless
+      - .serverless_nextjs
+
+  install:
+    - npm install -g serverless
+    - travis_retry npm install
+
+  script:
+    - serverless
+
+jobs:
+  include:
+    - <<: *DEPLOY_SERVICE_JOB
+      name: "Deploy FE"
+      env:
+        - SERVICE_PATH="/"

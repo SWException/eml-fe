@@ -1,0 +1,23 @@
+.quantity {
+    padding-top: 5px;
+}
+
+.quantity input {
+    -webkit-appearance: none;
+    border: none;
+    text-align: center;
+    width: 50px;
+    font-size: 16px;
+    color: #43484D;
+    font-weight: 300;
+}
+
+.minus {
+   border:none;
+   background-color: transparent;
+}
+
+.plus {
+    border:none;
+    background-color: transparent;
+}

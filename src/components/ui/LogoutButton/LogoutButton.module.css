@@ -1,0 +1,13 @@
+.button {
+    font-weight: 800;
+    font-size: 1.5rem;
+    background-color: transparent;
+    color: var(--color-dark);
+    border: transparent;
+    margin-top: 0.5rem;
+}
+
+.button:hover {
+    color: var(--color-dark);
+    background-color: transparent;
+}
