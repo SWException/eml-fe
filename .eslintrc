@@ -1,0 +1,40 @@
+// this file contains eslint configurations
+
+{
+    "root": true,
+    "parser": "@typescript-eslint/parser",
+    "plugins": [
+      "@typescript-eslint"
+    ],
+    "extends": [
+      "eslint:recommended", //eslint recommended rule
+      "plugin:@typescript-eslint/eslint-recommended",
+      "plugin:@typescript-eslint/recommended"
+    ],
+    "rules": { 
+        "indent": ["error", 4], //4 spaces  indentation
+        "brace-style": ["error", "stroustrup", {"allowSingleLine": true }], //brace style follows stroustrup conventions
+        "space-before-function-paren": ["error", "always"], //space between function name and parenthesis
+        "complexity": ["error", 10], //cyclomatic complexity
+        "max-len": ["error", { "code": 200 }], //max line length //DOVREBBE ESSERE DI 100 IN REALTÀ
+        "@typescript-eslint/explicit-function-return-type": ["warn"],
+        //"@typescript-esplint/no-unsafe-any": ["error"],
+        "@typescript-eslint/no-parameter-properties": ["error"],
+            //"@typescript-eslint/explicit-module-boundary-types": ["error"],
+        //"@typescript-eslint/no-unused-variable": ["error"],
+        "no-unused-vars": "error",
+        "no-multiple-empty-lines": ["warn", {"max": 2}],
+         //naming conventions
+        "@typescript-eslint/naming-convention": [
+            "error",
+            {
+                "selector": "function",
+                "format": ["camelCase"]
+            },
+            {
+                "selector": "class",
+                "format": ["PascalCase"]
+            }
+        ]
+      }
+  }

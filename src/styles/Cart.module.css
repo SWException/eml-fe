@@ -1,0 +1,122 @@
+@media screen and (min-width:760px){
+    .gridcontainer{
+        display: grid;
+        grid-template-columns: 70% 30%;
+        margin-top: 2rem;
+    }
+    
+    .griditemtotal{
+        display: flex;
+        flex-direction: row;
+        margin:2rem;
+        height: 20rem;
+    }
+}
+
+@media screen and (max-width:760px){
+    .gridcontainer{
+        display: grid;
+        grid-template-columns: 1frem;
+        margin-top: 2rem;
+    }
+    
+    .griditemtotal{
+        display: flex;
+        flex-direction: row;
+        margin:2rem;
+        justify-content: center;
+        align-items: center;
+        height: 20rem;
+    }
+}
+
+.cardtitle{
+    border: 2px solid var(--color-gray-dark);
+    font-weight: bold;
+    text-align: center;
+    background-color: #AACFEF;
+    color: var(--color-black);
+}
+.user {
+    margin-top: 2rem;
+}
+
+.griditemproducts{
+  margin-right:2rem; 
+  margin-left:2rem;
+}
+
+.table{
+    padding: 0em;
+}
+.table tr{
+    border-bottom: 2px solid darkgray;
+}
+
+.strong{
+    text-align: right;
+    margin-left: 3rem;
+}
+    
+.allcontainer{
+    font-family: sans-serif;
+    -webkit-text-size-adjust: 100%;
+    background-color: #f3f3f3;
+    height: fit-content;
+    margin: 2rem;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    flex-direction: column;
+}     
+
+.titlebox{
+    font-family: sans-serif;
+    -webkit-text-size-adjust: 100%;
+    -webkit-box-direction: normal;
+    box-sizing: inherit;
+    word-break: break-word;
+    margin-bottom: 28px;
+    border-bottom: 2px solid var(--color-dark);
+}    
+
+
+.title{
+    -webkit-text-size-adjust: 100%;
+    -webkit-box-direction: normal;
+    word-break: break-word;
+    box-sizing: inherit;
+    font-family: Arial, "Arial Unicode MS", Helvetica, "DejaVu Sans", "Lucida Sans Unicode", sans-serif;
+    color: #1A1A1A;
+    text-transform: none;
+    font-weight: 800;
+    font-size: 1rem;
+    line-height: 24px;
+    letter-spacing: 0.5px;
+    margin: 0;    
+}
+    
+.loadingitemlayout{
+    display:flex;
+    justify-content: center;
+    align-content: center;
+    text-align: center;
+}
+
+.cartempty{
+    justify-content: center;
+    align-content: center;
+    text-align: center;
+    margin-top: 2rem;
+    height: auto;    
+}
+
+.check{
+    margin-top: 1rem;
+    justify-content: center;
+    align-content: center;
+}
+
+
+
+ 

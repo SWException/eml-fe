@@ -1,6 +1,5 @@
 import Amplify, { Auth } from 'aws-amplify';
 import awsconfig from 'aws-exports';
-import { Button } from 'reactstrap';
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 Amplify.configure(awsconfig);
@@ -9,51 +8,36 @@ Amplify.configure(awsconfig);
 
 const Logout: React.FC = () => {
 
-    const [message, setMessage] = useState('');
-    const [error, setError] = useState('');
+    // const [message, setMessage] = useState('');
 
     const router = useRouter();
 
-    useEffect(()=>{
+    useEffect(() => {
         signOut();
-        let err = window.localStorage.getItem('err');
-        if(err){
-            setMessage(err);
+        const err = window.localStorage.getItem('err');
+        if (err) {
+            // setMessage(err);
             window.localStorage.removeItem('err');
         }
     }, [])
 
-    async function signOut() {
+    async function signOut () {
         console.log("HOHOHO");
         try {
             await Auth.signOut();
             console.log("Logout");
             window.localStorage.removeItem('jwt');
             window.localStorage.clear();
-            window.localStorage.setItem('err', 'Sei uscito da questo sito!');
-            window.location.reload();
-            setError('');
-            redirectToHomePage();
-        } catch (error) {
+            router.push('/');
+        }
+        catch (error) {
             console.log('error signing out: ', error);
-            setError('Errore durante il logout, riprovare');
-            setMessage('');
-            displayErr();
+            router.push('/account/signin');
         }
     }
-  
-    const displayErr = () =>{
-        return (error ? <div className="alert alert-danger">{error}</div> : '');
-    }
 
-
-    const redirectToHomePage = () =>{
-        router.push('/');
-    }
-
-    return(
+    return (
         <>
-            <p>test</p> 
         </>
     );
 

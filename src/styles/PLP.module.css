@@ -1,0 +1,26 @@
+
+@media screen and (min-width:760px){
+    .filter {
+        display: inline-flex;
+        margin: 2rem;
+    }
+    
+    .sortbox{
+        display:block;
+        margin-top: 0;
+        margin-left: 2rem;
+    }  
+}
+@media screen and (max-width:760px){
+    .filter {
+        display: block;
+        margin: 2rem;
+    }
+    
+    .sortbox{
+        display:inline-flex;
+        margin-top: 1rem;
+        margin-left: 0;
+    }
+}
+

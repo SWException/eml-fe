@@ -1,57 +1,64 @@
 import { OrderCard } from 'components/listorder';
-import React, { useEffect, useState } from "react";
-import { useRouter } from 'next/router';
+import React, { useEffect, useState, Dispatch } from "react";
 import { CustomerLayout } from 'components/layouts/CustomerLayout';
+import styles from 'styles/Orders.module.css';
+import { OrdersService, sessionService } from 'services';
+import { Order, Orders } from 'types';
+import { useRouter } from 'next/router';
 
-
-/*interface Props {
-    cartItems: string, //ASSOLUTAMENTE DA CONTROLLARE
-}*/
-
-const OrdersList = ({listorder}) => { //IN VERITA' E' :React.FC<Props>
-    console.log(listorder);
-    //Inserire Fetch
- 
+const OrdersList: React.FC = () => {
     const router = useRouter();
-    
-    let orders = [];
-    for(var i = 0; i < 20; i++){
-      var order= {
-        id : "ID" + i,
-        date: "19/01",
-        total: 10 + i,
-        totart: "2",
-        state: "pending",
-      };  
-      orders[i] = order;
-    }
 
-    const orderSummary = () => {
-        router.push('/order');
+    useEffect(() => {
+        const user = sessionService.isAuth();
+        if(!user){
+            router.push('/');
+        }
+        else {
+            reloadOrders();
+        }
+    }, [])
+
+    const [orders, setOrder]: [Orders, Dispatch<Orders>] = useState<Orders>();
+
+    const reloadOrders = async () => {
+        const orders = await OrdersService.fetchOrders();
+        setOrder(orders);
+        console.log('Orders', orders);
     }
 
     return (
-        <CustomerLayout header>
-            <div className="items">
-                <div className="title-main">
-                    <h1>List of orders</h1>
-                </div>
-                <div className="listorder-item-layout">
-                {orders.map((order) => (
-                    <>
-                        <OrderCard 
-                        id={order.id} 
-                        date = {order.date}
-                        total={order.total}
-                        totart={order.totart}
-                        state={order.state}
-                        /> 
-                        <button type="button" onClick={orderSummary}>Order Summary</button>
-                    </>
-                ))}
-                </div>
+        <CustomerLayout header footer>
+            <div>
+                <h1>List of orders</h1>
             </div>
-
+            <div className={styles.div}>
+                {orders && orders.length >0 ? (
+                    <table className={styles.orders}>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>DATE</th>
+                                <th>TOTAL</th>
+                                <th>STATE</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {orders.map((order: Order) => (
+                                <tr>
+                                    <OrderCard
+                                        order={order}
+                                    />
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                ) : (
+                    <div className={styles.div}>
+                            No orders
+                    </div>
+                )}
+            </div>
         </CustomerLayout>
     );
 };

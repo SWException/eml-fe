@@ -1,76 +1,70 @@
 import React, { useState, useEffect, Fragment } from 'react';
-import { Collapse, Navbar, NavbarToggler, Nav, NavItem, NavLink } from 'reactstrap';
-import Link from 'next/link';
+import { Navbar, Nav, NavItem, NavLink, Collapse, NavbarToggler, NavbarBrand } from 'reactstrap';
 import styles from './Header.module.css';
-import { SearchBar } from 'components/ui';
-import { LogoutButton } from 'components/ui';
-import { useAuth } from 'context';
+import { LogoutButton, SearchBar } from 'components/ui';
+import ProfileButton from 'components/ProfileButton';
+import { sessionService } from 'services'
 
+/**
+ * Context check isAuthenticated
+ */
 
 const Header: React.FC = () => {
 
-  const [isOpen, setIsOpen] = useState(false);
+    //const { isAuthenticated } = useAuth();
+    const [auth, setAuth] = useState(false);
+    const [isOpen, setIsOpen] = useState(false);
 
-  const { isAuthenticated } = useAuth()
+    const toggle = () => setIsOpen(!isOpen);
 
-  useEffect(()=>{
-    //
-  })
+    useEffect(() => {
+        if (sessionService.isAuth()) {
+            setAuth(true)
+        }
+        else {
+            setAuth(false)
+        }
+    })
 
-  const toggle = () => {
-    setIsOpen(!isOpen);
-  };
 
-  return (
-    <Fragment>
-      <Navbar className={styles.navbar} expand="md">
-        <Link href="/">
-          <NavLink className={styles.siteTitle}>COMPANY NAME</NavLink>
-        </Link>
-        <NavbarToggler onClick={toggle} />
-        <Collapse isOpen={isOpen} navbar>
-          <Nav className="ml-auto" navbar>
-            <NavItem>
-              <SearchBar/>
-            </NavItem>
-            <Fragment>
-              {isAuthenticated ? (
-                <Fragment>
-              <NavItem>
-                <Link href="/profile">
-                  <NavLink>Profile</NavLink>
-                </Link>
-              </NavItem>
-              <NavItem>
-                <Link href="/orders">
-                  <NavLink>My Orders</NavLink>
-                </Link>
-              </NavItem>
-              <NavItem>
-                <LogoutButton />
-              </NavItem>
-                </Fragment>
-              ) : (
-                <Fragment>
-                  <NavItem>
-                    <Link href="/account/signin"><NavLink>Login</NavLink></Link>
-                  </NavItem>
-                  <NavItem>
-                  <Link href="/account/signup"><NavLink>Signup</NavLink></Link>
-                </NavItem>
-                </Fragment>
-              )}
-              <NavItem>
-                <Link href="/cart">
-                  <NavLink>Cart</NavLink>
-                </Link>
-              </NavItem>
-            </Fragment>
-          </Nav>
-        </Collapse>
-      </Navbar>    
-    </Fragment>
-  );
+    return (
+        <Fragment>
+            <Navbar className={styles.navbar} expand="md">
+                <NavbarBrand href="/">
+                    <img src="/logoemp.png" width={170} height={60} />
+                </NavbarBrand>
+                <NavbarToggler onClick={toggle} className={styles.navtoggler}>Menu</NavbarToggler>
+                <Collapse isOpen={isOpen} navbar>
+                    <SearchBar />
+                    <Nav className="ml-auto" navbar>
+                        <Fragment>
+                            {auth ? (
+                                <Fragment>
+                                    <NavItem>
+                                        <ProfileButton />
+                                    </NavItem>
+                                    <NavItem>
+                                        <LogoutButton />
+                                    </NavItem>
+                                </Fragment>
+                            ) : (
+                                <Fragment>
+                                    <NavItem>
+                                        <NavLink className="navbar" href="/account/signin">Login</NavLink>
+                                    </NavItem>
+                                </Fragment>
+                            )}
+                            <NavItem>
+                                <NavLink className="navbar" href="/cart">
+                                    <img src="/iconcart.png" width={40} height={40} />
+                                </NavLink>
+                            </NavItem>
+                        </Fragment>
+                    </Nav>
+                </Collapse>
+            </Navbar>
+        </Fragment>
+    );
 }
 
 export default Header;

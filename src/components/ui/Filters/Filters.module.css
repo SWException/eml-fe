@@ -1,0 +1,26 @@
+.separate {
+    text-align: center;
+}
+
+
+
+@media screen and (min-width:760px){
+    .filterbox{
+        display: inline-flex;
+    }
+    .filterButton{
+        margin-left: 1rem;
+        margin-top: 0;
+    }
+    
+}
+@media screen and (max-width:760px){
+    .filterbox{
+        display: block;
+    }
+    .filterButton{
+        margin-top:1rem;
+        margin-left:1rem;
+    }
+    
+}

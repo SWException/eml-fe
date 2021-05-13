@@ -1,65 +1,126 @@
-import { APIClass } from 'aws-amplify';
-import { Products, ProductsData, ProductData } from '../types/product';
-//import { catchError } from 'utils/catchError';
-//import apiClient from 'utils/apiClient';
+import { InsertProduct, EditProduct, SearchRules, Products, Product } from 'types';
+import { AuthService } from 'services';
 
-type ProductPayload = { params: unknown };
-
-//mockare fetchProducts
-
-const fetchProducts = async (payload?: ProductPayload): Promise<ProductsData> => {
-  try {
+const fetchProducts = async (params?: SearchRules): Promise<Products> => {
+    const token = await AuthService.getTokenJwt();
     const requestOptions = {
-      method: 'GET',
-      headers: { 
-        "Access-Control-Allow-Origin": "*",
-        'Content-Type': 'application/json'
-       }
-    };
-    const res = await fetch('https://virtserver.swaggerhub.com/swexception4/OpenAPI/0.0.2/products', requestOptions)
-    const products = await res.json();
-
-    console.log(products.data);
-
-    const productsData: ProductsData = {
-      products: products.data,
-      total: products.data.length,
-    };
-
-    return productsData;
-
-  } catch (error) {
-    throw new Error('Error on fetching Products');
-  }
-};
-
-export const fetchProduct = async (id: string): Promise<ProductData> => {
-  try {
-    const requestOptions = {
-      method: 'GET',
-      headers: { 
-        "Access-Control-Allow-Origin": "*",
-        'Content-Type': 'application/json'
-       }
-    };
-    const res = await fetch(`https://virtserver.swaggerhub.com/swexception4/OpenAPI/0.0.2/products/${id}`, requestOptions)
-    const data = await res.json();
-
-    const productData: ProductData = {
-      product: data.data
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `${token}` // Necessario se si è venditore, altrimenti ritorna solo i prodotti visibili al cliente e non quelli nascosti
+        }
     };
     
-    return productData;
-  } catch (error) {
-    throw new Error(error);
-  }
+
+    const minPrice = (params?.minPrice) ? "&minPrice=" + params.minPrice : "";
+    const maxPrice = (params?.maxPrice) ? "&maxPrice=" + params.maxPrice : "";
+    const category = (params?.category) ? "&category=" + params.category : "";
+    const sorting = (params?.sorting) ? "&sorting=" + params.sorting : "";
+    const search = (params?.search) ? "&search=" + params.search : "";
+
+    //console.log(`${minPrice}${maxPrice}${category}${sorting}${search}`);
+    const res = await fetch(`${process.env.AWS_ENDPOINT}/products?${minPrice}${maxPrice}${category}${sorting}${search}`, requestOptions)
+        .catch(() => { throw new Error('Error on fetching all products') });
+
+    const productsReturned = await res.json();
+    console.log(productsReturned);
+    if (productsReturned.status == 'error')
+        throw new Error(productsReturned.message);
+
+    const products: Products = productsReturned.data;
+    return products;
 };
 
+const addProduct = async (product: InsertProduct): Promise<boolean> => {
+    const token = await AuthService.getTokenJwt();
+    const requestOptions = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `${token}`
+        },
+        body: JSON.stringify(product)
+    };
+
+    const res = await fetch(`${process.env.AWS_ENDPOINT}/products`, requestOptions);
+    const response = await res.json();
+
+    if (response.status == "error") {
+        throw new Error(response.message);
+    }
+
+    return true;
+};
+
+export const fetchProduct = async (id: string): Promise<Product> => {
+    const token = await AuthService.getTokenJwt();
+    const requestOptions = {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `${token}` // Necessario se si è venditore, altrimenti ritorna il prodotto solo se è visibile al cliente, se è nascosto non lo ritorna
+        }
+    };
+    const res = await fetch(`${process.env.AWS_ENDPOINT}/products/${id}`, requestOptions)
+        .catch(() => { throw new Error('Error on fetching all products') });
+
+    const productReturned = await res.json();
+
+    if (productReturned.status == 'error')
+        throw new Error(productReturned.message);
+
+    const product: Product = productReturned.data;
+    return product;
+};
+
+export const modifyProduct = async (id: string, product: EditProduct): Promise<boolean> => {
+    const token = await AuthService.getTokenJwt();
+    const requestOptions = {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `${token}`,
+        },
+        body: JSON.stringify(product),
+    };
+
+    const res = await fetch(`${process.env.AWS_ENDPOINT}/products/${id}`, requestOptions)
+        .catch(() => { throw new Error('Error on modify product') });
+
+    const response = await res.json();
+
+    if (response.status == 'error')
+        throw new Error(response.message);
+
+    return true;
+};
+
+export const deleteProduct = async (id: string): Promise<boolean> => {
+    const token = await AuthService.getTokenJwt();
+
+    const requestOptions = {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `${token}`
+        }
+    }
+
+    const res = await fetch(`${process.env.AWS_ENDPOINT}/products/${id}`, requestOptions)
+        .catch(() => { throw new Error('Error on deleting product') });
+
+    const response = await res.json();
+
+    if (response.status == 'error')
+        throw new Error(response.message);
+
+    return true;
+};
 
 export const ProductService = {
-  fetchProducts,
-  fetchProduct,
-  /*
-  addProduct,
-  deleteProduct,*/
+    fetchProducts,
+    fetchProduct,
+    addProduct,
+    modifyProduct,
+    deleteProduct,
 };

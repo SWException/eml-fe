@@ -1,4 +1,17 @@
-.navbar{
-    background-color: var(--color-quaternary);
+.navbar {
+    background-image: radial-gradient(center, circle farthest-corner, #FFFFFF 0%, #AACFEF 100%);
+    color: var(--color-dark);
+}
+
+.siteTitle {
+    font-size: 3rem;
+    font-weight: 800;
+    text-align: center;
+    cursor: pointer;
+}
+
+.navbar a {
+    font-weight: 800;
+    color: var(--color-dark);
 }
 

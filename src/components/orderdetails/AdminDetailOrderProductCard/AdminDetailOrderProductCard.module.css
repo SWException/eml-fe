@@ -1,0 +1,42 @@
+@media screen and (min-width:760px){
+    .container{
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+        justify-content: center;
+        align-content: center;
+        align-items: center;
+        text-align: center;
+        grid-gap:0.5rem;
+        box-shadow: 0;
+    }
+
+}
+
+@media screen and (max-width:760px){
+    .container{
+        display: grid;
+        grid-template-columns: 1fr;
+        justify-content: center;
+        align-content: center;
+        align-items: center;
+        text-align: center;
+        grid-gap:0.5rem;
+        box-shadow: 10px 10px 10px 10px #dedede;
+        padding: 2rem;
+    }
+}
+
+.item{}
+
+
+.order {
+    font-family: Arial, Helvetica, sans-serif;
+    display: flex;
+    align-items: center;
+    text-align: center;
+}
+
+.order td {
+    padding: 0.5rem;
+    width: 20rem;
+}

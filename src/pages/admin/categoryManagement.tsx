@@ -1,66 +1,127 @@
-import React from 'react'
-import { useRouter } from 'next/router';
+import React, { ChangeEvent, Dispatch, useEffect, useState } from 'react';
 import { AdminLayout } from 'components/layouts/AdminLayout';
+import styles from 'styles/CategoryManagement.module.css';
+import { Button } from 'reactstrap';
+import { AddNewCategory, EditExistingCategory } from 'components/admin/';
+import { CategoriesService } from 'services';
+import { Categories } from 'types';
+import { GetStaticProps } from 'next';
 
-interface Props{
-    categories: any, //DA MODIFICARE NON APPENA E' PRONTO
+type Props = {
+    initialCategories: Categories
 }
 
-const CategoryManagement: React.FC<Props> = ({categories}) => {
-    
-    const router = useRouter();
+const CategoryManagement: React.FC<Props> = ({initialCategories}) => {
 
-    let categories2 = {
-        "categories": [
-          {
-            "id": 1,
-            "name": "giochi"
-          },
-          {
-            "id": 2,
-            "name": "cucina"
-          }
-        ]
-      };
+    const [categories, setCategories]: [Categories, Dispatch<Categories>] = useState<Categories>(initialCategories);
+
+    useEffect(() => {
+        setCategories(initialCategories);
+    }, [initialCategories])
+
+    const getCategoriesByName = async (name: string): Promise<void> => {
+        console.log(name);
+        try {
+            const categories: Categories = await CategoriesService.fetchCategoriesByName(name);
+            setCategories(categories);
+        }
+        catch (err) {
+            console.log(err);
+        }
+    }
+
+    const getAllCategories = async (): Promise<void> => {
+        try {
+            const categories = await CategoriesService.fetchAllCategories();
+            setCategories(categories);
+            console.log(categories);
+        }
+        catch (err) {
+            console.log(err);
+        }
+    }
+
+    const deleteCategory = async (id: string): Promise<void> => {
+        try {
+            const response: boolean = await CategoriesService.deleteCategory(id);
+            console.log(response);
+            if (response) {
+                getAllCategories();
+                confirm("Category deleted successfully!");
+            }
+            else {
+                alert("Something went wrong, try again later ..");
+            }
+        }
+        catch (err) {
+            console.log(err)
+        }
+    }
+
+    const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
+        const value = e.target.value;
+        if (value == '') {
+            getAllCategories();
+        }
+        else {
+            getCategoriesByName(value);
+        }
+    }
 
     return (
         <AdminLayout header>
-            <input type="text" placeholder="New category name...."/>
-            <button type="button">Add category</button>
-            <br/>      
-            
-            <table>
-                <th>
-                    CATEGORY
-                </th>
-                <th>
-                    EDIT
-                </th>
-                <th>
-                    REMOVE
-                </th>
-                {categories2.categories.map((category)=>(
-                    <tr>
-                        <td>{category.name}</td>
-                        <td><button type="button">EDIT</button></td>
-                        <td><button type="button">REMOVE</button></td>
-                    </tr>
-                ))}
-            </table>
+            <h1>Management Categories</h1>
+            <div className={styles.tab}>
+                <AddNewCategory
+                    loadCategories={() => { getAllCategories() }}
+                />
+            </div>
+            <div className={styles.tab}>
+                <label><strong>Search:</strong></label>
+                <input className={styles.input} type="text" placeholder="Search category by name..." onChange={(e) => { handleChange(e) }} />
+            </div>
+            {categories ? (
+                <div>
+                    <div className={styles.tab}>
+                        <table className={styles.categories}>
+                            <thead>
+                                <tr>
+                                    <th>NAME</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {categories.map((category) => (
+                                    <tr key={category.id}>
+                                        <td>{category.name}</td>
+                                        <td>
+                                            <EditExistingCategory
+                                                category={category}
+                                                loadCategories={() => { getAllCategories() }}
+                                            /></td>
+                                        <td><Button color="primary" size="lg" onClick={() => deleteCategory(category.id)}>X</Button></td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            ) : (
+                <div>
+                    No categories
+                </div>
+            )}
+
         </AdminLayout>
     );
 };
 
-/*export async function getStaticProps() {
-    const res = await fetch('https://virtserver.swaggerhub.com/swexception4/OpenAPI/0.0.1/getProducts');
-
-    const products = await res.json();
-
-    return {
-        props: {
-            products: products,
-        }
-    };    
-}*/
-
 export default CategoryManagement;
+
+export const getStaticProps: GetStaticProps = async () => {
+    
+    const initialCategories = await CategoriesService.fetchAllCategories().catch(() => null);
+    return {
+        props: { initialCategories },
+        revalidate: 30
+    }
+}

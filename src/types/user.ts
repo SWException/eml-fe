@@ -1,14 +1,16 @@
 export type User = {
-    //_id: string;
+    username?: string,
+    name: string,
+    surname: string,
     email?: string;
-    name: string;
+    email_verified?: boolean,
     imageURL: string;
     carts: string[];
-    role: 'user' | 'admin';
-  };
-  
-  export type UserFields = {
+    role?: 'user' | 'admin' | string;
+};
+
+export type UserFields = {
     name: string;
     password: string;
     email: string;
-  };
+};

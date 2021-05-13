@@ -1,61 +1,29 @@
-import React, { useState } from 'react';
-import Amplify, { Auth } from 'aws-amplify';
-import styles from './Button.module.css';
-import { Button, Spinner, Dropdown, DropdownToggle, DropdownMenu, DropdownItem} from 'reactstrap';
-import { useRouter } from 'next/router';
+import React from 'react';
+import { Button } from 'reactstrap';
 import { useAuth } from 'context'
+import styles from 'components/ui/LogoutButton/LogoutButton.module.css'
+import { useRouter } from 'next/router';
 
-const LogoutButton: React.FC = () =>  {
-
+const LogoutButton: React.FC = () => {
+    const { logout } = useAuth();
+    
     const router = useRouter();
 
-    const [isOpen, setIsOpen] = useState(false);
-
-    const { logout } = useAuth()
-
-    const signOut = async() => {
-        console.log("HOHOHO");
+    const signOut = async () => {
         try {
             await logout();
-        } catch (error) {
+            router.push('/')
+        }
+        catch (error) {
             console.log('error signing out: ', error);
         }
     }
 
-  const toggle = () => setIsOpen(prevState => !prevState);
-
-  return (
-    <>
-      <Dropdown isOpen={isOpen} toggle={toggle}>
-        <DropdownToggle>
-            Logout
-        </DropdownToggle>
-        <DropdownMenu
-            modifiers={{
-            setMaxHeight: {
-                enabled: true,
-                order: 890,
-                fn: (data) => {
-                return {
-                    ...data,
-                    styles: {
-                    ...data.styles,
-                    overflow: 'auto',
-                    maxHeight: '200px',
-                    },
-                };
-                },
-            },
-            }}
-            >
-            <DropdownItem><Button onClick={()=>{
-                signOut();
-            }}>Logout</Button></DropdownItem>
-            <DropdownItem><Button>Logout all devices</Button></DropdownItem>
-        </DropdownMenu>
-        </Dropdown>
-    </>
-  );
+    return (
+        <>
+            <Button className={styles.button} size="lg" onClick={() => { signOut(); }}>Logout</Button>
+        </>
+    );
 };
 
 export default LogoutButton;

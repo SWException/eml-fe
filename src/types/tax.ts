@@ -1,7 +1,10 @@
 export type Tax = {
-    id: number;
-    name: string;
+    id: string;
     value: number;
+    description: string;
 };
 
 export type Taxes = Tax[];
+
+export type InsertTax = Omit<Tax, 'id'>;
+export type EditTax = InsertTax;

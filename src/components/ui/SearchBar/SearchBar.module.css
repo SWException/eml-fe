@@ -1,18 +1,16 @@
-.input[type=text] {
-    width: 70%;
-    box-sizing: border-box;
-    border: 2px solid #ccc;
-    border-radius: 4px;
-    font-size: 16px;
-    background-color: var(--color-light);
-    background-position: 5px 5px; 
-    background-repeat: no-repeat;
-    padding: 4px 20px 4px 40px;
-    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
-  } 
+ .input[type=text] {
+     width: 40rem;
+     font-size: 1.5rem;
+     border-color: none;
+     background-color: var(--color-light);
+     background-position: 5px 5px;
+     background-repeat: no-repeat;
+     padding: 0.4rem 1rem 0.4rem 1rem;
+     margin-top: 1rem;
+     border-radius:25px;
+ }
 
-.searchButton{
-  border-radius: 4px;
-  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
-  padding:  4px 20px 4px 20px;
-}
+ .div {
+     width: auto;
+     margin-left: 20%;
+ }

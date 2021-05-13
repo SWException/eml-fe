@@ -3,9 +3,12 @@ export type Product = {
     name: string;
     description: string;
     primaryPhoto: string;
-    secondaryPhotos?: string[];
-    categories: string[];
+    secondaryPhotos: string[];
+    categoryId: string;
+    category: string;
     price: number;
+    netPrice: number;
+    taxId: string;
     tax: number;
     show: boolean;
     showHome: boolean;
@@ -13,30 +16,30 @@ export type Product = {
 };
 
 export type Products = Product[];
- 
-export interface ProductsData {
-    products: Product[];
-    total: number;
+
+export type InsertProduct = Omit<Product, 'tax' | 'id' | 'categoryId' | 'price' | 'taxId'> & { tax: string };
+export type EditProduct = InsertProduct;
+export type ProductCart = Omit<Product, 'description' | 'secondaryPhotos' | 'categorId' | 'category' | 'netPrice' | 'taxId' | 'show' | 'showHome' | 'stock'> & { quantity: number, total: number }
+
+
+export type SearchRules = {
+    minPrice?: number;
+    maxPrice?: number;
+    category?: string;
+    sorting?: string;
+    search?: string;
 }
 
-export interface ProductData {
+
+export type ProductData = {
     product: Product;
 }
 
-  
-/*
-export interface AddProduct {
+
+export type ProductAdmin = {
+    productId: string;
     name: string;
-    image: string;
     price: number;
-    description: string;
-    category: string;
+    tax: number;
+    categories: string[];
 }
-  
-export interface AddProductData {
-    product: Product;
-} 
-
-*/
-  
-  
