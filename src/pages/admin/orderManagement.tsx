@@ -2,7 +2,7 @@ import React, { useState, useEffect, ChangeEvent, Dispatch } from 'react'
 import { useRouter } from 'next/router';
 import { AdminLayout } from 'components/layouts/AdminLayout';
 import styles from 'styles/OrdersManagement.module.css'
-import { Button } from 'reactstrap'
+import { Button, Spinner } from 'reactstrap'
 import { Order, Orders } from 'types'
 import { OrdersService } from 'services';
 
@@ -87,33 +87,39 @@ const OrderManagement: React.FC = () => {
             </div>
             {orders ? (
                 <div className={styles.div}>
-                    <table className={styles.orders}>
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>CUSTOMER EMAIL</th>
-                                <th>STATUS</th>
-                                <th>DATE</th>
-                                <th>TOTAL</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {orders.map((order: Order) => ( // Sarà da sistemare i nomi dei campi di orders. Ivan prima o poi modificherà il BE così da rispettare quanto definito nelle OpenApi
-                                <tr key={order.orderid}>
-                                    <td>{order.orderid}</td>
-                                    <td title={order.customer.name + " " + order.customer.surname + " - " + order.customer.username}>{order.customer.email}</td>
-                                    <td>{order.orderStatus}</td>
-                                    <td>{getDate(order.timestamp)}</td>
-                                    <td>€ {order.total}</td>
-                                    <td><Button color="primary" size="lg" onClick={() => { router.push(`/admin/orderDetailsAdmin?id=${order.orderid}`) }}>Order Summary</Button></td>
+                    {orders.length>0 ? (
+                        <table className={styles.orders}>
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>CUSTOMER EMAIL</th>
+                                    <th>STATUS</th>
+                                    <th>DATE</th>
+                                    <th>TOTAL</th>
                                 </tr>
-                            ))}
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                {orders.map((order: Order) => ( // Sarà da sistemare i nomi dei campi di orders. Ivan prima o poi modificherà il BE così da rispettare quanto definito nelle OpenApi
+                                    <tr key={order.orderid}>
+                                        <td>{order.orderid}</td>
+                                        <td title={order.customer.name + " " + order.customer.surname + " - " + order.customer.username}>{order.customer.email}</td>
+                                        <td>{order.orderStatus}</td>
+                                        <td>{getDate(order.timestamp)}</td>
+                                        <td>€ {order.total}</td>
+                                        <td><Button color="primary" size="lg" onClick={() => { router.push(`/admin/orderDetailsAdmin?id=${order.orderid}`) }}>Order Summary</Button></td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    ) : (
+                        <div>
+                            No orders in this status
+                        </div>
+                    )}
                 </div>
             ) : (
                 <div className={styles.div}>
-                    No Orders
+                    <Spinner style={{ width: '3rem', height: '3rem' }}/>
                 </div>
             )}
         </AdminLayout>
