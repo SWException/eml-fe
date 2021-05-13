@@ -8,6 +8,20 @@
         align-content: center;
         text-align: "center";
     }
+    .griditemleft{
+        justify-content: "center";
+        align-content: center;
+        align-items: center;
+        text-align: "center";
+        margin-left: 25rem;
+    }
+    .griditemright{
+        justify-content: "center";
+        align-content: center;
+        align-items: center;
+        text-align: "center";
+        margin-left: 2rem;
+    }
 }
 
 
@@ -24,15 +38,21 @@
         text-align: "center";
         align-content: center;
     }
+    .griditemleft{
+        justify-content: "center";
+        align-content: center;
+        align-items: center;
+        text-align: "center";
+        margin-left: 2rem;
+    }
+    .griditemright{
+        justify-content: "center";
+        align-content: center;
+        align-items: center;
+        text-align: "center";
+        margin-left: 2rem;
+    }
 }
-.griditem{
-    justify-content: "center";
-    align-content: center;
-    align-items: center;
-    text-align: "center";
-    margin-left: 10rem;
-}
-
 
 .div {
     width: 30rem;
