@@ -37,8 +37,8 @@ const ProductsPage: React.FC<Props> = ({ initialProducts, search }) => {
     return (
         <CustomerLayout header categories footer>
             <div>
-                <div className={styles.filter}> Price:<Filters setFilters={setFilters} searchRules={searchRules} /> </div>
-                <div className={styles.filter}> Price sorting:<Sort setFilters={setFilters} searchRules={searchRules} /></div>
+                {/* <div className={styles.filter}> Price:<Filters setFilters={setFilters} searchRules={searchRules} /> </div>*/ }
+                {/* <div className={styles.filter}> Price sorting:<Sort setFilters={setFilters} searchRules={searchRules} /></div>*/ }
                 <div>
                     {products?.length > 0 ? (
                         <ProductList products={products} />
