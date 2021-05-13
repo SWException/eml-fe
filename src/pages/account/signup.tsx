@@ -10,17 +10,9 @@ Amplify.configure(awsconfig);
 import styles from 'styles/Account.module.css';
 
 
-/**
- * TODO: 
- * controllare per bene errori ritornati
- * Fare check client side delle informazioni inserite (es email e confirmEmail sono uguali, stessa cosa password)
- * Aggiungere ripeti password piuttosto che ripeti email
- */
-
 const SignUp: React.FC = () => {
     const router = useRouter()
 
-    //Lavorare su state configurato meglio stile Reducer
     const [email, setEmail] = useState('');
     const [password, setPass] = useState('');
     const [code, setCode] = useState('');
@@ -80,6 +72,7 @@ const SignUp: React.FC = () => {
             setLoading(true);
             await AuthService.confirmCode(email, code);
             setLoading(false);
+            alert('Registration was successful')
             router.push('/account/signin');
         }
         catch (error) {

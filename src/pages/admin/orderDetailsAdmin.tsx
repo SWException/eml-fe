@@ -1,6 +1,6 @@
 import React, { useEffect, useState, Dispatch } from "react";
 import { AdminLayout } from 'components/layouts/AdminLayout';
-import styles from "styles/Order.module.css";
+import styles from "styles/OrderAdmin.module.css";
 import { AdminDetailOrderProductCard } from 'components/orderdetails'
 import { OrdersService } from 'services';
 import { Order, OrderProduct } from 'types'

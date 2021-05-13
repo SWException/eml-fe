@@ -42,7 +42,7 @@ const OrderDetails: React.FC<Props> = ({ id }) => {
                         <div className={styles.detailsorder}>
                             <div className={styles.div}><strong>Order ID:</strong>  {order.orderid}</div>
                             <div className={styles.div}><strong>Date:</strong>  {getDate(order.timestamp)}</div>
-                            <div style={{ padding: 10 }}><strong>State:</strong>  {order.orderStatus}</div>
+                            <div className={styles.status}><strong>State:</strong>  {order.orderStatus}</div>
                         </div>
                         <div className={styles.itemlayout}>
                             <h2>Products</h2>
@@ -71,15 +71,15 @@ const OrderDetails: React.FC<Props> = ({ id }) => {
                         <div>
                             <div className={styles.button}>
                                 <p>Do you need assistance?</p>
-                                <a href="mailto:farmaciapadovana@gmail.com?subject=Assistance%20Required&body=This%20is%20an%20example"><Button color="primary" size="lg" style={{ marginLeft: 20 }}>Assistance</Button></a>
+                                <a href="mailto:swexception.outlook.com?subject=Assistance%20Required&body=This%20is%20an%20example"><Button color="primary" size="lg" style={{ marginLeft: 20 }}>Assistance</Button></a>
                             </div>
                             <div className={styles.button}>
                                 <p>Do you want to ask for a return?</p>
-                                <a href="mailto:farmaciapadovana@gmail.com?subject=Return%20request&body=This%20is%20an%20example"><Button color="primary" size="lg" style={{ marginLeft: 20 }}>Request Return</Button></a>
+                                <a href="mailto:swexception.outlook.com?subject=Return%20request&body=This%20is%20an%20example"><Button color="primary" size="lg" style={{ marginLeft: 20 }}>Request Return</Button></a>
                             </div>
                             <div className={styles.button}>
                                 <p>Do you want cancel your order? </p>
-                                <a href="mailto:farmaciapadovana@gmail.com?subject=Cancel%20Request&body=This%20is%20an%20example"><Button color="primary" size="lg" style={{ marginLeft: 20 }}>Cancel Order</Button></a>
+                                <a href="mailto:swexception.outlook.com?subject=Cancel%20Request&body=This%20is%20an%20example"><Button color="primary" size="lg" style={{ marginLeft: 20 }}>Cancel Order</Button></a>
                             </div>
                         </div>
                     </>

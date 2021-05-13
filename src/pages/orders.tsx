@@ -33,7 +33,7 @@ const OrdersList: React.FC = () => {
                 <h1>List of orders</h1>
             </div>
             <div className={styles.div}>
-                {orders ? (
+                {orders && orders.length >0 ? (
                     <table className={styles.orders}>
                         <thead>
                             <tr>

@@ -25,16 +25,14 @@
         align-content: center;
     }
 }
-
-
-
-
 .griditem{
     justify-content: "center";
     align-content: center;
     align-items: center;
     text-align: "center";
+    margin-left: 10rem;
 }
+
 
 .div {
     width: 30rem;
