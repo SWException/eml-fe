@@ -32,6 +32,8 @@ const CheckoutForm: React.FC = () => {
     const [addresses, setAddresses]: [Addresses, Dispatch<Addresses>] = useState<Addresses>();
 
     const [intent, setIntent] = useState<PaymentIntent>();
+    const [clientSecret, setClientSecret] = useState<string>();
+    const [addressesChange, setAddressesChange] = useState<boolean>(true);
 
     const [errorMessage, setErrorMessage] = useState("");
     const [infoMessage, setInfoMessage] = useState("");
@@ -74,14 +76,21 @@ const CheckoutForm: React.FC = () => {
     const pay = async (): Promise<void> => {
         resetMessage();
         setLoading(true);
-        let paymentIntent: PaymentIntent = intent;
-        if(!paymentIntent){
-            paymentIntent = await CheckoutService.fetchCheckout(idSelectedShippingAddress, idSelectedBillingAddress);
-            setIntent(paymentIntent);
-        }
-        console.log("PAYMENT INTENT", paymentIntent);
 
-        await stripe.confirmCardPayment(paymentIntent.secret, {
+        let secret: string = clientSecret;
+        let paymentIntent: PaymentIntent = intent;
+
+        if(!clientSecret){
+            if(!paymentIntent){
+                paymentIntent = await CheckoutService.fetchCheckout(idSelectedShippingAddress, idSelectedBillingAddress);
+                setIntent(paymentIntent);
+            }
+            console.log("PAYMENT INTENT", paymentIntent);
+            secret = paymentIntent.secret
+            setClientSecret(secret);
+        }
+
+        await stripe.confirmCardPayment(secret, {
             payment_method: {
                 card: elements.getElement(CardElement)
             }
@@ -113,11 +122,13 @@ const CheckoutForm: React.FC = () => {
     }
 
     const handleChangeShippingAddress = async (id: string): Promise<void> => {
+        setAddressesChange(true);
         setIdSelectedShippingAddress(id);
         setTextSelectedShippingAddress(await getTextAddress(id));
     }
 
     const handleChangeBillingAddress = async (id: string): Promise<void> => {
+        setAddressesChange(true);
         setIdSelectedBillingAddress(id);
         setTextSelectedBillingAddress(await getTextAddress(id));
     }
@@ -358,9 +369,6 @@ const CheckoutForm: React.FC = () => {
     }
 
     const handlerShowBilling = () => {
-        if(intent){
-            CheckoutService.deleteCheckout(intent.id);
-        }
         if(!idSelectedShippingAddress || idSelectedShippingAddress === "#"){
             resetMessage();
             setErrorMessage("Select one address or add a new one!");
@@ -370,9 +378,28 @@ const CheckoutForm: React.FC = () => {
         setShowShipping(false);
         setShowPayment(false);
         setShowBilling(true);
-        if(useShippingAsBilling){
+        if((!idSelectedBillingAddress || idSelectedBillingAddress === "#") && useShippingAsBilling){
             setUseShippingAsBilling(true);
             handleChangeBillingAddress(idSelectedShippingAddress);
+        }
+    }
+
+    const updateIntent = async (): Promise<void> => {
+        if(addressesChange){
+            if(intent){
+                await CheckoutService.deleteCheckout(intent.id);
+                setClientSecret(null);
+                setIntent(null);
+            }
+    
+            if(idSelectedBillingAddress && idSelectedShippingAddress){
+                const paymentIntent = await CheckoutService.fetchCheckout(idSelectedShippingAddress, idSelectedBillingAddress);
+                setIntent(paymentIntent);
+                console.log("PAYMENT INTENT", paymentIntent);
+                const secret = paymentIntent.secret;
+                setClientSecret(secret);
+            }
+            setAddressesChange(false);
         }
     }
 
@@ -382,8 +409,8 @@ const CheckoutForm: React.FC = () => {
             setErrorMessage("Select one address or add a new one!");
             return;
         }
+        updateIntent();
         resetMessage();
-        setIntent(null)
         setShowShipping(false);
         setShowBilling(false);
         setShowPayment(true);
@@ -430,6 +457,9 @@ const CheckoutForm: React.FC = () => {
                         <>
                             <h2 className="mb-3" style={{ marginTop: "20px" }}>Payment</h2>
                             <form>
+                                <p><strong>Cart: </strong>{intent?.cartTotal} €</p>
+                                <p><strong>Shipping Fee: </strong>{intent?.shippingFee} €</p>
+                                <p><strong>Total: </strong>{intent?.total} €</p>
                                 <CardElement id="card-element" options={cardStyle} />
                                 <div style={{ display: "flex", alignItems: "center", justifyContent: "center", margin: "20px" }}>
                                     <Button color="primary" size="lg" onClick={(): Promise<void> => pay()} id="submit">
