@@ -31,9 +31,8 @@ const Header: React.FC = () => {
         <Fragment>
             <Navbar className={styles.navbar} expand="md">
                 <NavbarBrand href="/">
-                    <img src="/logo.png" width={120} height={80} />
+                    <img src="/logoemp.png" width={170} height={60} />
                 </NavbarBrand>
-                <NavbarBrand href="/" className={styles.siteTitle}>COMPANY NAME</NavbarBrand>
                 <NavbarToggler onClick={toggle} className={styles.navtoggler}>Menu</NavbarToggler>
                 <Collapse isOpen={isOpen} navbar>
                     <SearchBar />

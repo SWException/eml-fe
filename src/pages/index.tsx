@@ -16,8 +16,11 @@ const Index: React.FC<Props> = ({products}) => {
         <CustomerLayout header categories footer>
             
             <Container className={styles.container}>
+                <div className={styles.imagehome}>
+                    <img src="home.jpg" width= "100%" className={styles.image}/>
+                </div>
                 <div className={styles.title}>
-                    <h1>BEST PRODUCTS</h1>
+                    <h1 style={{textDecoration:"underline"}}>BEST PRODUCTS</h1>
                 </div>
                 <ProductList products={products}/>
             </Container>

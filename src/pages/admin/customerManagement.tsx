@@ -77,7 +77,7 @@ const CustomerManagement: React.FC = () => {
                     </table>
                 </div>
             ) : (
-                <div>
+                <div className={styles.message}>
                     No user in the system
                 </div>
             )}

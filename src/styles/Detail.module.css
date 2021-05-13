@@ -86,12 +86,16 @@
 }
 
 .minus {
-    border:none;
+    border-radius: 100%;
+    color: var(--color-dark);
     background-color: transparent;
+    margin-right: 0.5rem;
 }
 
 .plus {
-    border:none;
+    border-radius: 100%;
+    margin-left: 0.5rem;
+    color: var(--color-dark);
     background-color: transparent;
 }
 

@@ -3,7 +3,7 @@
     background-color: #dddddd;
 }
 
-@media screen and (min-width:760px){
+@media screen and (min-width:1120px){
     .productGrid {
         display: grid;
         grid-template-columns: 1fr 1fr 1fr 1fr;
@@ -16,7 +16,20 @@
     }
 }
 
-@media screen and (max-width:760px){
+@media screen and (min-width:770px) and (max-width:1120px){
+    .productGrid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-gap: 2rem;
+        margin: 4rem 4rem 4rem 4rem;
+        font-size: 1.7rem;
+        color: var(--color-dark);
+        justify-content: center;
+        align-items: center;
+    }
+}
+
+@media screen and (max-width:770px){
     .productGrid {
         display: grid;
         grid-template-columns: 1fr;
