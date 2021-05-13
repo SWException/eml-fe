@@ -298,6 +298,7 @@ const Profile: React.FC = () => {
         AuthService.deleteAccount((err, result) => {
             console.log(err, result);
             if (result)
+                alert('Account successfully deleted!')
                 router.push("/account/signout");
         })
             .catch(() => null);
